@@ -1,0 +1,11 @@
+Usuarios:
+
+nivelPrivilegio: 
+1-Administrador 
+2-Usuario Jugador
+
+virtual:
+0-real
+1-virtual
+
+
