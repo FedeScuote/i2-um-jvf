@@ -24,7 +24,7 @@ DROP TABLE desafios;
 -- http://www.phpmyadmin.net
 --
 -- Servidor: localhost
--- Tiempo de generación: 23-09-2012 a las 17:46:56
+-- Tiempo de generación: 23-09-2012 a las 21:58:04
 -- Versión del servidor: 5.5.16
 -- Versión de PHP: 5.3.8
 
@@ -51,6 +51,7 @@ CREATE TABLE IF NOT EXISTS `desafios` (
   `idDesafio` int(11) NOT NULL AUTO_INCREMENT,
   `monto` int(11) DEFAULT NULL,
   `fechaHoraInicioD` datetime DEFAULT NULL,
+  `estadoD` varchar(10) NOT NULL,
   PRIMARY KEY (`idDesafio`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=3 ;
 
@@ -58,9 +59,9 @@ CREATE TABLE IF NOT EXISTS `desafios` (
 -- Volcado de datos para la tabla `desafios`
 --
 
-INSERT INTO `desafios` (`idDesafio`, `monto`, `fechaHoraInicioD`) VALUES
-(1, 200, '2012-09-03 13:00:00'),
-(2, 250, '2012-09-12 15:00:00');
+INSERT INTO `desafios` (`idDesafio`, `monto`, `fechaHoraInicioD`, `estadoD`) VALUES
+(1, 200, '2012-09-03 13:00:00', 'Finalizado'),
+(2, 250, '2012-09-12 15:00:00', 'Finalizado');
 
 -- --------------------------------------------------------
 
@@ -94,6 +95,7 @@ CREATE TABLE IF NOT EXISTS `partidas` (
   `idPartida` int(11) NOT NULL AUTO_INCREMENT,
   `torneos_idTorneo` int(11) NOT NULL,
   `fechaHoraInicioP` datetime DEFAULT NULL,
+  `estadoP` varchar(10) NOT NULL,
   PRIMARY KEY (`idPartida`,`torneos_idTorneo`),
   KEY `Partidas_FKIndex1` (`torneos_idTorneo`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
@@ -183,6 +185,7 @@ CREATE TABLE IF NOT EXISTS `torneos` (
   `pozo` int(11) DEFAULT NULL,
   `costoInscripcion` int(11) DEFAULT NULL,
   `fechaHoraInicioT` datetime DEFAULT NULL,
+  `estadoT` varchar(10) NOT NULL,
   PRIMARY KEY (`idTorneo`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=4 ;
 
@@ -190,10 +193,10 @@ CREATE TABLE IF NOT EXISTS `torneos` (
 -- Volcado de datos para la tabla `torneos`
 --
 
-INSERT INTO `torneos` (`idTorneo`, `descripcion`, `pozo`, `costoInscripcion`, `fechaHoraInicioT`) VALUES
-(1, 'Torneo Nacional Batalla Naval 2012', 50000, 50, '2012-09-11 09:00:00'),
-(2, 'Torneo Apertura Batalla Naval 2012', 30000, 30, '2012-03-22 09:30:00'),
-(3, 'Torneo Nacional Ludo 2012', 2000, 20, '2012-09-10 10:00:00');
+INSERT INTO `torneos` (`idTorneo`, `descripcion`, `pozo`, `costoInscripcion`, `fechaHoraInicioT`, `estadoT`) VALUES
+(1, 'Torneo Nacional Batalla Naval 2012', 50000, 50, '2012-10-11 09:00:00', 'En hora'),
+(2, 'Torneo Apertura Batalla Naval 2012', 30000, 30, '2012-09-23 09:30:00', 'Atrasado'),
+(3, 'Torneo Nacional Ludo 2012', 2000, 20, '2012-09-22 10:00:00', 'En curso');
 
 -- --------------------------------------------------------
 

@@ -1,11 +1,36 @@
 Usuarios:
 
-nivelPrivilegio: 
-1-Administrador 
-2-Usuario Jugador
+nivelPrivilegio: 1-Administrador 
+	 	 2-Usuario Jugador
+		 3-Dueño
 
-virtual:
-0-real
-1-virtual
+virtual: 0-real
+	 1-virtual
 
 
+
+Torneos:
+
+estadoT:  En hora
+	  En curso
+	  Atrasado
+	  Finalizado
+	  Cancelado
+
+
+
+Desafíos:
+
+estadoD:  En hora
+	  En curso
+	  Atrasado
+	  Finalizado
+	  Cancelado
+
+Partidas:
+
+estadoD:  En hora
+	  En curso
+	  Atrasado
+	  Finalizado
+	  Cancelado

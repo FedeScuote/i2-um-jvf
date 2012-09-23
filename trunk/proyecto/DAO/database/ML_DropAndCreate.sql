@@ -19,10 +19,12 @@ DROP TABLE juegos;
 DROP TABLE desafios;
 
 
+
 CREATE TABLE desafios (
   idDesafio INT NOT NULL AUTO_INCREMENT,
   monto INT NULL,
   fechaHoraInicioD DATETIME NULL,
+  estadoD VARCHAR(10) NULL,
   PRIMARY KEY(idDesafio)
 );
 
@@ -37,6 +39,7 @@ CREATE TABLE partidas (
   idPartida INT NOT NULL AUTO_INCREMENT,
   torneos_idTorneo INT NOT NULL,
   fechaHoraInicioP DATETIME NULL,
+  estadoP VARCHAR(10) NULL,
   PRIMARY KEY(idPartida, torneos_idTorneo),
   INDEX Partidas_FKIndex1(torneos_idTorneo)
 );
@@ -53,6 +56,7 @@ CREATE TABLE torneos (
   pozo INT NULL,
   costoInscripcion INT NULL,
   fechaHoraInicioT DATETIME NULL,
+  estadoT VARCHAR(10) NULL,
   PRIMARY KEY(idTorneo)
 );
 
