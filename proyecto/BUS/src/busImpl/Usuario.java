@@ -38,6 +38,10 @@ public class Usuario {
 
 	private int creditoB;
 
+	private int virtualB;
+
+	private int partidasGanadasB;
+
 	public static Usuario findByName(String name)throws NoSeEncuentraUsuarioException {
 		UsuarioDAO dao = getDAO();
 		try {
@@ -110,5 +114,21 @@ public class Usuario {
 
 	public void setCreditoB(int creditoB) {
 		this.creditoB = creditoB;
+	}
+
+	public int getVirtualB() {
+		return virtualB;
+	}
+
+	public void setVirtualB(int virtualB) {
+		this.virtualB = virtualB;
+	}
+
+	public int getPartidasGanadasB() {
+		return partidasGanadasB;
+	}
+
+	public void setPartidasGanadasB(int partidasGanadasB) {
+		this.partidasGanadasB = partidasGanadasB;
 	}
 }
