@@ -17,4 +17,18 @@ public class Celda {
 	}
 
 
+	public boolean estaOcupada(){
+		return estado==OCUPADO;
+	}
+	public boolean estaDisparada(){
+		return estado==TOCADO;
+	}
+	public void setOcupada(){
+		estado=OCUPADO;
+	}
+	public void setDisparada(){
+		estado=TOCADO;
+	}
+
+
 }
