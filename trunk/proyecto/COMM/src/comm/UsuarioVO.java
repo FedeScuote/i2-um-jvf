@@ -4,6 +4,8 @@ import java.io.Serializable;
 
 public class UsuarioVO implements Serializable {
 
+	private int idUsuario;
+
 	private String nombreB;
 
 	private String apellidoB;
@@ -28,6 +30,14 @@ public class UsuarioVO implements Serializable {
 		super();
 		this.nombreB = nombreB;
 		this.apellidoB = apellidoB;
+	}
+
+	public int getIdUsuario() {
+		return idUsuario;
+	}
+
+	public void setIdUsuario(int idUsuario) {
+		this.idUsuario = idUsuario;
 	}
 
 }
