@@ -1,7 +1,5 @@
 package daoInterfaces;
 
-import java.util.ArrayList;
-import java.util.Date;
 
 import excepcionesB.NotDataFoundException;
 import excepcionesB.YaExisteUsuarioException;
