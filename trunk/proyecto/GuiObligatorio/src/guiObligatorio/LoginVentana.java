@@ -161,8 +161,8 @@ public class LoginVentana extends JFrame {
 					// RECIBO LOS DATOS Y LOS MANDO AL BUS
 					String datosUsuario = usuario.getText();
 					String datosPassword = password.getPassword().toString();
-					String host = null; // HAY QUE VER QUE PONER EN HOST PORQUE
-										// NO TENEMOS MAIN
+					String host = null;
+
 					try { // try y catch para verificar si esta el usuario o
 							// no
 						Registry registry = LocateRegistry.getRegistry(host);
