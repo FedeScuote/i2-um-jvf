@@ -3,8 +3,6 @@ package guiObligatorio;
 import java.awt.BorderLayout;
 import javax.swing.JPanel;
 import javax.swing.JFrame;
-import java.awt.Dimension;
-import javax.swing.BoxLayout;
 import java.awt.GridBagLayout;
 import javax.swing.JButton;
 import java.awt.GridBagConstraints;
