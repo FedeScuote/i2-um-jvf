@@ -46,6 +46,8 @@ public class UsuarioDAODB implements UsuarioDAO {
 
 			}
 		} catch (SQLException ex) {
+			System.out.println("error");
+			throw new NotDataFoundException();
 
 		}
 		conexion.disconnect();
