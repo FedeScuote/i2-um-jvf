@@ -6,9 +6,19 @@ public class UsuarioVO implements Serializable {
 
 	private int idUsuario;
 
+	private String usuarioB;
+
 	private String nombreB;
 
 	private String apellidoB;
+
+	public String getUsuarioB() {
+		return usuarioB;
+	}
+
+	public void setUsuarioB(String usuarioB) {
+		this.usuarioB = usuarioB;
+	}
 
 	public String getApellidoB() {
 		return apellidoB;
