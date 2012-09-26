@@ -4,15 +4,20 @@ import java.rmi.RemoteException;
 
 import comm.ServiciosUsuario;
 import comm.UsuarioVO;
+import commExceptions.ContrasenaInvalidaException;
 import commExceptions.NoSeEncuentraUsuarioException;
 
 public class ServicioUsuarioImpl implements ServiciosUsuario {
 
-	public UsuarioVO login(String usuario, String contraseña) throws RemoteException,NoSeEncuentraUsuarioException {
+	public UsuarioVO login(String usuario, String contraseña) throws RemoteException,NoSeEncuentraUsuarioException, ContrasenaInvalidaException {
 
 		try {
 			Usuario nuevo = Usuario.findByName(usuario);
-			return new UsuarioVO(nuevo.getNombreB(), nuevo.getApellidoB());
+			if(nuevo.getClaveB().equals(contraseña)){
+				return new UsuarioVO(nuevo.getNombreB(), nuevo.getApellidoB());
+			}else{
+				throw new ContrasenaInvalidaException();
+			}
 		} catch (NoSeEncuentraUsuarioException e) {
 			throw new NoSeEncuentraUsuarioException();
 		}

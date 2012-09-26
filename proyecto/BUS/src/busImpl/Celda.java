@@ -29,6 +29,12 @@ public class Celda {
 	public void setDisparada(){
 		estado=TOCADO;
 	}
+	public void setTiroErrado(){
+		estado=TIROERRADO;
+	}
+	public boolean estaErrado(){
+		return estado==TIROERRADO;
+	}
 
 
 }
