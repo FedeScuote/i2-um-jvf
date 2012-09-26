@@ -4,8 +4,53 @@ import excepcionesB.CoordenadasCeldasInvalidasException;
 
 public class Tablero {
 
-	Celda[][] tabla;
+	Celda[][] tabla = new Celda[10][10];
 	private Usuario jugador;
+	private boolean miTurno;
+	private int cantBarcosL4=3;
+	private int cantBarcosL3=2;
+	private int cantBarcosL2=1;
+	private int cantBarcosL1=1;
+
+	public void decrementarBarcosL1(){
+		cantBarcosL1--;
+
+	}
+	public void decrementarBarcosL2(){
+		cantBarcosL2--;
+
+	}
+	public void decrementarBarcosL3(){
+		cantBarcosL3--;
+
+	}
+	public void decrementarBarcosL4(){
+		cantBarcosL4--;
+
+	}
+	public int getCantBarcosL4() {
+		return cantBarcosL4;
+	}
+
+	public int getCantBarcosL3() {
+		return cantBarcosL3;
+	}
+
+	public int getCantBarcosL2() {
+		return cantBarcosL2;
+	}
+
+	public int getCantBarcosL1() {
+		return cantBarcosL1;
+	}
+
+	public boolean isMiTurno() {
+		return miTurno;
+	}
+
+	public void setMiTurno(boolean miTurno) {
+		this.miTurno = miTurno;
+	}
 
 	public Celda[][] getTabla() {
 		return tabla;
@@ -64,7 +109,12 @@ public class Tablero {
 			if(tabla[coordenadaX][coordenadaY].estaDisparada()){
 				throw new CoordenadasCeldasInvalidasException();
 			}else{
-			tabla[coordenadaX][coordenadaY].setDisparada();
+				if(tabla[coordenadaX][coordenadaY].estaOcupada()){
+					tabla[coordenadaX][coordenadaY].setDisparada();
+				}else{
+					tabla[coordenadaX][coordenadaY].setTiroErrado();
+				}
+
 			}
 		}
 	}
