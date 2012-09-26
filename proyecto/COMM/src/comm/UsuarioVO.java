@@ -40,4 +40,9 @@ public class UsuarioVO implements Serializable {
 		this.idUsuario = idUsuario;
 	}
 
+	@Override
+	public String toString() {
+		return this.getNombreB();
+	}
+
 }
