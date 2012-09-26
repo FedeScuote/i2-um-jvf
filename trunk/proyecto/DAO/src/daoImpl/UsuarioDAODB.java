@@ -39,7 +39,7 @@ public class UsuarioDAODB implements UsuarioDAO {
 					u.setCreditoB(resultado.getInt("credito"));
 					u.setVirtualB(resultado.getInt("virtual"));
 					u.setPartidasGanadasB(resultado.getInt("partidasGanadas"));
-
+					u.setClaveB(resultado.getString("clave"));
 					conexion.disconnect();
 					return u;
 				}
