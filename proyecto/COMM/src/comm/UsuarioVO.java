@@ -42,7 +42,6 @@ public class UsuarioVO implements Serializable {
 
 	@Override
 	public String toString() {
-		return this.getNombreB();
+			return this.getNombreB();
 	}
-
 }
