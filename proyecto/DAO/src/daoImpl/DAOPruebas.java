@@ -16,18 +16,20 @@ public class DAOPruebas {
 		// TODO Auto-generated method stub
 
 		RankingDAODB r=new RankingDAODB();
-
+		try {
+			System.out.println((r.getRankingLudo()).size());
+		} catch (NoHayRankingException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
 		try {
 			for(int i=0;i<r.getRankingLudo().size();i++){
-				try {
+
 					System.out.println(((RankingDAODB)(r.getRankingLudo().get(i))).getUsuario());
 					System.out.println(((RankingDAODB)(r.getRankingLudo().get(i))).getGanadas());
-					System.out.println((r.getRankingLudo()).size());
 
-				} catch (NoHayRankingException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
+
+
 			}
 		} catch (NoHayRankingException e) {
 			// TODO Auto-generated catch block
