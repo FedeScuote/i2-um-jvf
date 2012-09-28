@@ -13,11 +13,14 @@ import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 import javax.swing.JLabel;
 import javax.swing.ImageIcon;
+import javax.swing.JOptionPane;
 import javax.swing.JPasswordField;
 import comm.ServiciosUsuario;
 import comm.UsuarioVO;
 import commExceptions.ContrasenaInvalidaException;
 import commExceptions.NoSeEncuentraUsuarioException;
+import javax.swing.JDialog;
+import javax.swing.WindowConstants;
 
 public class LoginVentana extends JFrame {
 
@@ -175,19 +178,21 @@ public class LoginVentana extends JFrame {
 					} catch (Exception remoteExceptionrmi) {
 						//si no se encuentra el usuario la excepcion es NoSeEncuentraUsuarioExcption
 						if (remoteExceptionrmi instanceof NoSeEncuentraUsuarioException) {
-							System.out.println("no existe usuario");
-						}
-						if(remoteExceptionrmi instanceof ContrasenaInvalidaException){
-							System.out.println("Contrasena Erronea");
-						}
+							JOptionPane.showMessageDialog(new JFrame(), "usuario invalido");
 
+						}else{
+						if(remoteExceptionrmi instanceof ContrasenaInvalidaException){
+							JOptionPane.showMessageDialog(new JFrame(), "password invalido");
+						}
 						else {
 
 							System.err.println("Client exception: "
 									+ remoteExceptionrmi.toString());
 							remoteExceptionrmi.printStackTrace();
 						}
-					}
+
+						}
+											}
 
 				}
 			});
