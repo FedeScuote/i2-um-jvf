@@ -41,6 +41,7 @@ public class SegundaPantallaLudo extends JFrame {
 	public SegundaPantallaLudo() {
 		super();
 		initialize();
+		this.setExtendedState(this.getExtendedState()|JFrame.MAXIMIZED_BOTH);//mi frame arranca maximizada
 	}
 
 	/**

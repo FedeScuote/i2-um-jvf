@@ -44,6 +44,7 @@ public class LoginVentana extends JFrame {
 	public LoginVentana() {
 		super();
 		initialize();
+		this.setExtendedState(this.getExtendedState()|JFrame.MAXIMIZED_BOTH);//mi frame arranca maximizada
 	}
 
 	/**
@@ -166,13 +167,8 @@ public class LoginVentana extends JFrame {
 								datosPassword);
 						System.out.println(response);
 					} catch (Exception remoteExceptionrmi) {
-						if (remoteExceptionrmi instanceof NoSeEncuentraUsuarioException) {// VER
-																							// SI
-																							// ESTA
-																							// BIEN
-																							// O NO
-																							// LA
-																							// IMPORTACION
+						//si no se encuentra el usuario la excepcion es NoSeEncuentraUsuarioExcption
+						if (remoteExceptionrmi instanceof NoSeEncuentraUsuarioException) {
 							System.out.println("no existe usuario");
 						} else {
 							System.err.println("Client exception: "
