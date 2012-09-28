@@ -26,10 +26,10 @@ public class UsuarioDAODB implements UsuarioDAO {
 		try {
 
 			ResultSet resultado = conexion
-					.devolverResutado("select* from usuarios");
+					.devolverResutado("SELECT * FROM usuarios WHERE usuario='"+usuario+"'");
+			boolean esta=false;
 			while (resultado.next()) {
 
-				if ((resultado.getString("usuario")).equals(usuario)) {
 					u.setIdUsuarioB(resultado.getInt("idUsuario"));
 					u.setUsuarioB(resultado.getString("usuario"));
 					u.setNombreB(resultado.getString("nombre"));
@@ -39,23 +39,20 @@ public class UsuarioDAODB implements UsuarioDAO {
 					u.setCreditoB(resultado.getInt("credito"));
 					u.setVirtualB(resultado.getInt("virtual"));
 					u.setPartidasGanadasB(resultado.getInt("partidasGanadas"));
-					u.setClaveB(resultado.getString("clave"));
-					conexion.disconnect();
-					return u;
-				}
-
+					esta=true;
+			}
+			conexion.disconnect();
+			if(esta){
+				return u;
+			}else{
+				throw new NotDataFoundException();
 			}
 		} catch (SQLException ex) {
-
+			System.out.println("error");
 			throw new NotDataFoundException();
 
 		}
-		if(u.getUsuarioB()==null){
 
-			throw new NotDataFoundException();
-		}
-		conexion.disconnect();
-		return u;
 
 	}
 
