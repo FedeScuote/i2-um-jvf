@@ -28,6 +28,16 @@ CREATE TABLE posiciones (
   PRIMARY KEY(idPosicion)
 );
 
+CREATE TABLE ranking (
+  usuarios_idusuario INT NOT NULL,
+  juegos_idJuego INT NOT NULL,
+  usuarioRanking INT NULL,
+  ganadas INT NULL,
+  PRIMARY KEY(usuarios_idusuario, juegos_idJuego),
+  INDEX usuarios_has_juegos_FKIndex1(usuarios_idusuario),
+  INDEX usuarios_has_juegos_FKIndex2(juegos_idJuego)
+);
+
 CREATE TABLE torneos (
   idTorneo INT NOT NULL AUTO_INCREMENT,
   descripcion VARCHAR(50) NULL,

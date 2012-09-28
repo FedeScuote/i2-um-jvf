@@ -10,6 +10,8 @@ DROP TABLE usuarios;
 
 DROP TABLE torneos;
 
+DROP TABLE ranking;
+
 DROP TABLE posiciones;
 
 DROP TABLE partidas;
@@ -19,12 +21,15 @@ DROP TABLE juegos;
 DROP TABLE desafios;
 
 
+
+
+
 -- phpMyAdmin SQL Dump
 -- version 3.4.5
 -- http://www.phpmyadmin.net
 --
 -- Servidor: localhost
--- Tiempo de generación: 23-09-2012 a las 21:58:04
+-- Tiempo de generación: 28-09-2012 a las 20:02:02
 -- Versión del servidor: 5.5.16
 -- Versión de PHP: 5.3.8
 
@@ -53,7 +58,7 @@ CREATE TABLE IF NOT EXISTS `desafios` (
   `fechaHoraInicioD` datetime DEFAULT NULL,
   `estadoD` varchar(10) NOT NULL,
   PRIMARY KEY (`idDesafio`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=3 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=17 ;
 
 --
 -- Volcado de datos para la tabla `desafios`
@@ -61,7 +66,21 @@ CREATE TABLE IF NOT EXISTS `desafios` (
 
 INSERT INTO `desafios` (`idDesafio`, `monto`, `fechaHoraInicioD`, `estadoD`) VALUES
 (1, 200, '2012-09-03 13:00:00', 'Finalizado'),
-(2, 250, '2012-09-12 15:00:00', 'Finalizado');
+(2, 250, '2012-09-12 15:00:00', 'Finalizado'),
+(3, 400, '2012-09-03 14:00:00', 'Finalizado'),
+(4, 300, '2012-09-20 14:00:00', 'Finalizado'),
+(5, 500, '2012-09-12 19:00:00', 'Finalizado'),
+(6, 453, '2012-09-26 19:00:00', 'Finalizado'),
+(7, 40, '2012-09-12 18:00:00', 'Finalizado'),
+(8, 300, '2012-08-13 14:00:00', 'Finalizado'),
+(9, 30, '2012-09-14 16:00:00', 'Finalizado'),
+(10, 400, '2012-09-19 17:00:00', 'Finalizado'),
+(11, 22, '2012-09-16 15:00:00', 'Finalizado'),
+(12, 100, '2012-09-15 13:00:00', 'Finalizado'),
+(13, 800, '2012-09-07 18:00:00', 'Finalizado'),
+(14, 900, '2012-09-17 12:00:00', 'Finalizado'),
+(15, 1000, '2012-09-19 12:00:00', 'Finalizado'),
+(16, 1050, '2012-09-08 18:00:00', 'Finalizado');
 
 -- --------------------------------------------------------
 
@@ -176,6 +195,29 @@ INSERT INTO `posiciones` (`idPosicion`, `puesto`) VALUES
 -- --------------------------------------------------------
 
 --
+-- Estructura de tabla para la tabla `ranking`
+--
+
+CREATE TABLE IF NOT EXISTS `ranking` (
+  `usuarios_idUsuario` int(11) NOT NULL,
+  `juegos_idJuego` int(11) NOT NULL,
+  `ganadas` int(11) NOT NULL,
+  KEY `usuarios_has_juegos_FKIndex1` (`usuarios_idUsuario`),
+  KEY `usuarios_has_juegos_FKIndex2` (`juegos_idJuego`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Volcado de datos para la tabla `ranking`
+--
+
+INSERT INTO `ranking` (`usuarios_idUsuario`, `juegos_idJuego`, `ganadas`) VALUES
+(6, 2, 1),
+(3, 2, 3),
+(8, 2, 2);
+
+-- --------------------------------------------------------
+
+--
 -- Estructura de tabla para la tabla `torneos`
 --
 
@@ -250,6 +292,30 @@ CREATE TABLE IF NOT EXISTS `usuarios_has_juegos_desafios` (
   KEY `Juegos_has_Desafios_FKIndex2` (`desafios_idDesafio`),
   KEY `Juegos_has_Desafios_FKIndex3` (`usuarios_idusuario`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Volcado de datos para la tabla `usuarios_has_juegos_desafios`
+--
+
+INSERT INTO `usuarios_has_juegos_desafios` (`juegos_idJuego`, `desafios_idDesafio`, `usuarios_idusuario`, `usuarioGanadorD`) VALUES
+(1, 1, 1, 1),
+(1, 1, 2, 1),
+(1, 2, 3, 3),
+(1, 2, 4, 3),
+(1, 3, 4, 4),
+(1, 3, 5, 4),
+(2, 4, 6, 6),
+(2, 4, 7, 6),
+(2, 5, 3, 3),
+(2, 5, 8, 3),
+(2, 6, 8, 8),
+(2, 6, 9, 8),
+(2, 7, 3, 3),
+(2, 7, 4, 3),
+(2, 8, 3, 3),
+(2, 8, 7, 3),
+(2, 9, 8, 8),
+(2, 9, 9, 8);
 
 -- --------------------------------------------------------
 
