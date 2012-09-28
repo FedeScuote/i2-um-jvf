@@ -52,6 +52,7 @@ public class VentanaPrincipal extends JFrame {
 	public VentanaPrincipal() {
 		super();
 		initialize();
+		this.setExtendedState(this.getExtendedState()|JFrame.MAXIMIZED_BOTH);//mi frame arranca maximizada
 	}
 
 	/**
