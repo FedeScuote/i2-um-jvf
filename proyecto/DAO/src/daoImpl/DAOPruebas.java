@@ -1,6 +1,10 @@
 package daoImpl;
 
+import java.util.ArrayList;
+
+import excepcionesB.NoHayRankingException;
 import excepcionesB.NotDataFoundException;
+import excepcionesD.NoExisteUsuarioException;
 import busImpl.Usuario;
 
 public class DAOPruebas {
@@ -11,7 +15,32 @@ public class DAOPruebas {
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 
+		RankingDAODB r=new RankingDAODB();
 
+		try {
+			for(int i=0;i<r.getRankingLudo().size();i++){
+				try {
+					System.out.println(((RankingDAODB)(r.getRankingLudo().get(i))).getUsuario());
+					System.out.println(((RankingDAODB)(r.getRankingLudo().get(i))).getGanadas());
+					System.out.println((r.getRankingLudo()).size());
+
+				} catch (NoHayRankingException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+		} catch (NoHayRankingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+
+		/*try {
+			System.out.println(r.getUsuario(0));
+		} catch (NoExisteUsuarioException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
 		UsuarioDAODB ud=new UsuarioDAODB();
 		Usuario u=new Usuario();
 
@@ -25,9 +54,10 @@ public class DAOPruebas {
 		}
 		if(u.getApellidoB()==null){
 			System.out.println("no encontré datos ja ja");
+
 			//throw new NotDataFoundException();
 		}
-
+	   */
 	}
 
 }
