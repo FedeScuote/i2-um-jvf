@@ -47,7 +47,10 @@ public class LoginVentana extends JFrame {
 	public LoginVentana() {
 		super();
 		initialize();
-		this.setExtendedState(this.getExtendedState()|JFrame.MAXIMIZED_BOTH);//mi frame arranca maximizada
+		this.setExtendedState(this.getExtendedState() | JFrame.MAXIMIZED_BOTH);// mi
+																				// frame
+																				// arranca
+																				// maximizada
 	}
 
 	/**
@@ -159,10 +162,11 @@ public class LoginVentana extends JFrame {
 					// RECIBO LOS DATOS Y LOS MANDO AL BUS
 					String datosUsuario = usuario.getText();
 					char[] charPassword = password.getPassword();
-					String datosPassword = LoginVentana.deCharArrayAString(charPassword);
+					String datosPassword = LoginVentana
+							.deCharArrayAString(charPassword);
 					// son mis parametros ingreados que voy a autentificar
 					try { // try y catch para verificar si esta el usuario o
-							// no
+						// no
 						Registry registry = LocateRegistry.getRegistry(host);
 						ServiciosUsuario stub = (ServiciosUsuario) registry
 								.lookup("Hello");
@@ -170,23 +174,25 @@ public class LoginVentana extends JFrame {
 								datosPassword);
 						System.out.println(response);
 					} catch (Exception remoteExceptionrmi) {
-						//si no se encuentra el usuario la excepcion es NoSeEncuentraUsuarioExcption
+						// si no se encuentra el usuario la excepcion es
+						// NoSeEncuentraUsuarioExcption
 						if (remoteExceptionrmi instanceof NoSeEncuentraUsuarioException) {
-							JOptionPane.showMessageDialog(new JFrame(), "usuario invalido");
+							JOptionPane.showMessageDialog(new JFrame(),
+									"usuario invalido");
 
-						}else{
-						if(remoteExceptionrmi instanceof ContrasenaInvalidaException){
-							JOptionPane.showMessageDialog(new JFrame(), "password invalido");
-						}
-						else {
+						} else {
+							if (remoteExceptionrmi instanceof ContrasenaInvalidaException) {
+								JOptionPane.showMessageDialog(new JFrame(),
+										"password invalido");
+							} else {
 
-							System.err.println("Client exception: "
-									+ remoteExceptionrmi.toString());
-							remoteExceptionrmi.printStackTrace();
-						}
+								System.err.println("Client exception: "
+										+ remoteExceptionrmi.toString());
+								remoteExceptionrmi.printStackTrace();
+							}
 
 						}
-											}
+					}
 
 				}
 			});
@@ -217,13 +223,15 @@ public class LoginVentana extends JFrame {
 		}
 		return password;
 	}
-	public static String deCharArrayAString(char[] array){
+
+	public static String deCharArrayAString(char[] array) {
 		String aux = "";
-		for(int i =0; i<array.length; i++){
+		for (int i = 0; i < array.length; i++) {
 			aux = aux + array[i];
 		}
 		return aux;
 	}
+
 	public static void main(String[] args) {
 		LoginVentana l = new LoginVentana();
 		l.setVisible(true);
