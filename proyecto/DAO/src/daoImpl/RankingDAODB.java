@@ -49,7 +49,7 @@ public class RankingDAODB implements RankingDAO {
 
 		try {
 
-			ResultSet resultado = c.devolverResutado("SELECT usuarios_idusuario, ganadas FROM  `ranking` WHERE juegos_idJuego='2'");
+			ResultSet resultado = c.devolverResutado("SELECT usuarios_idusuario, ganadas FROM  `ranking` WHERE juegos_idJuego='2' ORDER BY ganadas DESC");
 			while (resultado.next()) {
 					RankingDAODB r=new RankingDAODB();
 					int idUsuario=resultado.getInt("usuarios_idusuario");
@@ -108,7 +108,7 @@ public class RankingDAODB implements RankingDAO {
 
 		try {
 
-			ResultSet resultado = c.devolverResutado("SELECT usuarios_idusuario, ganadas FROM  `ranking` WHERE juegos_idJuego='3'");
+			ResultSet resultado = c.devolverResutado("SELECT usuarios_idusuario, ganadas FROM  `ranking` WHERE juegos_idJuego='3' ORDER BY ganadas DESC");
 			while (resultado.next()) {
 					RankingDAODB r=new RankingDAODB();
 					int idUsuario=resultado.getInt("usuarios_idusuario");
@@ -149,7 +149,7 @@ public class RankingDAODB implements RankingDAO {
 
 		try {
 
-			ResultSet resultado = c.devolverResutado("SELECT usuarios_idusuario, ganadas FROM  `ranking` WHERE juegos_idJuego='1'");
+			ResultSet resultado = c.devolverResutado("SELECT usuarios_idusuario, ganadas FROM  `ranking` WHERE juegos_idJuego='1' ORDER BY ganadas DESC");
 			while (resultado.next()) {
 					RankingDAODB r=new RankingDAODB();
 					int idUsuario=resultado.getInt("usuarios_idusuario");
