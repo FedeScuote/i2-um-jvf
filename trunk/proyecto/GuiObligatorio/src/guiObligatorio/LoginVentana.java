@@ -16,6 +16,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JPasswordField;
 import comm.ServiciosUsuario;
 import comm.UsuarioVO;
+import commExceptions.ContrasenaInvalidaException;
 import commExceptions.NoSeEncuentraUsuarioException;
 
 public class LoginVentana extends JFrame {
@@ -175,7 +176,13 @@ public class LoginVentana extends JFrame {
 						//si no se encuentra el usuario la excepcion es NoSeEncuentraUsuarioExcption
 						if (remoteExceptionrmi instanceof NoSeEncuentraUsuarioException) {
 							System.out.println("no existe usuario");
-						} else {
+						}
+						if(remoteExceptionrmi instanceof ContrasenaInvalidaException){
+							System.out.println("Contrasena Erronea");
+						}
+
+						else {
+
 							System.err.println("Client exception: "
 									+ remoteExceptionrmi.toString());
 							remoteExceptionrmi.printStackTrace();
