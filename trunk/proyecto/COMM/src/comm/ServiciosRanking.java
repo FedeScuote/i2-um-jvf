@@ -6,5 +6,5 @@ import java.util.ArrayList;
 
 public interface ServiciosRanking extends Remote {
 
-	public ArrayList preguntarRanking() throws RemoteException;
+	public ArrayList<RankingVO> preguntarRanking() throws RemoteException;
 }
