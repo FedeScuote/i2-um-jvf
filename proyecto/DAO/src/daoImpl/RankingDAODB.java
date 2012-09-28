@@ -94,6 +94,82 @@ public class RankingDAODB implements RankingDAO {
 		return usuario;
 	}
 
+	public ArrayList getRankingBackgammon() throws NoHayRankingException {
+		ArrayList a=new ArrayList();
+
+		ArrayList usuarios=new ArrayList();
+		ArrayList ganados=new ArrayList();
+
+
+		Conexion c=new Conexion("com.mysql.jdbc.Driver","jdbc:mysql://localhost/jvm", "root", "");
+
+		try {
+
+			ResultSet resultado = c.devolverResutado("SELECT usuarios_idusuario, ganadas FROM  `ranking` WHERE juegos_idJuego='3'");
+			while (resultado.next()) {
+					RankingDAODB r=new RankingDAODB();
+					int idUsuario=resultado.getInt("usuarios_idusuario");
+					String usuario=r.getUsuario(idUsuario);
+					//System.out.println(usuario);
+					r.setUsuario(usuario);
+					r.setGanadas(resultado.getInt("ganadas"));
+					a.add(r);
+			}
+
+		} catch (SQLException ex) {
+
+			throw new NoHayRankingException();
+
+		} catch (NoExisteUsuarioException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+
+
+		c.disconnect();
+		return a;
+	}
+
+
+	public ArrayList getRankingBatallaNaval() throws NoHayRankingException {
+		ArrayList a=new ArrayList();
+
+		ArrayList usuarios=new ArrayList();
+		ArrayList ganados=new ArrayList();
+
+
+		Conexion c=new Conexion("com.mysql.jdbc.Driver","jdbc:mysql://localhost/jvm", "root", "");
+
+		try {
+
+			ResultSet resultado = c.devolverResutado("SELECT usuarios_idusuario, ganadas FROM  `ranking` WHERE juegos_idJuego='1'");
+			while (resultado.next()) {
+					RankingDAODB r=new RankingDAODB();
+					int idUsuario=resultado.getInt("usuarios_idusuario");
+					String usuario=r.getUsuario(idUsuario);
+					//System.out.println(usuario);
+					r.setUsuario(usuario);
+					r.setGanadas(resultado.getInt("ganadas"));
+					a.add(r);
+			}
+
+		} catch (SQLException ex) {
+
+			throw new NoHayRankingException();
+
+		} catch (NoExisteUsuarioException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+
+
+		c.disconnect();
+		return a;
+
+	}
+
 
 
 
