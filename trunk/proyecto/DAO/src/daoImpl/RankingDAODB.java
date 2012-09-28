@@ -59,6 +59,7 @@ public class RankingDAODB implements RankingDAO {
 					r.setGanadas(resultado.getInt("ganadas"));
 					a.add(r);
 			}
+			a.get(0);
 
 		} catch (SQLException ex) {
 
@@ -67,6 +68,8 @@ public class RankingDAODB implements RankingDAO {
 		} catch (NoExisteUsuarioException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+		} catch (IndexOutOfBoundsException i) {
+			throw new NoHayRankingException();
 		}
 
 
@@ -115,6 +118,7 @@ public class RankingDAODB implements RankingDAO {
 					r.setGanadas(resultado.getInt("ganadas"));
 					a.add(r);
 			}
+			a.get(0);
 
 		} catch (SQLException ex) {
 
@@ -123,6 +127,8 @@ public class RankingDAODB implements RankingDAO {
 		} catch (NoExisteUsuarioException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+		} catch (IndexOutOfBoundsException i) {
+			throw new NoHayRankingException();
 		}
 
 
@@ -153,6 +159,7 @@ public class RankingDAODB implements RankingDAO {
 					r.setGanadas(resultado.getInt("ganadas"));
 					a.add(r);
 			}
+			a.get(0);
 
 		} catch (SQLException ex) {
 
@@ -161,6 +168,8 @@ public class RankingDAODB implements RankingDAO {
 		} catch (NoExisteUsuarioException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+		} catch (IndexOutOfBoundsException i) {
+			throw new NoHayRankingException();
 		}
 
 

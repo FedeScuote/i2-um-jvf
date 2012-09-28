@@ -17,12 +17,6 @@ public class DAOPruebas {
 
 		RankingDAODB r=new RankingDAODB();
 		try {
-			System.out.println((r.getRankingLudo()).size());
-		} catch (NoHayRankingException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}
-		try {
 			for(int i=0;i<r.getRankingLudo().size();i++){
 
 					System.out.println(((RankingDAODB)(r.getRankingLudo().get(i))).getUsuario());
