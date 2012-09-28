@@ -155,7 +155,12 @@ public class LoginVentana extends JFrame {
 				public void actionPerformed(java.awt.event.ActionEvent e) {
 					// RECIBO LOS DATOS Y LOS MANDO AL BUS
 					String datosUsuario = usuario.getText();
-					String datosPassword = password.getPassword().toString();
+					char[] charPassword = password.getPassword();
+					String datosPassword = "";
+					for(int i =0; i<charPassword.length; i++){
+						datosPassword = datosPassword + charPassword[i];
+					}
+
 					String host = null;
 
 					try { // try y catch para verificar si esta el usuario o
