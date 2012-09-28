@@ -19,8 +19,6 @@ import comm.ServiciosUsuario;
 import comm.UsuarioVO;
 import commExceptions.ContrasenaInvalidaException;
 import commExceptions.NoSeEncuentraUsuarioException;
-import javax.swing.JDialog;
-import javax.swing.WindowConstants;
 
 public class LoginVentana extends JFrame {
 
