@@ -13,7 +13,18 @@ import javax.swing.JTable;
 import java.awt.Insets;
 import java.awt.Dimension;
 import javax.swing.JButton;
+import javax.swing.table.DefaultTableModel;
+
+import comm.RankingVO;
+import comm.ServiciosRanking;
+import comm.ServiciosUsuario;
+import comm.UsuarioVO;
+import commExceptions.NoSeEncuentraUsuarioException;
+
 import java.awt.Color;
+import java.rmi.registry.LocateRegistry;
+import java.rmi.registry.Registry;
+import java.util.ArrayList;
 
 public class VentanaPrincipal extends JFrame {
 
@@ -53,6 +64,22 @@ public class VentanaPrincipal extends JFrame {
 		this.setTitle("Ventana Principal");
 		this.setBounds(new Rectangle(0, 0, 834, 632));
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		String host = null;
+		try { // intento recibir datos para el ranking
+			Registry registry = LocateRegistry.getRegistry(host);
+			ServiciosRanking stub = (ServiciosRanking) registry.lookup("Hello");
+			ArrayList response = stub.preguntarRanking();
+			llenarTabla(tablaRanking, response);
+		} catch (Exception remoteExceptionrmi) {
+			if (remoteExceptionrmi instanceof NoSeEncuentraUsuarioException) {
+
+				System.out.println("no existe usuario");
+			} else {
+				System.err.println("Client exception: "
+						+ remoteExceptionrmi.toString());
+				remoteExceptionrmi.printStackTrace();
+			}
+		}
 	}
 
 	/**
@@ -85,7 +112,8 @@ public class VentanaPrincipal extends JFrame {
 			imagenFondo = new JLabel();
 			imagenFondo.setText("");
 			imagenFondo.setBackground(Color.white);
-			imagenFondo.setIcon(new ImageIcon(getClass().getResource("/guiObligatorio/Sin título.jpg")));
+			imagenFondo.setIcon(new ImageIcon(getClass().getResource(
+					"/guiObligatorio/Sin título.jpg")));
 			GridBagConstraints gridBagConstraints3 = new GridBagConstraints();
 			gridBagConstraints3.gridx = 0;
 			gridBagConstraints3.ipadx = 48;
@@ -121,7 +149,8 @@ public class VentanaPrincipal extends JFrame {
 			panelVentanaPrincipal.add(getPanelRanking(), gridBagConstraints);
 			panelVentanaPrincipal.add(getJugarLudo(), gridBagConstraints1);
 			panelVentanaPrincipal.add(getJugarBatalla(), gridBagConstraints2);
-			panelVentanaPrincipal.add(getJugarBackgammon(), gridBagConstraints3);
+			panelVentanaPrincipal
+					.add(getJugarBackgammon(), gridBagConstraints3);
 			panelVentanaPrincipal.add(imagenFondo, gridBagConstraints8);
 		}
 		return panelVentanaPrincipal;
@@ -190,5 +219,15 @@ public class VentanaPrincipal extends JFrame {
 		}
 		return jugarBackgammon;
 	}
-
-}  //  @jve:decl-index=0:visual-constraint="39,-35"
+	//METODO PARA LLENAR UNA JTABLE CON UN ARRAY DE OBJETOS
+	private void llenarTabla(JTable tabla, ArrayList<RankingVO> lista){
+		DefaultTableModel model = new DefaultTableModel();
+		tabla.setModel(model);
+		model.setColumnIdentifiers(new String[] {"nro", "Nick"});
+		// relleno la tabla con data del arraylist
+		while (lista.iterator().hasNext())
+		{
+		    model.addRow(new String[] {lista.iterator().next().nroAString(),lista.iterator().next().usuario});
+		}
+	}
+} // @jve:decl-index=0:visual-constraint="39,-35"
