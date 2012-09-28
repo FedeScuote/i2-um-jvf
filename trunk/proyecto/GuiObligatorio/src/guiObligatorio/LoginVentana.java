@@ -21,6 +21,7 @@ import commExceptions.ContrasenaInvalidaException;
 import commExceptions.NoSeEncuentraUsuarioException;
 
 public class LoginVentana extends JFrame {
+	private static final String host = null;
 
 	private static final long serialVersionUID = 1L;
 
@@ -158,13 +159,8 @@ public class LoginVentana extends JFrame {
 					// RECIBO LOS DATOS Y LOS MANDO AL BUS
 					String datosUsuario = usuario.getText();
 					char[] charPassword = password.getPassword();
-					String datosPassword = "";
-					for(int i =0; i<charPassword.length; i++){
-						datosPassword = datosPassword + charPassword[i];
-					}
-
-					String host = null;
-
+					String datosPassword = LoginVentana.deCharArrayAString(charPassword);
+					// son mis parametros ingreados que voy a autentificar
 					try { // try y catch para verificar si esta el usuario o
 							// no
 						Registry registry = LocateRegistry.getRegistry(host);
@@ -221,7 +217,13 @@ public class LoginVentana extends JFrame {
 		}
 		return password;
 	}
-
+	public static String deCharArrayAString(char[] array){
+		String aux = "";
+		for(int i =0; i<array.length; i++){
+			aux = aux + array[i];
+		}
+		return aux;
+	}
 	public static void main(String[] args) {
 		LoginVentana l = new LoginVentana();
 		l.setVisible(true);
