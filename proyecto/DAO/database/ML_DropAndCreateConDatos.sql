@@ -21,15 +21,12 @@ DROP TABLE juegos;
 DROP TABLE desafios;
 
 
-
-
-
 -- phpMyAdmin SQL Dump
 -- version 3.4.5
 -- http://www.phpmyadmin.net
 --
 -- Servidor: localhost
--- Tiempo de generación: 28-09-2012 a las 20:02:02
+-- Tiempo de generación: 28-09-2012 a las 21:41:59
 -- Versión del servidor: 5.5.16
 -- Versión de PHP: 5.3.8
 
@@ -213,7 +210,10 @@ CREATE TABLE IF NOT EXISTS `ranking` (
 INSERT INTO `ranking` (`usuarios_idUsuario`, `juegos_idJuego`, `ganadas`) VALUES
 (6, 2, 1),
 (3, 2, 3),
-(8, 2, 2);
+(8, 2, 2),
+(1, 1, 1),
+(3, 1, 1),
+(4, 1, 1);
 
 -- --------------------------------------------------------
 
