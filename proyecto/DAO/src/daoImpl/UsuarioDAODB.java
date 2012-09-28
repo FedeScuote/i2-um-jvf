@@ -29,7 +29,7 @@ public class UsuarioDAODB implements UsuarioDAO {
 					.devolverResutado("SELECT * FROM usuarios WHERE usuario='"+usuario+"'");
 			boolean esta=false;
 			while (resultado.next()) {
-
+					u.setClaveB(resultado.getString("clave"));
 					u.setIdUsuarioB(resultado.getInt("idUsuario"));
 					u.setUsuarioB(resultado.getString("usuario"));
 					u.setNombreB(resultado.getString("nombre"));
