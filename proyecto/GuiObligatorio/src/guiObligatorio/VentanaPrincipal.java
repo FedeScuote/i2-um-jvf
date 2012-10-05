@@ -11,13 +11,11 @@ import javax.swing.ImageIcon;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import java.awt.Insets;
-import java.awt.Dimension;
 import javax.swing.JButton;
 import javax.swing.table.DefaultTableModel;
 
 import comm.RankingVO;
 import comm.ServiciosRanking;
-import comm.ServiciosUsuario;
 import comm.UsuarioVO;
 import commExceptions.NoSeEncuentraUsuarioException;
 
@@ -29,6 +27,8 @@ import java.util.ArrayList;
 public class VentanaPrincipal extends JFrame {
 
 	private static final long serialVersionUID = 1L;
+
+	private static final String host = null;
 
 	private UsuarioVO usuario;
 
@@ -68,7 +68,6 @@ public class VentanaPrincipal extends JFrame {
 		this.setTitle("Ventana Principal");
 		this.setBounds(new Rectangle(0, 0, 834, 632));
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		String host = null;
 		try { // intento recibir datos para el ranking
 			Registry registry = LocateRegistry.getRegistry(host);
 			ServiciosRanking stub = (ServiciosRanking) registry.lookup("Hello");
