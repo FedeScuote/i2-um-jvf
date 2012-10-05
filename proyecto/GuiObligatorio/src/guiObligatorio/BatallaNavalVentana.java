@@ -10,6 +10,7 @@ import javax.swing.JButton;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.JLabel;
+import javax.swing.SwingConstants;
 
 public class BatallaNavalVentana extends JFrame {
 
@@ -26,8 +27,13 @@ public class BatallaNavalVentana extends JFrame {
 	// utilizar para mi
 	// tablero
 	private JButton[][] botonesContrincante = new JButton[TAMANO_TABLERO][TAMANO_TABLERO];
+	
 	private final static int TAMANO_TABLERO = 10;
 
+	private	JLabel [] labelsLetras = new JLabel [TAMANO_TABLERO];
+	
+	private	JLabel [] labelsNumeros = new JLabel [TAMANO_TABLERO];
+	
 	private JLabel indicadorTurno = null;
 
 	/**
@@ -59,10 +65,13 @@ public class BatallaNavalVentana extends JFrame {
 	 */
 	private JPanel getJContentPane() {
 		if (jContentPane == null) {
+			BorderLayout borderLayout = new BorderLayout();
 			indicadorTurno = new JLabel();
 			indicadorTurno.setText("ES TU TURNO");
+			indicadorTurno.setHorizontalAlignment(SwingConstants.CENTER);
+			indicadorTurno.setHorizontalTextPosition(SwingConstants.CENTER);
 			jContentPane = new JPanel();
-			jContentPane.setLayout(new BorderLayout());
+			jContentPane.setLayout(borderLayout);
 			jContentPane.add(getPanelJugador(), BorderLayout.WEST);
 			jContentPane.add(getPanelContrincante(), BorderLayout.EAST);
 			jContentPane.add(indicadorTurno, BorderLayout.CENTER);
@@ -124,16 +133,23 @@ public class BatallaNavalVentana extends JFrame {
 		botones = new JButton[TAMANO_TABLERO+1][TAMANO_TABLERO+1];
 		for (int i = 1; i <= TAMANO_TABLERO; i++) {
 			for (int j = 1; j <= TAMANO_TABLERO; j++) {
-				JButton jButton = new JButton();
-				jButton.addActionListener(new ListenerBoton(i, j));
-				panel.add(jButton);
-				botones[i][j] = jButton;
-				botones[i][j].setSize(25, 25);
-				botones[i][j].setMaximumSize(new Dimension(25,25));
-
+				//verifico donde tengo que poner labels para mostrar mis numeros
+				if((i==1)|| (j==1)){ 
+					
+				}else{
+					JButton jButton = new JButton();
+					jButton.addActionListener(new ListenerBoton(i, j));
+					panel.add(jButton);
+					botones[i][j] = jButton;
+					botones[i][j].setSize(25, 25);
+					botones[i][j].setMaximumSize(new Dimension(25,25));
+				}
 
 			}
 		}
+	}
+	private void crearLabels(JPanel panel){
+		
 	}
 
 }// @jve:decl-index=0:visual-constraint="10,10"
