@@ -24,7 +24,7 @@ public class UsuarioDAODB implements UsuarioDAO {
 		Usuario u = new Usuario();
 		Conexion conexion = new Conexion("com.mysql.jdbc.Driver","jdbc:mysql://localhost/jvm", "root", "");
 		try {
-
+			
 			ResultSet resultado = conexion
 					.devolverResutado("SELECT * FROM usuarios WHERE usuario='"+usuario+"'");
 			boolean esta=false;
