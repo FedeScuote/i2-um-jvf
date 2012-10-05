@@ -8,7 +8,7 @@ import commExceptions.NoSeEncuentraUsuarioException;
 
 public class PartidaBatallaNaval implements ServicioPartidaBatallaNaval {
 
-
+	private int idPartida;
 	private JuegoBatallaNaval juego = new JuegoBatallaNaval();
 	private int cantJ=0;
 
