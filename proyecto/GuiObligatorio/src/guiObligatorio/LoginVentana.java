@@ -137,7 +137,7 @@ public class LoginVentana extends JFrame {
 			panelLogin.setSize(new Dimension(10, 10));
 			panelLogin.setVisible(true);
 			panelLogin.add(labelPassword, gridBagConstraints1);
-			panelLogin.add(getLogin(), gridBagConstraints11);
+			panelLogin.add(getLogin(this), gridBagConstraints11);
 			panelLogin.add(getUsuario(), gridBagConstraints21);
 			panelLogin.add(labelUsuario, gridBagConstraints);
 			panelLogin.add(getPassword(), gridBagConstraints10);
@@ -152,7 +152,7 @@ public class LoginVentana extends JFrame {
 	 * @return javax.swing.JButton
 	 */
 	// BOTON LOGIN
-	private JButton getLogin() {
+	private JButton getLogin(final JFrame pantalla) {
 		if (Login == null) {
 			Login = new JButton();
 			Login.setName("");
@@ -172,7 +172,11 @@ public class LoginVentana extends JFrame {
 								.lookup("Hello");
 						UsuarioVO response = stub.login(datosUsuario,
 								datosPassword);
-						System.out.println(response);
+						JOptionPane.showMessageDialog(new JFrame(),
+						"BIENVENIDO "+response.getNombreB());
+						pantalla.dispose();
+						VentanaPrincipal l = new VentanaPrincipal(response);
+						l.setVisible(true);
 					} catch (Exception remoteExceptionrmi) {
 						// si no se encuentra el usuario la excepcion es
 						// NoSeEncuentraUsuarioExcption

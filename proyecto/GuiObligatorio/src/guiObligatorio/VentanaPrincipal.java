@@ -30,6 +30,8 @@ public class VentanaPrincipal extends JFrame {
 
 	private static final long serialVersionUID = 1L;
 
+	private UsuarioVO usuario;
+
 	private JPanel jContentPane = null;
 
 	private JPanel panelVentanaPrincipal = null;
@@ -49,9 +51,10 @@ public class VentanaPrincipal extends JFrame {
 	/**
 	 * This is the default constructor
 	 */
-	public VentanaPrincipal() {
+	public VentanaPrincipal(UsuarioVO usuarioVO) {
 		super();
 		initialize();
+		usuario=usuarioVO;
 		this.setExtendedState(this.getExtendedState()|JFrame.MAXIMIZED_BOTH);//mi frame arranca maximizada
 	}
 
