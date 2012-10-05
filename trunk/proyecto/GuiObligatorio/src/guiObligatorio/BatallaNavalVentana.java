@@ -3,18 +3,32 @@ package guiObligatorio;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.GridLayout;
+
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JFrame;
 import java.awt.GridBagLayout;
 import javax.swing.JButton;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.rmi.registry.LocateRegistry;
+import java.rmi.registry.Registry;
+import java.util.Timer;
+
 import javax.swing.JLabel;
 import javax.swing.SwingConstants;
+
+import comm.ServiciosBatallaNaval;
+import comm.ServiciosUsuario;
+import comm.UsuarioVO;
 
 public class BatallaNavalVentana extends JFrame {
 
 	private static final long serialVersionUID = 1L;
+
+	private static final String host = null;
+
+	private UsuarioVO usuario;
 
 	private JPanel jContentPane = null;
 
@@ -22,10 +36,15 @@ public class BatallaNavalVentana extends JFrame {
 
 	private JPanel PanelContrincante = null;
 
+	private boolean esMiTurno = false;
+
+	private Timer temporizador;
+
 	private JButton[][] botonesJugador = new JButton[TAMANO_TABLERO][TAMANO_TABLERO]; // es
-																						// mi
-																						// matriz
-																						// de
+
+	// mi
+	// matriz
+	// de
 
 	// botones que voy a
 	// utilizar para mi
@@ -56,18 +75,18 @@ public class BatallaNavalVentana extends JFrame {
 		initialize();
 		this.crearLabelsLetra(PanelJugador, labelsLetrasJugador);
 		this.crearTablero(PanelJugador, botonesJugador); // creo mi tablero
-															// en mi panel
-															// jugador
+		// en mi panel
+		// jugador
 		this.crearLabelsLetra(PanelContrincante, labelsLetrasContrincante);
 		this.crearTablero(PanelContrincante, botonesContrincante);// creo mi
-																	// tablero
-																	// en mi
-																	// panel
-																	// contrincante
+		// tablero
+		// en mi
+		// panel
+		// contrincante
 		this.setExtendedState(this.getExtendedState() | JFrame.MAXIMIZED_BOTH);// mi
-																				// frame
-																				// arranca
-																				// maximizada
+		// frame
+		// arranca
+		// maximizada
 	}
 
 	/**
@@ -148,7 +167,19 @@ public class BatallaNavalVentana extends JFrame {
 	}
 
 	private void clickBoton(int fila, int columna) {
-		System.out.println(((Integer) fila).toString()+((Integer) columna).toString());
+		if (esMiTurno) {
+			try { // try y catch para verificar si esta el usuario o
+				// no
+				Registry registry = LocateRegistry.getRegistry(host);
+				ServiciosBatallaNaval stub = (ServiciosBatallaNaval) registry
+						.lookup("Hello");
+				stub.disparar(this.usuario, fila, columna);
+				JOptionPane
+						.showMessageDialog(new JFrame(), "DISPARO REALIZADO");
+			} catch (Exception e) {
+
+			}
+		}
 	}
 
 	// metodo al cual le paso el panel donde quiero crear un tablero del tamano
@@ -179,27 +210,26 @@ public class BatallaNavalVentana extends JFrame {
 		}
 		for (int i = 1; i < TAMANO_TABLERO; i++) {
 			arrayLabels[i].setText(ALFABETO[i - 1]);// alfabeto menos uno porque
-													// arranco del i=1
-			arrayLabels[i].setHorizontalAlignment(SwingConstants.CENTER);//hago que mis letras queden
-			arrayLabels[i].setHorizontalTextPosition(SwingConstants.CENTER);//justificadas
+			// arranco del i=1
+			arrayLabels[i].setHorizontalAlignment(SwingConstants.CENTER);// hago
+																			// que
+																			// mis
+																			// letras
+																			// queden
+			arrayLabels[i].setHorizontalTextPosition(SwingConstants.CENTER);// justificadas
 		}
 	}
 
-/*	METODO A IMPLEMENTAR
- * private void crearLabelsNumeros(JPanel panel, JLabel[] arrayLabels) {
-		for (int i = 1; i < TAMANO_TABLERO; i++) {
-			for (int j = 1; j < TAMANO_TABLERO; j++) {
-			JLabel jlabel = new JLabel();
-			panel.add(jlabel);
-			arrayLabels[i] = jlabel;
-			}
-		}
-		for (int i = 1; i < TAMANO_TABLERO; i++) {
-			arrayLabels[i].setText(ALFABETO[i - 1]);// alfabeto menos uno porque
-													// arranco del i=1
-			arrayLabels[i].setHorizontalAlignment(SwingConstants.CENTER);//hago que mis letras queden
-			arrayLabels[i].setHorizontalTextPosition(SwingConstants.CENTER);//justificadas
-		}
-	}*/
+	/*
+	 * METODO A IMPLEMENTAR private void crearLabelsNumeros(JPanel panel,
+	 * JLabel[] arrayLabels) { for (int i = 1; i < TAMANO_TABLERO; i++) { for
+	 * (int j = 1; j < TAMANO_TABLERO; j++) { JLabel jlabel = new JLabel();
+	 * panel.add(jlabel); arrayLabels[i] = jlabel; } } for (int i = 1; i <
+	 * TAMANO_TABLERO; i++) { arrayLabels[i].setText(ALFABETO[i - 1]);//
+	 * alfabeto menos uno porque // arranco del i=1
+	 * arrayLabels[i].setHorizontalAlignment(SwingConstants.CENTER);//hago que
+	 * mis letras queden
+	 * arrayLabels[i].setHorizontalTextPosition(SwingConstants.CENTER);//justificadas } }
+	 */
 
 }// @jve:decl-index=0:visual-constraint="10,10"
