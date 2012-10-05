@@ -5,6 +5,8 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashSet;
 
+import busImpl.Ranking;
+
 import conexion.Conexion;
 import daoInterfaces.RankingDAO;
 import excepcionesB.NoHayRankingException;
@@ -51,9 +53,10 @@ public class RankingDAODB implements RankingDAO {
 
 			ResultSet resultado = c.devolverResutado("SELECT usuarios_idusuario, ganadas FROM  `ranking` WHERE juegos_idJuego='2' ORDER BY ganadas DESC");
 			while (resultado.next()) {
-					RankingDAODB r=new RankingDAODB();
+					RankingDAODB r1=new RankingDAODB();
+					Ranking r=new Ranking();
 					int idUsuario=resultado.getInt("usuarios_idusuario");
-					String usuario=r.getUsuario(idUsuario);
+					String usuario=r1.getUsuario(idUsuario);
 					//System.out.println(usuario);
 					r.setUsuario(usuario);
 					r.setGanadas(resultado.getInt("ganadas"));
