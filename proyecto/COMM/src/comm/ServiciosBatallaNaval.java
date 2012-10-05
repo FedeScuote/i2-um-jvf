@@ -18,6 +18,6 @@ public interface ServiciosBatallaNaval extends Remote {
 	//Metodo para indicar el turno de un jugador
 	public boolean esMiTurno(UsuarioVO usuario) throws RemoteException;
 
-
+	///iniciar partida
 
 }
