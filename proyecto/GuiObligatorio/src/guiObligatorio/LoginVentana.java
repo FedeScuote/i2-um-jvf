@@ -181,13 +181,12 @@ public class LoginVentana extends JFrame {
 						// si no se encuentra el usuario la excepcion es
 						// NoSeEncuentraUsuarioExcption
 						if (remoteExceptionrmi instanceof NoSeEncuentraUsuarioException) {
-							JOptionPane.showMessageDialog(new JFrame(),
-									"usuario invalido");
+							JOptionPane.showMessageDialog(new JFrame(),"usuario invalido", "ERROR", JOptionPane.ERROR_MESSAGE);
 
 						} else {
 							if (remoteExceptionrmi instanceof ContrasenaInvalidaException) {
 								JOptionPane.showMessageDialog(new JFrame(),
-										"password invalido");
+										"password invalido", "ERROR", JOptionPane.ERROR_MESSAGE);
 							} else {
 
 								System.err.println("Client exception: "

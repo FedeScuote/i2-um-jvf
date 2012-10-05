@@ -148,7 +148,7 @@ public class BatallaNavalVentana extends JFrame {
 	}
 
 	private void clickBoton(int fila, int columna) {
-		// Metodo que va a disparar o no etc.
+		System.out.println(((Integer) fila).toString()+((Integer) columna).toString());
 	}
 
 	// metodo al cual le paso el panel donde quiero crear un tablero del tamano
