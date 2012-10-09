@@ -70,7 +70,7 @@ public class VentanaPrincipal extends JFrame {
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		try { // intento recibir datos para el ranking
 			Registry registry = LocateRegistry.getRegistry(host);
-			ServiciosRanking stub = (ServiciosRanking) registry.lookup("Hello");
+			ServiciosRanking stub = (ServiciosRanking) registry.lookup("Ranking");
 			ArrayList response = stub.preguntarRanking();
 			llenarTabla(tablaRanking, response);
 		} catch (Exception remoteExceptionrmi) {
