@@ -55,9 +55,9 @@ public class Ranking implements ServiciosRanking {
 
 	public ArrayList<RankingVO> preguntarRanking() throws RemoteException {
 		RankingDAO dao = getDAO();
+		ArrayList<RankingVO> aux = new ArrayList<RankingVO>();
 		try {
-			ArrayList<RankingVO> aux = new ArrayList<RankingVO>();
-			ArrayList retorno = dao.getRankingLudo();
+			ArrayList retorno = dao.getRankingGeneral();
 			int i=0;
 			while(i<retorno.size()){
 				RankingVO nuevo = new RankingVO();
@@ -66,12 +66,11 @@ public class Ranking implements ServiciosRanking {
 				aux.add(nuevo);
 				i++;
 			}
-			return aux;
-		//	return dao.findByName(name);
+
 		} catch (NoHayRankingException e) {
 			System.out.println("error");
 		}
-		return null;
+		return aux;
 	}
 
 
