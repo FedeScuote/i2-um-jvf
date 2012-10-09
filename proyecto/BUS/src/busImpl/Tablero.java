@@ -3,45 +3,61 @@ package busImpl;
 import excepcionesB.CoordenadasCeldasInvalidasException;
 
 public class Tablero {
+	//**********************Declaracion de Const******************************//
+	private static final int LARGO_TABLERO = 10;
+	private static final String SUBMARINO = "SUBMARINO";
+	private static final String DESTRUCTORES = "DESTRUCTORES";
+	private static final String CRUCEROS = "CRUCEROS";
+	private static final String ACORAZADO = "ACORAZADO";
+	private static final int CANTIDAD_INICIAL_SUBMARINO = 3;
+	private static final int CANTIDAD_INICIAL_DESTRUCTORES = 2;
+	private static final int CANTIDAD_INICIAL_CRUCEROS = 1;
+	private static final int CANTIDAD_INICIAL_ACORAZADO = 1;
+	//***********************************************************************//
 
-	Celda[][] tabla = new Celda[10][10];
+	Celda[][] tabla ;
+
 	private Usuario jugador;
+
 	private boolean miTurno;
-	private int cantBarcosL4=3;
-	private int cantBarcosL3=2;
-	private int cantBarcosL2=1;
-	private int cantBarcosL1=1;
 
-	public void decrementarBarcosL1(){
-		cantBarcosL1--;
+	private int cantBarcosSubmarino;
+	private int cantBarcosDestructores;
+	private int cantBarcosCruceros;
+	private int cantBarcosAcorazado;
 
-	}
-	public void decrementarBarcosL2(){
-		cantBarcosL2--;
+	public void decrementarBarcosCruceros(){
+		cantBarcosCruceros--;
 
 	}
-	public void decrementarBarcosL3(){
-		cantBarcosL3--;
+	public void decrementarBarcosAcorazado(){
+		cantBarcosAcorazado--;
 
 	}
-	public void decrementarBarcosL4(){
-		cantBarcosL4--;
+	public void decrementarBarcosDestructores(){
+		cantBarcosDestructores--;
 
 	}
-	public int getCantBarcosL4() {
-		return cantBarcosL4;
+	public void decrementarBarcosSubmarino(){
+		cantBarcosSubmarino--;
+
 	}
 
-	public int getCantBarcosL3() {
-		return cantBarcosL3;
+
+	public int getCantBarcosAcorazado() {
+		return cantBarcosAcorazado;
 	}
 
-	public int getCantBarcosL2() {
-		return cantBarcosL2;
+	public int getCantBarcosCruceros() {
+		return cantBarcosCruceros;
 	}
 
-	public int getCantBarcosL1() {
-		return cantBarcosL1;
+	public int getCantBarcosDestructores() {
+		return cantBarcosDestructores;
+	}
+
+	public int getCantBarcosSubmarino() {
+		return cantBarcosSubmarino;
 	}
 
 	public boolean isMiTurno() {
@@ -117,6 +133,17 @@ public class Tablero {
 
 			}
 		}
+	}
+	public Tablero(Usuario jugador) {
+		super();
+		this.tabla = new Celda[LARGO_TABLERO][LARGO_TABLERO];
+		this.jugador = jugador;
+		this.miTurno = false;
+		this.cantBarcosSubmarino = CANTIDAD_INICIAL_SUBMARINO;
+		this.cantBarcosDestructores = CANTIDAD_INICIAL_DESTRUCTORES;
+		this.cantBarcosCruceros = CANTIDAD_INICIAL_CRUCEROS;
+		this.cantBarcosAcorazado = CANTIDAD_INICIAL_ACORAZADO;
+
 	}
 
 }
