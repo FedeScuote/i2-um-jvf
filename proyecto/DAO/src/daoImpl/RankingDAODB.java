@@ -195,13 +195,22 @@ public class RankingDAODB implements RankingDAO {
 
 			ResultSet resultado = c.devolverResutado("SELECT usuarios_idusuario, sum(ganadas) FROM `ranking` WHERE juegos_idJuego='1' OR juegos_idJuego='2' OR juegos_idJuego='3' GROUP BY usuarios_idusuario ORDER BY ganadas DESC");
 			while (resultado.next()) {
-					RankingDAODB r=new RankingDAODB();
+//					RankingDAODB r=new RankingDAODB();
+//					int idUsuario=resultado.getInt("usuarios_idusuario");
+//					String usuario=r.getUsuario(idUsuario);
+//					//System.out.println(usuario);
+//					r.setUsuario(usuario);
+//					r.setGanadas(resultado.getInt("sum(ganadas)"));
+//					a.add(r);
+					RankingDAODB r1=new RankingDAODB();
+					Ranking r=new Ranking();
 					int idUsuario=resultado.getInt("usuarios_idusuario");
-					String usuario=r.getUsuario(idUsuario);
+					String usuario=r1.getUsuario(idUsuario);
 					//System.out.println(usuario);
 					r.setUsuario(usuario);
 					r.setGanadas(resultado.getInt("sum(ganadas)"));
 					a.add(r);
+
 			}
 			a.get(0);
 
