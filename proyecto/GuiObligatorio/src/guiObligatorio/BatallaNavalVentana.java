@@ -193,6 +193,7 @@ public class BatallaNavalVentana extends JFrame {
 				stub.disparar(this.usuario, fila, columna);
 				JOptionPane
 						.showMessageDialog(new JFrame(), "DISPARO REALIZADO");
+				temporizador.start();
 			} catch (Exception e) {
 
 			}
