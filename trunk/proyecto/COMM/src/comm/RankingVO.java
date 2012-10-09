@@ -26,9 +26,4 @@ public class RankingVO implements Serializable {
 	public String nroAString(){
 		return nro.toString();
 	}
-	@Override
-	public String toString() {
-
-		return usuario;
-	}
 }
