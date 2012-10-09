@@ -4,6 +4,7 @@ import java.io.Serializable;
 
 public class RankingVO implements Serializable {
 
+
 	public Integer nro;
 	public String usuario;
 
@@ -24,5 +25,10 @@ public class RankingVO implements Serializable {
 	}
 	public String nroAString(){
 		return nro.toString();
+	}
+	@Override
+	public String toString() {
+
+		return usuario;
 	}
 }
