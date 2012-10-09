@@ -6,8 +6,10 @@ import commExceptions.CoordenadasInvalidasException;
 import commExceptions.NoInicioJuegoException;
 
 public interface ServiciosBatallaNaval extends Remote {
+
+	public void jugarBatallaNaval(UsuarioVO usuario) throws RemoteException;
 	//Metodo para agregar barcos al iniciar la partida
-	public void agregarBarco(UsuarioVO usuario, int coordenadaInicialX, int coordenadaInicialY, int coordenadaFinalX, int coordenadaFinalY) throws RemoteException, CoordenadasInvalidasException;
+	public void agregarBarco(UsuarioVO usuario, int coordenadaInicialX, int coordenadaInicialY, int coordenadaFinalX, int coordenadaFinalY, String tipoBarco) throws RemoteException, CoordenadasInvalidasException;
 
 	//Metodo para disparar
 	public void disparar(UsuarioVO usuario, int coordenadaX,int coordenadaY) throws RemoteException, CoordenadasInvalidasException, NoInicioJuegoException;
