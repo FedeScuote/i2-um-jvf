@@ -7,13 +7,14 @@ import java.awt.GridLayout;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JFrame;
+import javax.swing.Timer;
+
 import java.awt.GridBagLayout;
 import javax.swing.JButton;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
-import java.util.Timer;
 
 import javax.swing.JLabel;
 import javax.swing.SwingConstants;
@@ -25,6 +26,8 @@ import comm.UsuarioVO;
 public class BatallaNavalVentana extends JFrame {
 
 	private static final long serialVersionUID = 1L;
+
+	private static final int pause=200;
 
 	private static final String host = null;
 
@@ -87,6 +90,20 @@ public class BatallaNavalVentana extends JFrame {
 		// frame
 		// arranca
 		// maximizada
+		ActionListener taskPerformer = new ActionListener() {
+		      public void actionPerformed(ActionEvent evt) {
+		    	  esMiTurno = preguntarTurno(usuario);
+		    	  if(!esMiTurno){
+		    		  temporizador.restart();
+		    		  indicadorTurno.setText("NO ES TU TURNO");
+		    	  }else{
+		    		indicadorTurno.setText("ES TU TURNO");
+		    	  }
+		      }
+		 };
+		 temporizador.setInitialDelay(pause);
+		 temporizador.addActionListener(taskPerformer);
+		 temporizador.start();
 	}
 
 	/**
@@ -231,5 +248,17 @@ public class BatallaNavalVentana extends JFrame {
 	 * mis letras queden
 	 * arrayLabels[i].setHorizontalTextPosition(SwingConstants.CENTER);//justificadas } }
 	 */
-
+	//METODO PARA PREGUNTAR TURNO
+	public static boolean preguntarTurno(UsuarioVO usuario){
+		try { // try y catch para verificar si esta el usuario o
+			// no
+			Registry registry = LocateRegistry.getRegistry(host);
+			ServiciosBatallaNaval stub = (ServiciosBatallaNaval) registry
+					.lookup("Turn");
+			return stub.esMiTurno(usuario);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return false;
+		}
+	}
 }// @jve:decl-index=0:visual-constraint="10,10"
