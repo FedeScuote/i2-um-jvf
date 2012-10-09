@@ -74,11 +74,11 @@ public class VentanaPrincipal extends JFrame {
 			ServiciosRanking stub = (ServiciosRanking) registry.lookup("Ranking");
 			ArrayList<RankingVO> response = stub.preguntarRanking();
 			int i=0;
-			while(i<response.size()){
-				System.out.println(response.get(i).getUsuario());
-				i++;
-			}
-			//llenarTabla(tablaRanking, response);
+//			while(i<response.size()){
+//				System.out.println(response.get(i).getUsuario());
+//				i++;
+//			}
+			llenarTabla(tablaRanking, response);
 		} catch (Exception remoteExceptionrmi) {
 			if (remoteExceptionrmi instanceof NoSeEncuentraUsuarioException) {
 
@@ -232,7 +232,7 @@ public class VentanaPrincipal extends JFrame {
 	private void llenarTabla(JTable tabla, ArrayList<RankingVO> lista){
 		DefaultTableModel model = new DefaultTableModel();
 		tabla.setModel(model);
-		model.setColumnIdentifiers(new String[] {"nro", "Nick"});
+		model.setColumnIdentifiers(new String[] {"nro partidas ganadas", "Nick"});
 		Iterator i = lista.iterator();
 		// relleno la tabla con data del arraylist
 		while (i.hasNext())
