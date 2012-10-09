@@ -182,6 +182,46 @@ public class RankingDAODB implements RankingDAO {
 
 	}
 
+	public ArrayList getRankingGeneral() throws NoHayRankingException {
+		ArrayList a=new ArrayList();
+
+		ArrayList usuarios=new ArrayList();
+		ArrayList ganados=new ArrayList();
+
+
+		Conexion c=new Conexion("com.mysql.jdbc.Driver","jdbc:mysql://localhost/jvm", "root", "");
+
+		try {
+
+			ResultSet resultado = c.devolverResutado("SELECT usuarios_idusuario, sum(ganadas) FROM `ranking` WHERE juegos_idJuego='1' OR juegos_idJuego='2' OR juegos_idJuego='3' GROUP BY usuarios_idusuario ORDER BY ganadas DESC");
+			while (resultado.next()) {
+					RankingDAODB r=new RankingDAODB();
+					int idUsuario=resultado.getInt("usuarios_idusuario");
+					String usuario=r.getUsuario(idUsuario);
+					//System.out.println(usuario);
+					r.setUsuario(usuario);
+					r.setGanadas(resultado.getInt("sum(ganadas)"));
+					a.add(r);
+			}
+			a.get(0);
+
+		} catch (SQLException ex) {
+
+			throw new NoHayRankingException();
+
+		} catch (NoExisteUsuarioException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IndexOutOfBoundsException i) {
+			throw new NoHayRankingException();
+		}
+
+
+
+		c.disconnect();
+		return a;
+	}
+
 
 
 
