@@ -23,6 +23,7 @@ import java.awt.Color;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 import java.util.ArrayList;
+import java.util.Iterator;
 
 public class VentanaPrincipal extends JFrame {
 
@@ -71,8 +72,13 @@ public class VentanaPrincipal extends JFrame {
 		try { // intento recibir datos para el ranking
 			Registry registry = LocateRegistry.getRegistry(host);
 			ServiciosRanking stub = (ServiciosRanking) registry.lookup("Ranking");
-			ArrayList response = stub.preguntarRanking();
-			llenarTabla(tablaRanking, response);
+			ArrayList<RankingVO> response = stub.preguntarRanking();
+			int i=0;
+			while(i<response.size()){
+				System.out.println(response.get(i).getUsuario());
+				i++;
+			}
+			//llenarTabla(tablaRanking, response);
 		} catch (Exception remoteExceptionrmi) {
 			if (remoteExceptionrmi instanceof NoSeEncuentraUsuarioException) {
 
@@ -227,10 +233,12 @@ public class VentanaPrincipal extends JFrame {
 		DefaultTableModel model = new DefaultTableModel();
 		tabla.setModel(model);
 		model.setColumnIdentifiers(new String[] {"nro", "Nick"});
+		Iterator i = lista.iterator();
 		// relleno la tabla con data del arraylist
-		while (lista.iterator().hasNext())
+		while (i.hasNext())
 		{
-		    model.addRow(new String[] {lista.iterator().next().nroAString(),lista.iterator().next().usuario});
+			RankingVO rank= (RankingVO)i.next();
+		    model.addRow(new String[] {rank.nroAString(),rank.usuario});
 		}
 	}
 } // @jve:decl-index=0:visual-constraint="39,-35"
