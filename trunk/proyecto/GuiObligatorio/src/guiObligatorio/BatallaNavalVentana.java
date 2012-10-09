@@ -172,7 +172,7 @@ public class BatallaNavalVentana extends JFrame {
 				// no
 				Registry registry = LocateRegistry.getRegistry(host);
 				ServiciosBatallaNaval stub = (ServiciosBatallaNaval) registry
-						.lookup("Hello");
+						.lookup("Shoot");
 				stub.disparar(this.usuario, fila, columna);
 				JOptionPane
 						.showMessageDialog(new JFrame(), "DISPARO REALIZADO");
