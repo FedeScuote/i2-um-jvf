@@ -17,10 +17,10 @@ public class DAOPruebas {
 
 		RankingDAODB r=new RankingDAODB();
 		try {
-			for(int i=0;i<r.getRankingLudo().size();i++){
+			for(int i=0;i<r.getRankingGeneral().size();i++){
 
-					System.out.println(((RankingDAODB)(r.getRankingLudo().get(i))).getUsuario());
-					System.out.println(((RankingDAODB)(r.getRankingLudo().get(i))).getGanadas());
+					System.out.println(((RankingDAODB)(r.getRankingGeneral().get(i))).getUsuario());
+					System.out.println(((RankingDAODB)(r.getRankingGeneral().get(i))).getGanadas());
 
 
 
