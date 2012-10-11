@@ -31,8 +31,6 @@ public class SegundaPantalla extends JFrame {
 
 	private JList torneosDisponiblesLista = null;
 
-	private JLabel imagenFondo = null;
-
 	private JButton crearDesafioBoton = null;
 
 	/**
@@ -84,15 +82,6 @@ public class SegundaPantalla extends JFrame {
 			gridBagConstraints1.ipady = 20;
 			gridBagConstraints1.anchor = GridBagConstraints.SOUTH;
 			gridBagConstraints1.gridy = 1;
-			GridBagConstraints gridBagConstraints9 = new GridBagConstraints();
-			gridBagConstraints9.gridx = 0;
-			gridBagConstraints9.gridwidth = 5;
-			gridBagConstraints9.gridheight = 5;
-			gridBagConstraints9.anchor = GridBagConstraints.NORTH;
-			gridBagConstraints9.gridy = 0;
-			imagenFondo = new JLabel();
-			imagenFondo.setText("");
-			imagenFondo.setIcon(new ImageIcon(getClass().getResource("/guiObligatorio/Ludo_Board.jpg")));
 			GridBagConstraints gridBagConstraints8 = new GridBagConstraints();
 			gridBagConstraints8.fill = GridBagConstraints.NONE;
 			gridBagConstraints8.gridy = 2;
@@ -141,7 +130,6 @@ public class SegundaPantalla extends JFrame {
 			panelSegundaPantalla.add(torneosDisponiblesLabel, gridBagConstraints7);
 			panelSegundaPantalla.add(getTorneosDisponiblesLista(), gridBagConstraints8);
 			panelSegundaPantalla.add(getCrearDesafioBoton(), gridBagConstraints1);
-			panelSegundaPantalla.add(imagenFondo, gridBagConstraints9);
 		}
 		return panelSegundaPantalla;
 	}
