@@ -15,7 +15,7 @@ import javax.swing.JList;
 import java.awt.Insets;
 import javax.swing.JButton;
 
-public class SegundaPantallaLudo extends JFrame {
+public class SegundaPantalla extends JFrame {
 
 	private static final long serialVersionUID = 1L;
 
@@ -38,7 +38,7 @@ public class SegundaPantallaLudo extends JFrame {
 	/**
 	 * This is the default constructor
 	 */
-	public SegundaPantallaLudo() {
+	public SegundaPantalla() {
 		super();
 		initialize();
 		this.setExtendedState(this.getExtendedState()|JFrame.MAXIMIZED_BOTH);//mi frame arranca maximizada
