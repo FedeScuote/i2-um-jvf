@@ -10,6 +10,7 @@ public interface DesafioDAO {
 	//terminados
 	public ArrayList getDesafios() throws NoHayDesafioException;
 	public ArrayList getDesafiosBatallaNaval() throws NoHayDesafioException;
-
+	//en construcción
+	public ArrayList getDesafiosUsuariosDisponibleBatallaNaval() throws NoHayDesafioException;
 
 }
