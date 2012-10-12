@@ -1,6 +1,6 @@
 package comm;
 
-public class DesafioBatallaNaval extends DesafioVO {
+public class DesafioBatallaNavalVO extends DesafioVO {
 
 	final private String Juego = "BATALLA NAVAL";
 	
