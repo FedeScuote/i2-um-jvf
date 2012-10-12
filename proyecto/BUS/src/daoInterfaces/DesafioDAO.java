@@ -7,8 +7,9 @@ import excepcionesB.NoHayDesafioException;
 
 public interface DesafioDAO {
 
-	//construcción
+	//terminados
 	public ArrayList getDesafios() throws NoHayDesafioException;
+	public ArrayList getDesafiosBatallaNaval() throws NoHayDesafioException;
 
 
 }
