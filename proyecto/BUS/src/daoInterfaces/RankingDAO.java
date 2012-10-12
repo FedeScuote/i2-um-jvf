@@ -11,7 +11,7 @@ public interface RankingDAO {
 	public ArrayList getRankingBatallaNaval()throws NoHayRankingException;
 	//terminado es una colección de objetos del tipo RankingDAODB
 	public ArrayList getRankingBackgammon()throws NoHayRankingException;
-	//construcción
+	//terminado  es una colección de objetos del tipo RankingDAODB
 	public ArrayList getRankingGeneral() throws NoHayRankingException;
 
 }
