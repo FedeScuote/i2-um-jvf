@@ -21,12 +21,17 @@ DROP TABLE juegos;
 DROP TABLE desafios;
 
 
+
+
+
+
+
 -- phpMyAdmin SQL Dump
 -- version 3.4.5
 -- http://www.phpmyadmin.net
 --
 -- Servidor: localhost
--- Tiempo de generación: 28-09-2012 a las 21:41:59
+-- Tiempo de generación: 12-10-2012 a las 20:46:36
 -- Versión del servidor: 5.5.16
 -- Versión de PHP: 5.3.8
 
@@ -55,7 +60,7 @@ CREATE TABLE IF NOT EXISTS `desafios` (
   `fechaHoraInicioD` datetime DEFAULT NULL,
   `estadoD` varchar(10) NOT NULL,
   PRIMARY KEY (`idDesafio`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=17 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=24 ;
 
 --
 -- Volcado de datos para la tabla `desafios`
@@ -77,7 +82,14 @@ INSERT INTO `desafios` (`idDesafio`, `monto`, `fechaHoraInicioD`, `estadoD`) VAL
 (13, 800, '2012-09-07 18:00:00', 'Finalizado'),
 (14, 900, '2012-09-17 12:00:00', 'Finalizado'),
 (15, 1000, '2012-09-19 12:00:00', 'Finalizado'),
-(16, 1050, '2012-09-08 18:00:00', 'Finalizado');
+(16, 1050, '2012-09-08 18:00:00', 'Finalizado'),
+(17, 500, '2012-10-24 18:00:00', 'En hora'),
+(18, 1500, '2012-10-16 15:00:00', 'En hora'),
+(19, 30, '2012-10-31 16:00:00', 'En hora'),
+(20, 5000, '2012-11-13 13:00:00', 'En hora'),
+(21, 450, '2012-12-19 00:00:00', 'En hora'),
+(22, 300, '2012-12-14 00:00:00', 'En hora'),
+(23, 250, '2012-01-24 17:00:00', 'En hora');
 
 -- --------------------------------------------------------
 

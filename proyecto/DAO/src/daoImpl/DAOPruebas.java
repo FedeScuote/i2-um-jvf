@@ -4,10 +4,12 @@ package daoImpl;
 import java.util.ArrayList;
 import java.util.Date;
 
+import excepcionesB.NoHayDesafioException;
 import excepcionesB.NoHayRankingException;
 import excepcionesB.NotDataFoundException;
 import excepcionesD.NoExisteUsuarioException;
 import busImpl.Usuario;
+import busImpl.Desafio;
 
 public class DAOPruebas {
 
@@ -18,9 +20,14 @@ public class DAOPruebas {
 		// TODO Auto-generated method stub
 
 
-		Date fa=new Date();
-		fa.setHours(14);
-		System.out.println(fa);
+		DesafioDAODB d=new DesafioDAODB();
+		try {
+			ArrayList a=d.getDesafios();
+			System.out.println(((Desafio)a.get(5)).getIdDesafio());
+		} catch (NoHayDesafioException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 
 
 
