@@ -6,22 +6,24 @@ import java.util.Iterator;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
-import comm.DesafioBatallaNaval;
+import comm.DesafioBatallaNavalVO;
 import comm.RankingVO;
 
 public class SegundaPantallaBatallaN extends SegundaPantalla {
 
 
-	private void llenarTabla(JTable tabla, ArrayList<DesafioBatallaNaval> lista){
+
+	//basicamente el mismo metodo que en la otra ventana.
+	private void llenarTabla(JTable tabla, ArrayList<DesafioBatallaNavalVO> lista){
 		DefaultTableModel model = new DefaultTableModel();
 		tabla.setModel(model);
-		model.setColumnIdentifiers(new String[] {"nro partidas ganadas", "Nick"});
+		model.setColumnIdentifiers(new String[] {"apuesta", "Nick"});
 		Iterator i = lista.iterator();
 		// relleno la tabla con data del arraylist
 		while (i.hasNext())
 		{
-			RankingVO rank= (RankingVO)i.next();
-		    model.addRow(new String[] {rank.nroAString(),rank.usuario});
+			DesafioBatallaNavalVO desafio= (DesafioBatallaNavalVO)i.next();
+		    model.addRow(new String[] {((Integer)desafio.getApuesta()).toString(),desafio.getUsuarioCreador().toString()});
 		}
 	}
 }
