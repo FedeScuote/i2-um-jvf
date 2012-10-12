@@ -94,4 +94,50 @@ public class DesafioDAODB implements DesafioDAO {
 		return a;
 	}
 
+	public ArrayList getDesafiosBatallaNaval() throws NoHayDesafioException {
+		ArrayList a=new ArrayList();
+
+
+
+
+		Conexion c=new Conexion("com.mysql.jdbc.Driver","jdbc:mysql://localhost/jvm", "root", "");
+
+		try {
+
+			ResultSet resultado = c.devolverResutado("SELECT idDesafio, monto, fechaHoraInicioD, estadoD FROM desafios,usuarios_has_juegos_desafios WHERE fechaHoraInicioD >= now() AND idDesafio=desafios_idDesafio AND juegos_idJuego='1' ");
+			while (resultado.next()) {
+					Desafio d=new Desafio();
+
+					int idDesafio=resultado.getInt("idDesafio");
+					int monto=resultado.getInt("monto");
+					Date fecha=resultado.getDate("fechaHoraInicioD");
+					String estadoD=resultado.getString("estadoD");
+					//System.out.println(usuario);
+					d.setIdDesafio(idDesafio);
+					d.setMonto(monto);
+					d.setFechaHoraInicioD(fecha);
+					d.setEstado(estadoD);
+					a.add(d);
+			}
+			a.get(0);
+
+		} catch (SQLException ex) {
+
+			throw new NoHayDesafioException();
+
+		} catch (IndexOutOfBoundsException i) {
+			throw new NoHayDesafioException();
+		}
+
+
+
+		c.disconnect();
+		return a;
+	}
+
+
+
+
+
+
 }
