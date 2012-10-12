@@ -1,4 +1,4 @@
-package guiObligatorio;
+package ventanaPrincipal;
 
 public class MainMenu {
 

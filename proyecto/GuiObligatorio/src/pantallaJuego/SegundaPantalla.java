@@ -1,4 +1,4 @@
-package guiObligatorio;
+package pantallaJuego;
 
 import java.awt.BorderLayout;
 import javax.swing.JPanel;
