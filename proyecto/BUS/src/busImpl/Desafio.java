@@ -3,12 +3,10 @@ package busImpl;
 import java.rmi.RemoteException;
 import java.util.ArrayList;
 import java.util.Date;
-
 import comm.DesafioBatallaNavalVO;
 import comm.RankingVO;
 import comm.ServiciosDesafio;
 import commExceptions.NoHayDesafiosDisponiblesException;
-
 import daoInterfaces.DesafioDAO;
 import daoInterfaces.RankingDAO;
 import daoInterfaces.UsuarioDAO;
@@ -16,6 +14,7 @@ import excepcionesB.NoHayDesafioException;
 
 public class Desafio implements ServiciosDesafio {
 
+	private String usuarioDesafio;
 	private int idDesafio;
 	private int monto;
 	private Date fechaHoraInicioD;
