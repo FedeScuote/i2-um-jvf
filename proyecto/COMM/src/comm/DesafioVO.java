@@ -4,9 +4,9 @@ import java.io.Serializable;
 
 public class DesafioVO implements Serializable {
 
-	UsuarioVO usuarioCreador;
+	private int idDesafio;
 
-	int apuesta;
+	private int apuesta;
 
 	public int getApuesta() {
 		return apuesta;
@@ -16,12 +16,13 @@ public class DesafioVO implements Serializable {
 		this.apuesta = apuesta;
 	}
 
-	public UsuarioVO getUsuarioCreador() {
-		return usuarioCreador;
+	public int getIdDesafio() {
+		return idDesafio;
 	}
 
-	public void setUsuarioCreador(UsuarioVO usuario) {
-		this.usuarioCreador = usuario;
+	public void setIdDesafio(int idDesafio) {
+		this.idDesafio = idDesafio;
 	}
+
 
 }
