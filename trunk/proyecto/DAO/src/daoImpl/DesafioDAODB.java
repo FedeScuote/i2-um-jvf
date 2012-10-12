@@ -104,7 +104,7 @@ public class DesafioDAODB implements DesafioDAO {
 
 		try {
 
-			ResultSet resultado = c.devolverResutado("SELECT idDesafio, monto, fechaHoraInicioD, estadoD FROM desafios,usuarios_has_juegos_desafios WHERE fechaHoraInicioD >= now() AND idDesafio=desafios_idDesafio AND juegos_idJuego='1' ");
+			ResultSet resultado = c.devolverResutado("SELECT idDesafio, monto, fechaHoraInicioD, estadoD FROM desafios,usuarios_has_juegos_desafios WHERE estadoD='En hora' AND idDesafio=desafios_idDesafio AND juegos_idJuego='1' ");
 			while (resultado.next()) {
 					Desafio d=new Desafio();
 
@@ -134,6 +134,53 @@ public class DesafioDAODB implements DesafioDAO {
 		c.disconnect();
 		return a;
 	}
+	//construcción
+	public ArrayList getDesafiosUsuariosDisponibleBatallaNaval() throws NoHayDesafioException {
+		ArrayList a=new ArrayList();
+
+
+
+
+		Conexion c=new Conexion("com.mysql.jdbc.Driver","jdbc:mysql://localhost/jvm", "root", "");
+
+		try {
+
+			ResultSet resultado = c.devolverResutado("SELECT idDesafio, monto, fechaHoraInicioD, estadoD FROM desafios,usuarios_has_juegos_desafios WHERE estadoD='En hora' AND idDesafio=desafios_idDesafio AND juegos_idJuego='1'  ");
+			while (resultado.next()) {
+					Desafio d=new Desafio();
+
+					int idDesafio=resultado.getInt("idDesafio");
+					int idUsuario=resultado.getInt("usuarios_idusuario");
+					int monto=resultado.getInt("monto");
+					Date fecha=resultado.getDate("fechaHoraInicioD");
+					String estadoD=resultado.getString("estadoD");
+					//System.out.println(usuario);
+					d.setIdDesafio(idDesafio);
+					d.setMonto(monto);
+					d.setFechaHoraInicioD(fecha);
+					d.setEstado(estadoD);
+					//hay que buscar a la base de datos el usuario, yo tengo la idUsuario
+					UsuarioDAODB ud=new UsuarioDAODB();
+					String usuarioDesafio="";
+					d.setUsuarioDesafio(usuarioDesafio);
+
+					a.add(d);
+			}
+			a.get(0);
+
+		} catch (SQLException ex) {
+
+			throw new NoHayDesafioException();
+
+		} catch (IndexOutOfBoundsException i) {
+			throw new NoHayDesafioException();
+		}
+
+
+
+		c.disconnect();
+		return a;
+	}
 
 
 
@@ -141,3 +188,11 @@ public class DesafioDAODB implements DesafioDAO {
 
 
 }
+
+
+
+
+
+
+
+
