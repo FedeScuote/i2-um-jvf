@@ -71,26 +71,8 @@ public class VentanaPrincipal extends JFrame {
 		this.setTitle("Ventana Principal");
 		this.setBounds(new Rectangle(0, 0, 834, 632));
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		try { // intento recibir datos para el ranking
-			Registry registry = LocateRegistry.getRegistry(host);
-			ServiciosRanking stub = (ServiciosRanking) registry.lookup("Ranking");
-			ArrayList<RankingVO> response = stub.preguntarRanking();
-			int i=0;
-//			while(i<response.size()){
-//				System.out.println(response.get(i).getUsuario());
-//				i++;
-//			}
-			llenarTabla(tablaRanking, response);
-		} catch (Exception remoteExceptionrmi) {
-			if (remoteExceptionrmi instanceof NoSeEncuentraUsuarioException) {
+		preguntarRanking();
 
-				System.out.println("no existe usuario");
-			} else {
-				System.err.println("Client exception: "
-						+ remoteExceptionrmi.toString());
-				remoteExceptionrmi.printStackTrace();
-			}
-		}
 	}
 
 	/**
@@ -248,6 +230,28 @@ public class VentanaPrincipal extends JFrame {
 		{
 			RankingVO rank= (RankingVO)i.next();
 		    model.addRow(new String[] {rank.nroAString(),rank.usuario});
+		}
+	}
+	private void preguntarRanking(){
+		try { // intento recibir datos para el ranking
+			Registry registry = LocateRegistry.getRegistry(host);
+			ServiciosRanking stub = (ServiciosRanking) registry.lookup("Ranking");
+			ArrayList<RankingVO> response = stub.preguntarRanking();
+			int i=0;
+//			while(i<response.size()){
+//				System.out.println(response.get(i).getUsuario());
+//				i++;
+//			}
+			llenarTabla(tablaRanking, response);
+		} catch (Exception remoteExceptionrmi) {
+			if (remoteExceptionrmi instanceof NoSeEncuentraUsuarioException) {
+
+				System.out.println("no existe usuario");
+			} else {
+				System.err.println("Client exception: "
+						+ remoteExceptionrmi.toString());
+				remoteExceptionrmi.printStackTrace();
+			}
 		}
 	}
 } // @jve:decl-index=0:visual-constraint="39,-35"

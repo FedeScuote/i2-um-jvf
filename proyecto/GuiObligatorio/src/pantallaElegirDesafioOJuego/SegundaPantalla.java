@@ -14,19 +14,31 @@ import javax.swing.JTable;
 import javax.swing.JList;
 import java.awt.Insets;
 import javax.swing.JButton;
+
+import comm.DesafioBatallaNavalVO;
+import comm.RankingVO;
+import comm.ServiciosDesafio;
+import comm.ServiciosRanking;
+import commExceptions.NoHayDesafiosDisponiblesException;
+
 import java.awt.Color;
+import java.rmi.registry.LocateRegistry;
+import java.rmi.registry.Registry;
+import java.util.ArrayList;
 
 public class SegundaPantalla extends JFrame {
 
 	private static final long serialVersionUID = 1L;
 
+	private static final String host = null;
+
 	private JPanel jContentPane = null;
 
 	private JPanel panelSegundaPantalla = null;
 
-	private JLabel desafiosDisponiblesLabel = null;
+	protected JLabel desafiosDisponiblesLabel = null;
 
-	private JList desafiosDisponiblesLista = null;
+	protected JList desafiosDisponiblesLista = null;
 
 	private JLabel torneosDisponiblesLabel = null;
 
@@ -44,6 +56,7 @@ public class SegundaPantalla extends JFrame {
 		initialize();
 		this.setExtendedState(this.getExtendedState()|JFrame.MAXIMIZED_BOTH);//mi frame arranca maximizada
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
 	}
 
 	/**
@@ -199,5 +212,6 @@ public class SegundaPantalla extends JFrame {
 		}
 		return BotonRetorno;
 	}
+
 
 }  //  @jve:decl-index=0:visual-constraint="10,10"
