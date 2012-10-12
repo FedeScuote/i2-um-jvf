@@ -1,6 +1,8 @@
 package daoImpl;
 
+
 import java.util.ArrayList;
+import java.util.Date;
 
 import excepcionesB.NoHayRankingException;
 import excepcionesB.NotDataFoundException;
@@ -15,7 +17,15 @@ public class DAOPruebas {
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 
-		RankingDAODB r=new RankingDAODB();
+
+		Date fa=new Date();
+		fa.setHours(14);
+		System.out.println(fa);
+
+
+
+
+	/*	RankingDAODB r=new RankingDAODB();
 		try {
 			for(int i=0;i<r.getRankingGeneral().size();i++){
 
