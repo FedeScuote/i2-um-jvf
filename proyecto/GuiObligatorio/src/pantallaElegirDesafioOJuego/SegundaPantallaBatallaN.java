@@ -1,4 +1,4 @@
-package pantallaJuego;
+package pantallaElegirDesafioOJuego;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -8,7 +8,6 @@ import javax.swing.table.DefaultTableModel;
 
 
 import comm.DesafioBatallaNavalVO;
-import comm.RankingVO;
 
 public class SegundaPantallaBatallaN extends SegundaPantalla {
 
