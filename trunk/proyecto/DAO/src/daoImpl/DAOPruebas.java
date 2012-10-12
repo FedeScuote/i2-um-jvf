@@ -22,8 +22,8 @@ public class DAOPruebas {
 
 		DesafioDAODB d=new DesafioDAODB();
 		try {
-			ArrayList a=d.getDesafios();
-			System.out.println(((Desafio)a.get(5)).getIdDesafio());
+			ArrayList a=d.getDesafiosBatallaNaval();
+			System.out.println(((Desafio)a.get(0)).getIdDesafio());
 		} catch (NoHayDesafioException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

@@ -1,4 +1,6 @@
-﻿DROP TABLE usuarios_has_torneos_posiciones;
+﻿
+
+DROP TABLE usuarios_has_torneos_posiciones;
 
 DROP TABLE usuarios_has_juegos_torneos;
 
@@ -24,14 +26,12 @@ DROP TABLE desafios;
 
 
 
-
-
 -- phpMyAdmin SQL Dump
 -- version 3.4.5
 -- http://www.phpmyadmin.net
 --
 -- Servidor: localhost
--- Tiempo de generación: 12-10-2012 a las 20:46:36
+-- Tiempo de generación: 12-10-2012 a las 21:04:07
 -- Versión del servidor: 5.5.16
 -- Versión de PHP: 5.3.8
 
@@ -316,6 +316,8 @@ INSERT INTO `usuarios_has_juegos_desafios` (`juegos_idJuego`, `desafios_idDesafi
 (1, 2, 4, 3),
 (1, 3, 4, 4),
 (1, 3, 5, 4),
+(1, 19, 1, 1),
+(1, 20, 1, 1),
 (2, 4, 6, 6),
 (2, 4, 7, 6),
 (2, 5, 3, 3),
