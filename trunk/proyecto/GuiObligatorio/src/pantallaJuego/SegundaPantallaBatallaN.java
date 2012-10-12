@@ -1,10 +1,11 @@
-package guiObligatorio;
+package pantallaJuego;
 
 import java.util.ArrayList;
 import java.util.Iterator;
 
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
+
 
 import comm.DesafioBatallaNavalVO;
 import comm.RankingVO;

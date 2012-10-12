@@ -1,4 +1,5 @@
-package guiObligatorio;
+package login;
+
 
 import java.awt.BorderLayout;
 import javax.swing.JPanel;
@@ -15,6 +16,8 @@ import javax.swing.JLabel;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import javax.swing.JPasswordField;
+
+import ventanaPrincipal.VentanaPrincipal;
 import comm.ServiciosUsuario;
 import comm.UsuarioVO;
 import commExceptions.ContrasenaInvalidaException;
