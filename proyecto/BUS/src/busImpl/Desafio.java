@@ -81,6 +81,12 @@ public class Desafio implements ServiciosDesafio {
 		}
 
 	}
+	public String getUsuarioDesafio() {
+		return usuarioDesafio;
+	}
+	public void setUsuarioDesafio(String usuarioDesafio) {
+		this.usuarioDesafio = usuarioDesafio;
+	}
 
 
 
