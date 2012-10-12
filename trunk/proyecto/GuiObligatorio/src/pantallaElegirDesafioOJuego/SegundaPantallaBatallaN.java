@@ -12,6 +12,7 @@ import javax.swing.table.DefaultTableModel;
 
 
 import comm.DesafioBatallaNavalVO;
+import comm.RankingVO;
 import comm.ServiciosDesafio;
 import commExceptions.NoHayDesafiosDisponiblesException;
 
@@ -29,11 +30,7 @@ public class SegundaPantallaBatallaN extends SegundaPantalla {
 			Registry registry = LocateRegistry.getRegistry(host);
 			ServiciosDesafio stub = (ServiciosDesafio) registry.lookup("Desafio");
 			ArrayList<DesafioBatallaNavalVO> response = stub.getDesafios();
-			Object[] array = new Object[response.size()];
-			for(int i=0; i<array.length;i++){
-				array[i]= response.get(i);
-			}
-			this.desafiosDisponiblesLista = new JList(array);
+			this.llenarTabla(this.desafiosDisponiblesTabla, response);
 		}catch(Exception e){
 			if(! (e instanceof NoHayDesafiosDisponiblesException)){
 			e.printStackTrace();
@@ -42,18 +39,17 @@ public class SegundaPantallaBatallaN extends SegundaPantalla {
 			}
 		}
 	}
-
-	//basicamente el mismo metodo que en la otra ventana.
+//	METODO PARA LLENAR UNA JTABLE CON UN ARRAY DE OBJETOS
 	private void llenarTabla(JTable tabla, ArrayList<DesafioBatallaNavalVO> lista){
 		DefaultTableModel model = new DefaultTableModel();
 		tabla.setModel(model);
-		model.setColumnIdentifiers(new String[] {"apuesta", "Nick"});
+		model.setColumnIdentifiers(new String[] {"Monto", "Nick"});
 		Iterator i = lista.iterator();
 		// relleno la tabla con data del arraylist
 		while (i.hasNext())
 		{
-			DesafioBatallaNavalVO desafio= (DesafioBatallaNavalVO)i.next();
-		    model.addRow(new String[] {((Integer)desafio.getApuesta()).toString()});
+			DesafioBatallaNavalVO rank= (DesafioBatallaNavalVO)i.next();
+		    model.addRow(new String[] {((Integer)rank.getApuesta()).toString(),((Integer)rank.getIdDesafio()).toString()});
 		}
 	}
 }
