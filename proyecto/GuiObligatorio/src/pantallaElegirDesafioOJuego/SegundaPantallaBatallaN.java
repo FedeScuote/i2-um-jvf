@@ -26,7 +26,7 @@ public class SegundaPantallaBatallaN extends SegundaPantalla {
 		this.llenarListaDesafio();
 	}
 	private void llenarListaDesafio(){
-		try { // intento recibir datos para el ranking
+		try { // intento recibir datos para el ranking/
 			Registry registry = LocateRegistry.getRegistry(host);
 			ServiciosDesafio stub = (ServiciosDesafio) registry.lookup("Desafio");
 			ArrayList<DesafioBatallaNavalVO> response = stub.getDesafios();
