@@ -27,7 +27,7 @@ public class BatallaNavalVentana extends JFrame {
 
 	private static final long serialVersionUID = 1L;
 
-	private static final int pause=200;
+	private static final int pause = 200;
 
 	private static final String host = null;
 
@@ -56,18 +56,12 @@ public class BatallaNavalVentana extends JFrame {
 
 	private final static int TAMANO_TABLERO = 10 + 1;// (casillas)+(labels)
 
-	private final static String[] ALFABETO = { "a", "b", "c", "d", "e", "f",
+	private final static String[] ALFABETO = {" ", "a", "b", "c", "d", "e", "f",
 			"g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s",
-			"t", "u", "v", "w", "x", "y", "z" };
+			"t", "u", "v", "w", "x", "y", "z" };// primero el vacio
 
-	private JLabel[] labelsLetrasJugador = new JLabel[TAMANO_TABLERO];
-
-	private JLabel[] labelsNumerosJugador = new JLabel[TAMANO_TABLERO];
-
-	private JLabel[] labelsLetrasContrincante = new JLabel[TAMANO_TABLERO];
-
-	private JLabel[] labelsNumerosContrincante = new JLabel[TAMANO_TABLERO];
-
+	// porque no va nada en
+	// esa linea
 	private JLabel indicadorTurno = null;
 
 	/**
@@ -76,11 +70,11 @@ public class BatallaNavalVentana extends JFrame {
 	public BatallaNavalVentana() {
 		super();
 		initialize();
-		this.crearLabelsLetra(PanelJugador, labelsLetrasJugador);
+		this.crearCabezal(PanelJugador);
 		this.crearTablero(PanelJugador, botonesJugador); // creo mi tablero
 		// en mi panel
 		// jugador
-		this.crearLabelsLetra(PanelContrincante, labelsLetrasContrincante);
+		this.crearCabezal(PanelContrincante);
 		this.crearTablero(PanelContrincante, botonesContrincante);// creo mi
 		// tablero
 		// en mi
@@ -91,19 +85,20 @@ public class BatallaNavalVentana extends JFrame {
 		// arranca
 		// maximizada
 		ActionListener taskPerformer = new ActionListener() {
-		      public void actionPerformed(ActionEvent evt) {
-		    	  esMiTurno = preguntarTurno(usuario);
-		    	  if(!esMiTurno){
-		    		  temporizador.restart();
-		    		  indicadorTurno.setText("NO ES TU TURNO");
-		    	  }else{
-		    		indicadorTurno.setText("ES TU TURNO");
-		    	  }
-		      }
-		 };
-		 temporizador.setInitialDelay(pause);
-		 temporizador.addActionListener(taskPerformer);
-		 temporizador.start();
+			public void actionPerformed(ActionEvent evt) {
+				esMiTurno = preguntarTurno(usuario);
+				if (!esMiTurno) {
+					temporizador.restart();
+					indicadorTurno.setText("NO ES TU TURNO");
+				} else {
+					indicadorTurno.setText("ES TU TURNO");
+				}
+			}
+		};
+		// temporizador = new Timer(pause, taskPerformer); falta implmenetar RMI
+		// temporizador.setInitialDelay(pause);
+		// temporizador.addActionListener(taskPerformer);
+		// temporizador.start();
 	}
 
 	/**
@@ -165,6 +160,48 @@ public class BatallaNavalVentana extends JFrame {
 		return PanelContrincante;
 	}
 
+
+
+	// metodo al cual le paso el panel donde quiero crear un tablero del tamano
+	// indicado en los atributos
+	private void crearTablero(JPanel panel, JButton[][] botones) {
+		// crear botones y agregarlos al panel
+		panel.setLayout(new GridLayout(TAMANO_TABLERO, TAMANO_TABLERO));
+		botones = new JButton[TAMANO_TABLERO][TAMANO_TABLERO];
+		for (int i = 1; i < TAMANO_TABLERO; i++) {
+				this.crearFila(panel, i, botones);
+
+		}
+	}
+
+	private void crearCabezal(JPanel panel) {
+		panel.setLayout(new GridLayout(TAMANO_TABLERO, TAMANO_TABLERO));
+
+		for (int i = 0; i < TAMANO_TABLERO; i++) {
+			JLabel jlabel = new JLabel();
+			panel.add(jlabel);
+			jlabel.setText(ALFABETO[i]); // alfabeto menos uno porque
+			jlabel.setHorizontalAlignment(SwingConstants.CENTER);
+			jlabel.setVerticalAlignment(SwingConstants.CENTER);
+		}
+	}
+	private void crearFila (JPanel panel, Integer numeroFila, JButton[][] botones){
+		for (int j = 0; j<TAMANO_TABLERO; j++){
+			if(j==0){
+				JLabel jlabel = new JLabel();
+				panel.add(jlabel);
+				jlabel.setText(numeroFila.toString()); // alfabeto menos uno porque
+				jlabel.setHorizontalAlignment(SwingConstants.CENTER);
+				jlabel.setVerticalAlignment(SwingConstants.CENTER);
+			}else{
+				JButton jButton = new JButton();
+				jButton.addActionListener(new ListenerBoton(numeroFila, j));
+				panel.add(jButton);
+				botones[numeroFila][j] = jButton;
+			}
+		}
+	}
+
 	private class ListenerBoton implements ActionListener {
 
 		private int x;
@@ -200,57 +237,9 @@ public class BatallaNavalVentana extends JFrame {
 		}
 	}
 
-	// metodo al cual le paso el panel donde quiero crear un tablero del tamano
-	// indicado en los atributos
-	private void crearTablero(JPanel panel, JButton[][] botones) {
-		// crear botones y agregarlos al panel
-		panel.setLayout(new GridLayout(TAMANO_TABLERO, TAMANO_TABLERO));
-		botones = new JButton[TAMANO_TABLERO][TAMANO_TABLERO];
-		for (int i = 1; i < TAMANO_TABLERO; i++) {
-			for (int j = 1; j < TAMANO_TABLERO; j++) {
-				JButton jButton = new JButton();
-				jButton.addActionListener(new ListenerBoton(i, j));
-				panel.add(jButton);
-				botones[i][j] = jButton;
-				botones[i][j].setSize(25, 25);
-				botones[i][j].setMaximumSize(new Dimension(25, 25));
-			}
-		}
-	}
 
-	private void crearLabelsLetra(JPanel panel, JLabel[] arrayLabels) {
-		panel.setLayout(new GridLayout(TAMANO_TABLERO, TAMANO_TABLERO));
-
-		for (int i = 1; i < TAMANO_TABLERO; i++) {
-			JLabel jlabel = new JLabel();
-			panel.add(jlabel);
-			arrayLabels[i] = jlabel;
-		}
-		for (int i = 1; i < TAMANO_TABLERO; i++) {
-			arrayLabels[i].setText(ALFABETO[i - 1]);// alfabeto menos uno porque
-			// arranco del i=1
-			arrayLabels[i].setHorizontalAlignment(SwingConstants.CENTER);// hago
-																			// que
-																			// mis
-																			// letras
-																			// queden
-			arrayLabels[i].setHorizontalTextPosition(SwingConstants.CENTER);// justificadas
-		}
-	}
-
-	/*
-	 * METODO A IMPLEMENTAR private void crearLabelsNumeros(JPanel panel,
-	 * JLabel[] arrayLabels) { for (int i = 1; i < TAMANO_TABLERO; i++) { for
-	 * (int j = 1; j < TAMANO_TABLERO; j++) { JLabel jlabel = new JLabel();
-	 * panel.add(jlabel); arrayLabels[i] = jlabel; } } for (int i = 1; i <
-	 * TAMANO_TABLERO; i++) { arrayLabels[i].setText(ALFABETO[i - 1]);//
-	 * alfabeto menos uno porque // arranco del i=1
-	 * arrayLabels[i].setHorizontalAlignment(SwingConstants.CENTER);//hago que
-	 * mis letras queden
-	 * arrayLabels[i].setHorizontalTextPosition(SwingConstants.CENTER);//justificadas } }
-	 */
-	//METODO PARA PREGUNTAR TURNO
-	public static boolean preguntarTurno(UsuarioVO usuario){
+	// METODO PARA PREGUNTAR TURNO
+	public static boolean preguntarTurno(UsuarioVO usuario) {
 		try { // try y catch para verificar si esta el usuario o
 			// no
 			Registry registry = LocateRegistry.getRegistry(host);
