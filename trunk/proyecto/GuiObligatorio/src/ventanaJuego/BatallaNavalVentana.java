@@ -159,8 +159,6 @@ public class BatallaNavalVentana extends JFrame {
 		return PanelContrincante;
 	}
 
-
-
 	// metodo al cual le paso el panel donde quiero crear un tablero del tamano
 	// indicado en los atributos
 	private void crearTablero(JPanel panel, JButton[][] botones) {
@@ -172,7 +170,7 @@ public class BatallaNavalVentana extends JFrame {
 
 		}
 	}
-
+	//metodo que me crea mi cabezal con mis letras
 	private void crearCabezal(JPanel panel) {
 		panel.setLayout(new GridLayout(TAMANO_TABLERO, TAMANO_TABLERO));
 
@@ -184,6 +182,7 @@ public class BatallaNavalVentana extends JFrame {
 			jlabel.setVerticalAlignment(SwingConstants.CENTER);
 		}
 	}
+	//metodo que le paso numero de fila y me agrega la fila con jlabel correspondiente
 	private void crearFila (JPanel panel, Integer numeroFila, JButton[][] botones){
 		for (int j = 0; j<TAMANO_TABLERO; j++){
 			if(j==0){
@@ -200,7 +199,7 @@ public class BatallaNavalVentana extends JFrame {
 			}
 		}
 	}
-
+	//clase de mis actionListener que voy a usar en mis botones
 	private class ListenerBoton implements ActionListener {
 
 		private int x;
