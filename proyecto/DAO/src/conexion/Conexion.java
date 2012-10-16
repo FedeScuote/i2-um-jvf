@@ -4,6 +4,8 @@ import java.sql.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import propertiesDAO.PConfig;
+
 /**
  *
  * @author usuario
@@ -14,10 +16,16 @@ public class Conexion{
 
     public Conexion() {
         try {
-        	String driver="com.mysql.jdbc.Driver";
-        	String url="jdbc:mysql://localhost/jvm";
-        	String usuario="root";
-        	String contraseña="";
+        	PConfig p=new PConfig();
+
+        	String driver = p.getDriver();
+        	String url = p.getUrl();
+        	String usuario = p.getUser();
+        	String contraseña = p.getPass();
+        	//String driver="com.mysql.jdbc.Driver";
+        	//String url="jdbc:mysql://localhost/jvm";
+        	//String usuario="root";
+        	//String contraseña="";
 
             Class.forName(driver).newInstance();
             conn = DriverManager.getConnection(url, usuario, contraseña);
