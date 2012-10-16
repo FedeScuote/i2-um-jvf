@@ -107,7 +107,6 @@ public class BatallaNavalVentana extends JFrame {
 	 * @return void
 	 */
 	private void initialize() {
-		this.setSize(728, 353);
 		this.setContentPane(getJContentPane());
 		this.setTitle("JFrame");
 	}
