@@ -12,8 +12,13 @@ public class Conexion{
 
     private Connection conn;
 
-    public Conexion(String driver, String url, String usuario, String contraseña) {
+    public Conexion() {
         try {
+        	String driver="com.mysql.jdbc.Driver";
+        	String url="jdbc:mysql://localhost/jvm";
+        	String usuario="root";
+        	String contraseña="";
+
             Class.forName(driver).newInstance();
             conn = DriverManager.getConnection(url, usuario, contraseña);
         } catch (InstantiationException ex) {

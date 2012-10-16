@@ -23,7 +23,7 @@ public class UsuarioDAODB implements UsuarioDAO {
 
 	public Usuario findByName(String usuario) throws NotDataFoundException {
 		Usuario u = new Usuario();
-		Conexion conexion = new Conexion("com.mysql.jdbc.Driver","jdbc:mysql://localhost/jvm", "root", "");
+		Conexion conexion = new Conexion();
 		try {
 
 			ResultSet resultado = conexion
@@ -66,7 +66,7 @@ public class UsuarioDAODB implements UsuarioDAO {
 	}
 
 	public String getUsuario(int idUsuario) throws NoExisteUsuarioException {
-		Conexion c = new Conexion("com.mysql.jdbc.Driver","jdbc:mysql://localhost/jvm", "root", "");
+		Conexion c = new Conexion();
 
 		ResultSet r = null;
 		String usuario = null;
