@@ -43,11 +43,7 @@ public class BatallaNavalVentana extends JFrame {
 
 	private Timer temporizador;
 
-	private JButton[][] botonesJugador = new JButton[TAMANO_TABLERO][TAMANO_TABLERO]; // es
-
-	// mi
-	// matriz
-	// de
+	private JButton[][] botonesJugador;
 
 	// botones que voy a
 	// utilizar para mi
