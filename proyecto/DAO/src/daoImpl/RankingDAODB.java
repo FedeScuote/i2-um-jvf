@@ -39,7 +39,7 @@ public class RankingDAODB implements RankingDAO {
 	}
 
 
-	//construccion
+	//terminado
 	public ArrayList getRankingLudo() throws NoHayRankingException{
 		ArrayList a=new ArrayList();
 
@@ -53,11 +53,11 @@ public class RankingDAODB implements RankingDAO {
 
 			ResultSet resultado = c.devolverResutado("SELECT usuarios_idusuario, ganadas FROM  `ranking` WHERE juegos_idJuego='2' ORDER BY ganadas DESC");
 			while (resultado.next()) {
-					RankingDAODB r1=new RankingDAODB();
+					UsuarioDAODB u=new UsuarioDAODB();
 					Ranking r=new Ranking();
 					int idUsuario=resultado.getInt("usuarios_idusuario");
-					String usuario=r1.getUsuario(idUsuario);
-					//System.out.println(usuario);
+					String usuario=u.getUsuario(idUsuario);
+
 					r.setUsuario(usuario);
 					r.setGanadas(resultado.getInt("ganadas"));
 					a.add(r);
@@ -83,23 +83,7 @@ public class RankingDAODB implements RankingDAO {
 
 
 
-	public String getUsuario(int idUsuario) throws NoExisteUsuarioException{
-		String usuario=null;
-		Conexion c=new Conexion("com.mysql.jdbc.Driver","jdbc:mysql://localhost/jvm", "root", "");
-		try {
-			ResultSet rs=c.devolverResutado("select usuario from usuarios where idUsuario="+idUsuario);
-			rs.next();
-			usuario=rs.getString("usuario");
-
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			throw new NoExisteUsuarioException();
-
-		}
-		//c.disconnect();
-		return usuario;
-	}
-
+	//terminado
 	public ArrayList getRankingBackgammon() throws NoHayRankingException {
 		ArrayList a=new ArrayList();
 
@@ -113,10 +97,11 @@ public class RankingDAODB implements RankingDAO {
 
 			ResultSet resultado = c.devolverResutado("SELECT usuarios_idusuario, ganadas FROM  `ranking` WHERE juegos_idJuego='3' ORDER BY ganadas DESC");
 			while (resultado.next()) {
-					RankingDAODB r=new RankingDAODB();
+					Ranking r=new Ranking();
+					UsuarioDAODB u=new UsuarioDAODB();
 					int idUsuario=resultado.getInt("usuarios_idusuario");
-					String usuario=r.getUsuario(idUsuario);
-					//System.out.println(usuario);
+					String usuario=u.getUsuario(idUsuario);
+
 					r.setUsuario(usuario);
 					r.setGanadas(resultado.getInt("ganadas"));
 					a.add(r);
@@ -140,7 +125,7 @@ public class RankingDAODB implements RankingDAO {
 		return a;
 	}
 
-
+	//terminado
 	public ArrayList getRankingBatallaNaval() throws NoHayRankingException {
 		ArrayList a=new ArrayList();
 
@@ -154,10 +139,11 @@ public class RankingDAODB implements RankingDAO {
 
 			ResultSet resultado = c.devolverResutado("SELECT usuarios_idusuario, ganadas FROM  `ranking` WHERE juegos_idJuego='1' ORDER BY ganadas DESC");
 			while (resultado.next()) {
-					RankingDAODB r=new RankingDAODB();
+					Ranking r=new Ranking();
+					UsuarioDAODB u=new UsuarioDAODB();
 					int idUsuario=resultado.getInt("usuarios_idusuario");
-					String usuario=r.getUsuario(idUsuario);
-					//System.out.println(usuario);
+					String usuario=u.getUsuario(idUsuario);
+
 					r.setUsuario(usuario);
 					r.setGanadas(resultado.getInt("ganadas"));
 					a.add(r);
@@ -181,7 +167,7 @@ public class RankingDAODB implements RankingDAO {
 		return a;
 
 	}
-
+	//terminado
 	public ArrayList getRankingGeneral() throws NoHayRankingException {
 		ArrayList a=new ArrayList();
 
@@ -195,18 +181,12 @@ public class RankingDAODB implements RankingDAO {
 
 			ResultSet resultado = c.devolverResutado("SELECT usuarios_idusuario, sum(ganadas) FROM `ranking` WHERE juegos_idJuego='1' OR juegos_idJuego='2' OR juegos_idJuego='3' GROUP BY usuarios_idusuario ORDER BY ganadas DESC");
 			while (resultado.next()) {
-//					RankingDAODB r=new RankingDAODB();
-//					int idUsuario=resultado.getInt("usuarios_idusuario");
-//					String usuario=r.getUsuario(idUsuario);
-//					//System.out.println(usuario);
-//					r.setUsuario(usuario);
-//					r.setGanadas(resultado.getInt("sum(ganadas)"));
-//					a.add(r);
-					RankingDAODB r1=new RankingDAODB();
+
+					UsuarioDAODB u=new UsuarioDAODB();
 					Ranking r=new Ranking();
 					int idUsuario=resultado.getInt("usuarios_idusuario");
-					String usuario=r1.getUsuario(idUsuario);
-					//System.out.println(usuario);
+					String usuario=u.getUsuario(idUsuario);
+
 					r.setUsuario(usuario);
 					r.setGanadas(resultado.getInt("sum(ganadas)"));
 					a.add(r);

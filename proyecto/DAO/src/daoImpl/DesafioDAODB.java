@@ -19,7 +19,9 @@ public class DesafioDAODB implements DesafioDAO {
 	private int idDesafio;
 	private int monto;
 	private Date fechaHoraInicioD;
-	private String estado; //En hora, En hora-lleno, En curso, Atrasado, Finalizado, Cancelado
+	private String estado; // En hora, En hora-lleno, En curso, Atrasado,
+
+	// Finalizado, Cancelado
 
 	public int getIdDesafio() {
 		return idDesafio;
@@ -54,30 +56,35 @@ public class DesafioDAODB implements DesafioDAO {
 	}
 
 	public ArrayList getDesafios() throws NoHayDesafioException {
-		ArrayList a=new ArrayList();
+		ArrayList a = new ArrayList();
 
-
-
-
-		Conexion c=new Conexion("com.mysql.jdbc.Driver","jdbc:mysql://localhost/jvm", "root", "");
+		Conexion c = new Conexion("com.mysql.jdbc.Driver",
+				"jdbc:mysql://localhost/jvm", "root", "");
 
 		try {
 
-			ResultSet resultado = c.devolverResutado("SELECT idDesafio, monto, fechaHoraInicioD, estadoD FROM desafios WHERE fechaHoraInicioD >= now() ");
+			ResultSet resultado = c
+					.devolverResutado("SELECT idDesafio, monto, fechaHoraInicioD, estadoD, usuarios_idusuario FROM desafios,usuarios_has_juegos_desafios WHERE estadoD='En hora' AND idDesafio=desafios_idDesafio");
 			while (resultado.next()) {
-					Desafio d=new Desafio();
+				Desafio d = new Desafio();
+				// cargo los datos en el objeto d de Desafio
+				int idDesafio = resultado.getInt("idDesafio");
+				int monto = resultado.getInt("monto");
+				int idUsuario = resultado.getInt("usuarios_idusuario");
+				Date fecha = resultado.getDate("fechaHoraInicioD");
+				String estadoD = resultado.getString("estadoD");
 
-					int idDesafio=resultado.getInt("idDesafio");
-					int monto=resultado.getInt("monto");
-					Date fecha=resultado.getDate("fechaHoraInicioD");
-					String estadoD=resultado.getString("estadoD");
-					//System.out.println(usuario);
-					d.setIdDesafio(idDesafio);
-					d.setMonto(monto);
-					d.setFechaHoraInicioD(fecha);
-					d.setEstado(estadoD);
-					a.add(d);
+				UsuarioDAODB ud = new UsuarioDAODB();
+				String usuarioDesafio = ud.getUsuario(idUsuario);
+
+				d.setUsuarioDesafio(usuarioDesafio);
+				d.setIdDesafio(idDesafio);
+				d.setMonto(monto);
+				d.setFechaHoraInicioD(fecha);
+				d.setEstado(estadoD);
+				a.add(d);
 			}
+			// compruebo si hay desafios
 			a.get(0);
 
 		} catch (SQLException ex) {
@@ -86,38 +93,38 @@ public class DesafioDAODB implements DesafioDAO {
 
 		} catch (IndexOutOfBoundsException i) {
 			throw new NoHayDesafioException();
+		} catch (NoExisteUsuarioException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
-
-
 
 		c.disconnect();
 		return a;
 	}
 
 	public ArrayList getDesafiosBatallaNaval() throws NoHayDesafioException {
-		ArrayList a=new ArrayList();
+		ArrayList a = new ArrayList();
 
-
-
-
-		Conexion c=new Conexion("com.mysql.jdbc.Driver","jdbc:mysql://localhost/jvm", "root", "");
+		Conexion c = new Conexion("com.mysql.jdbc.Driver",
+				"jdbc:mysql://localhost/jvm", "root", "");
 
 		try {
 
-			ResultSet resultado = c.devolverResutado("SELECT idDesafio, monto, fechaHoraInicioD, estadoD FROM desafios,usuarios_has_juegos_desafios WHERE estadoD='En hora' AND idDesafio=desafios_idDesafio AND juegos_idJuego='1' ");
+			ResultSet resultado = c
+					.devolverResutado("SELECT idDesafio, monto, fechaHoraInicioD, estadoD FROM desafios,usuarios_has_juegos_desafios WHERE estadoD='En hora' AND idDesafio=desafios_idDesafio AND juegos_idJuego='1' ");
 			while (resultado.next()) {
-					Desafio d=new Desafio();
+				Desafio d = new Desafio();
 
-					int idDesafio=resultado.getInt("idDesafio");
-					int monto=resultado.getInt("monto");
-					Date fecha=resultado.getDate("fechaHoraInicioD");
-					String estadoD=resultado.getString("estadoD");
-					//System.out.println(usuario);
-					d.setIdDesafio(idDesafio);
-					d.setMonto(monto);
-					d.setFechaHoraInicioD(fecha);
-					d.setEstado(estadoD);
-					a.add(d);
+				int idDesafio = resultado.getInt("idDesafio");
+				int monto = resultado.getInt("monto");
+				Date fecha = resultado.getDate("fechaHoraInicioD");
+				String estadoD = resultado.getString("estadoD");
+
+				d.setIdDesafio(idDesafio);
+				d.setMonto(monto);
+				d.setFechaHoraInicioD(fecha);
+				d.setEstado(estadoD);
+				a.add(d);
 			}
 			a.get(0);
 
@@ -129,42 +136,40 @@ public class DesafioDAODB implements DesafioDAO {
 			throw new NoHayDesafioException();
 		}
 
-
-
 		c.disconnect();
 		return a;
 	}
-	//construcción
-	public ArrayList getDesafiosUsuariosDisponibleBatallaNaval() throws NoHayDesafioException {
-		ArrayList a=new ArrayList();
 
+	public ArrayList getDesafiosUsuariosDisponibleBatallaNaval()
+			throws NoHayDesafioException {
+		ArrayList a = new ArrayList();
 
-
-
-		Conexion c=new Conexion("com.mysql.jdbc.Driver","jdbc:mysql://localhost/jvm", "root", "");
+		Conexion c = new Conexion("com.mysql.jdbc.Driver",
+				"jdbc:mysql://localhost/jvm", "root", "");
 
 		try {
 
-			ResultSet resultado = c.devolverResutado("SELECT idDesafio, monto, fechaHoraInicioD, estadoD FROM desafios,usuarios_has_juegos_desafios WHERE estadoD='En hora' AND idDesafio=desafios_idDesafio AND juegos_idJuego='1'  ");
+			ResultSet resultado = c
+					.devolverResutado("SELECT idDesafio, monto, fechaHoraInicioD, estadoD, usuarios_idusuario FROM desafios,usuarios_has_juegos_desafios WHERE estadoD='En hora' AND idDesafio=desafios_idDesafio AND juegos_idJuego='1'  ");
 			while (resultado.next()) {
-					Desafio d=new Desafio();
+				Desafio d = new Desafio();
 
-					int idDesafio=resultado.getInt("idDesafio");
-					int idUsuario=resultado.getInt("usuarios_idusuario");
-					int monto=resultado.getInt("monto");
-					Date fecha=resultado.getDate("fechaHoraInicioD");
-					String estadoD=resultado.getString("estadoD");
-					//System.out.println(usuario);
-					d.setIdDesafio(idDesafio);
-					d.setMonto(monto);
-					d.setFechaHoraInicioD(fecha);
-					d.setEstado(estadoD);
-					//hay que buscar a la base de datos el usuario, yo tengo la idUsuario
-					UsuarioDAODB ud=new UsuarioDAODB();
-					String usuarioDesafio="";
-					d.setUsuarioDesafio(usuarioDesafio);
+				int idDesafio = resultado.getInt("idDesafio");
+				int idUsuario = resultado.getInt("usuarios_idusuario");
+				int monto = resultado.getInt("monto");
+				Date fecha = resultado.getDate("fechaHoraInicioD");
+				String estadoD = resultado.getString("estadoD");
 
-					a.add(d);
+				d.setIdDesafio(idDesafio);
+				d.setMonto(monto);
+				d.setFechaHoraInicioD(fecha);
+				d.setEstado(estadoD);
+
+				UsuarioDAODB ud = new UsuarioDAODB();
+				String usuarioDesafio = ud.getUsuario(idUsuario);
+				d.setUsuarioDesafio(usuarioDesafio);
+
+				a.add(d);
 			}
 			a.get(0);
 
@@ -174,25 +179,114 @@ public class DesafioDAODB implements DesafioDAO {
 
 		} catch (IndexOutOfBoundsException i) {
 			throw new NoHayDesafioException();
+		} catch (NoExisteUsuarioException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
-
-
 
 		c.disconnect();
 		return a;
 	}
 
+	public ArrayList getDesafiosUsuariosDisponibleLudo()
+			throws NoHayDesafioException {
+		ArrayList a = new ArrayList();
+
+		Conexion c = new Conexion("com.mysql.jdbc.Driver",
+				"jdbc:mysql://localhost/jvm", "root", "");
+
+		try {
+
+			ResultSet resultado = c
+					.devolverResutado("SELECT idDesafio, monto, fechaHoraInicioD, estadoD, usuarios_idusuario FROM desafios,usuarios_has_juegos_desafios WHERE estadoD='En hora' AND idDesafio=desafios_idDesafio AND juegos_idJuego='2'  ");
+			while (resultado.next()) {
+				Desafio d = new Desafio();
+
+				int idDesafio = resultado.getInt("idDesafio");
+				int idUsuario = resultado.getInt("usuarios_idusuario");
+				int monto = resultado.getInt("monto");
+				Date fecha = resultado.getDate("fechaHoraInicioD");
+				String estadoD = resultado.getString("estadoD");
+
+				d.setIdDesafio(idDesafio);
+				d.setMonto(monto);
+				d.setFechaHoraInicioD(fecha);
+				d.setEstado(estadoD);
+
+				UsuarioDAODB ud = new UsuarioDAODB();
+				String usuarioDesafio = ud.getUsuario(idUsuario);
+				d.setUsuarioDesafio(usuarioDesafio);
+
+				a.add(d);
+			}
+			a.get(0);
+
+		} catch (SQLException ex) {
+
+			throw new NoHayDesafioException();
+
+		} catch (IndexOutOfBoundsException i) {
+			throw new NoHayDesafioException();
+		} catch (NoExisteUsuarioException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		c.disconnect();
+		return a;
+	}
+
+	public ArrayList getDesafiosUsuariosDisponibleBackgammon()
+	throws NoHayDesafioException {
+ArrayList a = new ArrayList();
 
 
+Conexion c = new Conexion("com.mysql.jdbc.Driver",
+		"jdbc:mysql://localhost/jvm", "root", "");
 
+try {
 
+	ResultSet resultado = c
+			.devolverResutado("SELECT idDesafio, monto, fechaHoraInicioD, estadoD, usuarios_idusuario FROM desafios,usuarios_has_juegos_desafios WHERE estadoD='En hora' AND idDesafio=desafios_idDesafio AND juegos_idJuego='3'  ");
+	while (resultado.next()) {
+		Desafio d = new Desafio();
 
+		int idDesafio = resultado.getInt("idDesafio");
+		int idUsuario = resultado.getInt("usuarios_idusuario");
+		int monto = resultado.getInt("monto");
+		Date fecha = resultado.getDate("fechaHoraInicioD");
+		String estadoD = resultado.getString("estadoD");
+
+		d.setIdDesafio(idDesafio);
+		d.setMonto(monto);
+		d.setFechaHoraInicioD(fecha);
+		d.setEstado(estadoD);
+
+		UsuarioDAODB ud = new UsuarioDAODB();
+		String usuarioDesafio = ud.getUsuario(idUsuario) ;
+		d.setUsuarioDesafio(usuarioDesafio);
+
+		a.add(d);
+	}
+	a.get(0);
+
+} catch (SQLException ex) {
+
+	throw new NoHayDesafioException();
+
+} catch (IndexOutOfBoundsException i) {
+	throw new NoHayDesafioException();
+} catch (NoExisteUsuarioException e) {
+	// TODO Auto-generated catch block
+	e.printStackTrace();
+}
+
+c.disconnect();
+return a;
 }
 
 
 
 
 
-
-
-
+}

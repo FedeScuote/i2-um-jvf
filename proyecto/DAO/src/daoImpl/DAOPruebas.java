@@ -21,9 +21,31 @@ public class DAOPruebas {
 
 
 		DesafioDAODB d=new DesafioDAODB();
+		ArrayList a;
 		try {
-			ArrayList a=d.getDesafiosBatallaNaval();
-			System.out.println(((Desafio)a.get(1)).getIdDesafio());
+			a = d.getDesafios();
+
+			for(int i=0;i<a.size();i++){
+				System.out.println(((Desafio)a.get(i)).getUsuarioDesafio());
+				System.out.println(((Desafio)a.get(i)).getMonto());
+				System.out.println(((Desafio)a.get(i)).getFechaHoraInicioD());
+				System.out.println(((Desafio)a.get(i)).getFechaHoraInicioD());
+			}
+
+
+		} catch (NoHayDesafioException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+
+
+
+	/*
+		DesafioDAODB d=new DesafioDAODB();
+		try {
+			ArrayList a=d.getDesafiosUsuariosDisponibleBatallaNaval();
+			System.out.println(((Desafio)a.get(0)).getUsuarioDesafio());
 		} catch (NoHayDesafioException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
