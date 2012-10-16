@@ -47,7 +47,7 @@ public class RankingDAODB implements RankingDAO {
 		ArrayList ganados=new ArrayList();
 
 
-		Conexion c=new Conexion("com.mysql.jdbc.Driver","jdbc:mysql://localhost/jvm", "root", "");
+		Conexion c=new Conexion();
 
 		try {
 
@@ -91,7 +91,7 @@ public class RankingDAODB implements RankingDAO {
 		ArrayList ganados=new ArrayList();
 
 
-		Conexion c=new Conexion("com.mysql.jdbc.Driver","jdbc:mysql://localhost/jvm", "root", "");
+		Conexion c=new Conexion();
 
 		try {
 
@@ -133,7 +133,7 @@ public class RankingDAODB implements RankingDAO {
 		ArrayList ganados=new ArrayList();
 
 
-		Conexion c=new Conexion("com.mysql.jdbc.Driver","jdbc:mysql://localhost/jvm", "root", "");
+		Conexion c=new Conexion();
 
 		try {
 
@@ -175,7 +175,7 @@ public class RankingDAODB implements RankingDAO {
 		ArrayList ganados=new ArrayList();
 
 
-		Conexion c=new Conexion("com.mysql.jdbc.Driver","jdbc:mysql://localhost/jvm", "root", "");
+		Conexion c=new Conexion();
 
 		try {
 

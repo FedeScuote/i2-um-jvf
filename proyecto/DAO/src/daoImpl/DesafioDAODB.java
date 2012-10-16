@@ -58,8 +58,7 @@ public class DesafioDAODB implements DesafioDAO {
 	public ArrayList getDesafios() throws NoHayDesafioException {
 		ArrayList a = new ArrayList();
 
-		Conexion c = new Conexion("com.mysql.jdbc.Driver",
-				"jdbc:mysql://localhost/jvm", "root", "");
+		Conexion c = new Conexion();
 
 		try {
 
@@ -105,8 +104,7 @@ public class DesafioDAODB implements DesafioDAO {
 	public ArrayList getDesafiosBatallaNaval() throws NoHayDesafioException {
 		ArrayList a = new ArrayList();
 
-		Conexion c = new Conexion("com.mysql.jdbc.Driver",
-				"jdbc:mysql://localhost/jvm", "root", "");
+		Conexion c = new Conexion();
 
 		try {
 
@@ -144,8 +142,7 @@ public class DesafioDAODB implements DesafioDAO {
 			throws NoHayDesafioException {
 		ArrayList a = new ArrayList();
 
-		Conexion c = new Conexion("com.mysql.jdbc.Driver",
-				"jdbc:mysql://localhost/jvm", "root", "");
+		Conexion c = new Conexion();
 
 		try {
 
@@ -192,8 +189,7 @@ public class DesafioDAODB implements DesafioDAO {
 			throws NoHayDesafioException {
 		ArrayList a = new ArrayList();
 
-		Conexion c = new Conexion("com.mysql.jdbc.Driver",
-				"jdbc:mysql://localhost/jvm", "root", "");
+		Conexion c = new Conexion();
 
 		try {
 
@@ -241,8 +237,7 @@ public class DesafioDAODB implements DesafioDAO {
 ArrayList a = new ArrayList();
 
 
-Conexion c = new Conexion("com.mysql.jdbc.Driver",
-		"jdbc:mysql://localhost/jvm", "root", "");
+Conexion c = new Conexion();
 
 try {
 
