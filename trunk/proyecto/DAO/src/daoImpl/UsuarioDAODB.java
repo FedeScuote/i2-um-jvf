@@ -9,6 +9,7 @@ import daoInterfaces.UsuarioDAO;
 import excepcionesB.NotDataFoundException;
 import excepcionesB.YaExisteUsuarioException;
 import excepcionesD.NoExisteUsuarioException;
+import org.apache.log4j.Logger;
 
 public class UsuarioDAODB implements UsuarioDAO {
 
@@ -20,6 +21,7 @@ public class UsuarioDAODB implements UsuarioDAO {
 	private int nivelPrivilegioD;
 	private String paisD;
 	private int creditoD;
+	private static Logger logger = Logger.getLogger(UsuarioDAODB.class);
 
 	public Usuario findByName(String usuario) throws NotDataFoundException {
 		Usuario u = new Usuario();
@@ -49,7 +51,7 @@ public class UsuarioDAODB implements UsuarioDAO {
 				throw new NotDataFoundException();
 			}
 		} catch (SQLException ex) {
-			System.out.println("error");
+			logger.error("error de my sql");
 			throw new NotDataFoundException();
 
 		}
