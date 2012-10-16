@@ -8,6 +8,7 @@ import busImpl.Usuario;
 import daoInterfaces.UsuarioDAO;
 import excepcionesB.NotDataFoundException;
 import excepcionesB.YaExisteUsuarioException;
+import excepcionesD.NoExisteUsuarioException;
 
 public class UsuarioDAODB implements UsuarioDAO {
 
@@ -24,7 +25,7 @@ public class UsuarioDAODB implements UsuarioDAO {
 		Usuario u = new Usuario();
 		Conexion conexion = new Conexion("com.mysql.jdbc.Driver","jdbc:mysql://localhost/jvm", "root", "");
 		try {
-			
+
 			ResultSet resultado = conexion
 					.devolverResutado("SELECT * FROM usuarios WHERE usuario='"+usuario+"'");
 			boolean esta=false;
@@ -63,6 +64,27 @@ public class UsuarioDAODB implements UsuarioDAO {
 		// TODO Auto-generated method stub
 		return false;
 	}
+
+	public String getUsuario(int idUsuario) throws NoExisteUsuarioException {
+		Conexion c = new Conexion("com.mysql.jdbc.Driver","jdbc:mysql://localhost/jvm", "root", "");
+
+		ResultSet r = null;
+		String usuario = null;
+		try {
+			r = c.devolverResutado("SELECT usuario FROM usuarios WHERE idusuario='"+ idUsuario + "'");
+
+			r.next();
+			usuario = r.getString("usuario");
+
+		} catch (SQLException ex) {
+
+		}
+		return usuario;
+
+	}
+
+
+
 
 }
 
