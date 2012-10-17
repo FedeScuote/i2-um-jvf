@@ -1,6 +1,7 @@
 package ventanaJuego;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.GridLayout;
 
@@ -86,8 +87,10 @@ public class BatallaNavalVentana extends JFrame {
 				if (!esMiTurno) {
 					temporizador.restart();
 					indicadorTurno.setText("NO ES TU TURNO");
+					indicadorTurno.setForeground(Color.RED);
 				} else {
 					indicadorTurno.setText("ES TU TURNO");
+					indicadorTurno.setForeground(Color.GREEN);
 				}
 			}
 		};
