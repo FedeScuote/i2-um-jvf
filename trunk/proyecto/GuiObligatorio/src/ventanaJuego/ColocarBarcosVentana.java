@@ -1,15 +1,9 @@
 package ventanaJuego;
 
 import java.awt.BorderLayout;
-import javax.swing.JPanel;
-import javax.swing.JFrame;
-import javax.swing.JRadioButtonMenuItem;
 
-import java.awt.GridBagLayout;
-import javax.swing.JRadioButton;
-import java.awt.GridBagConstraints;
-import java.awt.GridLayout;
-import javax.swing.BoxLayout;
+import javax.swing.*;
+import java.awt.*;
 
 public class ColocarBarcosVentana extends JFrame {
 
@@ -19,7 +13,7 @@ public class ColocarBarcosVentana extends JFrame {
 
 	private JPanel PanelElegirBarco = null;
 
-	private JRadioButtonMenuItem MenuBotones = null;
+	private ButtonGroup GrupoBotones = null;  //  @jve:decl-index=0:
 
 	private JRadioButton BotonSubmarino = null;
 
@@ -37,6 +31,7 @@ public class ColocarBarcosVentana extends JFrame {
 	public ColocarBarcosVentana() {
 		super();
 		initialize();
+		this.agregarBotonesAGroup();
 	}
 
 	/**
@@ -148,13 +143,12 @@ public class ColocarBarcosVentana extends JFrame {
 		}
 		return PanelTablero;
 	}
-	private void agregarBotonesAMenu(){
-		MenuBotones = new JRadioButtonMenuItem();
-		MenuBotones.add(BotonSubmarino);
-		MenuBotones.add(BotonDestructor);
-		MenuBotones.add(BotonCruzero);
-		MenuBotones.add(BotonAcorazado);
-
+	private void agregarBotonesAGroup(){
+		GrupoBotones = new ButtonGroup();
+		GrupoBotones.add(BotonSubmarino);
+		GrupoBotones.add(BotonDestructor);
+		GrupoBotones.add(BotonCruzero);
+		GrupoBotones.add(BotonAcorazado);
 	}
 
-}
+}  //  @jve:decl-index=0:visual-constraint="120,2"
