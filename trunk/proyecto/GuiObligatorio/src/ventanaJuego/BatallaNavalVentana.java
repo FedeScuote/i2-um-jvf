@@ -120,6 +120,7 @@ public class BatallaNavalVentana extends JFrame {
 			BorderLayout borderLayout = new BorderLayout();
 			indicadorTurno = new JLabel();
 			indicadorTurno.setText("ES TU TURNO");
+			indicadorTurno.setForeground(Color.GREEN);
 			indicadorTurno.setHorizontalAlignment(SwingConstants.CENTER);
 			indicadorTurno.setHorizontalTextPosition(SwingConstants.CENTER);
 			jContentPane = new JPanel();
