@@ -4,6 +4,8 @@ package daoImpl;
 import java.util.ArrayList;
 import java.util.Date;
 
+import org.apache.log4j.Logger;
+
 import excepcionesB.NoHayDesafioException;
 import excepcionesB.NoHayRankingException;
 import excepcionesB.NotDataFoundException;
@@ -12,13 +14,17 @@ import busImpl.Usuario;
 import busImpl.Desafio;
 
 public class DAOPruebas {
-
+	private static Logger logger = Logger.getLogger(DAOPruebas.class);
 	/**
 	 * @param args
 	 */
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 
+		logger.warn("warn");
+		logger.info("info");
+		logger.fatal("fatal");
+		logger.error("error");
 
 		DesafioDAODB d=new DesafioDAODB();
 		ArrayList a;
