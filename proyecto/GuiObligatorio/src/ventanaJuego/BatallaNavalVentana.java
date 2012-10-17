@@ -24,7 +24,7 @@ import comm.ServiciosBatallaNaval;
 import comm.ServiciosUsuario;
 import comm.UsuarioVO;
 
-public class BatallaNavalVentana extends JFrame {
+public class BatallaNavalVentana extends TablerosBatallaNaval {
 
 	private static final long serialVersionUID = 1L;
 
