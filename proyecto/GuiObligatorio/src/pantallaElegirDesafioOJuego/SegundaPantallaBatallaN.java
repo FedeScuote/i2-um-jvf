@@ -10,7 +10,6 @@ import javax.swing.JList;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
-
 import comm.DesafioBatallaNavalVO;
 import comm.RankingVO;
 import comm.ServiciosDesafio;
@@ -20,36 +19,47 @@ public class SegundaPantallaBatallaN extends SegundaPantalla {
 
 	private final static String host = null;
 
-
-	public SegundaPantallaBatallaN(){
+	public SegundaPantallaBatallaN() {
 		super();
 		this.llenarListaDesafio();
 	}
-	private void llenarListaDesafio(){
+
+	private void llenarListaDesafio() {
 		try { // intento recibir datos para el ranking/
 			Registry registry = LocateRegistry.getRegistry(host);
-			ServiciosDesafio stub = (ServiciosDesafio) registry.lookup("Desafio");
+			ServiciosDesafio stub = (ServiciosDesafio) registry
+					.lookup("Desafio");
 			ArrayList<DesafioBatallaNavalVO> response = stub.getDesafios();
 			this.llenarTabla(this.desafiosDisponiblesTabla, response);
-		}catch(Exception e){
-			if(! (e instanceof NoHayDesafiosDisponiblesException)){
-			e.printStackTrace();
-			}else{
+		} catch (Exception e) {
+			if (!(e instanceof NoHayDesafiosDisponiblesException)) {
+				e.printStackTrace();
+			} else {
 				System.out.println("no hay desafios");
 			}
 		}
 	}
-//	METODO PARA LLENAR UNA JTABLE CON UN ARRAY DE OBJETOS
-	private void llenarTabla(JTable tabla, ArrayList<DesafioBatallaNavalVO> lista){
-		DefaultTableModel model = new DefaultTableModel();
+
+	// METODO PARA LLENAR UNA JTABLE CON UN ARRAY DE OBJETOS
+	private void llenarTabla(JTable tabla,
+			ArrayList<DesafioBatallaNavalVO> lista) {
+		DefaultTableModel model = new DefaultTableModel() { // me hago mi modelo
+			// para que no puedan editar la tabla
+			@Override
+			public boolean isCellEditable(int row, int column) {
+				// all cells false
+				return false;
+			}
+		};
 		tabla.setModel(model);
-		model.setColumnIdentifiers(new String[] {"Monto", "Nick"});
+		model.setColumnIdentifiers(new String[] { "Monto", "Nick" });
 		Iterator i = lista.iterator();
 		// relleno la tabla con data del arraylist
-		while (i.hasNext())
-		{
-			DesafioBatallaNavalVO rank= (DesafioBatallaNavalVO)i.next();
-		    model.addRow(new String[] {((Integer)rank.getApuesta()).toString(),((Integer)rank.getIdDesafio()).toString()});
+		while (i.hasNext()) {
+			DesafioBatallaNavalVO rank = (DesafioBatallaNavalVO) i.next();
+			model.addRow(new String[] {
+					((Integer) rank.getApuesta()).toString(),
+					((Integer) rank.getIdDesafio()).toString() });
 		}
 	}
 }
