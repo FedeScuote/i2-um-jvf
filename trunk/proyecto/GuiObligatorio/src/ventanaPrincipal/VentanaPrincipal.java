@@ -10,6 +10,8 @@ import java.awt.GridBagConstraints;
 import javax.swing.ImageIcon;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import javax.swing.JTextArea;
+
 import java.awt.Insets;
 import javax.swing.JButton;
 import javax.swing.table.DefaultTableModel;
@@ -221,7 +223,14 @@ public class VentanaPrincipal extends JFrame {
 	}
 	//METODO PARA LLENAR UNA JTABLE CON UN ARRAY DE OBJETOS
 	private void llenarTabla(JTable tabla, ArrayList<RankingVO> lista){
-		DefaultTableModel model = new DefaultTableModel();
+		DefaultTableModel model = new DefaultTableModel() { // me hago mi modelo
+			// para que no puedan editar la tabla
+			@Override
+			public boolean isCellEditable(int row, int column) {
+				// all cells false
+				return false;
+			}
+		};
 		tabla.setModel(model);
 		model.setColumnIdentifiers(new String[] {"nro partidas ganadas", "Nick"});
 		Iterator i = lista.iterator();
