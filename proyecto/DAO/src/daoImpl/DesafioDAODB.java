@@ -161,7 +161,7 @@ public class DesafioDAODB implements DesafioDAO {
 				d.setMonto(monto);
 				d.setFechaHoraInicioD(fecha);
 				d.setEstado(estadoD);
-
+				d.setIdUsuario(idUsuario);
 				UsuarioDAODB ud = new UsuarioDAODB();
 				String usuarioDesafio = ud.getUsuario(idUsuario);
 				d.setUsuarioDesafio(usuarioDesafio);
