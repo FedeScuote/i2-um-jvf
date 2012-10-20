@@ -14,6 +14,8 @@ import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
+import ventanaJuego.ColocarBarcosVentana;
+
 import comm.DesafioBatallaNavalVO;
 import comm.DesafioVO;
 import comm.RankingVO;
@@ -81,6 +83,9 @@ public class SegundaPantallaBatallaN extends SegundaPantalla {
 			      JTable target = (JTable)e.getSource();
 			      int row = target.getSelectedRow();
 			      pantalla.iniciarPartida(pantalla.arrayDesafio.get(row), pantalla.usuario);
+			      pantalla.dispose();
+			      ColocarBarcosVentana l = new ColocarBarcosVentana(pantalla.usuario);
+			      l.setVisible(true);
 			    }
 			  }
 		});
