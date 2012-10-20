@@ -1,7 +1,7 @@
 package daoInterfaces;
 
 public interface PartidaDAO {
+	//devuelve idPartida
+	public int concretarDesafio(int idDesafio,int idDesafiante);
 
-	public int concretarDesafio(int idDesafio,int idDesafia);
-	
 }
