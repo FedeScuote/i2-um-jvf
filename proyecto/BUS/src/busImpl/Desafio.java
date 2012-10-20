@@ -73,6 +73,7 @@ public class Desafio implements ServiciosDesafio {
 			while(i<desafiosBDD.size()){
 				DesafioBatallaNavalVO nuevo = new DesafioBatallaNavalVO();
 				UsuarioVO usu = new UsuarioVO(((Desafio)desafiosBDD.get(i)).getUsuarioDesafio());
+				usu.setIdUsuario(((Desafio)desafiosBDD.get(i)).getIdUsuario());
 				nuevo.setApuesta(((Desafio)desafiosBDD.get(i)).getMonto());
 				nuevo.setIdDesafio((((Desafio)desafiosBDD.get(i)).getIdDesafio()));
 				nuevo.setUsuario(usu);
