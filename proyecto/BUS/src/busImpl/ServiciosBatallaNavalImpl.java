@@ -5,6 +5,7 @@ import java.util.ArrayList;
 
 import comm.DesafioBatallaNavalVO;
 import comm.DesafioVO;
+import comm.Estados;
 import comm.RegistroDisparo;
 import comm.ServiciosBatallaNaval;
 import comm.TableroVO;
@@ -93,6 +94,15 @@ public class ServiciosBatallaNavalImpl implements ServiciosBatallaNaval{
 
 	public ArrayList<RegistroDisparo> obtenerListaDisparos(UsuarioVO usuario) throws RemoteException {
 		return obtenerListaDisparos(usuario);
+	}
+
+	public boolean hundi(UsuarioVO usuario) throws RemoteException {
+		ArrayList<RegistroDisparo> nuevo=obtenerListaDisparos(usuario);
+		if(nuevo!=null){
+			return nuevo.get(nuevo.size()-1).getResultado()==Estados.HUNDIDO;
+		}else{
+			return false;
+		}
 	}
 
 }
