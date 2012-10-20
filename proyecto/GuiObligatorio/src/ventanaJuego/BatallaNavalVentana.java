@@ -20,8 +20,10 @@ import java.rmi.registry.Registry;
 import javax.swing.JLabel;
 import javax.swing.SwingConstants;
 
+import comm.CeldaVO;
 import comm.ServiciosBatallaNaval;
 import comm.ServiciosUsuario;
+import comm.TableroVO;
 import comm.UsuarioVO;
 
 public class BatallaNavalVentana extends JFrame{
@@ -169,6 +171,7 @@ public class BatallaNavalVentana extends JFrame{
 				this.crearFila(panel, i, botones);
 
 		}
+		refrescarTableroJugador();
 	}
 	//metodo que me crea mi cabezal con mis letras
 	private void crearCabezal(JPanel panel) {
@@ -228,6 +231,7 @@ public class BatallaNavalVentana extends JFrame{
 				stub.disparar(this.usuario, fila, columna);
 				JOptionPane
 						.showMessageDialog(new JFrame(), "DISPARO REALIZADO");
+				refrescarTableroJugador();
 				temporizador.start();
 			} catch (Exception e) {
 
@@ -237,16 +241,48 @@ public class BatallaNavalVentana extends JFrame{
 
 
 	// METODO PARA PREGUNTAR TURNO
-	public static boolean preguntarTurno(UsuarioVO usuario) {
+	public boolean preguntarTurno(UsuarioVO usuario) {
 		try { // try y catch para verificar si esta el usuario o
 			// no
 			Registry registry = LocateRegistry.getRegistry(host);
 			ServiciosBatallaNaval stub = (ServiciosBatallaNaval) registry
 					.lookup("Turn");
+			refrescarTableroJugador();
 			return stub.esMiTurno(usuario);
 		} catch (Exception e) {
 			e.printStackTrace();
 			return false;
 		}
 	}
+	public void refrescarTableroJugador(){
+		try { // try y catch para verificar si esta el usuario o
+			// no
+			Registry registry = LocateRegistry.getRegistry(host);
+			ServiciosBatallaNaval stub = (ServiciosBatallaNaval) registry
+					.lookup("Refresh");
+			cambiarBotones(botonesJugador,stub.refrescarTablero(usuario));
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	public void cambiarBotones(JButton[][] botones, TableroVO tablero){
+		CeldaVO[][] tabla = tablero.getTabla();
+		for (int i=0 ; i<tabla.length;i++){
+			for (int j = 0; j < tabla.length; j++) {
+				if(tabla[i][j].getEstado().equals("AGUA")){
+					botones[i][j].setBackground(Color.BLUE);
+				}else if (tabla[i][j].getEstado().equals("OCUPADO")) {
+					botones[i][j].setBackground(Color.BLACK);
+				}else if(tabla[i][j].getEstado().equals("TOCADO")){
+					botones[i][j].setBackground(Color.GREEN);
+				}else{
+					botones[i][j].setBackground(Color.RED); // esto quiere decir
+					//que si no era ninguno de los otros erre el tiro
+				}
+
+			}
+		}
+	}
+
+
 }// @jve:decl-index=0:visual-constraint="10,10"
