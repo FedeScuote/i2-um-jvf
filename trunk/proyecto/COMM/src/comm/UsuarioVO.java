@@ -12,6 +12,11 @@ public class UsuarioVO implements Serializable {
 
 	private String apellidoB;
 
+	public UsuarioVO(String usuarioB) {
+		super();
+		this.usuarioB = usuarioB;
+	}
+
 	public String getUsuarioB() {
 		return usuarioB;
 	}
