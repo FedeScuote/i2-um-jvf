@@ -40,7 +40,7 @@ public class ServiciosBatallaNavalImpl implements ServiciosBatallaNaval{
 	}
 
 
-	public void iniciarPartida(DesafioVO desafio, UsuarioVO desafiante) throws RemoteException{
+	public void iniciarPartida(DesafioBatallaNavalVO desafio, UsuarioVO desafiante) throws RemoteException{
 		PartidaDAO dao = getDAO();
 //		int idPartida=dao.concretarDesafio(desafio.getIdDesafio(), desafiante.getIdUsuario());
 		int idPartida=0;
