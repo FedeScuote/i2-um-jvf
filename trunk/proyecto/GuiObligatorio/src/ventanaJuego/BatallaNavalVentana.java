@@ -2,7 +2,6 @@ package ventanaJuego;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.Dimension;
 import java.awt.GridLayout;
 
 import javax.swing.JOptionPane;
@@ -23,7 +22,6 @@ import javax.swing.SwingConstants;
 
 import comm.CeldaVO;
 import comm.ServiciosBatallaNaval;
-import comm.ServiciosUsuario;
 import comm.TableroVO;
 import comm.UsuarioVO;
 
@@ -234,6 +232,9 @@ public class BatallaNavalVentana extends JFrame{
 				stub.disparar(this.usuario, fila, columna);
 				JOptionPane
 						.showMessageDialog(new JFrame(), "DISPARO REALIZADO");
+				if(stub.hundi(this.usuario)){
+					JOptionPane.showMessageDialog(new JFrame(),"HAS HUNDIDO UN BARCO", "ENHORABUENA", JOptionPane.INFORMATION_MESSAGE);
+				}
 				refrescarTableroJugador();
 				refrescarTableroOponente();
 				temporizador.start();
