@@ -180,21 +180,21 @@ public class LoginVentana extends JFrame {
 						pantalla.dispose();
 						VentanaPrincipal l = new VentanaPrincipal(response);
 						l.setVisible(true);
-					} catch (Exception remoteExceptionrmi) {
+					} catch (Exception error) {
 						// si no se encuentra el usuario la excepcion es
 						// NoSeEncuentraUsuarioExcption
-						if (remoteExceptionrmi instanceof NoSeEncuentraUsuarioException) {
+						if (error instanceof NoSeEncuentraUsuarioException) {
 							JOptionPane.showMessageDialog(new JFrame(),"usuario invalido", "ERROR", JOptionPane.ERROR_MESSAGE);
 
 						} else {
-							if (remoteExceptionrmi instanceof ContrasenaInvalidaException) {
+							if (error instanceof ContrasenaInvalidaException) {
 								JOptionPane.showMessageDialog(new JFrame(),
 										"password invalido", "ERROR", JOptionPane.ERROR_MESSAGE);
 							} else {
 
-								System.err.println("Client exception: "
-										+ remoteExceptionrmi.toString());
-								remoteExceptionrmi.printStackTrace();
+								error.printStackTrace();
+								JOptionPane.showMessageDialog(new JFrame(),"ERROR DESCONOCIDO", "ERROR", JOptionPane.ERROR_MESSAGE);
+								pantalla.dispose();
 							}
 
 						}
