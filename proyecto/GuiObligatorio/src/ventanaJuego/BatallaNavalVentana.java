@@ -80,6 +80,8 @@ public class BatallaNavalVentana extends JFrame{
 		// en mi
 		// panel
 		// contrincante
+		refrescarTableroJugador();
+		refrescarTableroOponente();
 		this.setExtendedState(this.getExtendedState() | JFrame.MAXIMIZED_BOTH);// mi
 		// frame
 		// arranca
@@ -97,10 +99,10 @@ public class BatallaNavalVentana extends JFrame{
 				}
 			}
 		};
-		// temporizador = new Timer(pause, taskPerformer); falta implmenetar RMI
-		// temporizador.setInitialDelay(pause);
-		// temporizador.addActionListener(taskPerformer);
-		// temporizador.start();
+		 temporizador = new Timer(pause, taskPerformer);
+		 temporizador.setInitialDelay(pause);
+		 temporizador.addActionListener(taskPerformer);
+		 temporizador.start();
 	}
 
 	/**
@@ -172,7 +174,7 @@ public class BatallaNavalVentana extends JFrame{
 				this.crearFila(panel, i, botones);
 
 		}
-		refrescarTableroJugador();
+
 	}
 	//metodo que me crea mi cabezal con mis letras
 	private void crearCabezal(JPanel panel) {
@@ -233,6 +235,7 @@ public class BatallaNavalVentana extends JFrame{
 				JOptionPane
 						.showMessageDialog(new JFrame(), "DISPARO REALIZADO");
 				refrescarTableroJugador();
+				refrescarTableroOponente();
 				temporizador.start();
 			} catch (Exception e) {
 
@@ -249,6 +252,7 @@ public class BatallaNavalVentana extends JFrame{
 			ServiciosBatallaNaval stub = (ServiciosBatallaNaval) registry
 					.lookup("BatallaNavalServices");
 			refrescarTableroJugador();
+			refrescarTableroOponente();
 			return stub.esMiTurno(usuario);
 		} catch (Exception e) {
 			e.printStackTrace();
