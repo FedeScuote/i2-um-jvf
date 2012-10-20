@@ -95,7 +95,7 @@ public class SegundaPantallaBatallaN extends SegundaPantalla {
 	private void iniciarPartida(DesafioVO desafio, UsuarioVO desafiante){
 		try { // intento recibir datos para el ranking
 			Registry registry = LocateRegistry.getRegistry(host);
-			ServiciosBatallaNaval stub = (ServiciosBatallaNaval) registry.lookup("iniciar");
+			ServiciosBatallaNaval stub = (ServiciosBatallaNaval) registry.lookup("BatallaNavalServices");
 			stub.iniciarPartida(desafio, desafiante);
 		}catch(Exception e){
 			if(e instanceof RemoteException){

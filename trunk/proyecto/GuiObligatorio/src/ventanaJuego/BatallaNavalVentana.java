@@ -14,6 +14,7 @@ import java.awt.GridBagLayout;
 import javax.swing.JButton;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 
@@ -227,7 +228,7 @@ public class BatallaNavalVentana extends JFrame{
 				// no
 				Registry registry = LocateRegistry.getRegistry(host);
 				ServiciosBatallaNaval stub = (ServiciosBatallaNaval) registry
-						.lookup("Shoot");
+						.lookup("BatallaNavalServices");
 				stub.disparar(this.usuario, fila, columna);
 				JOptionPane
 						.showMessageDialog(new JFrame(), "DISPARO REALIZADO");
@@ -246,7 +247,7 @@ public class BatallaNavalVentana extends JFrame{
 			// no
 			Registry registry = LocateRegistry.getRegistry(host);
 			ServiciosBatallaNaval stub = (ServiciosBatallaNaval) registry
-					.lookup("Turn");
+					.lookup("BatallaNavalServices");
 			refrescarTableroJugador();
 			return stub.esMiTurno(usuario);
 		} catch (Exception e) {
@@ -259,10 +260,33 @@ public class BatallaNavalVentana extends JFrame{
 			// no
 			Registry registry = LocateRegistry.getRegistry(host);
 			ServiciosBatallaNaval stub = (ServiciosBatallaNaval) registry
-					.lookup("Refresh");
+					.lookup("BatallaNavalServices");
 			cambiarBotones(botonesJugador,stub.refrescarTablero(usuario));
 		} catch (Exception e) {
+			if(e instanceof RemoteException){
+				JOptionPane.showMessageDialog(new JFrame(),"ERROR DE CONEXION", "ERROR", JOptionPane.ERROR_MESSAGE);
+			}else{
 			e.printStackTrace();
+			JOptionPane.showMessageDialog(new JFrame(),"ERROR DESCONOCIDO", "ERROR", JOptionPane.ERROR_MESSAGE);
+			this.dispose();
+			}
+		}
+	}
+	public void refrescarTableroOponente(){
+		try { // try y catch para verificar si esta el usuario o
+			// no
+			Registry registry = LocateRegistry.getRegistry(host);
+			ServiciosBatallaNaval stub = (ServiciosBatallaNaval) registry
+					.lookup("BatallaNavalServices");
+			cambiarBotones(botonesJugador,stub.refrescarTablero(usuario));
+		} catch (Exception e) {
+			if(e instanceof RemoteException){
+				JOptionPane.showMessageDialog(new JFrame(),"ERROR DE CONEXION", "ERROR", JOptionPane.ERROR_MESSAGE);
+			}else{
+			e.printStackTrace();
+			JOptionPane.showMessageDialog(new JFrame(),"ERROR DESCONOCIDO", "ERROR", JOptionPane.ERROR_MESSAGE);
+			this.dispose();
+			}
 		}
 	}
 	public void cambiarBotones(JButton[][] botones, TableroVO tablero){
