@@ -300,19 +300,23 @@ public class JvfBotBatallaNaval {
 	}
 
 	public static void main(String[] args) {
+
+	}
+
+	public static void comenzarJuego() throws RemoteException, CoordenadasInvalidasException, NoInicioJuegoException {
 		Registry registry;
 		try {
 			registry = LocateRegistry.getRegistry(null);
-			ServiciosBatallaNaval stub = (ServiciosBatallaNaval) registry.lookup("Hello");
+			ServiciosBatallaNaval stub = (ServiciosBatallaNaval) registry.lookup("BatallaNavalServices");
 			bn=stub;
 			JvfBotBatallaNaval.comenzarJuego();
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-	}
-
-	private static void comenzarJuego() throws RemoteException, CoordenadasInvalidasException, NoInicioJuegoException {
+		UsuarioVO n= new UsuarioVO("jhirata");
+		n.setIdUsuario(1);
+		usuario=n;
 		JvfBotBatallaNaval prueba = new JvfBotBatallaNaval();
 		while(true){
 			if(!bn.esMiTurno(usuario)){

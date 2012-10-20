@@ -3,6 +3,8 @@ package busImpl;
 import java.rmi.RemoteException;
 import java.util.ArrayList;
 
+import busImpl.bot.JvfBotBatallaNaval;
+
 import comm.DesafioBatallaNavalVO;
 import comm.DesafioVO;
 import comm.Estados;
@@ -11,6 +13,7 @@ import comm.ServiciosBatallaNaval;
 import comm.TableroVO;
 import comm.UsuarioVO;
 import commExceptions.CoordenadasInvalidasException;
+import commExceptions.NoInicioJuegoException;
 import commExceptions.NoSeEncuentraUsuarioException;
 import daoInterfaces.PartidaDAO;
 import daoInterfaces.RankingDAO;
@@ -52,6 +55,15 @@ public class ServiciosBatallaNavalImpl implements ServiciosBatallaNaval{
 		JuegoBatallaNaval juego = new JuegoBatallaNaval(jugador1,jugador2);
 		PartidaBatallaNaval nueva = new PartidaBatallaNaval(idPartida,juego);
 		this.partidas.add(nueva);
+		try {
+			JvfBotBatallaNaval.comenzarJuego();
+		} catch (CoordenadasInvalidasException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (NoInicioJuegoException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 
