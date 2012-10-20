@@ -16,6 +16,7 @@ import excepcionesB.NoHayDesafioException;
 public class Desafio implements ServiciosDesafio {
 
 	private String usuarioDesafio;
+	private int idUsuario;
 	private int idDesafio;
 	private int monto;
 	private Date fechaHoraInicioD;
@@ -89,6 +90,12 @@ public class Desafio implements ServiciosDesafio {
 	}
 	public void setUsuarioDesafio(String usuarioDesafio) {
 		this.usuarioDesafio = usuarioDesafio;
+	}
+	public int getIdUsuario() {
+		return idUsuario;
+	}
+	public void setIdUsuario(int idUsuario) {
+		this.idUsuario = idUsuario;
 	}
 
 
