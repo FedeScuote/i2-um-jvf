@@ -6,6 +6,7 @@ import java.util.Date;
 import comm.DesafioBatallaNavalVO;
 import comm.RankingVO;
 import comm.ServiciosDesafio;
+import comm.UsuarioVO;
 import commExceptions.NoHayDesafiosDisponiblesException;
 import daoInterfaces.DesafioDAO;
 import daoInterfaces.RankingDAO;
@@ -70,8 +71,10 @@ public class Desafio implements ServiciosDesafio {
 			int i=0;
 			while(i<desafiosBDD.size()){
 				DesafioBatallaNavalVO nuevo = new DesafioBatallaNavalVO();
+				UsuarioVO usu = new UsuarioVO(((Desafio)desafiosBDD.get(i)).getUsuarioDesafio());
 				nuevo.setApuesta(((Desafio)desafiosBDD.get(i)).getMonto());
 				nuevo.setIdDesafio((((Desafio)desafiosBDD.get(i)).getIdDesafio()));
+				nuevo.setUsuario(usu);
 				aux.add(nuevo);
 				i++;
 			}
