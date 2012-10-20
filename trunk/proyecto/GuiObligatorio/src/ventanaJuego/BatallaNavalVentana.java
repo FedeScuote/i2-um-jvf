@@ -282,7 +282,7 @@ public class BatallaNavalVentana extends JFrame{
 			Registry registry = LocateRegistry.getRegistry(host);
 			ServiciosBatallaNaval stub = (ServiciosBatallaNaval) registry
 					.lookup("BatallaNavalServices");
-			cambiarBotones(botonesJugador,stub.refrescarTablero(usuario));
+			cambiarBotones(botonesJugador,stub.refrescarTableroOponente(usuario));
 		} catch (Exception e) {
 			if(e instanceof RemoteException){
 				JOptionPane.showMessageDialog(new JFrame(),"ERROR DE CONEXION", "ERROR", JOptionPane.ERROR_MESSAGE);
