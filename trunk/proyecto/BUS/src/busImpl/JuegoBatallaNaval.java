@@ -1,7 +1,7 @@
 package busImpl;
 
 import java.rmi.RemoteException;
-
+import java.util.ArrayList;
 import comm.CeldaVO;
 import comm.ServiciosBatallaNaval;
 import comm.TableroVO;
@@ -16,17 +16,34 @@ public class JuegoBatallaNaval{
 	private static final String DESTRUCTORES = "DESTRUCTORES";
 	private static final String CRUCEROS = "CRUCEROS";
 	private static final String ACORAZADO = "ACORAZADO";
-
-
+	private static final int CANTIDAD_INICIAL_SUBMARINO = 3;
+	private static final int CANTIDAD_INICIAL_DESTRUCTORES = 2;
+	private static final int CANTIDAD_INICIAL_CRUCEROS = 1;
+	private static final int CANTIDAD_INICIAL_ACORAZADO = 1;
 
 	private Tablero tableroJugador1;
+	private ArrayList<RegistroDisparo> listaDisparosAOponente1;
 	private Tablero tableroJugador2;
+	private ArrayList<RegistroDisparo> listaDisparosAOponente2;
 
+
+	public boolean esta(UsuarioVO usuario){
+		return tableroJugador1.getJugador().getUsuarioB().equals(usuario.getUsuarioB())||tableroJugador1.getJugador().getUsuarioB().equals(usuario.getUsuarioB());
+	}
 
 	public JuegoBatallaNaval(Usuario jugador1, Usuario jugador2) {
 		super();
 		this.tableroJugador1 = new Tablero(jugador1);
 		this.tableroJugador2 = new Tablero(jugador2);
+	}
+
+	public int[] distribucion(){
+		int[] retorno = new int[4];
+		retorno[0]=CANTIDAD_INICIAL_SUBMARINO;
+		retorno[1]=CANTIDAD_INICIAL_DESTRUCTORES;
+		retorno[2]=CANTIDAD_INICIAL_CRUCEROS;
+		retorno[3]=CANTIDAD_INICIAL_ACORAZADO;
+		return retorno;
 	}
 
 	public Tablero getTableroJugador1() {
@@ -90,6 +107,7 @@ public class JuegoBatallaNaval{
 
 	}
 
+
 	private void quitarBarcoStockJugador1(String tipoBarco) {
 		if(tipoBarco.equals(SUBMARINO)){
 			tableroJugador1.decrementarBarcosSubmarino();
@@ -118,20 +136,6 @@ public class JuegoBatallaNaval{
 			tableroJugador1.setMiTurno(true);
 		}
 	}
-//	private void quitarBarcoStockJugador2(int largo) {
-//		if(largo==4){
-//			tableroJugador2.decrementarBarcosL4();
-//		}else if(largo==3){
-//			tableroJugador2.decrementarBarcosL3();
-//		}else if(largo==2){
-//			tableroJugador2.decrementarBarcosL2();
-//		}else if(largo==1){
-//			tableroJugador2.decrementarBarcosL1();
-//		}
-//		if(tableroJugador2.getCantBarcosL1()==0&&tableroJugador2.getCantBarcosL2()==0&&tableroJugador2.getCantBarcosL3()==0&&tableroJugador2.getCantBarcosL4()==4&&tableroJugador1.getCantBarcosL1()==0&&tableroJugador1.getCantBarcosL2()==0&&tableroJugador1.getCantBarcosL3()==0&&tableroJugador1.getCantBarcosL4()==4){
-//			tableroJugador1.setMiTurno(true);
-//		}
-//	}
 
 	private Boolean coordenadasEnDirY(int coordenadaInicialX,
 			int coordenadaFinalX) {
@@ -148,20 +152,60 @@ public class JuegoBatallaNaval{
 
 		if (tableroJugador1.getJugador().getIdUsuarioB() == usuario.getIdUsuario()) {
 			try {
-				tableroJugador1.dispararACelda(coordenadaX,coordenadaY);
+				Estados resultado=tableroJugador2.dispararACelda(coordenadaX,coordenadaY);
+				Disparo disparo=new Disparo();
+				disparo.setFila(coordenadaX);
+				disparo.setColumna(coordenadaY);
+				RegistroDisparo registro= new RegistroDisparo(resultado,disparo);
+				this.listaDisparosAOponente1.add(registro);
+				this.tableroJugador1.setMiTurno(false);
 			} catch (CoordenadasCeldasInvalidasException e) {
 				throw new CoordenadasInvalidasException();
 			}
 		}else{
 			try {
-				tableroJugador2.dispararACelda(coordenadaX,coordenadaY);
+				Estados resultado=tableroJugador1.dispararACelda(coordenadaX,coordenadaY);
+				Disparo disparo=new Disparo();
+				disparo.setFila(coordenadaX);
+				disparo.setColumna(coordenadaY);
+				RegistroDisparo registro= new RegistroDisparo(resultado,disparo);
+				this.listaDisparosAOponente2.add(registro);
+				this.tableroJugador2.setMiTurno(false);
 			} catch (CoordenadasCeldasInvalidasException e) {
 				throw new CoordenadasInvalidasException();
 			}
 		}
+	}
 
+	public TableroVO refrescarTableroOponente(UsuarioVO usuario) throws RemoteException{
+		TableroVO nuevo = new TableroVO();
+		if (tableroJugador1.getJugador().getIdUsuarioB() == usuario.getIdUsuario()) {
+			for(int i=0; i<tableroJugador2.tabla.length;i++){
+				for(int j=0;j<tableroJugador2.tabla.length;j++){
+					CeldaVO celda= new CeldaVO();
+					if(celda.estaDisparada()){
+						nuevo.getTabla()[i][j]=celda;
+					}else{
+						celda.setEstado(tableroJugador2.tabla[i][j].estado);
+						nuevo.getTabla()[i][j]=celda;
+					}
+				}
+			}
+		}else{
+			for(int i=0; i<tableroJugador1.tabla.length;i++){
+				for(int j=0;j<tableroJugador1.tabla.length;j++){
+					CeldaVO celda= new CeldaVO();
+					if(celda.estaDisparada()){
+						nuevo.getTabla()[i][j]=celda;
+					}else{
+						celda.setEstado(tableroJugador2.tabla[i][j].estado);
+						nuevo.getTabla()[i][j]=celda;
+					}
+				}
+			}
 
-
+		}
+		return nuevo;
 	}
 
 	public TableroVO refrescarTablero(UsuarioVO usuario) throws RemoteException {
@@ -174,8 +218,6 @@ public class JuegoBatallaNaval{
 					nuevo.getTabla()[i][j]=celda;
 				}
 			}
-
-
 		}else{
 			for(int i=0; i<tableroJugador2.tabla.length;i++){
 				for(int j=0;j<tableroJugador2.tabla.length;j++){
@@ -195,8 +237,23 @@ public class JuegoBatallaNaval{
 		}else{
 			return tableroJugador2.isMiTurno();
 		}
+	}
 
-
+	public static void main(String[] args) {
+		UsuarioVO jugador = new UsuarioVO("Yo");
+		Usuario jugador1 = new Usuario();
+		jugador1.setUsuarioB("Yo");
+		Usuario jugador2 = new Usuario();
+		jugador2.setUsuarioB("Oponente");
+		JuegoBatallaNaval juego = new JuegoBatallaNaval(jugador1,jugador2);
+		try {
+			juego.agregarBarco(jugador, 5, 5, 5, 6, SUBMARINO);
+		} catch (RemoteException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (CoordenadasInvalidasException e) {
+			System.out.println("Coordenadas Invalidas!");
+		}
 	}
 
 }

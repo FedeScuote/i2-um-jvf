@@ -14,11 +14,13 @@ public class BusMain {
 	private static BusServer bs;
 	private static Ranking bsRanking;
 	private static Desafio bsDesafio;
+	private static ServiciosBatallaNavalImpl bsBN;
 
 	public static void main(String[] args) {
 		bs = new BusServer();
 		bsRanking = new Ranking();
 		bsDesafio = new Desafio();
+		bsBN= new ServiciosBatallaNavalImpl();
 		try {
 
 			// Estableciendo un security manager
@@ -29,12 +31,14 @@ public class BusMain {
 			ServiciosUsuario stub = (ServiciosUsuario) UnicastRemoteObject.exportObject(bs, 0);
 			ServiciosRanking stubRanking = (ServiciosRanking) UnicastRemoteObject.exportObject(bsRanking, 0);
 			ServiciosDesafio stubDesafio = (ServiciosDesafio) UnicastRemoteObject.exportObject(bsDesafio, 0);
+			ServiciosDesafio stubBN = (ServiciosDesafio) UnicastRemoteObject.exportObject(bsBN, 0);
 			try {
 
 				Registry registry = LocateRegistry.createRegistry(1099);
 				registry.rebind("Ranking", stubRanking);
 				registry.rebind("Hello", stub);
 				registry.rebind("Desafio", stubDesafio);
+				registry.rebind("BatallaNavalServices", stubBN);
 				System.out.println("Servidor remoto registrado OK");
 
 			} catch (Exception e) {
