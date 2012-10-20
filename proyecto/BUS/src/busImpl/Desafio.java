@@ -68,7 +68,7 @@ public class Desafio implements ServiciosDesafio {
 		try{
 			DesafioDAO dao = getDAO();
 			ArrayList<DesafioBatallaNavalVO> aux = new ArrayList<DesafioBatallaNavalVO>();
-			ArrayList desafiosBDD=dao.getDesafiosBatallaNaval();
+			ArrayList desafiosBDD=dao.getDesafiosUsuariosDisponibleBatallaNaval();
 			int i=0;
 			while(i<desafiosBDD.size()){
 				DesafioBatallaNavalVO nuevo = new DesafioBatallaNavalVO();
