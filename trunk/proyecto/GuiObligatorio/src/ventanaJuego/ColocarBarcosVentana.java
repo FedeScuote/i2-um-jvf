@@ -8,8 +8,6 @@ import javax.swing.*;
 import comm.ServiciosBatallaNaval;
 import comm.UsuarioVO;
 import commExceptions.CoordenadasInvalidasException;
-
-import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.rmi.RemoteException;
@@ -49,13 +47,15 @@ public class ColocarBarcosVentana extends JFrame {
 
 	private JPanel PanelTablero = null;
 
-	private JButton[][] arrayBotones ;
+	private JButton[][] arrayBotones;
 
 	private boolean primerClick = false;
 
 	private int xPrimerClick = 0;
 
 	private int yPrimerClick = 0;
+
+	private int[] distribucion;
 
 	/**
 	 * This is the default constructor
@@ -66,6 +66,7 @@ public class ColocarBarcosVentana extends JFrame {
 		this.agregarBotonesAGroup();
 		this.usuario = usuario;
 		this.crearTablero(PanelTablero, arrayBotones);
+		this.pedirDistribucion();
 	}
 
 	/**
@@ -220,7 +221,7 @@ public class ColocarBarcosVentana extends JFrame {
 				JLabel jlabel = new JLabel();
 				panel.add(jlabel);
 				jlabel.setText(numeroFila.toString()); // alfabeto menos uno
-														// porque
+				// porque
 				jlabel.setHorizontalAlignment(SwingConstants.CENTER);
 				jlabel.setVerticalAlignment(SwingConstants.CENTER);
 			} else {
@@ -252,51 +253,124 @@ public class ColocarBarcosVentana extends JFrame {
 	}
 
 	private void clickBoton(int fila, int columna) {
-		if(primerClick){
+		if (primerClick) {
 			xPrimerClick = fila;
 			yPrimerClick = columna;
 			primerClick = false;
-		}else{
+		} else {
 			String tipoBarco = this.getBotonSelected();
-			this.colocarBarco(usuario, xPrimerClick, yPrimerClick, fila, columna, tipoBarco);
+			this.colocarBarco(usuario, xPrimerClick, yPrimerClick, fila,
+					columna, tipoBarco);
 		}
 
 	}
 
-	//metodo para colocarBarco con rmi
-	private void colocarBarco(UsuarioVO usuario, int coordenadaInicialX, int coordenadaInicialY, int coordenadaFinalX, int coordenadaFinalY, String tipoBarco){
+	// metodo para colocarBarco con rmi
+	private void colocarBarco(UsuarioVO usuario, int coordenadaInicialX,
+			int coordenadaInicialY, int coordenadaFinalX, int coordenadaFinalY,
+			String tipoBarco) {
 		try { // try y catch para verificar si esta el usuario o
 			// no
 			Registry registry = LocateRegistry.getRegistry(host);
 			ServiciosBatallaNaval stub = (ServiciosBatallaNaval) registry
 					.lookup("ColocarBarco");
-			 stub.agregarBarco(usuario, coordenadaInicialX, coordenadaInicialY, coordenadaFinalX, coordenadaFinalY, tipoBarco);
-		} catch (Exception e) {
-			if(e instanceof RemoteException){
-				JOptionPane.showMessageDialog(new JFrame(),"Error en la conexion intente de nuevo", "ERROR", JOptionPane.ERROR_MESSAGE);
+			stub.agregarBarco(usuario, coordenadaInicialX, coordenadaInicialY,
+					coordenadaFinalX, coordenadaFinalY, tipoBarco);
+			this.actualizarDistribucion();
+			if(!quedanBarcos()){
+				BatallaNavalVentana l = new BatallaNavalVentana(this.usuario);
+				l.setVisible(true);
+				this.dispose();
 			}
-			if(e instanceof CoordenadasInvalidasException){
-				JOptionPane.showMessageDialog(new JFrame(),"Coordenadas invalidas intente de nuevo", "ERROR", JOptionPane.ERROR_MESSAGE);
-			}else{
-			e.printStackTrace();
-			JOptionPane.showMessageDialog(new JFrame(),"ERROR DESCONOCIDO", "ERROR", JOptionPane.ERROR_MESSAGE);
-			this.dispose();
+		} catch (Exception e) {
+			if (e instanceof RemoteException) {
+				JOptionPane.showMessageDialog(new JFrame(),
+						"Error en la conexion intente de nuevo", "ERROR",
+						JOptionPane.ERROR_MESSAGE);
+			}
+			if (e instanceof CoordenadasInvalidasException) {
+				JOptionPane.showMessageDialog(new JFrame(),
+						"Coordenadas invalidas intente de nuevo", "ERROR",
+						JOptionPane.ERROR_MESSAGE);
+			} else {
+				e.printStackTrace();
+				JOptionPane
+						.showMessageDialog(new JFrame(), "ERROR DESCONOCIDO",
+								"ERROR", JOptionPane.ERROR_MESSAGE);
+				this.dispose();
 			}
 		}
 	}
-	//Metodo que me devuelve que boton esta seleccionado
-	private String getBotonSelected(){
-		if(BotonCruzero.isSelected()){
+
+	// Metodo que me devuelve que boton esta seleccionado
+	private String getBotonSelected() {
+		if (BotonCruzero.isSelected()) {
 			return "CRUZERO";
 		}
-		if(BotonSubmarino.isSelected()){
+		if (BotonSubmarino.isSelected()) {
 			return "SUBMARINO";
 		}
-		if(BotonAcorazado.isSelected()){
+		if (BotonAcorazado.isSelected()) {
 			return "ACORAZADO";
-		}
-		else{
+		} else {
 			return "DESTRUCTOR";
+		}
+	}
+
+	private void actualizarDistribucion() {
+		if (getBotonSelected().equals("SUBMARINO")) {
+			restarDelArray(distribucion, 0);
+		}
+		if (getBotonSelected().equals("DESTRUCTOR")) {
+			restarDelArray(distribucion, 1);
+		}
+		if (getBotonSelected().equals("CRUZERO")) {
+			restarDelArray(distribucion, 2);
+		}
+		if (getBotonSelected().equals("ACORAZADO")) {
+			restarDelArray(distribucion, 3);
+		}
+	}
+
+	private void restarDelArray(int[] array, int index) {
+		if (array[index] != 0) {
+			array[index] -= 1;
+		} else {
+			JOptionPane.showMessageDialog(new JFrame(),
+					"Ya no se pueden agregar mas barcos de ese tipo", "ERROR",
+					JOptionPane.ERROR_MESSAGE);
+		}
+	}
+
+	private boolean quedanBarcos() {
+		boolean quedan = false;
+		for (int i = 0; i < distribucion.length; i++) {
+			if(distribucion[i]!=0){
+				quedan=true;
+			}
+		}
+		return quedan;
+	}
+
+	private void pedirDistribucion() {
+		try { // try y catch para verificar si esta el usuario o
+			// no
+			Registry registry = LocateRegistry.getRegistry(host);
+			ServiciosBatallaNaval stub = (ServiciosBatallaNaval) registry
+					.lookup("ColocarBarco");
+			distribucion = stub.distribucion(usuario);
+		} catch (Exception e) {
+			if (e instanceof RemoteException) {
+				JOptionPane.showMessageDialog(new JFrame(),
+						"Error en la conexion intente de nuevo", "ERROR",
+						JOptionPane.ERROR_MESSAGE);
+			} else {
+				e.printStackTrace();
+				JOptionPane
+						.showMessageDialog(new JFrame(), "ERROR DESCONOCIDO",
+								"ERROR", JOptionPane.ERROR_MESSAGE);
+				this.dispose();
+			}
 		}
 	}
 

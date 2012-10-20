@@ -65,9 +65,10 @@ public class BatallaNavalVentana extends JFrame{
 	/**
 	 * This is the default constructor
 	 */
-	public BatallaNavalVentana() {
+	public BatallaNavalVentana(final UsuarioVO usuario) {
 		super();
 		initialize();
+		this.usuario = usuario;
 		this.crearCabezal(PanelJugador);
 		this.crearTablero(PanelJugador, botonesJugador); // creo mi tablero
 		// en mi panel
