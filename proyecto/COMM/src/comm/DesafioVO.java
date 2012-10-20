@@ -8,6 +8,16 @@ public class DesafioVO implements Serializable {
 
 	private int apuesta;
 
+	private UsuarioVO usuario;
+
+	public UsuarioVO getUsuario() {
+		return usuario;
+	}
+
+	public void setUsuario(UsuarioVO usuario) {
+		this.usuario = usuario;
+	}
+
 	public int getApuesta() {
 		return apuesta;
 	}
