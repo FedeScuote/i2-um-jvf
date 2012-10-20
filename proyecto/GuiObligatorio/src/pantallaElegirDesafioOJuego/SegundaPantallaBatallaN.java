@@ -33,9 +33,10 @@ public class SegundaPantallaBatallaN extends SegundaPantalla {
 
 	private UsuarioVO usuario=null;
 
-	public SegundaPantallaBatallaN() {
+	public SegundaPantallaBatallaN(UsuarioVO usuario) {
 		super();
 		this.llenarListaDesafio();
+		this.usuario=usuario;
 	}
 
 	private void llenarListaDesafio() {
@@ -43,7 +44,7 @@ public class SegundaPantallaBatallaN extends SegundaPantalla {
 			Registry registry = LocateRegistry.getRegistry(host);
 			ServiciosDesafio stub = (ServiciosDesafio) registry
 					.lookup("Desafio");
-			ArrayList<DesafioBatallaNavalVO> arrayDesafio = stub.getDesafios();
+			this.arrayDesafio = stub.getDesafios();
 			this.llenarTabla(this.desafiosDisponiblesTabla, arrayDesafio, this);
 		} catch (Exception e) {
 			if (!(e instanceof NoHayDesafiosDisponiblesException)) {
