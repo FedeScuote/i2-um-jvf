@@ -1,19 +1,43 @@
 package ventanaJuego;
 
 import java.awt.BorderLayout;
+import java.awt.GridLayout;
 
 import javax.swing.*;
+
+import comm.ServiciosBatallaNaval;
+import comm.UsuarioVO;
+import commExceptions.CoordenadasInvalidasException;
+
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.rmi.RemoteException;
+import java.rmi.registry.LocateRegistry;
+import java.rmi.registry.Registry;
 
 public class ColocarBarcosVentana extends JFrame {
 
 	private static final long serialVersionUID = 1L;
 
+	private final static int TAMANO_TABLERO = 10 + 1;// (casillas)+(labels)
+
+	private final static String[] ALFABETO = { " ", "a", "b", "c", "d", "e",
+			"f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r",
+			"s", "t", "u", "v", "w", "x", "y", "z" };// primero el vacio
+
+	// porque no va nada en
+	// esa linea
+
+	private static final String host = null;
+
+	private UsuarioVO usuario = null;
+
 	private JPanel jContentPane = null;
 
 	private JPanel PanelElegirBarco = null;
 
-	private ButtonGroup GrupoBotones = null;  //  @jve:decl-index=0:
+	private ButtonGroup GrupoBotones = null; // @jve:decl-index=0:
 
 	private JRadioButton BotonSubmarino = null;
 
@@ -25,13 +49,23 @@ public class ColocarBarcosVentana extends JFrame {
 
 	private JPanel PanelTablero = null;
 
+	private JButton[][] arrayBotones ;
+
+	private boolean primerClick = false;
+
+	private int xPrimerClick = 0;
+
+	private int yPrimerClick = 0;
+
 	/**
 	 * This is the default constructor
 	 */
-	public ColocarBarcosVentana() {
+	public ColocarBarcosVentana(UsuarioVO usuario) {
 		super();
 		initialize();
 		this.agregarBotonesAGroup();
+		this.usuario = usuario;
+		this.crearTablero(PanelTablero, arrayBotones);
 	}
 
 	/**
@@ -68,7 +102,8 @@ public class ColocarBarcosVentana extends JFrame {
 	private JPanel getPanelElegirBarco() {
 		if (PanelElegirBarco == null) {
 			PanelElegirBarco = new JPanel();
-			PanelElegirBarco.setLayout(new BoxLayout(getPanelElegirBarco(), BoxLayout.Y_AXIS));
+			PanelElegirBarco.setLayout(new BoxLayout(getPanelElegirBarco(),
+					BoxLayout.Y_AXIS));
 			PanelElegirBarco.add(getBotonSubmarino(), null);
 			PanelElegirBarco.add(getBotonDestructor(), null);
 			PanelElegirBarco.add(getBotonCruzero(), null);
@@ -143,7 +178,8 @@ public class ColocarBarcosVentana extends JFrame {
 		}
 		return PanelTablero;
 	}
-	private void agregarBotonesAGroup(){
+
+	private void agregarBotonesAGroup() {
 		GrupoBotones = new ButtonGroup();
 		GrupoBotones.add(BotonSubmarino);
 		GrupoBotones.add(BotonDestructor);
@@ -151,4 +187,117 @@ public class ColocarBarcosVentana extends JFrame {
 		GrupoBotones.add(BotonAcorazado);
 	}
 
-}  //  @jve:decl-index=0:visual-constraint="120,2"
+	// metodo al cual le paso el panel donde quiero crear un tablero del tamano
+	// indicado en los atributos
+	private void crearTablero(JPanel panel, JButton[][] botones) {
+		// crear botones y agregarlos al panel
+		panel.setLayout(new GridLayout(TAMANO_TABLERO, TAMANO_TABLERO));
+		botones = new JButton[TAMANO_TABLERO][TAMANO_TABLERO];
+		for (int i = 1; i < TAMANO_TABLERO; i++) {
+			this.crearFila(panel, i, botones);
+
+		}
+	}
+
+	// metodo que me crea mi cabezal con mis letras
+	private void crearCabezal(JPanel panel) {
+		panel.setLayout(new GridLayout(TAMANO_TABLERO, TAMANO_TABLERO));
+
+		for (int i = 0; i < TAMANO_TABLERO; i++) {
+			JLabel jlabel = new JLabel();
+			panel.add(jlabel);
+			jlabel.setText(ALFABETO[i]); // alfabeto menos uno porque
+			jlabel.setHorizontalAlignment(SwingConstants.CENTER);
+			jlabel.setVerticalAlignment(SwingConstants.CENTER);
+		}
+	}
+
+	// metodo que le paso numero de fila y me agrega la fila con jlabel
+	// correspondiente
+	private void crearFila(JPanel panel, Integer numeroFila, JButton[][] botones) {
+		for (int j = 0; j < TAMANO_TABLERO; j++) {
+			if (j == 0) {
+				JLabel jlabel = new JLabel();
+				panel.add(jlabel);
+				jlabel.setText(numeroFila.toString()); // alfabeto menos uno
+														// porque
+				jlabel.setHorizontalAlignment(SwingConstants.CENTER);
+				jlabel.setVerticalAlignment(SwingConstants.CENTER);
+			} else {
+				JButton jButton = new JButton();
+				jButton.addActionListener(new ListenerBoton(numeroFila, j));
+				panel.add(jButton);
+				botones[numeroFila][j] = jButton;
+			}
+		}
+	}
+
+	// clase de mis actionListener que voy a usar en mis botones
+	private class ListenerBoton implements ActionListener {
+
+		private int x;
+
+		private int y;
+
+		public ListenerBoton(int i, int j) {
+			// en el constructor se almacena la fila y columna que se presiona
+			x = i;
+			y = j;
+		}
+
+		public void actionPerformed(ActionEvent e) {
+			// cuando se presiona un boton se ejecutara este metodo
+			clickBoton(x, y);
+		}
+	}
+
+	private void clickBoton(int fila, int columna) {
+		if(primerClick){
+			xPrimerClick = fila;
+			yPrimerClick = columna;
+			primerClick = false;
+		}else{
+			String tipoBarco = this.getBotonSelected();
+			this.colocarBarco(usuario, xPrimerClick, yPrimerClick, fila, columna, tipoBarco);
+		}
+
+	}
+
+	//metodo para colocarBarco con rmi
+	private void colocarBarco(UsuarioVO usuario, int coordenadaInicialX, int coordenadaInicialY, int coordenadaFinalX, int coordenadaFinalY, String tipoBarco){
+		try { // try y catch para verificar si esta el usuario o
+			// no
+			Registry registry = LocateRegistry.getRegistry(host);
+			ServiciosBatallaNaval stub = (ServiciosBatallaNaval) registry
+					.lookup("ColocarBarco");
+			 stub.agregarBarco(usuario, coordenadaInicialX, coordenadaInicialY, coordenadaFinalX, coordenadaFinalY, tipoBarco);
+		} catch (Exception e) {
+			if(e instanceof RemoteException){
+				JOptionPane.showMessageDialog(new JFrame(),"Error en la conexion intente de nuevo", "ERROR", JOptionPane.ERROR_MESSAGE);
+			}
+			if(e instanceof CoordenadasInvalidasException){
+				JOptionPane.showMessageDialog(new JFrame(),"Coordenadas invalidas intente de nuevo", "ERROR", JOptionPane.ERROR_MESSAGE);
+			}else{
+			e.printStackTrace();
+			JOptionPane.showMessageDialog(new JFrame(),"ERROR DESCONOCIDO", "ERROR", JOptionPane.ERROR_MESSAGE);
+			this.dispose();
+			}
+		}
+	}
+	//Metodo que me devuelve que boton esta seleccionado
+	private String getBotonSelected(){
+		if(BotonCruzero.isSelected()){
+			return "CRUZERO";
+		}
+		if(BotonSubmarino.isSelected()){
+			return "SUBMARINO";
+		}
+		if(BotonAcorazado.isSelected()){
+			return "ACORAZADO";
+		}
+		else{
+			return "DESTRUCTOR";
+		}
+	}
+
+} // @jve:decl-index=0:visual-constraint="120,2"
