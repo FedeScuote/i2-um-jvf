@@ -14,6 +14,9 @@ public interface ServiciosBatallaNaval extends Remote {
 	//Metodo para disparar
 	public void disparar(UsuarioVO usuario, int coordenadaX,int coordenadaY) throws RemoteException, CoordenadasInvalidasException, NoInicioJuegoException;
 
+	//Metodo recibir distribucion
+	public int[] distribucion(UsuarioVO usuario);
+
 	//Metodo para refrescar imagen de matriz
 	public TableroVO refrescarTablero(UsuarioVO usuario) throws RemoteException;
 
