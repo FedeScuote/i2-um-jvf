@@ -16,6 +16,7 @@ public class BusServer implements ServiciosUsuario {
 			if(nuevo.getClaveB().equals(contraseña)){
 				UsuarioVO retorno =new UsuarioVO(nuevo.getNombreB(), nuevo.getApellidoB());
 				retorno.setIdUsuario(nuevo.getIdUsuarioB());
+				retorno.setUsuarioB(nuevo.getUsuarioB());
 				return retorno;
 			}else{
 				throw new ContrasenaInvalidaException();
