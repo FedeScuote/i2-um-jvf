@@ -73,7 +73,7 @@ public class SegundaPantallaBatallaN extends SegundaPantalla {
 			DesafioBatallaNavalVO rank = (DesafioBatallaNavalVO) i.next();
 			model.addRow(new String[] {
 					((Integer) rank.getApuesta()).toString(),
-					( rank.getUsuario().getNombreB()) });
+					( rank.getUsuario().getUsuarioB()) });
 		}
 
 		//añado mi action listener para ver aceptar un desafio
