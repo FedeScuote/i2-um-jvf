@@ -247,10 +247,6 @@ public class VentanaPrincipal extends JFrame {
 			ServiciosRanking stub = (ServiciosRanking) registry.lookup("Ranking");
 			ArrayList<RankingVO> response = stub.preguntarRanking();
 			int i=0;
-//			while(i<response.size()){
-//				System.out.println(response.get(i).getUsuario());
-//				i++;
-//			}
 			llenarTabla(tablaRanking, response);
 		} catch (Exception remoteExceptionrmi) {
 			if (remoteExceptionrmi instanceof NoSeEncuentraUsuarioException) {
