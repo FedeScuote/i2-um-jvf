@@ -29,6 +29,7 @@ public interface ServiciosBatallaNaval extends Remote {
 	//Metodo para comenzar una partida a partir de un desafio!
 	public void iniciarPartida(DesafioVO desafio, UsuarioVO desafiante) throws RemoteException;
 
+	public boolean hundi(UsuarioVO usuario)throws RemoteException;
 
 	public ArrayList<RegistroDisparo> obtenerListaDisparos(UsuarioVO usuario) throws RemoteException;
 
