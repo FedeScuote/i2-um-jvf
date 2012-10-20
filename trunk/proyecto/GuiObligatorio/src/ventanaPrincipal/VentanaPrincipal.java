@@ -194,14 +194,14 @@ public class VentanaPrincipal extends JFrame {
 	 *
 	 * @return javax.swing.JButton
 	 */
-	private JButton getJugarBatalla(final JFrame pantalla) {
+	private JButton getJugarBatalla(final VentanaPrincipal pantalla) {
 		if (jugarBatalla == null) {
 			jugarBatalla = new JButton();
 			jugarBatalla.setText("Jugar Batalla Naval");
 			jugarBatalla.addActionListener(new java.awt.event.ActionListener() {
 				public void actionPerformed(java.awt.event.ActionEvent e) {
 					pantalla.dispose();
-					SegundaPantallaBatallaN l= new SegundaPantallaBatallaN();
+					SegundaPantallaBatallaN l= new SegundaPantallaBatallaN(pantalla.usuario);
 					l.setVisible(true);
 				}
 			});
