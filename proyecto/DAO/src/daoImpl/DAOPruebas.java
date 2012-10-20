@@ -1,10 +1,13 @@
 package daoImpl;
 
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Date;
 
 import org.apache.log4j.Logger;
+
+import conexion.Conexion;
 
 import excepcionesB.NoHayDesafioException;
 import excepcionesB.NoHayRankingException;
@@ -20,6 +23,16 @@ public class DAOPruebas {
 	 */
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
+
+
+		int idDesafio=19;
+		int idDesafiante=2;
+		PartidaDAODB p =new PartidaDAODB();
+		p.concretarDesafio(idDesafio, idDesafiante);
+
+
+
+	/*
 
 		logger.warn("warn");
 		logger.info("info");
