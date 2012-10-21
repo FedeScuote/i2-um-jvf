@@ -2,9 +2,7 @@ package busImpl;
 
 import java.rmi.RemoteException;
 import java.util.ArrayList;
-import busImpl.bot.JvfBotBatallaNaval;
 import comm.CeldaVO;
-import comm.ServiciosBatallaNaval;
 import comm.TableroVO;
 import comm.UsuarioVO;
 import commExceptions.CoordenadasInvalidasException;
@@ -581,6 +579,14 @@ public class JuegoBatallaNaval{
 			e.printStackTrace();
 		} catch (CoordenadasInvalidasException e) {
 			System.out.println("Coordenadas Invalidas!");
+		}
+	}
+
+	public ArrayList<RegistroDisparo> obtenerListaDisparos(UsuarioVO usuario) {
+		if (tableroJugador1.getJugador().getIdUsuarioB() == usuario.getIdUsuario()) {
+			return listaDisparosAOponente1;
+		}else{
+			return listaDisparosAOponente2;
 		}
 	}
 
