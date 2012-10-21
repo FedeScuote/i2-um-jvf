@@ -309,7 +309,6 @@ public class JvfBotBatallaNaval {
 			registry = LocateRegistry.getRegistry(null);
 			ServiciosBatallaNaval stub = (ServiciosBatallaNaval) registry.lookup("BatallaNavalServices");
 			bn=stub;
-			JvfBotBatallaNaval.comenzarJuego();
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
