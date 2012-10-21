@@ -13,6 +13,9 @@ import excepcionesB.NoHayDesafioException;
 import excepcionesB.NoHayRankingException;
 import excepcionesB.NotDataFoundException;
 import excepcionesD.NoExisteUsuarioException;
+import busImpl.Disparo;
+import busImpl.Estados;
+import busImpl.Tablero;
 import busImpl.Usuario;
 import busImpl.Desafio;
 
@@ -25,6 +28,48 @@ public class DAOPruebas {
 		// TODO Auto-generated method stub
 
 
+		BatallaNavalDAODB b=new BatallaNavalDAODB();
+		Tablero t=b.getTablero(23, 1);
+		System.out.println(t.getCantBarcosCruceros());
+
+	/*
+
+		BatallaNavalDAODB b=new BatallaNavalDAODB();
+
+		Tablero tablero=new Tablero(null);
+		tablero.setCantBarcosAcorazado(2);
+		tablero.setCantBarcosAcorazadoColocados(2);
+		tablero.setCantBarcosCruceros(2);
+		tablero.setCantBarcosCrucerosColocados(2);
+		tablero.setCantBarcosDestructores(2);
+		tablero.setCantBarcosDestructoresColocados(2);
+		tablero.setCantBarcosSubmarino(2);
+		tablero.setCantBarcosSubmarinoColocados(2);
+		Usuario u=new Usuario();
+		u.setUsuarioB("jhirata");
+		tablero.setJugador(u);
+		tablero.setMiTurno(true);
+		int idPartida=23;
+		b.regstrarTablero(tablero, idPartida);
+
+
+		/*
+
+		Estados estado;
+		estado=Estados.AGUA;
+
+		Disparo disparo=new Disparo();
+		int idUsuario=99;
+		int idPartida=23;
+		disparo.setColumna(2);
+		disparo.setFila(2);
+
+		BatallaNavalDAODB b=new BatallaNavalDAODB();
+		b.registrarDisparo(disparo, estado, idUsuario, idPartida);
+
+
+
+	/*
 		int idDesafio=19;
 		int idDesafiante=2;
 		PartidaDAODB p =new PartidaDAODB();

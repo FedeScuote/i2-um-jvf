@@ -122,6 +122,44 @@ public class Conexion {
 
 	}
 
+	public void ingresarNuevaTuplaDeCincoColumnas2(String tabla, String idTabla,
+			String columnaUno, String columnaDos, String columnaTres,
+			String columnaCuatro, String columnaCinco, int valorUno,
+			int valorDos, String valorTres, int valorCuatro,
+			int valorCinco) throws SQLException {
+		Statement pregunta;
+		pregunta = (conn).createStatement();
+		pregunta.executeUpdate("INSERT INTO " + tabla + "(" + idTabla + ","
+				+ columnaUno + "," + columnaDos + "," + columnaTres + ","
+				+ columnaCuatro + "," + columnaCinco + ") VALUES(NULL,'"
+				+ valorUno + "','" + valorDos + "','" + valorTres + "','"
+				+ valorCuatro + "','" + valorCinco + "')");
+
+	}
+
+
+	public void ingresarNuevaTuplaDe11Columnas(String tabla, String idTabla,String columnaCero,
+			String columnaUno, String columnaDos,String columnaTres,
+			String columnaCuatro, String columnaCinco, String columnaSeis, String columnaSiete, String columnaOcho,
+			String columnaNueve, String columnaDiez, int valorCero, String valorUno,
+			int valorDos, int valorTres, int valorCuatro,
+			int valorCinco, int valorSeis,
+			int valorSiete, int valorOcho, int valorNueve,
+			int valorDiez) throws SQLException {
+		Statement pregunta;
+		pregunta = (conn).createStatement();
+		pregunta.executeUpdate("INSERT INTO " + tabla + "(" + idTabla + ","
+				+ columnaCero + "," + columnaUno + "," + columnaDos + "," + columnaTres + ","
+				+ columnaCuatro + "," + columnaCinco + ","+columnaSeis + "," + columnaSiete + "," + columnaOcho + ","
+				+ columnaNueve + "," + columnaDiez + ") VALUES(NULL,'"
+				+ valorCero + "','"+ valorUno + "','" + valorDos + "','" + valorTres + "','"
+				+ valorCuatro + "','" + valorCinco + "','"+valorSeis + "','" + valorSiete + "','" + valorOcho + "','"
+				+ valorNueve + "','" + valorDiez + "')");
+
+	}
+
+
+
 	public void ingresarNuevaTuplaDeDosColumnasEnTablasRelacionadas(
 			String tabla, String columnaUno, String columnaDos,
 			String valorUno, String valorDos) throws SQLException {

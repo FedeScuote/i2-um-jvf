@@ -280,6 +280,11 @@ c.disconnect();
 return a;
 }
 
+	public void crearDesafio(String usuario, int monto) {
+		// TODO Auto-generated method stub
+
+	}
+
 
 
 
