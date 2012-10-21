@@ -121,9 +121,9 @@ public class JuegoBatallaNaval{
 		}else if(tipoBarco.equals(ACORAZADO)){
 			tableroJugador1.decrementarBarcosAcorazadoColocados();
 		}
-		if(tableroJugador2.getCantBarcosSubmarinoColocados()==0&&tableroJugador2.getCantBarcosDestructoresColocados()==0&&tableroJugador2.getCantBarcosCrucerosColocados()==0&&tableroJugador2.getCantBarcosAcorazadoColocados()==0&&tableroJugador1.getCantBarcosSubmarinoColocados()==0&&tableroJugador1.getCantBarcosDestructoresColocados()==0&&tableroJugador1.getCantBarcosCrucerosColocados()==0&&tableroJugador1.getCantBarcosAcorazadoColocados()==0){
-			tableroJugador2.setMiTurno(true);
-		}
+//		if(tableroJugador2.getCantBarcosSubmarinoColocados()==0&&tableroJugador2.getCantBarcosDestructoresColocados()==0&&tableroJugador2.getCantBarcosCrucerosColocados()==0&&tableroJugador2.getCantBarcosAcorazadoColocados()==0&&tableroJugador1.getCantBarcosSubmarinoColocados()==0&&tableroJugador1.getCantBarcosDestructoresColocados()==0&&tableroJugador1.getCantBarcosCrucerosColocados()==0&&tableroJugador1.getCantBarcosAcorazadoColocados()==0){
+//			tableroJugador2.setMiTurno(true);
+//		}
 	}
 	private void quitarBarcoStockJugador2(String tipoBarco) {
 		if(tipoBarco.equals(SUBMARINO)){
@@ -135,9 +135,9 @@ public class JuegoBatallaNaval{
 		}else if(tipoBarco.equals(ACORAZADO)){
 			tableroJugador2.decrementarBarcosAcorazadoColocados();
 		}
-		if(tableroJugador2.getCantBarcosSubmarinoColocados()==0&&tableroJugador2.getCantBarcosDestructoresColocados()==0&&tableroJugador2.getCantBarcosCrucerosColocados()==0&&tableroJugador2.getCantBarcosAcorazadoColocados()==0&&tableroJugador1.getCantBarcosSubmarinoColocados()==0&&tableroJugador1.getCantBarcosDestructoresColocados()==0&&tableroJugador1.getCantBarcosCrucerosColocados()==0&&tableroJugador1.getCantBarcosAcorazadoColocados()==0){
-			tableroJugador1.setMiTurno(true);
-		}
+//		if(tableroJugador2.getCantBarcosSubmarinoColocados()==0&&tableroJugador2.getCantBarcosDestructoresColocados()==0&&tableroJugador2.getCantBarcosCrucerosColocados()==0&&tableroJugador2.getCantBarcosAcorazadoColocados()==0&&tableroJugador1.getCantBarcosSubmarinoColocados()==0&&tableroJugador1.getCantBarcosDestructoresColocados()==0&&tableroJugador1.getCantBarcosCrucerosColocados()==0&&tableroJugador1.getCantBarcosAcorazadoColocados()==0){
+//			tableroJugador1.setMiTurno(true);
+//		}
 	}
 
 	private Boolean coordenadasEnDirY(int coordenadaInicialX,
