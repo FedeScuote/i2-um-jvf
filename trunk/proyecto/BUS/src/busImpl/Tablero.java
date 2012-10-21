@@ -121,12 +121,23 @@ public class Tablero {
 
 	public void agregarCeldasDirY(int coordenadaX, int coordenadaInicialY,
 			int coordenadaFinalY, String tipoBarco) throws CoordenadasCeldasInvalidasException {
+		int idBarco=0;
+		if(tipoBarco.equals(SUBMARINO)){
+			idBarco=Integer.parseInt(LARGO_SUBMARINO+""+cantBarcosSubmarinoColocados);
+		}else if(tipoBarco.equals(DESTRUCTORES)){
+			idBarco=Integer.parseInt(LARGO_DESTRUCTORES+""+cantBarcosDestructoresColocados);
+		}else if(tipoBarco.equals(CRUCEROS)){
+			idBarco=Integer.parseInt(LARGO_CRUCEROS+""+cantBarcosCrucerosColocados);
+		}else if(tipoBarco.equals(ACORAZADO)){
+			idBarco=Integer.parseInt(LARGO_ACORAZADO+""+cantBarcosAcorazadoColocados);
+		}
 		if (!(coordenadaInicialY > coordenadaFinalY)&& !(coordenadaFinalY >= tabla.length)&&!(coordenadaInicialY<0) ) {
 			for (int i = coordenadaInicialY; i <= coordenadaFinalY; i++) {
 				if (tabla[coordenadaX][i].estaOcupada()) {
 					throw new CoordenadasCeldasInvalidasException();
 				}else{
 					tabla[coordenadaX][i].setOcupada();
+					tabla[coordenadaX][i].setId(idBarco);
 				}
 			}
 		} else {
