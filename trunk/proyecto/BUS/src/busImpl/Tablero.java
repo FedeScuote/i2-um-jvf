@@ -31,6 +31,34 @@ public class Tablero {
 	private int cantBarcosCruceros;
 	private int cantBarcosAcorazado;
 
+	private int cantBarcosSubmarinoColocados;
+	private int cantBarcosDestructoresColocados;
+	private int cantBarcosCrucerosColocados;
+	private int cantBarcosAcorazadoColocados;
+
+	public void decrementarBarcosCrucerosColocados(){
+		cantBarcosCrucerosColocados--;
+
+	}
+
+	public void decrementarBarcosAcorazadoColocados(){
+		cantBarcosAcorazadoColocados--;
+
+	}
+
+	public void decrementarBarcosDestructoresColocados(){
+		cantBarcosDestructoresColocados--;
+
+	}
+
+	public void decrementarBarcosSubmarinoColocados(){
+		cantBarcosSubmarinoColocados--;
+
+	}
+
+
+
+
 	public void decrementarBarcosCruceros(){
 		cantBarcosCruceros--;
 
@@ -92,8 +120,8 @@ public class Tablero {
 	}
 
 	public void agregarCeldasDirY(int coordenadaX, int coordenadaInicialY,
-			int coordenadaFinalY) throws CoordenadasCeldasInvalidasException {
-		if (!(coordenadaInicialY > coordenadaFinalY)&& !(coordenadaFinalY >= tabla.length) ) {
+			int coordenadaFinalY, String tipoBarco) throws CoordenadasCeldasInvalidasException {
+		if (!(coordenadaInicialY > coordenadaFinalY)&& !(coordenadaFinalY >= tabla.length)&&!(coordenadaInicialY<0) ) {
 			for (int i = coordenadaInicialY; i <= coordenadaFinalY; i++) {
 				if (tabla[coordenadaX][i].estaOcupada()) {
 					throw new CoordenadasCeldasInvalidasException();
@@ -102,7 +130,6 @@ public class Tablero {
 				}
 			}
 		} else {
-
 			throw new CoordenadasCeldasInvalidasException();
 
 		}
@@ -222,20 +249,38 @@ public class Tablero {
 
 
 			}
+			cantBarcosAcorazadoColocados=0;
+			cantBarcosCrucerosColocados=0;
+			cantBarcosDestructoresColocados=0;
+			cantBarcosSubmarinoColocados=0;
 		}
 
 	}
 
 
 	public void agregarCeldasDirX(int coordenadaY, int coordenadaInicialX,
-			int coordenadaFinalX) throws CoordenadasCeldasInvalidasException {
-		if (!(coordenadaInicialX + coordenadaFinalX >= tabla.length) && !(coordenadaInicialX > coordenadaFinalX)) {
+			int coordenadaFinalX, String tipoBarco) throws CoordenadasCeldasInvalidasException {
+		int idBarco=0;
+		if(tipoBarco.equals(SUBMARINO)){
+			idBarco=Integer.parseInt(LARGO_SUBMARINO+""+cantBarcosSubmarinoColocados);
+		}else if(tipoBarco.equals(DESTRUCTORES)){
+			idBarco=Integer.parseInt(LARGO_DESTRUCTORES+""+cantBarcosDestructoresColocados);
+		}else if(tipoBarco.equals(CRUCEROS)){
+			idBarco=Integer.parseInt(LARGO_CRUCEROS+""+cantBarcosCrucerosColocados);
+		}else if(tipoBarco.equals(ACORAZADO)){
+			idBarco=Integer.parseInt(LARGO_ACORAZADO+""+cantBarcosAcorazadoColocados);
+		}
+		if (!(coordenadaInicialX > coordenadaFinalX)&&!(coordenadaFinalX >= tabla.length)&&!(coordenadaInicialX<0)) {
 			for (int i = coordenadaInicialX; i <= coordenadaFinalX; i++) {
 				if (tabla[i][coordenadaY].estaOcupada()) {
+					//Hay que ver si agrega hasta la ocupada!!!
 					throw new CoordenadasCeldasInvalidasException();
 				}else{
+
 					tabla[i][coordenadaY].setOcupada();
+					tabla[i][coordenadaY].setId(idBarco);
 				}
+
 			}
 		} else {
 
@@ -367,11 +412,31 @@ public class Tablero {
 		this.cantBarcosDestructores = CANTIDAD_INICIAL_DESTRUCTORES;
 		this.cantBarcosCruceros = CANTIDAD_INICIAL_CRUCEROS;
 		this.cantBarcosAcorazado = CANTIDAD_INICIAL_ACORAZADO;
+		this.cantBarcosSubmarinoColocados = CANTIDAD_INICIAL_SUBMARINO;
+		this.cantBarcosDestructoresColocados = CANTIDAD_INICIAL_DESTRUCTORES;
+		this.cantBarcosCrucerosColocados = CANTIDAD_INICIAL_CRUCEROS;
+		this.cantBarcosAcorazadoColocados = CANTIDAD_INICIAL_ACORAZADO;
 		for(int i=0;i<tabla.length;i++){
 			for(int j=0;j<tabla.length;j++){
 				tabla[i][j]=new Celda();
 			}
 		}
+	}
+
+	public int getCantBarcosAcorazadoColocados() {
+		return cantBarcosAcorazadoColocados;
+	}
+
+	public int getCantBarcosCrucerosColocados() {
+		return cantBarcosCrucerosColocados;
+	}
+
+	public int getCantBarcosDestructoresColocados() {
+		return cantBarcosDestructoresColocados;
+	}
+
+	public int getCantBarcosSubmarinoColocados() {
+		return cantBarcosSubmarinoColocados;
 	}
 
 }

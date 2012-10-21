@@ -69,14 +69,14 @@ public class JuegoBatallaNaval{
 
 			if (coordenadasEnDirY(coordenadaInicialX, coordenadaFinalX)) {
 				try {
-					tableroJugador1.agregarCeldasDirY(coordenadaInicialX,coordenadaInicialY, coordenadaFinalY);
+					tableroJugador1.agregarCeldasDirY(coordenadaInicialX,coordenadaInicialY, coordenadaFinalY,tipoBarco);
 					quitarBarcoStockJugador1(tipoBarco);
 				} catch (CoordenadasCeldasInvalidasException e) {
 					throw new CoordenadasInvalidasException();
 				}
 			}else if(coordenadasEnDirX(coordenadaInicialY, coordenadaFinalY)){
 				try {
-					tableroJugador1.agregarCeldasDirY(coordenadaInicialY,coordenadaInicialX, coordenadaFinalX);
+					tableroJugador1.agregarCeldasDirY(coordenadaInicialY,coordenadaInicialX, coordenadaFinalX,tipoBarco);
 					quitarBarcoStockJugador1(tipoBarco   );
 				} catch (CoordenadasCeldasInvalidasException e) {
 					throw new CoordenadasInvalidasException();
@@ -88,14 +88,14 @@ public class JuegoBatallaNaval{
 		}else{
 			if (coordenadasEnDirY(coordenadaInicialX, coordenadaFinalX)) {
 				try {
-					tableroJugador2.agregarCeldasDirY(coordenadaInicialX,coordenadaInicialY, coordenadaFinalY);
+					tableroJugador2.agregarCeldasDirY(coordenadaInicialX,coordenadaInicialY, coordenadaFinalY,tipoBarco);
 					quitarBarcoStockJugador2(tipoBarco);
 				} catch (CoordenadasCeldasInvalidasException e) {
 					throw new CoordenadasInvalidasException();
 				}
 			}else if(coordenadasEnDirX(coordenadaInicialY, coordenadaFinalY)){
 				try {
-					tableroJugador2.agregarCeldasDirY(coordenadaInicialY,coordenadaInicialX, coordenadaFinalX);
+					tableroJugador2.agregarCeldasDirY(coordenadaInicialY,coordenadaInicialX, coordenadaFinalX,tipoBarco);
 					quitarBarcoStockJugador2(tipoBarco);
 				} catch (CoordenadasCeldasInvalidasException e) {
 					throw new CoordenadasInvalidasException();
@@ -110,29 +110,29 @@ public class JuegoBatallaNaval{
 
 	private void quitarBarcoStockJugador1(String tipoBarco) {
 		if(tipoBarco.equals(SUBMARINO)){
-			tableroJugador1.decrementarBarcosSubmarino();
+			tableroJugador1.decrementarBarcosSubmarinoColocados();
 		}else if(tipoBarco.equals(DESTRUCTORES)){
-			tableroJugador1.decrementarBarcosDestructores();
+			tableroJugador1.decrementarBarcosDestructoresColocados();
 		}else if(tipoBarco.equals(CRUCEROS)){
-			tableroJugador1.decrementarBarcosCruceros();
+			tableroJugador1.decrementarBarcosCrucerosColocados();
 		}else if(tipoBarco.equals(ACORAZADO)){
-			tableroJugador1.decrementarBarcosAcorazado();
+			tableroJugador1.decrementarBarcosAcorazadoColocados();
 		}
-		if(tableroJugador2.getCantBarcosSubmarino()==0&&tableroJugador2.getCantBarcosDestructores()==0&&tableroJugador2.getCantBarcosCruceros()==0&&tableroJugador2.getCantBarcosAcorazado()==4&&tableroJugador1.getCantBarcosSubmarino()==0&&tableroJugador1.getCantBarcosDestructores()==0&&tableroJugador1.getCantBarcosCruceros()==0&&tableroJugador1.getCantBarcosAcorazado()==0){
+		if(tableroJugador2.getCantBarcosSubmarinoColocados()==0&&tableroJugador2.getCantBarcosDestructoresColocados()==0&&tableroJugador2.getCantBarcosCrucerosColocados()==0&&tableroJugador2.getCantBarcosAcorazadoColocados()==0&&tableroJugador1.getCantBarcosSubmarinoColocados()==0&&tableroJugador1.getCantBarcosDestructoresColocados()==0&&tableroJugador1.getCantBarcosCrucerosColocados()==0&&tableroJugador1.getCantBarcosAcorazadoColocados()==0){
 			tableroJugador2.setMiTurno(true);
 		}
 	}
 	private void quitarBarcoStockJugador2(String tipoBarco) {
 		if(tipoBarco.equals(SUBMARINO)){
-			tableroJugador2.decrementarBarcosSubmarino();
+			tableroJugador2.decrementarBarcosSubmarinoColocados();
 		}else if(tipoBarco.equals(DESTRUCTORES)){
-			tableroJugador2.decrementarBarcosDestructores();
+			tableroJugador2.decrementarBarcosDestructoresColocados();
 		}else if(tipoBarco.equals(CRUCEROS)){
-			tableroJugador2.decrementarBarcosCruceros();
+			tableroJugador2.decrementarBarcosCrucerosColocados();
 		}else if(tipoBarco.equals(ACORAZADO)){
-			tableroJugador2.decrementarBarcosAcorazado();
+			tableroJugador2.decrementarBarcosAcorazadoColocados();
 		}
-		if(tableroJugador2.getCantBarcosSubmarino()==0&&tableroJugador2.getCantBarcosDestructores()==0&&tableroJugador2.getCantBarcosCruceros()==0&&tableroJugador2.getCantBarcosAcorazado()==4&&tableroJugador1.getCantBarcosSubmarino()==0&&tableroJugador1.getCantBarcosDestructores()==0&&tableroJugador1.getCantBarcosCruceros()==0&&tableroJugador1.getCantBarcosAcorazado()==0){
+		if(tableroJugador2.getCantBarcosSubmarinoColocados()==0&&tableroJugador2.getCantBarcosDestructoresColocados()==0&&tableroJugador2.getCantBarcosCrucerosColocados()==0&&tableroJugador2.getCantBarcosAcorazadoColocados()==0&&tableroJugador1.getCantBarcosSubmarinoColocados()==0&&tableroJugador1.getCantBarcosDestructoresColocados()==0&&tableroJugador1.getCantBarcosCrucerosColocados()==0&&tableroJugador1.getCantBarcosAcorazadoColocados()==0){
 			tableroJugador1.setMiTurno(true);
 		}
 	}
