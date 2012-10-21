@@ -319,7 +319,7 @@ public class JvfBotBatallaNaval {
 		usuario=n;
 		JvfBotBatallaNaval prueba = new JvfBotBatallaNaval();
 		while(true){
-			if(!bn.esMiTurno(usuario)){
+			if(bn.esMiTurno(usuario)){
 				Disparo disparo=prueba.proximoDisparo("");
 				bn.disparar(usuario, disparo.getFila(), disparo.getColumna());
 			}
