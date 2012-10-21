@@ -76,7 +76,7 @@ public class JuegoBatallaNaval{
 				}
 			}else if(coordenadasEnDirX(coordenadaInicialY, coordenadaFinalY)){
 				try {
-					tableroJugador1.agregarCeldasDirY(coordenadaInicialY,coordenadaInicialX, coordenadaFinalX,tipoBarco);
+					tableroJugador1.agregarCeldasDirX(coordenadaInicialY,coordenadaInicialX, coordenadaFinalX,tipoBarco);
 					quitarBarcoStockJugador1(tipoBarco   );
 				} catch (CoordenadasCeldasInvalidasException e) {
 					throw new CoordenadasInvalidasException();
@@ -95,7 +95,7 @@ public class JuegoBatallaNaval{
 				}
 			}else if(coordenadasEnDirX(coordenadaInicialY, coordenadaFinalY)){
 				try {
-					tableroJugador2.agregarCeldasDirY(coordenadaInicialY,coordenadaInicialX, coordenadaFinalX,tipoBarco);
+					tableroJugador2.agregarCeldasDirX(coordenadaInicialY,coordenadaInicialX, coordenadaFinalX,tipoBarco);
 					quitarBarcoStockJugador2(tipoBarco);
 				} catch (CoordenadasCeldasInvalidasException e) {
 					throw new CoordenadasInvalidasException();
