@@ -110,11 +110,11 @@ public class ServiciosBatallaNavalImpl implements ServiciosBatallaNaval{
 	}
 
 	public boolean gane(UsuarioVO usuario) throws RemoteException {
-		return obtenerPartida(usuario).perdi(usuario);
+		return obtenerPartida(usuario).gane(usuario);
 	}
 
 	public boolean perdi(UsuarioVO usuario) throws RemoteException {
-		return obtenerPartida(usuario).gane(usuario);
+		return obtenerPartida(usuario).perdi(usuario);
 	}
 
 }
