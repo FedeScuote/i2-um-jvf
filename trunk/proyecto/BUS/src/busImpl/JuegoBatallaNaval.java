@@ -36,6 +36,8 @@ public class JuegoBatallaNaval{
 		super();
 		this.tableroJugador1 = new Tablero(jugador1);
 		this.tableroJugador2 = new Tablero(jugador2);
+		this.tableroJugador2.agregarCeldas(distribucion());
+		this.tableroJugador1.setMiTurno(true);
 	}
 
 	public int[] distribucion(){
@@ -160,7 +162,10 @@ public class JuegoBatallaNaval{
 				RegistroDisparo registro= new RegistroDisparo(resultado,disparo);
 				this.listaDisparosAOponente1.add(registro);
 				this.tableroJugador1.setMiTurno(false);
-
+				Disparo dis= proximoDisparo("");
+				UsuarioVO usu=new UsuarioVO(this.tableroJugador2.getJugador().getUsuarioB());
+				usu.setIdUsuario(this.tableroJugador2.getJugador().getIdUsuarioB());
+				disparar(usu,dis.getFila(),dis.getColumna());
 			} catch (CoordenadasCeldasInvalidasException e) {
 				throw new CoordenadasInvalidasException();
 			}
@@ -533,6 +538,7 @@ public class JuegoBatallaNaval{
 		Usuario jugador2 = new Usuario();
 		jugador2.setUsuarioB("Oponente");
 		JuegoBatallaNaval juego = new JuegoBatallaNaval(jugador1,jugador2);
+
 		try {
 			juego.agregarBarco(jugador, 5, 5, 5, 6, SUBMARINO);
 		} catch (RemoteException e) {
