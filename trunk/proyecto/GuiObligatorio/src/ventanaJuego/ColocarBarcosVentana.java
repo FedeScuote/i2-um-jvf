@@ -237,6 +237,7 @@ public class ColocarBarcosVentana extends JFrame {
 				jlabel.setVerticalAlignment(SwingConstants.CENTER);
 			} else {
 				JButton jButton = new JButton();
+				jButton.setBackground(Color.blue);
 				jButton.addActionListener(new ListenerBoton(numeroFila, j));
 				panel.add(jButton);
 				botones[numeroFila][j] = jButton;
@@ -273,8 +274,6 @@ public class ColocarBarcosVentana extends JFrame {
 			String tipoBarco = this.getBotonSelected();
 			this.colocarBarco(usuario, xPrimerClick, yPrimerClick, fila,
 					columna, tipoBarco);
-			// this.pintarCasillerosOcupados(xPrimerClick, yPrimerClick,
-			// fila, columna);
 			primerClick = true;
 		}
 
@@ -296,6 +295,12 @@ public class ColocarBarcosVentana extends JFrame {
 						.mandarCasilleroABus(coordenadaFinalX), this
 						.mandarCasilleroABus(coordenadaFinalY), tipoBarco);
 				this.actualizarDistribucion();
+				if(this.agregoEnSentidoX(coordenadaInicialX, coordenadaInicialY, coordenadaFinalX, coordenadaFinalY)){
+					this.pintarCasillerosOcupadosX(coordenadaInicialX, yPrimerClick,
+					 coordenadaFinalX);
+					}else{
+						this.pintarCasillerosOcupadosY(coordenadaInicialX, coordenadaInicialY, coordenadaFinalY);
+					}
 				if (!quedanBarcos()) {
 					BatallaNavalVentana l = new BatallaNavalVentana(
 							this.usuario);
@@ -410,13 +415,24 @@ public class ColocarBarcosVentana extends JFrame {
 			}
 		}
 	}
-
-	private void pintarCasillerosOcupados(int XInicial, int YInicial,
-			int XFinal, int YFinal) {
+	//METODO QUE DEDUCE SI AGREGO EN SENTIDO X
+	private boolean agregoEnSentidoX(int XInicial, int YInicial, int XFinal,int YFinal){
+		return YInicial == YFinal;
+	}
+	//METODO QUE DEDUCE SI AGREGO EN SENTIDO Y
+	private boolean agregoEnSentidoY(int XInicial, int YInicial, int XFinal, int YFinal){
+		return XInicial== XFinal;
+	}
+	//METODOS PARA PINTAR LOS CASILLEROS PARA INDICAR DONDE SE AGREGO
+	private void pintarCasillerosOcupadosX(int XInicial, int YInicial,
+			int XFinal) {
 		for (int i = XInicial; i <= XFinal; i++) {
-			for (int j = YInicial; j <= YFinal; j++) {
-				arrayBotones[i][j].setBackground(Color.black);
-			}
+				arrayBotones[i+1][YInicial+1].setBackground(Color.black);
+		}
+	}
+	private void pintarCasillerosOcupadosY(int XInicial, int YInicial, int YFinal){
+		for (int i = YInicial; i <= YFinal; i++) {
+			arrayBotones[XInicial+1][i+1].setBackground(Color.black);
 		}
 	}
 

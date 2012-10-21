@@ -20,6 +20,8 @@ import java.rmi.registry.Registry;
 import javax.swing.JLabel;
 import javax.swing.SwingConstants;
 
+import ventanaPrincipal.VentanaPrincipal;
+
 import com.sun.jmx.remote.internal.RMIExporter;
 
 import comm.CeldaVO;
@@ -32,7 +34,7 @@ public class BatallaNavalVentana extends JFrame {
 	// CONSTANTES//////////////////////////////
 	private static final long serialVersionUID = 1L;
 
-	private static final int pause = 200;
+	private static final int pause = 500;
 
 	private static final String host = null;
 
@@ -234,7 +236,7 @@ public class BatallaNavalVentana extends JFrame {
 
 		public void actionPerformed(ActionEvent e) {
 			// cuando se presiona un boton se ejecutara este metodo
-			clickBoton(x, y);
+			clickBoton(x-1, y-1);//pongo menos uno para que el bus lo recibe de 0 a 9
 		}
 	}
 
@@ -249,13 +251,13 @@ public class BatallaNavalVentana extends JFrame {
 				stub.disparar(this.usuario, fila, columna);
 				JOptionPane
 						.showMessageDialog(new JFrame(), "DISPARO REALIZADO");
+				refrescarTableroJugador();
+				refrescarTableroOponente();
 				if (stub.hundi(this.usuario)) {
 					JOptionPane.showMessageDialog(new JFrame(),
 							"HAS HUNDIDO UN BARCO", "ENHORABUENA",
 							JOptionPane.INFORMATION_MESSAGE);
 				}
-				refrescarTableroJugador();
-				refrescarTableroOponente();
 				temporizador.start();
 			} catch (Exception e) {
 
@@ -271,11 +273,20 @@ public class BatallaNavalVentana extends JFrame {
 		if (this.gane()) {
 			JOptionPane.showMessageDialog(new JFrame(), "HAS GANADO",
 					"ENHORABUENA", JOptionPane.INFORMATION_MESSAGE);
+			temporizador.removeActionListener((temporizador.getActionListeners())[0]);
 			this.dispose();
-
+			VentanaPrincipal l = new VentanaPrincipal(this.usuario);
+			l.setVisible(true);
 			return false;
-		} else {
-
+		} else if (this.perdi()){
+			JOptionPane.showMessageDialog(new JFrame(), "HAS PERDIDO",
+					"LO SIENTO", JOptionPane.INFORMATION_MESSAGE);
+			temporizador.removeActionListener((temporizador.getActionListeners())[0]);
+			this.dispose();
+			VentanaPrincipal l = new VentanaPrincipal(this.usuario);
+			l.setVisible(true);
+			return false;
+		}else{
 			try { // try y catch para verificar si esta el usuario o
 				// no
 				Registry registry = LocateRegistry.getRegistry(host);
@@ -290,6 +301,8 @@ public class BatallaNavalVentana extends JFrame {
 			}
 		}
 	}
+
+
 
 	// METODO PARA REFRESCAR TABLERO DEL JUGADOR
 	public void refrescarTableroJugador() {
@@ -357,6 +370,9 @@ public class BatallaNavalVentana extends JFrame {
 				} else if (tabla[i][j].getEstado().equals("TOCADO")) {
 					botones[iArrayBotones][jArrayBotones]
 							.setBackground(Color.GREEN);
+				} else if (tabla[i][j].getEstado().equals("HUNDIDO")) {
+					botones[iArrayBotones][jArrayBotones]
+											.setBackground(Color.GREEN);
 				} else {
 					botones[iArrayBotones][jArrayBotones]
 							.setBackground(Color.RED); // esto quiere decir
@@ -367,15 +383,33 @@ public class BatallaNavalVentana extends JFrame {
 		}
 	}
 
-	// METODO PARA PREGUNTAR SI GANE
+	 //METODO PARA PREGUNTAR SI GANE
 	public boolean gane() {
 		try { // try y catch para verificar si esta el usuario o
 			// no
 			Registry registry = LocateRegistry.getRegistry(host);
 			ServiciosBatallaNaval stub = (ServiciosBatallaNaval) registry
 					.lookup("BatallaNavalServices");
-
 			return stub.gane(usuario);
+		} catch (Exception e) {
+			if (e instanceof RemoteException) {
+				JOptionPane
+						.showMessageDialog(new JFrame(), "ERROR DE CONEXION",
+								"ERROR", JOptionPane.ERROR_MESSAGE);
+			}
+
+			e.printStackTrace();
+			return false;
+		}
+	}
+	private boolean perdi() {
+		try { // try y catch para verificar si esta el usuario o
+			// no
+			Registry registry = LocateRegistry.getRegistry(host);
+			ServiciosBatallaNaval stub = (ServiciosBatallaNaval) registry
+					.lookup("BatallaNavalServices");
+
+			return stub.perdi(usuario);
 		} catch (Exception e) {
 			if (e instanceof RemoteException) {
 				JOptionPane
