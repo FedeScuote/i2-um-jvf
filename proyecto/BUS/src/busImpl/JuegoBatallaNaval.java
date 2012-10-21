@@ -34,6 +34,8 @@ public class JuegoBatallaNaval{
 
 	public JuegoBatallaNaval(Usuario jugador1, Usuario jugador2) {
 		super();
+		this.listaDisparosAOponente1=new ArrayList<RegistroDisparo>();
+		this.listaDisparosAOponente2=new ArrayList<RegistroDisparo>();
 		this.tableroJugador1 = new Tablero(jugador1);
 		this.tableroJugador2 = new Tablero(jugador2);
 		this.tableroJugador2.agregarCeldas(distribucion());
