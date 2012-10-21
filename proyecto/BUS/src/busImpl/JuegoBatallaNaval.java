@@ -164,7 +164,7 @@ public class JuegoBatallaNaval{
 				RegistroDisparo registro= new RegistroDisparo(resultado,disparo);
 				this.listaDisparosAOponente1.add(registro);
 				this.tableroJugador1.setMiTurno(false);
-				Disparo dis= proximoDisparo("");
+				Disparo dis= proximoDisparo1(usuario);
 				UsuarioVO usu=new UsuarioVO(this.tableroJugador2.getJugador().getUsuarioB());
 				usu.setIdUsuario(this.tableroJugador2.getJugador().getIdUsuarioB());
 				disparar(usu,dis.getFila(),dis.getColumna());
@@ -263,7 +263,9 @@ public class JuegoBatallaNaval{
 
 	}
 
-	public Disparo proximoDisparo1(String idPartida) throws RemoteException {
+	public Disparo proximoDisparo1(UsuarioVO usuario) throws RemoteException {
+		TableroVO tableroOponente;
+		tableroOponente=refrescarTableroOponente(usuario);
 		Disparo nuevo = new Disparo();
 		boolean termine = false;
 		int coordenadaX = 0;
@@ -271,7 +273,7 @@ public class JuegoBatallaNaval{
 		while (!termine) {
 			coordenadaX = (int) (Math.random() * 10);
 			coordenadaY = (int) (Math.random() * 10);
-			if (coordenadaX<10&&coordenadaY<10&&tableroJugador2.tabla[coordenadaX][coordenadaY].estaVacio()||tableroJugador2.tabla[coordenadaX][coordenadaY].estaOcupada()) {
+			if (coordenadaX<10&&coordenadaY<10&&tableroOponente.getTabla()[coordenadaX][coordenadaY].estaVacio()){
 				termine = true;
 			}
 		}
@@ -285,13 +287,13 @@ public class JuegoBatallaNaval{
 		Disparo nuevo = new Disparo();
 		while(!termine){
 			if(Math.random()>=0.2){
-				nuevo=proximoDisparo1("");
+				nuevo=proximoDisparo1(null);
 				if(((nuevo.getFila()%2==0)&&(nuevo.getColumna()%2!=0))||((nuevo.getFila()%2!=0)&&(nuevo.getColumna()%2==0))){
 					termine=true;
 				}
 			}else{
 				termine=true;
-				nuevo=proximoDisparo1("");
+				nuevo=proximoDisparo1(null);
 			}
 
 		}
@@ -304,13 +306,13 @@ public class JuegoBatallaNaval{
 		Disparo nuevo = new Disparo();
 		while(!termine){
 			if(Math.random()>=0.2){
-				nuevo=proximoDisparo1("");
+				nuevo=proximoDisparo1(null);
 				if((nuevo.getFila()==nuevo.getColumna())||(nuevo.getFila()+3==nuevo.getColumna())||(nuevo.getColumna()+3==nuevo.getFila())||(nuevo.getFila()+6==nuevo.getColumna())||(nuevo.getColumna()+6==nuevo.getFila())||(nuevo.getFila()+9==nuevo.getColumna())||(nuevo.getColumna()+9==nuevo.getFila())){
 					termine=true;
 				}
 			}else{
 				termine=true;
-				nuevo=proximoDisparo1("");
+				nuevo=proximoDisparo1(null);
 			}
 
 		}
@@ -410,7 +412,7 @@ public class JuegoBatallaNaval{
 					nuevo=proximoDisparoSinSubmarinos();
 				}
 			}else{
-				nuevo = proximoDisparo1(idPartida);
+				nuevo = proximoDisparo1(null);
 			}
 
 		} else {
@@ -504,7 +506,7 @@ public class JuegoBatallaNaval{
 
 		}
 		if(nuevo.getColumna()==-1){
-			nuevo =proximoDisparo1(idPartida);
+			nuevo =proximoDisparo1(null);
 		}
 
 		return nuevo;
