@@ -451,6 +451,39 @@ public class Tablero {
 		return cantBarcosSubmarinoColocados;
 	}
 
+	public void setCantBarcosSubmarino(int cantBarcosSubmarino) {
+		this.cantBarcosSubmarino = cantBarcosSubmarino;
+	}
+
+	public void setCantBarcosDestructores(int cantBarcosDestructores) {
+		this.cantBarcosDestructores = cantBarcosDestructores;
+	}
+
+	public void setCantBarcosCruceros(int cantBarcosCruceros) {
+		this.cantBarcosCruceros = cantBarcosCruceros;
+	}
+
+	public void setCantBarcosAcorazado(int cantBarcosAcorazado) {
+		this.cantBarcosAcorazado = cantBarcosAcorazado;
+	}
+
+	public void setCantBarcosSubmarinoColocados(int cantBarcosSubmarinoColocados) {
+		this.cantBarcosSubmarinoColocados = cantBarcosSubmarinoColocados;
+	}
+
+	public void setCantBarcosDestructoresColocados(
+			int cantBarcosDestructoresColocados) {
+		this.cantBarcosDestructoresColocados = cantBarcosDestructoresColocados;
+	}
+
+	public void setCantBarcosCrucerosColocados(int cantBarcosCrucerosColocados) {
+		this.cantBarcosCrucerosColocados = cantBarcosCrucerosColocados;
+	}
+
+	public void setCantBarcosAcorazadoColocados(int cantBarcosAcorazadoColocados) {
+		this.cantBarcosAcorazadoColocados = cantBarcosAcorazadoColocados;
+	}
+
 }
 
 
