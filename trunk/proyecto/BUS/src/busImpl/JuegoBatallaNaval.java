@@ -164,7 +164,7 @@ public class JuegoBatallaNaval{
 				RegistroDisparo registro= new RegistroDisparo(resultado,disparo);
 				this.listaDisparosAOponente1.add(registro);
 				this.tableroJugador1.setMiTurno(false);
-				Disparo dis= proximoDisparo1("");
+				Disparo dis= proximoDisparo("");
 				UsuarioVO usu=new UsuarioVO(this.tableroJugador2.getJugador().getUsuarioB());
 				usu.setIdUsuario(this.tableroJugador2.getJugador().getIdUsuarioB());
 				disparar(usu,dis.getFila(),dis.getColumna());
@@ -269,7 +269,7 @@ public class JuegoBatallaNaval{
 		while (!termine) {
 			coordenadaX = (int) (Math.random() * 10);
 			coordenadaY = (int) (Math.random() * 10);
-			if (coordenadaX<10&&coordenadaY<10&&tableroJugador2.tabla[coordenadaX][coordenadaY].estaVacio()) {
+			if (coordenadaX<10&&coordenadaY<10&&tableroJugador2.tabla[coordenadaX][coordenadaY].estaVacio()||tableroJugador2.tabla[coordenadaX][coordenadaY].estaOcupada()) {
 				termine = true;
 			}
 		}
