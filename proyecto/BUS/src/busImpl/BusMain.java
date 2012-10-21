@@ -5,6 +5,7 @@ import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 import java.rmi.server.UnicastRemoteObject;
 
+import comm.ServiciosBatallaNaval;
 import comm.ServiciosDesafio;
 import comm.ServiciosRanking;
 import comm.ServiciosUsuario;
@@ -31,7 +32,7 @@ public class BusMain {
 			ServiciosUsuario stub = (ServiciosUsuario) UnicastRemoteObject.exportObject(bs, 0);
 			ServiciosRanking stubRanking = (ServiciosRanking) UnicastRemoteObject.exportObject(bsRanking, 0);
 			ServiciosDesafio stubDesafio = (ServiciosDesafio) UnicastRemoteObject.exportObject(bsDesafio, 0);
-			ServiciosDesafio stubBN = (ServiciosDesafio) UnicastRemoteObject.exportObject(bsBN, 0);
+			ServiciosBatallaNaval stubBN = (ServiciosBatallaNaval) UnicastRemoteObject.exportObject(bsBN, 0);
 			try {
 
 				Registry registry = LocateRegistry.createRegistry(1099);
