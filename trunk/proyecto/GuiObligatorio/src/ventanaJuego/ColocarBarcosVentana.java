@@ -1,6 +1,7 @@
 package ventanaJuego;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.GridLayout;
 
 import javax.swing.*;
@@ -280,6 +281,8 @@ public class ColocarBarcosVentana extends JFrame {
 			stub.agregarBarco(usuario, coordenadaInicialX, coordenadaInicialY,
 					coordenadaFinalX, coordenadaFinalY, tipoBarco);
 			this.actualizarDistribucion();
+			this.pintarCasillerosOcupados(coordenadaInicialX, coordenadaInicialY,
+					coordenadaFinalX, coordenadaFinalY);
 			if(!quedanBarcos()){
 				BatallaNavalVentana l = new BatallaNavalVentana(this.usuario);
 				l.setVisible(true);
@@ -373,6 +376,14 @@ public class ColocarBarcosVentana extends JFrame {
 						.showMessageDialog(new JFrame(), "ERROR DESCONOCIDO",
 								"ERROR", JOptionPane.ERROR_MESSAGE);
 				this.dispose();
+			}
+		}
+	}
+
+	private void pintarCasillerosOcupados(int XInicial,int YInicial,int XFinal,int YFinal){
+		for (int i = XInicial+1; i <= XFinal; i++) {
+			for (int j = YInicial+1; j <= YFinal; j++) {
+				arrayBotones[i][j].setBackground(Color.black);
 			}
 		}
 	}
