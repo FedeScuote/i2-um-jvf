@@ -34,7 +34,7 @@ public class BatallaNavalVentana extends JFrame {
 	// CONSTANTES//////////////////////////////
 	private static final long serialVersionUID = 1L;
 
-	private static final int pause = 500;
+	private static final int pause = 1000;
 
 	private static final String host = null;
 
