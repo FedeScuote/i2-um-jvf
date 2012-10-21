@@ -20,13 +20,16 @@ import java.rmi.registry.Registry;
 import javax.swing.JLabel;
 import javax.swing.SwingConstants;
 
+import com.sun.jmx.remote.internal.RMIExporter;
+
 import comm.CeldaVO;
 import comm.ServiciosBatallaNaval;
 import comm.TableroVO;
 import comm.UsuarioVO;
 
-public class BatallaNavalVentana extends JFrame{
-
+public class BatallaNavalVentana extends JFrame {
+	// ///////////////////////////////////////VARIABLES Y
+	// CONSTANTES//////////////////////////////
 	private static final long serialVersionUID = 1L;
 
 	private static final int pause = 200;
@@ -54,13 +57,17 @@ public class BatallaNavalVentana extends JFrame{
 
 	private final static int TAMANO_TABLERO = 10 + 1;// (casillas)+(labels)
 
-	private final static String[] ALFABETO = {" ", "a", "b", "c", "d", "e", "f",
-			"g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s",
-			"t", "u", "v", "w", "x", "y", "z" };// primero el vacio
+	private final static String[] ALFABETO = { " ", "a", "b", "c", "d", "e",
+			"f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r",
+			"s", "t", "u", "v", "w", "x", "y", "z" };// primero el vacio// porque no va nada en// esa linea
 
-	// porque no va nada en
-	// esa linea
 	private JLabel indicadorTurno = null;
+
+	// ///////////////////////////////////////VARIABLES Y
+	// CONSTANTES//////////////////////////////
+
+	// ///////////////////////////////////METODOS Y
+	// CONSTRUCTORES////////////////////////////
 
 	/**
 	 * This is the default constructor
@@ -98,10 +105,10 @@ public class BatallaNavalVentana extends JFrame{
 				}
 			}
 		};
-		 temporizador = new Timer(pause, taskPerformer);
-		 temporizador.setInitialDelay(pause);
-		 temporizador.addActionListener(taskPerformer);
-		 temporizador.start();
+		temporizador = new Timer(pause, taskPerformer);
+		temporizador.setInitialDelay(pause);
+		temporizador.addActionListener(taskPerformer);
+		temporizador.start();
 	}
 
 	/**
@@ -169,12 +176,13 @@ public class BatallaNavalVentana extends JFrame{
 		// crear botones y agregarlos al panel
 		panel.setLayout(new GridLayout(TAMANO_TABLERO, TAMANO_TABLERO));
 		for (int i = 1; i < TAMANO_TABLERO; i++) {
-				this.crearFila(panel, i, botones);
+			this.crearFila(panel, i, botones);
 
 		}
 
 	}
-	//metodo que me crea mi cabezal con mis letras
+
+	// metodo que me crea mi cabezal con mis letras
 	private void crearCabezal(JPanel panel) {
 		panel.setLayout(new GridLayout(TAMANO_TABLERO, TAMANO_TABLERO));
 
@@ -186,26 +194,32 @@ public class BatallaNavalVentana extends JFrame{
 			jlabel.setVerticalAlignment(SwingConstants.CENTER);
 		}
 	}
-	//metodo que le paso numero de fila y me agrega la fila con jlabel correspondiente
-	private void crearFila (JPanel panel, Integer numeroFila, JButton[][] botones){
-		for (int j = 0; j<TAMANO_TABLERO; j++){
-			if(j==0){
+
+	// metodo que le paso numero de fila y me agrega la fila con jlabel
+	// correspondiente
+	private void crearFila(JPanel panel, Integer numeroFila, JButton[][] botones) {
+		for (int j = 0; j < TAMANO_TABLERO; j++) {
+			if (j == 0) {
 				JLabel jlabel = new JLabel();
 				panel.add(jlabel);
-				jlabel.setText(numeroFila.toString()); // alfabeto menos uno porque
+				jlabel.setText(numeroFila.toString()); // alfabeto menos uno
+														// porque
 				jlabel.setHorizontalAlignment(SwingConstants.CENTER);
 				jlabel.setVerticalAlignment(SwingConstants.CENTER);
-			}else{
+			} else {
 				JButton jButton = new JButton();
-				if(panel.equals(PanelContrincante)){//solo añado mis listeners si es panel contr
-				jButton.addActionListener(new ListenerBoton(numeroFila, j));
+				if (panel.equals(PanelContrincante)) {// solo añado mis
+														// listeners si es panel
+														// contr
+					jButton.addActionListener(new ListenerBoton(numeroFila, j));
 				}
 				panel.add(jButton);
 				botones[numeroFila][j] = jButton;
 			}
 		}
 	}
-	//clase de mis actionListener que voy a usar en mis botones
+
+	// clase de mis actionListener que voy a usar en mis botones
 	private class ListenerBoton implements ActionListener {
 
 		private int x;
@@ -224,6 +238,7 @@ public class BatallaNavalVentana extends JFrame{
 		}
 	}
 
+	// METODO DE MIS BOTONES
 	private void clickBoton(int fila, int columna) {
 		if (esMiTurno) {
 			try { // try y catch para verificar si esta el usuario o
@@ -234,8 +249,10 @@ public class BatallaNavalVentana extends JFrame{
 				stub.disparar(this.usuario, fila, columna);
 				JOptionPane
 						.showMessageDialog(new JFrame(), "DISPARO REALIZADO");
-				if(stub.hundi(this.usuario)){
-					JOptionPane.showMessageDialog(new JFrame(),"HAS HUNDIDO UN BARCO", "ENHORABUENA", JOptionPane.INFORMATION_MESSAGE);
+				if (stub.hundi(this.usuario)) {
+					JOptionPane.showMessageDialog(new JFrame(),
+							"HAS HUNDIDO UN BARCO", "ENHORABUENA",
+							JOptionPane.INFORMATION_MESSAGE);
 				}
 				refrescarTableroJugador();
 				refrescarTableroOponente();
@@ -243,84 +260,132 @@ public class BatallaNavalVentana extends JFrame{
 			} catch (Exception e) {
 
 			}
-		}else{
-			JOptionPane.showMessageDialog(new JFrame(),"NO ES TU TURNO", "ESPERA", JOptionPane.ERROR_MESSAGE);
+		} else {
+			JOptionPane.showMessageDialog(new JFrame(), "NO ES TU TURNO",
+					"ESPERA", JOptionPane.ERROR_MESSAGE);
 		}
 	}
-
 
 	// METODO PARA PREGUNTAR TURNO
 	public boolean preguntarTurno(UsuarioVO usuario) {
-		try { // try y catch para verificar si esta el usuario o
-			// no
-			Registry registry = LocateRegistry.getRegistry(host);
-			ServiciosBatallaNaval stub = (ServiciosBatallaNaval) registry
-					.lookup("BatallaNavalServices");
-			refrescarTableroJugador();
-			refrescarTableroOponente();
-			return stub.esMiTurno(usuario);
-		} catch (Exception e) {
-			e.printStackTrace();
+		if (this.gane()) {
+			JOptionPane.showMessageDialog(new JFrame(), "HAS GANADO",
+					"ENHORABUENA", JOptionPane.INFORMATION_MESSAGE);
+			this.dispose();
+
 			return false;
+		} else {
+
+			try { // try y catch para verificar si esta el usuario o
+				// no
+				Registry registry = LocateRegistry.getRegistry(host);
+				ServiciosBatallaNaval stub = (ServiciosBatallaNaval) registry
+						.lookup("BatallaNavalServices");
+				refrescarTableroJugador();
+				refrescarTableroOponente();
+				return stub.esMiTurno(usuario);
+			} catch (Exception e) {
+				e.printStackTrace();
+				return false;
+			}
 		}
 	}
-	public void refrescarTableroJugador(){
+
+	// METODO PARA REFRESCAR TABLERO DEL JUGADOR
+	public void refrescarTableroJugador() {
 		try { // try y catch para verificar si esta el usuario o
 			// no
 			Registry registry = LocateRegistry.getRegistry(host);
 			ServiciosBatallaNaval stub = (ServiciosBatallaNaval) registry
 					.lookup("BatallaNavalServices");
-			cambiarBotones(botonesJugador,stub.refrescarTablero(usuario));
+			cambiarBotones(botonesJugador, stub.refrescarTablero(usuario));
 		} catch (Exception e) {
-			if(e instanceof RemoteException){
-				JOptionPane.showMessageDialog(new JFrame(),"ERROR DE CONEXION", "ERROR", JOptionPane.ERROR_MESSAGE);
-			}else{
-			e.printStackTrace();
-			JOptionPane.showMessageDialog(new JFrame(),"ERROR DESCONOCIDO", "ERROR", JOptionPane.ERROR_MESSAGE);
-			this.dispose();
+			if (e instanceof RemoteException) {
+				JOptionPane
+						.showMessageDialog(new JFrame(), "ERROR DE CONEXION",
+								"ERROR", JOptionPane.ERROR_MESSAGE);
+			} else {
+				e.printStackTrace();
+				JOptionPane
+						.showMessageDialog(new JFrame(), "ERROR DESCONOCIDO",
+								"ERROR", JOptionPane.ERROR_MESSAGE);
+				this.dispose();
 			}
 		}
 	}
-	public void refrescarTableroOponente(){
+
+	// METODO PARA REFRESCAR TABLERO DEL OPONENTE
+	public void refrescarTableroOponente() {
 		try { // try y catch para verificar si esta el usuario o
 			// no
 			Registry registry = LocateRegistry.getRegistry(host);
 			ServiciosBatallaNaval stub = (ServiciosBatallaNaval) registry
 					.lookup("BatallaNavalServices");
-			cambiarBotones(botonesContrincante,stub.refrescarTableroOponente(usuario));
+			cambiarBotones(botonesContrincante, stub
+					.refrescarTableroOponente(usuario));
 		} catch (Exception e) {
-			if(e instanceof RemoteException){
-				JOptionPane.showMessageDialog(new JFrame(),"ERROR DE CONEXION", "ERROR", JOptionPane.ERROR_MESSAGE);
-			}else{
-			e.printStackTrace();
-			JOptionPane.showMessageDialog(new JFrame(),"ERROR DESCONOCIDO", "ERROR", JOptionPane.ERROR_MESSAGE);
-			this.dispose();
+			if (e instanceof RemoteException) {
+				JOptionPane
+						.showMessageDialog(new JFrame(), "ERROR DE CONEXION",
+								"ERROR", JOptionPane.ERROR_MESSAGE);
+			} else {
+				e.printStackTrace();
+				JOptionPane
+						.showMessageDialog(new JFrame(), "ERROR DESCONOCIDO",
+								"ERROR", JOptionPane.ERROR_MESSAGE);
+				this.dispose();
 			}
 		}
 	}
-	public void cambiarBotones(JButton[][] botones, TableroVO tablero){
+
+	// METODO DONDE "PINTA" LOS BOTONES PARA REFRESCAR EL TABLERO
+	public void cambiarBotones(JButton[][] botones, TableroVO tablero) {
 		CeldaVO[][] tabla = tablero.getTabla();
 		int iArrayBotones = 0;
 		int jArrayBotones = 0;
-		for (int i = 0 ; i<tabla.length;i++){
+		for (int i = 0; i < tabla.length; i++) {
 			iArrayBotones++;
-			jArrayBotones=0;
+			jArrayBotones = 0;
 			for (int j = 0; j < tabla.length; j++) {
 				jArrayBotones++;
-				if(tabla[i][j].getEstado().equals("AGUA")){
-					botones[iArrayBotones][jArrayBotones].setBackground(Color.BLUE);
-				}else if (tabla[i][j].getEstado().equals("OCUPADO")) {
-					botones[iArrayBotones][jArrayBotones].setBackground(Color.BLACK);
-				}else if(tabla[i][j].getEstado().equals("TOCADO")){
-					botones[iArrayBotones][jArrayBotones].setBackground(Color.GREEN);
-				}else{
-					botones[iArrayBotones][jArrayBotones].setBackground(Color.RED); // esto quiere decir
-					//que si no era ninguno de los otros erre el tiro
+				if (tabla[i][j].getEstado().equals("AGUA")) {
+					botones[iArrayBotones][jArrayBotones]
+							.setBackground(Color.BLUE);
+				} else if (tabla[i][j].getEstado().equals("OCUPADO")) {
+					botones[iArrayBotones][jArrayBotones]
+							.setBackground(Color.BLACK);
+				} else if (tabla[i][j].getEstado().equals("TOCADO")) {
+					botones[iArrayBotones][jArrayBotones]
+							.setBackground(Color.GREEN);
+				} else {
+					botones[iArrayBotones][jArrayBotones]
+							.setBackground(Color.RED); // esto quiere decir
+					// que si no era ninguno de los otros erre el tiro
 				}
 
 			}
 		}
 	}
 
+	// METODO PARA PREGUNTAR SI GANE
+	public boolean gane() {
+		try { // try y catch para verificar si esta el usuario o
+			// no
+			Registry registry = LocateRegistry.getRegistry(host);
+			ServiciosBatallaNaval stub = (ServiciosBatallaNaval) registry
+					.lookup("BatallaNavalServices");
+
+			return stub.gane(usuario);
+		} catch (Exception e) {
+			if (e instanceof RemoteException) {
+				JOptionPane
+						.showMessageDialog(new JFrame(), "ERROR DE CONEXION",
+								"ERROR", JOptionPane.ERROR_MESSAGE);
+			}
+
+			e.printStackTrace();
+			return false;
+		}
+	}
 
 }// @jve:decl-index=0:visual-constraint="10,10"
