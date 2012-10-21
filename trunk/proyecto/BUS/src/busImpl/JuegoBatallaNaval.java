@@ -190,6 +190,37 @@ public class JuegoBatallaNaval{
 		}
 	}
 
+	public boolean gane(UsuarioVO usuario){
+		boolean retorno=false;
+		int cantHundidos=0;
+		if (tableroJugador1.getJugador().getIdUsuarioB() == usuario.getIdUsuario()) {
+			for(int i=0;i<listaDisparosAOponente1.size();i++){
+				if(listaDisparosAOponente1.get(i).getResultado()==Estados.HUNDIDO){
+					cantHundidos++;
+				}
+			}
+			retorno=CANTIDAD_INICIAL_ACORAZADO+CANTIDAD_INICIAL_CRUCEROS+CANTIDAD_INICIAL_DESTRUCTORES+CANTIDAD_INICIAL_SUBMARINO==cantHundidos;
+		}else{
+			for(int i=0;i<listaDisparosAOponente2.size();i++){
+				if(listaDisparosAOponente2.get(i).getResultado()==Estados.HUNDIDO){
+					cantHundidos++;
+				}
+			}
+			retorno=CANTIDAD_INICIAL_ACORAZADO+CANTIDAD_INICIAL_CRUCEROS+CANTIDAD_INICIAL_DESTRUCTORES+CANTIDAD_INICIAL_SUBMARINO==cantHundidos;
+		}
+		return retorno;
+	}
+
+	public boolean perdi(UsuarioVO usuario){
+		boolean retorno=false;
+		if (tableroJugador1.getJugador().getIdUsuarioB() == usuario.getIdUsuario()) {
+			retorno=tableroJugador1.getCantBarcosAcorazado()+tableroJugador1.getCantBarcosCruceros()+tableroJugador1.getCantBarcosDestructores()+tableroJugador1.getCantBarcosSubmarino()==0;
+		}else{
+			retorno=tableroJugador2.getCantBarcosAcorazado()+tableroJugador2.getCantBarcosCruceros()+tableroJugador2.getCantBarcosDestructores()+tableroJugador2.getCantBarcosSubmarino()==0;
+		}
+		return retorno;
+	}
+
 	public TableroVO refrescarTableroOponente(UsuarioVO usuario) throws RemoteException{
 		TableroVO nuevo = new TableroVO();
 		if (tableroJugador1.getJugador().getIdUsuarioB() == usuario.getIdUsuario()) {
