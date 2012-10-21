@@ -49,7 +49,7 @@ public class ColocarBarcosVentana extends JFrame {
 
 	private JButton[][] arrayBotones;
 
-	private boolean primerClick = false;
+	private boolean primerClick = true;
 
 	private int xPrimerClick = 0;
 
@@ -65,6 +65,7 @@ public class ColocarBarcosVentana extends JFrame {
 		initialize();
 		this.agregarBotonesAGroup();
 		this.usuario = usuario;
+		this.crearCabezal(PanelTablero);
 		this.crearTablero(PanelTablero, arrayBotones);
 		this.pedirDistribucion();
 	}
@@ -148,6 +149,7 @@ public class ColocarBarcosVentana extends JFrame {
 		if (BotonCruzero == null) {
 			BotonCruzero = new JRadioButton();
 			BotonCruzero.setText("Cruzero");
+			BotonCruzero.setSelected(true);
 		}
 		return BotonCruzero;
 	}
@@ -248,7 +250,7 @@ public class ColocarBarcosVentana extends JFrame {
 
 		public void actionPerformed(ActionEvent e) {
 			// cuando se presiona un boton se ejecutara este metodo
-			clickBoton(x, y);
+			clickBoton(x-1, y-1);//Manejo menos uno porque EL BUS NO SABE MANEJARSE
 		}
 	}
 
@@ -261,6 +263,7 @@ public class ColocarBarcosVentana extends JFrame {
 			String tipoBarco = this.getBotonSelected();
 			this.colocarBarco(usuario, xPrimerClick, yPrimerClick, fila,
 					columna, tipoBarco);
+			primerClick=true;
 		}
 
 	}
@@ -273,7 +276,7 @@ public class ColocarBarcosVentana extends JFrame {
 			// no
 			Registry registry = LocateRegistry.getRegistry(host);
 			ServiciosBatallaNaval stub = (ServiciosBatallaNaval) registry
-					.lookup("ColocarBarco");
+					.lookup("BatallaNavalServices");
 			stub.agregarBarco(usuario, coordenadaInicialX, coordenadaInicialY,
 					coordenadaFinalX, coordenadaFinalY, tipoBarco);
 			this.actualizarDistribucion();
@@ -357,7 +360,7 @@ public class ColocarBarcosVentana extends JFrame {
 			// no
 			Registry registry = LocateRegistry.getRegistry(host);
 			ServiciosBatallaNaval stub = (ServiciosBatallaNaval) registry
-					.lookup("ColocarBarco");
+					.lookup("BatallaNavalServices");
 			distribucion = stub.distribucion(usuario);
 		} catch (Exception e) {
 			if (e instanceof RemoteException) {
@@ -372,6 +375,11 @@ public class ColocarBarcosVentana extends JFrame {
 				this.dispose();
 			}
 		}
+	}
+
+	public static void main(String[] args) {
+		ColocarBarcosVentana l = new ColocarBarcosVentana(null);
+		l.setVisible(true);
 	}
 
 } // @jve:decl-index=0:visual-constraint="120,2"
