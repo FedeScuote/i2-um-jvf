@@ -2,13 +2,8 @@ package busImpl;
 
 import java.rmi.RemoteException;
 import java.util.ArrayList;
-
-import busImpl.bot.JvfBotBatallaNaval;
-
 import comm.DesafioBatallaNavalVO;
 import comm.DesafioVO;
-import comm.Estados;
-import comm.RegistroDisparo;
 import comm.ServiciosBatallaNaval;
 import comm.TableroVO;
 import comm.UsuarioVO;
@@ -97,7 +92,7 @@ public class ServiciosBatallaNavalImpl implements ServiciosBatallaNaval{
 	}
 
 	public ArrayList<RegistroDisparo> obtenerListaDisparos(UsuarioVO usuario) throws RemoteException {
-		return obtenerListaDisparos(usuario);
+		return obtenerPartida(usuario).obtenerListaDisparos(usuario);
 	}
 
 	public boolean hundi(UsuarioVO usuario) throws RemoteException {

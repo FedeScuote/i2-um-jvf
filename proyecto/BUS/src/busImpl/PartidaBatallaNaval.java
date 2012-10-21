@@ -1,7 +1,7 @@
 package busImpl;
 
 import java.rmi.RemoteException;
-
+import java.util.ArrayList;
 import comm.ServicioPartidaBatallaNaval;
 import comm.ServiciosBatallaNaval;
 import comm.TableroVO;
@@ -80,6 +80,8 @@ public class PartidaBatallaNaval{
 	}
 
 
-
+	public ArrayList<RegistroDisparo> obtenerListaDisparos(UsuarioVO usuario) {
+		return juego.obtenerListaDisparos(usuario);
+	}
 
 }
