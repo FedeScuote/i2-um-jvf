@@ -124,22 +124,22 @@ public class Tablero {
 			int coordenadaFinalY, String tipoBarco) throws CoordenadasCeldasInvalidasException {
 		int idBarco=0;
 		if(tipoBarco.equals(SUBMARINO)){
-			if(coordenadaFinalY-coordenadaInicialY+1==LARGO_SUBMARINO){
+			if(coordenadaFinalY-coordenadaInicialY+1!=LARGO_SUBMARINO){
 				throw new CoordenadasCeldasInvalidasException();
 			}
 			idBarco=Integer.parseInt(LARGO_SUBMARINO+""+cantBarcosSubmarinoColocados);
 		}else if(tipoBarco.equals(DESTRUCTORES)){
-			if(coordenadaFinalY-coordenadaInicialY+1==LARGO_DESTRUCTORES){
+			if(coordenadaFinalY-coordenadaInicialY+1!=LARGO_DESTRUCTORES){
 				throw new CoordenadasCeldasInvalidasException();
 			}
 			idBarco=Integer.parseInt(LARGO_DESTRUCTORES+""+cantBarcosDestructoresColocados);
 		}else if(tipoBarco.equals(CRUCEROS)){
-			if(coordenadaFinalY-coordenadaInicialY+1==LARGO_DESTRUCTORES){
+			if(coordenadaFinalY-coordenadaInicialY+1!=LARGO_CRUCEROS){
 				throw new CoordenadasCeldasInvalidasException();
 			}
 			idBarco=Integer.parseInt(LARGO_CRUCEROS+""+cantBarcosCrucerosColocados);
 		}else if(tipoBarco.equals(ACORAZADO)){
-			if(coordenadaFinalY-coordenadaInicialY+1==LARGO_ACORAZADO){
+			if(coordenadaFinalY-coordenadaInicialY+1!=LARGO_ACORAZADO){
 				throw new CoordenadasCeldasInvalidasException();
 			}
 			idBarco=Integer.parseInt(LARGO_ACORAZADO+""+cantBarcosAcorazadoColocados);
@@ -286,22 +286,22 @@ public class Tablero {
 			int coordenadaFinalX, String tipoBarco) throws CoordenadasCeldasInvalidasException {
 		int idBarco=0;
 		if(tipoBarco.equals(SUBMARINO)){
-			if(coordenadaFinalX-coordenadaInicialX+1==LARGO_SUBMARINO){
+			if(coordenadaFinalX-coordenadaInicialX+1!=LARGO_SUBMARINO){
 				throw new CoordenadasCeldasInvalidasException();
 			}
 			idBarco=Integer.parseInt(LARGO_SUBMARINO+""+cantBarcosSubmarinoColocados);
 		}else if(tipoBarco.equals(DESTRUCTORES)){
-			if(coordenadaFinalX-coordenadaInicialX+1==LARGO_DESTRUCTORES){
+			if(coordenadaFinalX-coordenadaInicialX+1!=LARGO_DESTRUCTORES){
 				throw new CoordenadasCeldasInvalidasException();
 			}
 			idBarco=Integer.parseInt(LARGO_DESTRUCTORES+""+cantBarcosDestructoresColocados);
 		}else if(tipoBarco.equals(CRUCEROS)){
-			if(coordenadaFinalX-coordenadaInicialX+1==LARGO_CRUCEROS){
+			if(coordenadaFinalX-coordenadaInicialX+1!=LARGO_CRUCEROS){
 				throw new CoordenadasCeldasInvalidasException();
 			}
 			idBarco=Integer.parseInt(LARGO_CRUCEROS+""+cantBarcosCrucerosColocados);
 		}else if(tipoBarco.equals(ACORAZADO)){
-			if(coordenadaFinalX-coordenadaInicialX+1==LARGO_ACORAZADO){
+			if(coordenadaFinalX-coordenadaInicialX+1!=LARGO_ACORAZADO){
 				throw new CoordenadasCeldasInvalidasException();
 			}
 			idBarco=Integer.parseInt(LARGO_ACORAZADO+""+cantBarcosAcorazadoColocados);
