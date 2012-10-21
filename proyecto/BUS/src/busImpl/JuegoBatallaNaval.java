@@ -215,6 +215,7 @@ public class JuegoBatallaNaval{
 				for(int j=0;j<tableroJugador1.tabla.length;j++){
 					CeldaVO celda= new CeldaVO();
 					celda.setEstado(tableroJugador1.tabla[i][j].estado);
+					celda.setId(tableroJugador1.tabla[i][j].getId());
 					nuevo.getTabla()[i][j]=celda;
 				}
 			}
@@ -223,6 +224,7 @@ public class JuegoBatallaNaval{
 				for(int j=0;j<tableroJugador2.tabla.length;j++){
 					CeldaVO celda= new CeldaVO();
 					celda.setEstado(tableroJugador2.tabla[i][j].estado);
+					celda.setId(tableroJugador2.tabla[i][j].getId());
 					nuevo.getTabla()[i][j]=celda;
 				}
 			}
