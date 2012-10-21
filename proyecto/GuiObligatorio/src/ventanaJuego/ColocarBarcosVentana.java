@@ -48,7 +48,7 @@ public class ColocarBarcosVentana extends JFrame {
 
 	private JPanel PanelTablero = null;
 
-	private JButton[][] arrayBotones;
+	private JButton[][] arrayBotones = new JButton[TAMANO_TABLERO][TAMANO_TABLERO];
 
 	private boolean primerClick = true;
 
@@ -196,7 +196,6 @@ public class ColocarBarcosVentana extends JFrame {
 	private void crearTablero(JPanel panel, JButton[][] botones) {
 		// crear botones y agregarlos al panel
 		panel.setLayout(new GridLayout(TAMANO_TABLERO, TAMANO_TABLERO));
-		botones = new JButton[TAMANO_TABLERO][TAMANO_TABLERO];
 		for (int i = 1; i < TAMANO_TABLERO; i++) {
 			this.crearFila(panel, i, botones);
 
@@ -251,7 +250,8 @@ public class ColocarBarcosVentana extends JFrame {
 
 		public void actionPerformed(ActionEvent e) {
 			// cuando se presiona un boton se ejecutara este metodo
-			clickBoton(x-1, y-1);//Manejo menos uno porque EL BUS NO SABE MANEJARSE
+			clickBoton(x - 1, y - 1);// Manejo menos uno porque EL BUS NO
+										// SABE MANEJARSE
 		}
 	}
 
@@ -264,7 +264,9 @@ public class ColocarBarcosVentana extends JFrame {
 			String tipoBarco = this.getBotonSelected();
 			this.colocarBarco(usuario, xPrimerClick, yPrimerClick, fila,
 					columna, tipoBarco);
-			primerClick=true;
+			//this.pintarCasillerosOcupados(xPrimerClick, yPrimerClick,
+					//fila, columna);
+			primerClick = true;
 		}
 
 	}
@@ -278,12 +280,13 @@ public class ColocarBarcosVentana extends JFrame {
 			Registry registry = LocateRegistry.getRegistry(host);
 			ServiciosBatallaNaval stub = (ServiciosBatallaNaval) registry
 					.lookup("BatallaNavalServices");
-			stub.agregarBarco(usuario,this.mandarCasilleroABus(coordenadaInicialX), this.mandarCasilleroABus(coordenadaInicialY),
-					this.mandarCasilleroABus(coordenadaFinalX),this.mandarCasilleroABus(coordenadaFinalY), tipoBarco);
+			stub.agregarBarco(usuario, this
+					.mandarCasilleroABus(coordenadaInicialX), this
+					.mandarCasilleroABus(coordenadaInicialY), this
+					.mandarCasilleroABus(coordenadaFinalX), this
+					.mandarCasilleroABus(coordenadaFinalY), tipoBarco);
 			this.actualizarDistribucion();
-			this.pintarCasillerosOcupados(coordenadaInicialX, coordenadaInicialY,
-					coordenadaFinalX, coordenadaFinalY);
-			if(!quedanBarcos()){
+			if (!quedanBarcos()) {
 				BatallaNavalVentana l = new BatallaNavalVentana(this.usuario);
 				l.setVisible(true);
 				this.dispose();
@@ -351,8 +354,8 @@ public class ColocarBarcosVentana extends JFrame {
 	private boolean quedanBarcos() {
 		boolean quedan = false;
 		for (int i = 0; i < distribucion.length; i++) {
-			if(distribucion[i]!=0){
-				quedan=true;
+			if (distribucion[i] != 0) {
+				quedan = true;
 			}
 		}
 		return quedan;
@@ -380,7 +383,8 @@ public class ColocarBarcosVentana extends JFrame {
 		}
 	}
 
-	private void pintarCasillerosOcupados(int XInicial,int YInicial,int XFinal,int YFinal){
+	private void pintarCasillerosOcupados(int XInicial, int YInicial,
+			int XFinal, int YFinal) {
 		for (int i = XInicial; i <= XFinal; i++) {
 			for (int j = YInicial; j <= YFinal; j++) {
 				arrayBotones[i][j].setBackground(Color.black);
@@ -388,9 +392,10 @@ public class ColocarBarcosVentana extends JFrame {
 		}
 	}
 
-	private int mandarCasilleroABus(int i){
+	private int mandarCasilleroABus(int i) {
 		return i--;
 	}
+
 	public static void main(String[] args) {
 		ColocarBarcosVentana l = new ColocarBarcosVentana(null);
 		l.setVisible(true);

@@ -45,7 +45,7 @@ public class BatallaNavalVentana extends JFrame{
 
 	private Timer temporizador;
 
-	private JButton[][] botonesJugador;
+	private JButton[][] botonesJugador = new JButton[TAMANO_TABLERO][TAMANO_TABLERO];
 
 	// botones que voy a
 	// utilizar para mi
@@ -168,7 +168,6 @@ public class BatallaNavalVentana extends JFrame{
 	private void crearTablero(JPanel panel, JButton[][] botones) {
 		// crear botones y agregarlos al panel
 		panel.setLayout(new GridLayout(TAMANO_TABLERO, TAMANO_TABLERO));
-		botones = new JButton[TAMANO_TABLERO][TAMANO_TABLERO];
 		for (int i = 1; i < TAMANO_TABLERO; i++) {
 				this.crearFila(panel, i, botones);
 
