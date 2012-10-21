@@ -58,6 +58,11 @@ public class ColocarBarcosVentana extends JFrame {
 
 	private int[] distribucion;
 
+	private static final String SUBMARINO = "SUBMARINO";
+	private static final String DESTRUCTORES = "DESTRUCTORES";
+	private static final String CRUCEROS = "CRUCEROS";
+	private static final String ACORAZADO = "ACORAZADO";
+
 	/**
 	 * This is the default constructor
 	 */
@@ -69,6 +74,7 @@ public class ColocarBarcosVentana extends JFrame {
 		this.crearCabezal(PanelTablero);
 		this.crearTablero(PanelTablero, arrayBotones);
 		this.pedirDistribucion();
+		this.setExtendedState(JFrame.MAXIMIZED_BOTH);
 	}
 
 	/**
@@ -149,7 +155,7 @@ public class ColocarBarcosVentana extends JFrame {
 	private JRadioButton getBotonCruzero() {
 		if (BotonCruzero == null) {
 			BotonCruzero = new JRadioButton();
-			BotonCruzero.setText("Cruzero");
+			BotonCruzero.setText("Crucero");
 			BotonCruzero.setSelected(true);
 		}
 		return BotonCruzero;
@@ -314,29 +320,29 @@ public class ColocarBarcosVentana extends JFrame {
 	// Metodo que me devuelve que boton esta seleccionado
 	private String getBotonSelected() {
 		if (BotonCruzero.isSelected()) {
-			return "CRUZERO";
+			return CRUCEROS;
 		}
 		if (BotonSubmarino.isSelected()) {
-			return "SUBMARINO";
+			return SUBMARINO;
 		}
 		if (BotonAcorazado.isSelected()) {
-			return "ACORAZADO";
+			return ACORAZADO;
 		} else {
-			return "DESTRUCTOR";
+			return DESTRUCTORES;
 		}
 	}
 
 	private void actualizarDistribucion() {
-		if (getBotonSelected().equals("SUBMARINO")) {
+		if (getBotonSelected().equals(SUBMARINO)) {
 			restarDelArray(distribucion, 0);
 		}
-		if (getBotonSelected().equals("DESTRUCTOR")) {
+		if (getBotonSelected().equals(DESTRUCTORES)) {
 			restarDelArray(distribucion, 1);
 		}
-		if (getBotonSelected().equals("CRUZERO")) {
+		if (getBotonSelected().equals(CRUCEROS)) {
 			restarDelArray(distribucion, 2);
 		}
-		if (getBotonSelected().equals("ACORAZADO")) {
+		if (getBotonSelected().equals(ACORAZADO)) {
 			restarDelArray(distribucion, 3);
 		}
 	}

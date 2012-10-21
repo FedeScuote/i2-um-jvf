@@ -81,7 +81,7 @@ public class BatallaNavalVentana extends JFrame{
 		// contrincante
 		refrescarTableroJugador();
 		refrescarTableroOponente();
-		this.setExtendedState(this.getExtendedState() | JFrame.MAXIMIZED_BOTH);// mi
+		this.setExtendedState(JFrame.MAXIMIZED_BOTH);// mi
 		// frame
 		// arranca
 		// maximizada
@@ -197,7 +197,9 @@ public class BatallaNavalVentana extends JFrame{
 				jlabel.setVerticalAlignment(SwingConstants.CENTER);
 			}else{
 				JButton jButton = new JButton();
+				if(panel.equals(PanelContrincante)){//solo añado mis listeners si es panel contr
 				jButton.addActionListener(new ListenerBoton(numeroFila, j));
+				}
 				panel.add(jButton);
 				botones[numeroFila][j] = jButton;
 			}
@@ -241,6 +243,8 @@ public class BatallaNavalVentana extends JFrame{
 			} catch (Exception e) {
 
 			}
+		}else{
+			JOptionPane.showMessageDialog(new JFrame(),"NO ES TU TURNO", "ESPERA", JOptionPane.ERROR_MESSAGE);
 		}
 	}
 
@@ -283,7 +287,7 @@ public class BatallaNavalVentana extends JFrame{
 			Registry registry = LocateRegistry.getRegistry(host);
 			ServiciosBatallaNaval stub = (ServiciosBatallaNaval) registry
 					.lookup("BatallaNavalServices");
-			cambiarBotones(botonesJugador,stub.refrescarTableroOponente(usuario));
+			cambiarBotones(botonesContrincante,stub.refrescarTableroOponente(usuario));
 		} catch (Exception e) {
 			if(e instanceof RemoteException){
 				JOptionPane.showMessageDialog(new JFrame(),"ERROR DE CONEXION", "ERROR", JOptionPane.ERROR_MESSAGE);
@@ -296,16 +300,21 @@ public class BatallaNavalVentana extends JFrame{
 	}
 	public void cambiarBotones(JButton[][] botones, TableroVO tablero){
 		CeldaVO[][] tabla = tablero.getTabla();
-		for (int i=0 ; i<tabla.length;i++){
+		int iArrayBotones = 0;
+		int jArrayBotones = 0;
+		for (int i = 0 ; i<tabla.length;i++){
+			iArrayBotones++;
+			jArrayBotones=0;
 			for (int j = 0; j < tabla.length; j++) {
+				jArrayBotones++;
 				if(tabla[i][j].getEstado().equals("AGUA")){
-					botones[i][j].setBackground(Color.BLUE);
+					botones[iArrayBotones][jArrayBotones].setBackground(Color.BLUE);
 				}else if (tabla[i][j].getEstado().equals("OCUPADO")) {
-					botones[i][j].setBackground(Color.BLACK);
+					botones[iArrayBotones][jArrayBotones].setBackground(Color.BLACK);
 				}else if(tabla[i][j].getEstado().equals("TOCADO")){
-					botones[i][j].setBackground(Color.GREEN);
+					botones[iArrayBotones][jArrayBotones].setBackground(Color.GREEN);
 				}else{
-					botones[i][j].setBackground(Color.RED); // esto quiere decir
+					botones[iArrayBotones][jArrayBotones].setBackground(Color.RED); // esto quiere decir
 					//que si no era ninguno de los otros erre el tiro
 				}
 
