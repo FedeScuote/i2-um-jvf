@@ -56,15 +56,6 @@ public class ServiciosBatallaNavalImpl implements ServiciosBatallaNaval{
 		PartidaBatallaNaval nueva = new PartidaBatallaNaval(idPartida,juego);
 		this.partidas=new ArrayList<PartidaBatallaNaval>();
 		this.partidas.add(nueva);
-		try {
-			JvfBotBatallaNaval.comenzarJuego();
-		} catch (CoordenadasInvalidasException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (NoInicioJuegoException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
 	}
 
 
