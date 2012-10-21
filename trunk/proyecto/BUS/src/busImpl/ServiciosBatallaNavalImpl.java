@@ -20,7 +20,7 @@ import daoInterfaces.RankingDAO;
 
 public class ServiciosBatallaNavalImpl implements ServiciosBatallaNaval{
 
-	private ArrayList<PartidaBatallaNaval> partidas;
+	private ArrayList<PartidaBatallaNaval> partidas = new ArrayList<PartidaBatallaNaval>();
 
 	public void agregarBarco(UsuarioVO usuario, int coordenadaInicialX, int coordenadaInicialY, int coordenadaFinalX, int coordenadaFinalY, String tipoBarco) throws RemoteException, CoordenadasInvalidasException {
 		obtenerPartida(usuario).agregarBarco(usuario, coordenadaInicialX, coordenadaInicialY, coordenadaFinalX, coordenadaFinalY, tipoBarco);
@@ -54,16 +54,17 @@ public class ServiciosBatallaNavalImpl implements ServiciosBatallaNaval{
 		}
 		JuegoBatallaNaval juego = new JuegoBatallaNaval(jugador1,jugador2);
 		PartidaBatallaNaval nueva = new PartidaBatallaNaval(idPartida,juego);
+		this.partidas=new ArrayList<PartidaBatallaNaval>();
 		this.partidas.add(nueva);
-		try {
-			JvfBotBatallaNaval.comenzarJuego();
-		} catch (CoordenadasInvalidasException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (NoInicioJuegoException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+//		try {
+////			JvfBotBatallaNaval.comenzarJuego();
+//		} catch (CoordenadasInvalidasException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		} catch (NoInicioJuegoException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
 	}
 
 
