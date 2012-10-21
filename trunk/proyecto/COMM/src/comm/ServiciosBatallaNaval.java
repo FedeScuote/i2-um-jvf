@@ -2,7 +2,6 @@ package comm;
 import java.rmi.Remote;
 import java.rmi.RemoteException;
 import java.util.ArrayList;
-
 import commExceptions.CoordenadasInvalidasException;
 import commExceptions.NoInicioJuegoException;
 
@@ -35,7 +34,7 @@ public interface ServiciosBatallaNaval extends Remote {
 
 	public boolean perdi(UsuarioVO usuario) throws RemoteException;
 
-	public ArrayList<RegistroDisparo> obtenerListaDisparos(UsuarioVO usuario) throws RemoteException;
+	//public ArrayList<RegistroDisparo> obtenerListaDisparos(UsuarioVO usuario) throws RemoteException;
 
 
 
