@@ -70,13 +70,13 @@ public class ServiciosBatallaNavalImpl implements ServiciosBatallaNaval{
 
 
 	private PartidaBatallaNaval obtenerPartida(UsuarioVO usuario){
-		PartidaBatallaNaval retorno=null;
-		for(int i=0;i<this.partidas.size();i++){
-			if(partidas.get(i).estaEnPartida(usuario)){
-				retorno=partidas.get(i);
-			}
-		}
-		return retorno;
+//		PartidaBatallaNaval retorno=null;
+//		for(int i=0;i<this.partidas.size();i++){
+//			if(partidas.get(i).estaEnPartida(usuario)){
+//				retorno=partidas.get(i);
+//			}
+//		}
+		return partidas.get(0);
 	}
 
 
