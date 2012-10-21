@@ -59,8 +59,11 @@ public class ColocarBarcosVentana extends JFrame {
 	private int[] distribucion;
 
 	private static final String SUBMARINO = "SUBMARINO";
+
 	private static final String DESTRUCTORES = "DESTRUCTORES";
+
 	private static final String CRUCEROS = "CRUCEROS";
+
 	private static final String ACORAZADO = "ACORAZADO";
 
 	/**
@@ -257,7 +260,7 @@ public class ColocarBarcosVentana extends JFrame {
 		public void actionPerformed(ActionEvent e) {
 			// cuando se presiona un boton se ejecutara este metodo
 			clickBoton(x - 1, y - 1);// Manejo menos uno porque EL BUS NO
-										// SABE MANEJARSE
+			// SABE MANEJARSE
 		}
 	}
 
@@ -270,8 +273,8 @@ public class ColocarBarcosVentana extends JFrame {
 			String tipoBarco = this.getBotonSelected();
 			this.colocarBarco(usuario, xPrimerClick, yPrimerClick, fila,
 					columna, tipoBarco);
-			//this.pintarCasillerosOcupados(xPrimerClick, yPrimerClick,
-					//fila, columna);
+			// this.pintarCasillerosOcupados(xPrimerClick, yPrimerClick,
+			// fila, columna);
 			primerClick = true;
 		}
 
@@ -281,39 +284,46 @@ public class ColocarBarcosVentana extends JFrame {
 	private void colocarBarco(UsuarioVO usuario, int coordenadaInicialX,
 			int coordenadaInicialY, int coordenadaFinalX, int coordenadaFinalY,
 			String tipoBarco) {
-		try { // try y catch para verificar si esta el usuario o
-			// no
-			Registry registry = LocateRegistry.getRegistry(host);
-			ServiciosBatallaNaval stub = (ServiciosBatallaNaval) registry
-					.lookup("BatallaNavalServices");
-			stub.agregarBarco(usuario, this
-					.mandarCasilleroABus(coordenadaInicialX), this
-					.mandarCasilleroABus(coordenadaInicialY), this
-					.mandarCasilleroABus(coordenadaFinalX), this
-					.mandarCasilleroABus(coordenadaFinalY), tipoBarco);
-			this.actualizarDistribucion();
-			if (!quedanBarcos()) {
-				BatallaNavalVentana l = new BatallaNavalVentana(this.usuario);
-				l.setVisible(true);
-				this.dispose();
+		if (quedanBarcos(tipoBarco)) {
+			try { // try y catch para verificar si esta el usuario o
+				// no
+				Registry registry = LocateRegistry.getRegistry(host);
+				ServiciosBatallaNaval stub = (ServiciosBatallaNaval) registry
+						.lookup("BatallaNavalServices");
+				stub.agregarBarco(usuario, this
+						.mandarCasilleroABus(coordenadaInicialX), this
+						.mandarCasilleroABus(coordenadaInicialY), this
+						.mandarCasilleroABus(coordenadaFinalX), this
+						.mandarCasilleroABus(coordenadaFinalY), tipoBarco);
+				this.actualizarDistribucion();
+				if (!quedanBarcos()) {
+					BatallaNavalVentana l = new BatallaNavalVentana(
+							this.usuario);
+					l.setVisible(true);
+					this.dispose();
+				}
+			} catch (Exception e) {
+				if (e instanceof RemoteException) {
+					JOptionPane.showMessageDialog(new JFrame(),
+							"Error en la conexion intente de nuevo", "ERROR",
+							JOptionPane.ERROR_MESSAGE);
+				}
+				if (e instanceof CoordenadasInvalidasException) {
+					JOptionPane.showMessageDialog(new JFrame(),
+							"Coordenadas invalidas intente de nuevo", "ERROR",
+							JOptionPane.ERROR_MESSAGE);
+				} else {
+					e.printStackTrace();
+					JOptionPane.showMessageDialog(new JFrame(),
+							"ERROR DESCONOCIDO", "ERROR",
+							JOptionPane.ERROR_MESSAGE);
+					this.dispose();
+				}
 			}
-		} catch (Exception e) {
-			if (e instanceof RemoteException) {
-				JOptionPane.showMessageDialog(new JFrame(),
-						"Error en la conexion intente de nuevo", "ERROR",
-						JOptionPane.ERROR_MESSAGE);
-			}
-			if (e instanceof CoordenadasInvalidasException) {
-				JOptionPane.showMessageDialog(new JFrame(),
-						"Coordenadas invalidas intente de nuevo", "ERROR",
-						JOptionPane.ERROR_MESSAGE);
-			} else {
-				e.printStackTrace();
-				JOptionPane
-						.showMessageDialog(new JFrame(), "ERROR DESCONOCIDO",
-								"ERROR", JOptionPane.ERROR_MESSAGE);
-				this.dispose();
-			}
+		}else{
+			JOptionPane.showMessageDialog(new JFrame(),
+					"Ya no se pueden agregar mas barcos de ese tipo", "ERROR",
+					JOptionPane.ERROR_MESSAGE);
 		}
 	}
 
@@ -367,6 +377,18 @@ public class ColocarBarcosVentana extends JFrame {
 		return quedan;
 	}
 
+	private boolean quedanBarcos(String tipoBarco) {
+		if (tipoBarco.equals(SUBMARINO)) {
+			return distribucion[0] != 0;
+		} else if (tipoBarco.equals(DESTRUCTORES)) {
+			return distribucion[1] != 0;
+		} else if (tipoBarco.equals(CRUCEROS)) {
+			return distribucion[2] != 0;
+		} else {
+			return distribucion[3] != 0;
+		}
+	}
+
 	private void pedirDistribucion() {
 		try { // try y catch para verificar si esta el usuario o
 			// no
@@ -400,11 +422,6 @@ public class ColocarBarcosVentana extends JFrame {
 
 	private int mandarCasilleroABus(int i) {
 		return i--;
-	}
-
-	public static void main(String[] args) {
-		ColocarBarcosVentana l = new ColocarBarcosVentana(null);
-		l.setVisible(true);
 	}
 
 } // @jve:decl-index=0:visual-constraint="120,2"
