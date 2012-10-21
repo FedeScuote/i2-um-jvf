@@ -180,6 +180,7 @@ public class JuegoBatallaNaval{
 				RegistroDisparo registro= new RegistroDisparo(resultado,disparo);
 				this.listaDisparosAOponente2.add(registro);
 				this.tableroJugador2.setMiTurno(false);
+				this.tableroJugador1.setMiTurno(true);
 			} catch (CoordenadasCeldasInvalidasException e) {
 				throw new CoordenadasInvalidasException();
 			}
