@@ -278,8 +278,8 @@ public class ColocarBarcosVentana extends JFrame {
 			Registry registry = LocateRegistry.getRegistry(host);
 			ServiciosBatallaNaval stub = (ServiciosBatallaNaval) registry
 					.lookup("BatallaNavalServices");
-			stub.agregarBarco(usuario, coordenadaInicialX, coordenadaInicialY,
-					coordenadaFinalX, coordenadaFinalY, tipoBarco);
+			stub.agregarBarco(usuario,this.mandarCasilleroABus(coordenadaInicialX), this.mandarCasilleroABus(coordenadaInicialY),
+					this.mandarCasilleroABus(coordenadaFinalX),this.mandarCasilleroABus(coordenadaFinalY), tipoBarco);
 			this.actualizarDistribucion();
 			this.pintarCasillerosOcupados(coordenadaInicialX, coordenadaInicialY,
 					coordenadaFinalX, coordenadaFinalY);
@@ -381,13 +381,16 @@ public class ColocarBarcosVentana extends JFrame {
 	}
 
 	private void pintarCasillerosOcupados(int XInicial,int YInicial,int XFinal,int YFinal){
-		for (int i = XInicial+1; i <= XFinal; i++) {
-			for (int j = YInicial+1; j <= YFinal; j++) {
+		for (int i = XInicial; i <= XFinal; i++) {
+			for (int j = YInicial; j <= YFinal; j++) {
 				arrayBotones[i][j].setBackground(Color.black);
 			}
 		}
 	}
 
+	private int mandarCasilleroABus(int i){
+		return i--;
+	}
 	public static void main(String[] args) {
 		ColocarBarcosVentana l = new ColocarBarcosVentana(null);
 		l.setVisible(true);
