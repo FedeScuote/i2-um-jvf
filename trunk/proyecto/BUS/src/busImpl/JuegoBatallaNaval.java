@@ -193,7 +193,7 @@ public class JuegoBatallaNaval{
 			for(int i=0; i<tableroJugador2.tabla.length;i++){
 				for(int j=0;j<tableroJugador2.tabla.length;j++){
 					CeldaVO celda= new CeldaVO();
-					if(celda.estaOcupada()){
+					if(tableroJugador2.tabla[i][j].estaOcupada()){
 						nuevo.getTabla()[i][j]=celda;
 					}else{
 						celda.setEstado(tableroJugador2.tabla[i][j].estado);
@@ -205,10 +205,10 @@ public class JuegoBatallaNaval{
 			for(int i=0; i<tableroJugador2.tabla.length;i++){
 				for(int j=0;j<tableroJugador2.tabla.length;j++){
 					CeldaVO celda= new CeldaVO();
-					if(celda.estaOcupada()){
+					if(tableroJugador1.tabla[i][j].estaOcupada()){
 						nuevo.getTabla()[i][j]=celda;
 					}else{
-						celda.setEstado(tableroJugador2.tabla[i][j].estado);
+						celda.setEstado(tableroJugador1.tabla[i][j].estado);
 						nuevo.getTabla()[i][j]=celda;
 					}
 				}
