@@ -162,7 +162,7 @@ public class JuegoBatallaNaval{
 				RegistroDisparo registro= new RegistroDisparo(resultado,disparo);
 				this.listaDisparosAOponente1.add(registro);
 				this.tableroJugador1.setMiTurno(false);
-				Disparo dis= proximoDisparo("");
+				Disparo dis= proximoDisparo1("");
 				UsuarioVO usu=new UsuarioVO(this.tableroJugador2.getJugador().getUsuarioB());
 				usu.setIdUsuario(this.tableroJugador2.getJugador().getIdUsuarioB());
 				disparar(usu,dis.getFila(),dis.getColumna());
@@ -199,8 +199,8 @@ public class JuegoBatallaNaval{
 				}
 			}
 		}else{
-			for(int i=0; i<tableroJugador1.tabla.length;i++){
-				for(int j=0;j<tableroJugador1.tabla.length;j++){
+			for(int i=0; i<tableroJugador2.tabla.length;i++){
+				for(int j=0;j<tableroJugador2.tabla.length;j++){
 					CeldaVO celda= new CeldaVO();
 					if(celda.estaOcupada()){
 						nuevo.getTabla()[i][j]=celda;
