@@ -71,6 +71,14 @@ public class PartidaBatallaNaval{
 		return juego.distribucion();
 	}
 
+	public boolean perdi(UsuarioVO usuario){
+		return perdi(usuario);
+	}
+
+	public boolean gane(UsuarioVO usuario){
+		return gane(usuario);
+	}
+
 
 
 
