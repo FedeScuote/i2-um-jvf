@@ -30,6 +30,7 @@ public class DAOPruebas {
 
 		BatallaNavalDAODB b=new BatallaNavalDAODB();
 		Tablero t=b.getTablero(23, 1);
+		//System.out.println((t.getTabla());
 		System.out.println(t.getCantBarcosCruceros());
 
 	/*
