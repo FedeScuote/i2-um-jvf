@@ -1,6 +1,7 @@
 package busImpl;
 
 import java.util.ArrayList;
+
 import excepcionesB.CoordenadasCeldasInvalidasException;
 
 public class Tablero {
