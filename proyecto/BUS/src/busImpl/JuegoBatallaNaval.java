@@ -305,7 +305,7 @@ public class JuegoBatallaNaval{
 		while (!termine) {
 			coordenadaX = (int) (Math.random() * 10);
 			coordenadaY = (int) (Math.random() * 10);
-			if (coordenadaX<10&&coordenadaY<10&&tableroJugador2.tabla[coordenadaX][coordenadaY].estaVacio()){
+			if (coordenadaX<10&&coordenadaY<10&&(tableroJugador1.tabla[coordenadaX][coordenadaY].estaVacio()||tableroJugador1.tabla[coordenadaX][coordenadaY].estaOcupada())){
 				termine = true;
 			}
 		}
