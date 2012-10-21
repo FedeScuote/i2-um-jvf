@@ -167,7 +167,7 @@ public class JuegoBatallaNaval{
 				this.listaDisparosAOponente1.add(registro);
 				this.tableroJugador1.setMiTurno(false);
 				this.tableroJugador2.setMiTurno(true);
-				Disparo dis= proximoDisparo("");
+				Disparo dis= proximoDisparo1();
 				UsuarioVO usu=new UsuarioVO(this.tableroJugador2.getJugador().getUsuarioB());
 				usu.setIdUsuario(this.tableroJugador2.getJugador().getIdUsuarioB());
 				disparar(usu,dis.getFila(),dis.getColumna());
