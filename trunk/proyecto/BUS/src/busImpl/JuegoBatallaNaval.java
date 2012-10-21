@@ -22,10 +22,12 @@ public class JuegoBatallaNaval{
 	private static final int CANTIDAD_INICIAL_CRUCEROS = 1;
 	private static final int CANTIDAD_INICIAL_ACORAZADO = 1;
 
+	private static boolean modoRobot;
 	private Tablero tableroJugador1;
 	private ArrayList<RegistroDisparo> listaDisparosAOponente1;
 	private Tablero tableroJugador2;
 	private ArrayList<RegistroDisparo> listaDisparosAOponente2;
+
 
 
 	public boolean esta(UsuarioVO usuario){
@@ -164,10 +166,11 @@ public class JuegoBatallaNaval{
 				RegistroDisparo registro= new RegistroDisparo(resultado,disparo);
 				this.listaDisparosAOponente1.add(registro);
 				this.tableroJugador1.setMiTurno(false);
-				Disparo dis= proximoDisparo1(usuario);
-				UsuarioVO usu=new UsuarioVO(this.tableroJugador2.getJugador().getUsuarioB());
-				usu.setIdUsuario(this.tableroJugador2.getJugador().getIdUsuarioB());
-				disparar(usu,dis.getFila(),dis.getColumna());
+				this.tableroJugador2.setMiTurno(true);
+//				Disparo dis= proximoDisparo1(usuario);
+//				UsuarioVO usu=new UsuarioVO(this.tableroJugador2.getJugador().getUsuarioB());
+//				usu.setIdUsuario(this.tableroJugador2.getJugador().getIdUsuarioB());
+//				disparar(usu,dis.getFila(),dis.getColumna());
 			} catch (CoordenadasCeldasInvalidasException e) {
 				throw new CoordenadasInvalidasException();
 			}
@@ -533,10 +536,6 @@ public class JuegoBatallaNaval{
 		}
 		return i;
 	}
-
-
-
-
 
 	public static void main(String[] args) {
 		UsuarioVO jugador = new UsuarioVO("Yo");
