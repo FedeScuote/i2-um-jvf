@@ -17,4 +17,8 @@ public interface DesafioDAO {
 	public ArrayList getDesafiosUsuariosDisponibleBackgammon() throws NoHayDesafioException;
 
 	public ArrayList getDesafiosBatallaNaval() throws NoHayDesafioException;
+
+	public void crearDesafio(String usuario,int monto);
+
+
 }
