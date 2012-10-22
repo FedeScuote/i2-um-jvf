@@ -8,12 +8,19 @@ import comm.RankingVO;
 import comm.ServiciosDesafio;
 import comm.UsuarioVO;
 import commExceptions.NoHayDesafiosDisponiblesException;
+import commExceptions.NoSeEncuentraUsuarioException;
 import daoInterfaces.DesafioDAO;
 import daoInterfaces.RankingDAO;
 import daoInterfaces.UsuarioDAO;
 import excepcionesB.NoHayDesafioException;
 
 public class Desafio implements ServiciosDesafio {
+
+
+	private static final String USUARIO_BOT_1 = "jhirata";
+	private static final String USUARIO_BOT_2 = "vtuyare";
+	private static final String USUARIO_BOT_3 = "fkono";
+	private static final String USUARIO_BOT_4 = "jdiaz";
 
 	private String usuarioDesafio;
 	private int idUsuario;
@@ -65,9 +72,9 @@ public class Desafio implements ServiciosDesafio {
 	}
 
 	public ArrayList<DesafioBatallaNavalVO> getDesafios() throws RemoteException, NoHayDesafiosDisponiblesException{
+		DesafioDAO dao = getDAO();
+		ArrayList<DesafioBatallaNavalVO> aux = new ArrayList<DesafioBatallaNavalVO>();
 		try{
-			DesafioDAO dao = getDAO();
-			ArrayList<DesafioBatallaNavalVO> aux = new ArrayList<DesafioBatallaNavalVO>();
 			ArrayList desafiosBDD=dao.getDesafiosUsuariosDisponibleBatallaNaval();
 			int i=0;
 			while(i<desafiosBDD.size()){
@@ -82,7 +89,34 @@ public class Desafio implements ServiciosDesafio {
 			}
 			return aux;
 		}catch(NoHayDesafioException e){
-			 throw new NoHayDesafiosDisponiblesException();
+			DesafioBatallaNavalVO nuevo1 = new DesafioBatallaNavalVO();
+			DesafioBatallaNavalVO nuevo2 = new DesafioBatallaNavalVO();
+			DesafioBatallaNavalVO nuevo3 = new DesafioBatallaNavalVO();
+			DesafioBatallaNavalVO nuevo4 = new DesafioBatallaNavalVO();
+			UsuarioVO usuarioVOBot1 = new UsuarioVO(USUARIO_BOT_1);
+			UsuarioVO usuarioVOBot2 = new UsuarioVO(USUARIO_BOT_2);
+			UsuarioVO usuarioVOBot3 = new UsuarioVO(USUARIO_BOT_3);
+			UsuarioVO usuarioVOBot4 = new UsuarioVO(USUARIO_BOT_4);
+			nuevo1.setUsuario(usuarioVOBot1);
+			nuevo2.setUsuario(usuarioVOBot2);
+			nuevo3.setUsuario(usuarioVOBot3);
+			nuevo4.setUsuario(usuarioVOBot4);
+			int apuesta=0;
+			apuesta=((int)Math.random()*100)+50;
+			nuevo1.setApuesta(apuesta);
+			apuesta=((int)Math.random()*100)+30;
+			nuevo2.setApuesta(apuesta);
+			apuesta=((int)Math.random()*100)+40;
+			nuevo3.setApuesta(apuesta);
+			apuesta=((int)Math.random()*100)+25;
+			nuevo4.setApuesta(apuesta);
+			aux.add(nuevo1);
+			aux.add(nuevo2);
+			aux.add(nuevo3);
+			aux.add(nuevo4);
+			int index=(int)(Math.random()*3);
+			aux.remove(index);
+			return aux;
 		}
 
 	}

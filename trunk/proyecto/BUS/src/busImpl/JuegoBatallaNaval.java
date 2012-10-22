@@ -20,7 +20,7 @@ public class JuegoBatallaNaval{
 	private static final int CANTIDAD_INICIAL_CRUCEROS = 1;
 	private static final int CANTIDAD_INICIAL_ACORAZADO = 1;
 
-	private static boolean modoRobot;
+	private boolean modoRobot;
 	private Tablero tableroJugador1;
 	private ArrayList<RegistroDisparo> listaDisparosAOponente1;
 	private Tablero tableroJugador2;
@@ -32,14 +32,17 @@ public class JuegoBatallaNaval{
 		return tableroJugador1.getJugador().getUsuarioB().equals(usuario.getUsuarioB())||tableroJugador1.getJugador().getUsuarioB().equals(usuario.getUsuarioB());
 	}
 
-	public JuegoBatallaNaval(Usuario jugador1, Usuario jugador2) {
+	public JuegoBatallaNaval(Usuario jugador1, Usuario jugador2, boolean modoRobot) {
 		super();
+		this.modoRobot=modoRobot;
 		this.listaDisparosAOponente1=new ArrayList<RegistroDisparo>();
 		this.listaDisparosAOponente2=new ArrayList<RegistroDisparo>();
 		this.tableroJugador1 = new Tablero(jugador1);
 		this.tableroJugador2 = new Tablero(jugador2);
-		this.tableroJugador2.agregarCeldas(distribucion());
-		this.tableroJugador1.setMiTurno(true);
+		if(modoRobot){
+			this.tableroJugador2.agregarCeldas(distribucion());
+			this.tableroJugador1.setMiTurno(true);
+		}
 	}
 
 	public int[] distribucion(){
@@ -165,10 +168,14 @@ public class JuegoBatallaNaval{
 				this.listaDisparosAOponente1.add(registro);
 				this.tableroJugador1.setMiTurno(false);
 				this.tableroJugador2.setMiTurno(true);
-				Disparo dis= proximoDisparo1();
-				UsuarioVO usu=new UsuarioVO(this.tableroJugador2.getJugador().getUsuarioB());
-				usu.setIdUsuario(this.tableroJugador2.getJugador().getIdUsuarioB());
-				disparar(usu,dis.getFila(),dis.getColumna());
+				if(this.modoRobot){
+					//Se deberia esperar un tiempo aleatorio relativamente corto para no ocacionar sospechas
+					Disparo dis= proximoDisparo("");
+					//por construccion
+					UsuarioVO usuarioRobot=new UsuarioVO(this.tableroJugador2.getJugador().getUsuarioB());
+					usuarioRobot.setIdUsuario(this.tableroJugador2.getJugador().getIdUsuarioB());
+					disparar(usuarioRobot,dis.getFila(),dis.getColumna());
+				}
 			} catch (CoordenadasCeldasInvalidasException e) {
 				throw new CoordenadasInvalidasException();
 			}
@@ -353,7 +360,8 @@ public class JuegoBatallaNaval{
 		boolean retorno = false;
 		if (registro.getDisparo().getColumna() + 1 < tableroJugador2.tabla.length
 				&& tableroJugador2.tabla[registro.getDisparo().getFila()][registro
-						.getDisparo().getColumna() + 1].estaVacio()) {
+						.getDisparo().getColumna() + 1].estaVacio()|| tableroJugador2.tabla[registro.getDisparo().getFila()][registro
+						                                                                             						.getDisparo().getColumna() + 1].estaOcupada()) {
 			retorno = true;
 		}
 		return retorno;
@@ -362,8 +370,9 @@ public class JuegoBatallaNaval{
 	public boolean puedoIrHaciaLaIzquierda(RegistroDisparo registro) {
 		boolean retorno = false;
 		if (registro.getDisparo().getColumna() - 1 >= 0
-				&& tableroJugador2.tabla[registro.getDisparo().getFila()][registro
-						.getDisparo().getColumna() - 1].estaVacio()) {
+				&& tableroJugador1.tabla[registro.getDisparo().getFila()][registro
+						.getDisparo().getColumna() - 1].estaVacio()||tableroJugador1.tabla[registro.getDisparo().getFila()][registro
+						                                                                            						.getDisparo().getColumna() - 1].estaOcupada()) {
 			retorno = true;
 		}
 		return retorno;
@@ -371,9 +380,10 @@ public class JuegoBatallaNaval{
 
 	public boolean puedoIrHaciaAbajo(RegistroDisparo registro) {
 		boolean retorno = false;
-		if (registro.getDisparo().getFila() + 1 < tableroJugador2.tabla.length
-				&& tableroJugador2.tabla[registro.getDisparo().getFila() + 1][registro
-						.getDisparo().getColumna()].estaVacio()) {
+		if (registro.getDisparo().getFila() + 1 < tableroJugador1.tabla.length
+				&& tableroJugador1.tabla[registro.getDisparo().getFila() + 1][registro
+						.getDisparo().getColumna()].estaVacio()||tableroJugador1.tabla[registro.getDisparo().getFila() + 1][registro
+						                                                                            						.getDisparo().getColumna()].estaOcupada()) {
 			retorno = true;
 		}
 		return retorno;
@@ -382,8 +392,9 @@ public class JuegoBatallaNaval{
 	public boolean puedoIrHaciaArriba(RegistroDisparo registro) {
 		boolean retorno = false;
 		if (registro.getDisparo().getFila() - 1 >= 0
-				&& tableroJugador2.tabla[registro.getDisparo().getFila() - 1][registro
-						.getDisparo().getColumna()].estaVacio()) {
+				&& tableroJugador1.tabla[registro.getDisparo().getFila() - 1][registro
+						.getDisparo().getColumna()].estaVacio()||tableroJugador1.tabla[registro.getDisparo().getFila() - 1][registro
+						                                                                            						.getDisparo().getColumna()].estaOcupada()) {
 			retorno = true;
 		}
 		return retorno;
@@ -435,15 +446,9 @@ public class JuegoBatallaNaval{
 		nuevo.setColumna(-1);
 		nuevo.setFila(-1);
 		if (!tengoLugarADisparar()) {
-			if(tableroJugador2.getCantBarcosSubmarino()==0){
-				if(tableroJugador2.getCantBarcosDestructores()==0){
-					nuevo=proximoDisparoSinSubNiDes();
-				}else{
-					nuevo=proximoDisparoSinSubmarinos();
-				}
-			}else{
+
 				nuevo = proximoDisparo1();
-			}
+
 
 		} else {
 			if (primerTocadoLuegoDeHundir() == listaDisparosAOponente2.size() - 1) {
@@ -570,7 +575,7 @@ public class JuegoBatallaNaval{
 		jugador1.setUsuarioB("Yo");
 		Usuario jugador2 = new Usuario();
 		jugador2.setUsuarioB("Oponente");
-		JuegoBatallaNaval juego = new JuegoBatallaNaval(jugador1,jugador2);
+		JuegoBatallaNaval juego = new JuegoBatallaNaval(jugador1,jugador2,true);
 
 		try {
 			juego.agregarBarco(jugador, 5, 5, 5, 6, SUBMARINO);
