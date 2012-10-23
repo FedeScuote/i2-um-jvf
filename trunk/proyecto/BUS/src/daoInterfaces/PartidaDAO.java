@@ -6,4 +6,5 @@ public interface PartidaDAO {
 	//devuelve true en caso de que el usuario tenga una partida pendiente, false en caso contrario
 	public boolean partidaPendiente(int idUsuario);
 
+	public int idPartida(int idUsuario);
 }
