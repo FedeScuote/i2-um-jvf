@@ -80,11 +80,11 @@ public class PartidaBatallaNaval{
 	}
 
 	public boolean perdi(UsuarioVO usuario){
-		return perdi(usuario);
+		return juego.perdi(usuario);
 	}
 
 	public boolean gane(UsuarioVO usuario){
-		return gane(usuario);
+		return juego.gane(usuario);
 	}
 
 
