@@ -10,16 +10,17 @@ import comm.UsuarioVO;
 import commExceptions.CoordenadasInvalidasException;
 import commExceptions.NoInicioJuegoException;
 import commExceptions.NoSeEncuentraUsuarioException;
+import daoInterfaces.BatallaNavalDAO;
 import daoInterfaces.DesafioDAO;
 import daoInterfaces.PartidaDAO;
 import daoInterfaces.RankingDAO;
 
 public class ServiciosBatallaNavalImpl implements ServiciosBatallaNaval{
 
-	private static final int ID_USUARIO_BOT_1 = 1;
-	private static final int ID_USUARIO_BOT_2 = 2;
-	private static final int ID_USUARIO_BOT_3 = 7;
-	private static final int ID_USUARIO_BOT_4 = 9;
+	private static final String USUARIO_BOT_1 = "jhirata";
+	private static final String USUARIO_BOT_2 = "vtuyare";
+	private static final String USUARIO_BOT_3 = "fkono";
+	private static final String USUARIO_BOT_4 = "jdiaz";
 
 	private ArrayList<PartidaBatallaNaval> partidas = new ArrayList<PartidaBatallaNaval>();
 
@@ -44,19 +45,21 @@ public class ServiciosBatallaNavalImpl implements ServiciosBatallaNaval{
 	public void iniciarPartida(DesafioBatallaNavalVO desafio, UsuarioVO desafiante) throws RemoteException{
 		PartidaDAO dao = getDAO();
 		DesafioDAO dao1 = getDAO1();
-		boolean modoRobot=esBot(desafio.getUsuario().getIdUsuario());
+		BatallaNavalDAO dao2 = getDAO2();
+		boolean modoRobot=esBot(desafio.getUsuario().getUsuarioB());
+		int idDesafio=desafio.getIdDesafio();
 		if(modoRobot){
-			dao1.crearDesafio(desafio.getUsuario().getUsuarioB(), desafio.getApuesta());
+			idDesafio=dao1.crearDesafio(desafio.getUsuario().getUsuarioB(), desafio.getApuesta());
 		}
-//		int idPartida=dao.concretarDesafio(desafio.getIdDesafio(), desafiante.getIdUsuario());
+		int idPartida=dao.concretarDesafio(idDesafio, desafiante.getIdUsuario());
 		try {
-			int idPartida=0;
 			Usuario jugador1=Usuario.findByName(desafiante.getUsuarioB());
 			Usuario jugador2=Usuario.findByName(desafio.getUsuario().getUsuarioB());
 			JuegoBatallaNaval juego = new JuegoBatallaNaval(jugador1,jugador2,modoRobot);
 			PartidaBatallaNaval nueva = new PartidaBatallaNaval(idPartida,juego);
-			this.partidas=new ArrayList<PartidaBatallaNaval>();
 			this.partidas.add(nueva);
+			dao2.regstrarTablero(juego.getTableroJugador1(), idPartida);
+			dao2.regstrarTablero(juego.getTableroJugador2(), idPartida);
 		} catch (NoSeEncuentraUsuarioException e) {
 			e.printStackTrace();
 		}
@@ -65,9 +68,9 @@ public class ServiciosBatallaNavalImpl implements ServiciosBatallaNaval{
 
 
 
-	private boolean esBot(int idUsuario) {
+	private boolean esBot(String usuario) {
 		// TODO Auto-generated method stub
-		return idUsuario==ID_USUARIO_BOT_1||idUsuario==ID_USUARIO_BOT_2||idUsuario==ID_USUARIO_BOT_3||idUsuario==ID_USUARIO_BOT_4;
+		return usuario.equals(USUARIO_BOT_1)||usuario.equals(USUARIO_BOT_2)||usuario.equals(USUARIO_BOT_3)||usuario.equals(USUARIO_BOT_4);
 	}
 
 	private PartidaBatallaNaval obtenerPartida(UsuarioVO usuario){
@@ -141,6 +144,45 @@ public class ServiciosBatallaNavalImpl implements ServiciosBatallaNaval{
 
 	public boolean perdi(UsuarioVO usuario) throws RemoteException {
 		return obtenerPartida(usuario).perdi(usuario);
+	}
+	private static BatallaNavalDAO getDAO2() {
+		try {
+			return (BatallaNavalDAO) Class.forName("daoImpl.BatallaNavalDAODB")
+					.newInstance();
+		} catch (InstantiationException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IllegalAccessException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return null;
+	}
+
+	public boolean hayPartidaEnCurso(UsuarioVO usuario) throws RemoteException {
+		PartidaDAO dao = getDAO();
+		BatallaNavalDAO dao1 = getDAO2();
+		boolean retorno=dao.partidaPendiente(usuario.getIdUsuario());
+		if(retorno){
+			try {
+				Usuario us=Usuario.findByName(usuario.getUsuarioB());
+				int idPartida=dao.idPartida(usuario.getIdUsuario());
+				Usuario oponente=dao.oponente(usuario.getIdUsuario());
+				JuegoBatallaNaval juego = new JuegoBatallaNaval(us,oponente,true);
+				juego.setTableroJugador1(dao1.getTablero(idPartida, usuario.getIdUsuario()));
+				juego.setTableroJugador2(dao1.getTablero(idPartida, oponente.getIdUsuarioB()));
+				PartidaBatallaNaval continuacion = new PartidaBatallaNaval(idPartida,juego);
+				partidas.add(continuacion);
+			} catch (NoSeEncuentraUsuarioException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+
+		}
+		return retorno;
 	}
 
 }
