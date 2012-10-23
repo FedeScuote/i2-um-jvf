@@ -5,17 +5,21 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
+import org.apache.log4j.Logger;
+
 import busImpl.Desafio;
 import busImpl.Ranking;
+import busImpl.Usuario;
 import conexion.Conexion;
 
 import daoInterfaces.DesafioDAO;
 import excepcionesB.NoHayDesafioException;
 import excepcionesB.NoHayRankingException;
+import excepcionesB.NotDataFoundException;
 import excepcionesD.NoExisteUsuarioException;
 
 public class DesafioDAODB implements DesafioDAO {
-
+	private static Logger logger = Logger.getLogger(DesafioDAODB.class);
 	private int idDesafio;
 	private int monto;
 	private Date fechaHoraInicioD;
@@ -280,10 +284,93 @@ c.disconnect();
 return a;
 }
 
-	public void crearDesafio(String usuario, int monto) {
-		// TODO Auto-generated method stub
+	//devuelve la idDesafio de BatallaNaval
+	public int crearDesafio(String usuario, int monto) {
+		UsuarioDAODB ud=new UsuarioDAODB();
+		Usuario u;
+		Conexion c=new Conexion();
+		int idDesafio=0;
+		int idUsuario=0;
+		int idJuego=1; //Batalla Naval
+		int usuarioGanadorD=0; //El cero representa a ningun usuario
 
+		try {
+			u = ud.findByName(usuario);
+			idUsuario=u.getIdUsuarioB();
+			this.getDesafiosUsuariosDisponibleBatallaNaval(idUsuario);
+			logger.info("Ya existe desafio del usuario: "+usuario);
+
+		} catch (NotDataFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (NoHayDesafioException e) {
+			//ingreso en desafios
+			try {
+				c.ingresarNuevaTuplaDeTresColumnas2("desafios", "idDesafio", "monto", "fechaHoraInicioD", "estadoD", monto, "now()", "En hora");
+				ResultSet r=c.devolverResutado("SELECT MAX(idDesafio)FROM desafios");
+				r.next();
+				idDesafio=r.getInt("MAX(idDesafio)");
+				//ingreso en la relacion usuarios_has_juegos_desafios
+				c.ingresarNuevaTuplaDeCuatroColumnasIntEnTablasRelacionadas("usuarios_has_juegos_desafios", "juegos_idJuego", "desafios_idDesafio", "usuarios_idUsuario", "usuarioGanadorD", 1, idDesafio, idUsuario, usuarioGanadorD);
+
+			} catch (SQLException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+		}
+		return idDesafio;
 	}
+
+
+
+	public ArrayList getDesafiosUsuariosDisponibleBatallaNaval(int idUser)throws NoHayDesafioException {
+ArrayList a = new ArrayList();
+
+Conexion c = new Conexion();
+
+try {
+
+	ResultSet resultado = c
+			.devolverResutado("SELECT idDesafio, monto, fechaHoraInicioD, estadoD, usuarios_idusuario FROM desafios,usuarios_has_juegos_desafios WHERE estadoD='En hora' AND idDesafio=desafios_idDesafio AND juegos_idJuego='1' AND usuarios_idusuario='"+idUser+"'");
+	while (resultado.next()) {
+		Desafio d = new Desafio();
+
+		int idDesafio = resultado.getInt("idDesafio");
+		int idUsuario = resultado.getInt("usuarios_idusuario");
+		int monto = resultado.getInt("monto");
+		Date fecha = resultado.getDate("fechaHoraInicioD");
+		String estadoD = resultado.getString("estadoD");
+
+		d.setIdDesafio(idDesafio);
+		d.setMonto(monto);
+		d.setFechaHoraInicioD(fecha);
+		d.setEstado(estadoD);
+		d.setIdUsuario(idUsuario);
+		UsuarioDAODB ud = new UsuarioDAODB();
+		String usuarioDesafio = ud.getUsuario(idUsuario);
+		d.setUsuarioDesafio(usuarioDesafio);
+
+		a.add(d);
+	}
+	a.get(0);
+
+} catch (SQLException ex) {
+
+	throw new NoHayDesafioException();
+
+} catch (IndexOutOfBoundsException i) {
+	throw new NoHayDesafioException();
+} catch (NoExisteUsuarioException e) {
+	// TODO Auto-generated catch block
+	e.printStackTrace();
+}
+
+c.disconnect();
+return a;
+}
+
+
+
 
 
 

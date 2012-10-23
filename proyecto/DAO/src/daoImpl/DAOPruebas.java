@@ -27,9 +27,15 @@ public class DAOPruebas {
 	 * @param args
 	 */
 	public static void main(String[] args) {
+		PartidaDAODB p=new PartidaDAODB();
+		logger.debug(p.oponente(1).getUsuarioB());
 
 
+		/*
+		DesafioDAODB d=new DesafioDAODB();
+		logger.debug(d.crearDesafio("jdiaz", 1600));
 
+		/*
 
 		DesafioDAODB d=new DesafioDAODB();
 		try {
@@ -44,9 +50,12 @@ public class DAOPruebas {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
+		PartidaDAODB p=new PartidaDAODB();
+		int idDesafio=17;
+		int idDesafiante=8;
+		p.concretarDesafio(idDesafio, idDesafiante);
 
-
+		*/
 
 		/*//pruebas registrar celdas
 		Conexion c=new Conexion();
