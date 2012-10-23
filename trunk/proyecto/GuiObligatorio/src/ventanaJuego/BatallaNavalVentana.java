@@ -273,7 +273,7 @@ public class BatallaNavalVentana extends JFrame {
 		if (this.gane()) {
 			JOptionPane.showMessageDialog(new JFrame(), "HAS GANADO",
 					"ENHORABUENA", JOptionPane.INFORMATION_MESSAGE);
-			temporizador.removeActionListener((temporizador.getActionListeners())[0]);
+			temporizador.stop();
 			this.dispose();
 			VentanaPrincipal l = new VentanaPrincipal(this.usuario);
 			l.setVisible(true);
@@ -281,7 +281,7 @@ public class BatallaNavalVentana extends JFrame {
 		} else if (this.perdi()){
 			JOptionPane.showMessageDialog(new JFrame(), "HAS PERDIDO",
 					"LO SIENTO", JOptionPane.INFORMATION_MESSAGE);
-			temporizador.removeActionListener((temporizador.getActionListeners())[0]);
+			temporizador.stop();
 			this.dispose();
 			VentanaPrincipal l = new VentanaPrincipal(this.usuario);
 			l.setVisible(true);
@@ -294,6 +294,9 @@ public class BatallaNavalVentana extends JFrame {
 						.lookup("BatallaNavalServices");
 				refrescarTableroJugador();
 				refrescarTableroOponente();
+				if(stub.esMiTurno(usuario)==true){
+					temporizador.stop();
+				}
 				return stub.esMiTurno(usuario);
 			} catch (Exception e) {
 				e.printStackTrace();
