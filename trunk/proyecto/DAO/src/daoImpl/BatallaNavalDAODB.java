@@ -143,13 +143,13 @@ public class BatallaNavalDAODB implements BatallaNavalDAO {
 
 			//obtengo los registros de celdas
 			r2=c.devolverResutado("SELECT xC, yC, id, estado FROM celdas WHERE t_batalla_naval_idTBatallaNaval="+idTablero);
-			Celda celda=new Celda();
 			Celda[][] celdaMatriz=new Celda[10][10];
 			while(r2.next()){
+				Celda celda=new Celda();
 				int xC=r2.getInt("xC");
 				int yC=r2.getInt("yC");
 				int id=r2.getInt("id");
-				logger.debug("paso el id de celda: "+id);
+				//logger.debug("paso el id de celda: "+id);
 				String estado=r2.getString("estado");
 				celda.setEstado(estado);
 				celda.setId(id);
@@ -227,11 +227,11 @@ public class BatallaNavalDAODB implements BatallaNavalDAO {
 			}
 			int barcosSubmarinos=tablero.getCantBarcosSubmarino();
 			int barcosDestructores=tablero.getCantBarcosDestructores();
-			int barcosCruceros=tablero.getCantBarcosDestructores();
+			int barcosCruceros=tablero.getCantBarcosCruceros();
 			int barcosAcorazados=tablero.getCantBarcosAcorazado();
 			int barcosSubmarinosColocados=tablero.getCantBarcosSubmarinoColocados();
 			int barcosDestructoresColocados=tablero.getCantBarcosDestructoresColocados();
-			int barcosCrucerosColocados=tablero.getCantBarcosDestructoresColocados();
+			int barcosCrucerosColocados=tablero.getCantBarcosCrucerosColocados();
 			int barcosAcorazadosColocados=tablero.getCantBarcosAcorazadoColocados();
 			Conexion c=new Conexion();
 			try {
