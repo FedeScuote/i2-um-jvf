@@ -78,7 +78,7 @@ public class VentanaPrincipal extends JFrame {
 		this.setBounds(new Rectangle(0, 0, 834, 632));
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		preguntarRanking();
-		this.partidaEnCurso();
+		//this.partidaEnCurso();
 
 	}
 
