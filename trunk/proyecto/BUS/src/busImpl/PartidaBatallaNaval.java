@@ -37,8 +37,8 @@ public class PartidaBatallaNaval{
 	public void agregarBarco(UsuarioVO usuario, int coordenadaInicialX, int coordenadaInicialY, int coordenadaFinalX, int coordenadaFinalY, String tipoBarco) throws RemoteException, CoordenadasInvalidasException {
 		BatallaNavalDAO dao = getDAO();
 		juego.agregarBarco(usuario, coordenadaInicialX, coordenadaInicialY, coordenadaFinalX, coordenadaFinalY, tipoBarco);
-//		dao.regstrarTablero(this.juego.getTableroJugador1(), this.idPartida);
-//		dao.regstrarTablero(this.juego.getTableroJugador2(), this.idPartida);
+		dao.regstrarTablero(this.juego.getTableroJugador1(), this.idPartida);
+		dao.regstrarTablero(this.juego.getTableroJugador2(), this.idPartida);
 
 	}
 
@@ -47,8 +47,8 @@ public class PartidaBatallaNaval{
 		try {
 			BatallaNavalDAO dao = getDAO();
 			juego.disparar(usuario, coordenadaX, coordenadaY);
-//			dao.regstrarTablero(this.juego.getTableroJugador1(), this.idPartida);
-//			dao.regstrarTablero(this.juego.getTableroJugador2(), this.idPartida);
+			dao.regstrarTablero(this.juego.getTableroJugador1(), this.idPartida);
+			dao.regstrarTablero(this.juego.getTableroJugador2(), this.idPartida);
 		} catch (NoInicioJuegoException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
