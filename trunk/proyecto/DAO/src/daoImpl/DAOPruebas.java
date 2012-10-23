@@ -26,25 +26,65 @@ public class DAOPruebas {
 	 * @param args
 	 */
 	public static void main(String[] args) {
-		Celda[][] c=new Celda[10][10];
-		Celda d=new Celda();
-		int largoi=c.length;
-		int largoj=c[0].length;
 
+		/*
+		Conexion c=new Conexion();
+		Celda[][] celda=new Celda[10][10];
+		Celda caux=new Celda();
+		int largoi=celda.length;
+		int largoj=celda[0].length;
+		int idTablero=6;
+
+		int a=0;
+		for(int i=0; i<largoi; i++ ){
+			for(int j=0;j<largoj;j++){
+				a++;
+				celda[i][j]=caux;
+				System.out.println(celda[i][j].getEstado()+" "+a);
+
+				caux=celda[i][j];
+				int xC=i;
+				int yC=j;
+				int id=caux.getId();
+				String estado=caux.getEstado();
+				try {
+					c.ingresarNuevaTuplaDeCincoColumnas2("celdas", "idCelda", "t_batalla_naval_idTBatallaNaval", "xC", "yC", "id", "estado", idTablero,xC ,yC , id, estado);
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+
+
+			}
+		}
+		/*
+		*/
+
+
+
+		Celda[][] celda=new Celda[10][10];
+		Celda caux=new Celda();
+		int largoi=celda.length;
+		int largoj=celda[0].length;
 
 		for(int i=0; i<largoi; i++ ){
 			for(int j=0;j<largoj;j++){
 
-				c[i][j]=d;
+				celda[i][j]=caux;
+
+
 
 			}
 		}
+
+
+
 
 		BatallaNavalDAODB b=new BatallaNavalDAODB();
 		int idPartida=20;
 
 		Tablero tablero=new Tablero(null);
-		tablero.setTabla(c);
+		tablero.setTabla(celda);
 		tablero.setCantBarcosAcorazado(2);
 		tablero.setCantBarcosAcorazadoColocados(2);
 		tablero.setCantBarcosCruceros(2);

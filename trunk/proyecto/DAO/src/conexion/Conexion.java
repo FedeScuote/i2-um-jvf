@@ -116,7 +116,7 @@ public class Conexion {
 		pregunta = (conn).createStatement();
 		pregunta.executeUpdate("INSERT INTO " + tabla + "(" + idTabla + ","
 				+ columnaUno + "," + columnaDos + "," + columnaTres + ","
-				+ columnaCuatro + ") VALUES(NULL,'" + valorUno + "','"
+				+ columnaCuatro +","+ columnaCinco+ ") VALUES(NULL,'" + valorUno + "','"
 				+ valorDos + "','" + valorTres + "','" + valorCuatro + "','" + valorCinco +"')");
 
 	}
