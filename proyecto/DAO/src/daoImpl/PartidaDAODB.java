@@ -43,11 +43,9 @@ public class PartidaDAODB implements PartidaDAO {
 		String jugador;
 		try {
 			jugador = ud.getUsuario(idUsuario);
-			ResultSet r=c.devolverResutado("SELECT estadoD FROM desafios, t_batalla_naval WHERE idDesafio=desafios_idDesafio AND jugador='"+jugador+"'");
-			r.next();
-			String estadoDesafio=r.getString("estadoD");
-			if(estadoDesafio.equals("En curso")){
-				return true;
+			ResultSet r=c.devolverResutado("SELECT usuarioGanadorD FROM usuarios_has_juegos_desafios WHERE usuarios_idusuario='"+idUsuario+"'");
+			while(r.next()){
+				return r.getInt("usuarioGanadorD")==0;
 			}
 		} catch (NoExisteUsuarioException e) {
 			// TODO Auto-generated catch block
@@ -70,7 +68,6 @@ public class PartidaDAODB implements PartidaDAO {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-
 		return idPartida;
 	}
 
@@ -84,8 +81,9 @@ public class PartidaDAODB implements PartidaDAO {
 		int idOponente=0;
 		try {
 			ResultSet r=c.devolverResutado("SELECT usuarios_idusuario FROM usuarios_has_juegos_desafios WHERE usuarios_idusuario !='"+idUsuario+"' AND desafios_idDesafio='"+idPartida+"' AND usuarioGanadorD='0'");
-			r.next();
-			idOponente=r.getInt("usuarios_idusuario");
+			while(r.next()){
+				idOponente=r.getInt("usuarios_idusuario");
+			}
 			String oponente=ud.getUsuario(idOponente);
 			u=ud.findByName(oponente);
 		} catch (SQLException e) {
