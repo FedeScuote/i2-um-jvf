@@ -9,19 +9,26 @@ import java.awt.GridBagConstraints;
 import javax.swing.JLabel;
 import javax.swing.ImageIcon;
 import javax.swing.table.TableColumn;
+import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JList;
 import java.awt.Insets;
 import javax.swing.JButton;
 
+import ventanaPrincipal.VentanaPrincipal;
+
 import comm.DesafioBatallaNavalVO;
 import comm.RankingVO;
+import comm.ServiciosBatallaNaval;
 import comm.ServiciosDesafio;
 import comm.ServiciosRanking;
+import comm.UsuarioVO;
 import commExceptions.NoHayDesafiosDisponiblesException;
 
 import java.awt.Color;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 import java.util.ArrayList;
@@ -51,6 +58,8 @@ public class SegundaPantalla extends JFrame {
 	private JScrollPane TorneosDisponiblesPane = null;
 
 	protected JTable TorneosDisponiblesTabla = null;
+
+	protected UsuarioVO usuario=null;
 
 	/**
 	 * This is the default constructor
@@ -181,6 +190,7 @@ public class SegundaPantalla extends JFrame {
 		if (BotonRetorno == null) {
 			BotonRetorno = new JButton();
 			BotonRetorno.setText("RETORNO");
+			BotonRetorno.addActionListener(new ListenerBoton());
 		}
 		return BotonRetorno;
 	}
@@ -233,6 +243,19 @@ public class SegundaPantalla extends JFrame {
 			TorneosDisponiblesTabla = new JTable();
 		}
 		return TorneosDisponiblesTabla;
+	}
+	private class ListenerBoton implements ActionListener {
+		public void actionPerformed(ActionEvent e) {
+			// cuando se presiona un boton se ejecutara este metodo
+			clickBotonRetorno();//pongo menos uno para que el bus lo recibe de 0 a 9
+		}
+	}
+
+	// METODO DE MIS BOTONES
+	private void clickBotonRetorno() {
+		this.dispose();
+		VentanaPrincipal l = new VentanaPrincipal(usuario);
+		l.setVisible(true);
 	}
 
 
