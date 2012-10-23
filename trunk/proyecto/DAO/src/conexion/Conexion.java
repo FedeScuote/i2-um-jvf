@@ -81,15 +81,15 @@ public class Conexion {
 				+ "','" + valorDos + "')");
 	}
 
-	public void ingresarNuevaTuplaDeTresColumnas(String tabla, String idTabla,
+	public void ingresarNuevaTuplaDeTresColumnas2(String tabla, String idTabla,
 			String columnaUno, String columnaDos, String columnaTres,
-			String valorUno, String valorDos, String valorTres)
+			int valorUno, String valorDos, String valorTres)
 			throws SQLException {
 		Statement pregunta;
 		pregunta = (conn).createStatement();
 		pregunta.executeUpdate("INSERT INTO " + tabla + "(" + idTabla + ","
 				+ columnaUno + "," + columnaDos + "," + columnaTres
-				+ ") VALUES(NULL,'" + valorUno + "','" + valorDos + "','"
+				+ ") VALUES(NULL,'" + valorUno + "'," + valorDos + ",'"
 				+ valorTres + "')");
 	}
 

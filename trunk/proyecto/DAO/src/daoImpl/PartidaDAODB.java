@@ -5,8 +5,11 @@ import java.sql.SQLException;
 
 import org.apache.log4j.Logger;
 
+import busImpl.Usuario;
+
 import conexion.Conexion;
 import daoInterfaces.PartidaDAO;
+import excepcionesB.NotDataFoundException;
 import excepcionesD.NoExisteUsuarioException;
 
 public class PartidaDAODB implements PartidaDAO {
@@ -54,5 +57,45 @@ public class PartidaDAODB implements PartidaDAO {
 			e.printStackTrace();
 		}
 		return false;
+	}
+
+	public int idPartida(int idUsuario) {
+		int idPartida=0;
+		Conexion c=new Conexion();
+		try {
+			ResultSet r=c.devolverResutado("SELECT desafios_idDesafio FROM usuarios_has_juegos_desafios WHERE usuarios_idusuario='"+idUsuario+"' AND usuarioGanadorD='0'");
+			r.next();
+			idPartida=r.getInt("desafios_idDesafio");
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		return idPartida;
+	}
+
+	public Usuario oponente(int idUsuario) {
+		Usuario u=new Usuario();
+		UsuarioDAODB ud=new UsuarioDAODB();
+		Conexion c=new Conexion();
+		int idPartida=this.idPartida(idUsuario);
+		int idOponente=0;
+		try {
+			ResultSet r=c.devolverResutado("SELECT usuarios_idusuario FROM usuarios_has_juegos_desafios WHERE usuarios_idusuario !='"+idUsuario+"' AND desafios_idDesafio='"+idPartida+"' AND usuarioGanadorD='0'");
+			r.next();
+			idOponente=r.getInt("usuarios_idusuario");
+			String oponente=ud.getUsuario(idOponente);
+			u=ud.findByName(oponente);
+		} catch (SQLException e) {
+			logger.info("Aún no hay contrincante");
+		} catch (NoExisteUsuarioException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (NotDataFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		return u;
 	}
 }
