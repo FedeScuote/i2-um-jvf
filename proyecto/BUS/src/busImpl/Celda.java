@@ -35,17 +35,17 @@ public class Celda {
 	}
 
 	public boolean estaHundido(){
-		return estado==HUNDIDO;
+		return estado.equals(HUNDIDO);
 	}
 
 	public boolean estaVacio(){
-		return estado==AGUA;
+		return estado.equals(AGUA);
 	}
 	public boolean estaOcupada(){
-		return estado==OCUPADO;
+		return estado.equals(OCUPADO);
 	}
 	public boolean estaDisparada(){
-		return estado==TOCADO;
+		return estado.equals(TOCADO);
 	}
 	public void setOcupada(){
 		estado=OCUPADO;
