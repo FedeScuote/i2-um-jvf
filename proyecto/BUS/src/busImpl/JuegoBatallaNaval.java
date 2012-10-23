@@ -314,6 +314,7 @@ public class JuegoBatallaNaval{
 			if (coordenadaX<10&&coordenadaY<10&&(tableroJugador1.tabla[coordenadaX][coordenadaY].estaVacio()||tableroJugador1.tabla[coordenadaX][coordenadaY].estaOcupada())){
 				termine = true;
 			}
+
 		}
 		nuevo.setFila(coordenadaX);
 		nuevo.setColumna(coordenadaY);
