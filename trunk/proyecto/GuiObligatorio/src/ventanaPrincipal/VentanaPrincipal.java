@@ -17,8 +17,12 @@ import javax.swing.JButton;
 import javax.swing.table.DefaultTableModel;
 
 import pantallaElegirDesafioOJuego.SegundaPantallaBatallaN;
+import ventanaJuego.BatallaNavalVentana;
 
 import comm.RankingVO;
+import comm.ServicioDesconexion;
+import comm.ServicioPartidaBatallaNaval;
+import comm.ServiciosBatallaNaval;
 import comm.ServiciosRanking;
 import comm.UsuarioVO;
 import commExceptions.NoSeEncuentraUsuarioException;
@@ -74,6 +78,7 @@ public class VentanaPrincipal extends JFrame {
 		this.setBounds(new Rectangle(0, 0, 834, 632));
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		preguntarRanking();
+		this.partidaEnCurso();
 
 	}
 
@@ -259,4 +264,18 @@ public class VentanaPrincipal extends JFrame {
 			}
 		}
 	}
+	private void partidaEnCurso(){
+		try{
+			Registry registry = LocateRegistry.getRegistry(host);
+			ServiciosBatallaNaval stub = (ServiciosBatallaNaval) registry.lookup("BatallaNavalServices");
+			if(stub.hayPartidaEnCurso(usuario)){
+				this.dispose();
+				BatallaNavalVentana l = new BatallaNavalVentana(this.usuario);
+				l.setVisible(true);
+			}
+		}catch(Exception e){
+
+		}
+	}
+
 } // @jve:decl-index=0:visual-constraint="39,-35"
