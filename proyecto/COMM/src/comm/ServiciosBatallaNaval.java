@@ -35,6 +35,8 @@ public interface ServiciosBatallaNaval extends Remote {
 
 	public boolean perdi(UsuarioVO usuario) throws RemoteException;
 
+	public void terminarPartida(UsuarioVO usuario, boolean gane) throws RemoteException;
+
 	//public ArrayList<RegistroDisparo> obtenerListaDisparos(UsuarioVO usuario) throws RemoteException;
 
 	public boolean hayPartidaEnCurso(UsuarioVO usuario) throws RemoteException;
