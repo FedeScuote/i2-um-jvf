@@ -18,7 +18,7 @@ public interface DesafioDAO {
 
 	public ArrayList getDesafiosBatallaNaval() throws NoHayDesafioException;
 
-	public void crearDesafio(String usuario,int monto);
+	public int crearDesafio(String usuario,int monto);
 
 
 }
