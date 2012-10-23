@@ -31,8 +31,6 @@ public class SegundaPantallaBatallaN extends SegundaPantalla {
 
 	private ArrayList<DesafioBatallaNavalVO> arrayDesafio= null;
 
-	private UsuarioVO usuario=null;
-
 	public SegundaPantallaBatallaN(UsuarioVO usuario) {
 		super();
 		this.llenarListaDesafio();
