@@ -34,7 +34,7 @@ public class BatallaNavalVentana extends JFrame {
 	// CONSTANTES//////////////////////////////
 	private static final long serialVersionUID = 1L;
 
-	private static final int pause = 1000;
+	private static final int pause = 2000;
 
 	private static final String host = null;
 
@@ -132,8 +132,8 @@ public class BatallaNavalVentana extends JFrame {
 		if (jContentPane == null) {
 			BorderLayout borderLayout = new BorderLayout();
 			indicadorTurno = new JLabel();
-			indicadorTurno.setText("ES TU TURNO");
-			indicadorTurno.setForeground(Color.GREEN);
+			indicadorTurno.setText("NO ES TU TURNO");
+			indicadorTurno.setForeground(Color.RED);
 			indicadorTurno.setHorizontalAlignment(SwingConstants.CENTER);
 			indicadorTurno.setHorizontalTextPosition(SwingConstants.CENTER);
 			jContentPane = new JPanel();
@@ -251,8 +251,10 @@ public class BatallaNavalVentana extends JFrame {
 				stub.disparar(this.usuario, fila, columna);
 				JOptionPane
 						.showMessageDialog(new JFrame(), "DISPARO REALIZADO");
-				refrescarTableroJugador();
 				refrescarTableroOponente();
+				esMiTurno = false;
+				indicadorTurno.setText("NO ES TU TURNO");
+				indicadorTurno.setForeground(Color.RED);
 				if (stub.hundi(this.usuario)) {
 					JOptionPane.showMessageDialog(new JFrame(),
 							"HAS HUNDIDO UN BARCO", "ENHORABUENA",
@@ -277,7 +279,7 @@ public class BatallaNavalVentana extends JFrame {
 			this.dispose();
 			VentanaPrincipal l = new VentanaPrincipal(this.usuario);
 			l.setVisible(true);
-			return false;
+			return true;
 		} else if (this.perdi()){
 			JOptionPane.showMessageDialog(new JFrame(), "HAS PERDIDO",
 					"LO SIENTO", JOptionPane.INFORMATION_MESSAGE);
@@ -285,7 +287,7 @@ public class BatallaNavalVentana extends JFrame {
 			this.dispose();
 			VentanaPrincipal l = new VentanaPrincipal(this.usuario);
 			l.setVisible(true);
-			return false;
+			return true;
 		}else{
 			try { // try y catch para verificar si esta el usuario o
 				// no
