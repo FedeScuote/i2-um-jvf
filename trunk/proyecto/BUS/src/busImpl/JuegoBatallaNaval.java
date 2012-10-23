@@ -28,7 +28,7 @@ public class JuegoBatallaNaval{
 	private Tablero tableroJugador2;
 	private ArrayList<RegistroDisparo> listaDisparosAOponente2;
 
-	
+
 
 	public boolean esta(UsuarioVO usuario){
 		return tableroJugador1.getJugador().getUsuarioB().equals(usuario.getUsuarioB())||tableroJugador1.getJugador().getUsuarioB().equals(usuario.getUsuarioB());
@@ -74,7 +74,7 @@ public class JuegoBatallaNaval{
 
 	public void agregarBarco(UsuarioVO usuario, int coordenadaInicialX,int coordenadaInicialY, int coordenadaFinalX, int coordenadaFinalY, String tipoBarco)
 			throws RemoteException, CoordenadasInvalidasException {
-		
+
 		if (tableroJugador1.getJugador().getIdUsuarioB() == usuario.getIdUsuario()) {
 
 			if (coordenadasEnDirY(coordenadaInicialX, coordenadaFinalX)) {
@@ -87,7 +87,7 @@ public class JuegoBatallaNaval{
 			}else if(coordenadasEnDirX(coordenadaInicialY, coordenadaFinalY)){
 				try {
 					tableroJugador1.agregarCeldasDirX(coordenadaInicialY,coordenadaInicialX, coordenadaFinalX,tipoBarco);
-					quitarBarcoStockJugador1(tipoBarco   );
+					quitarBarcoStockJugador1(tipoBarco);
 				} catch (CoordenadasCeldasInvalidasException e) {
 					throw new CoordenadasInvalidasException();
 				}
@@ -360,9 +360,9 @@ public class JuegoBatallaNaval{
 	public boolean puedoIrHaciaLaDerecha(RegistroDisparo registro) {
 		boolean retorno = false;
 		if (registro.getDisparo().getColumna() + 1 < tableroJugador2.tabla.length
-				&& tableroJugador2.tabla[registro.getDisparo().getFila()][registro
+				&& (tableroJugador2.tabla[registro.getDisparo().getFila()][registro
 						.getDisparo().getColumna() + 1].estaVacio()|| tableroJugador2.tabla[registro.getDisparo().getFila()][registro
-						                                                                             						.getDisparo().getColumna() + 1].estaOcupada()) {
+						                                                                             						.getDisparo().getColumna() + 1].estaOcupada())) {
 			retorno = true;
 		}
 		return retorno;
@@ -371,9 +371,9 @@ public class JuegoBatallaNaval{
 	public boolean puedoIrHaciaLaIzquierda(RegistroDisparo registro) {
 		boolean retorno = false;
 		if (registro.getDisparo().getColumna() - 1 >= 0
-				&& tableroJugador1.tabla[registro.getDisparo().getFila()][registro
+				&& (tableroJugador1.tabla[registro.getDisparo().getFila()][registro
 						.getDisparo().getColumna() - 1].estaVacio()||tableroJugador1.tabla[registro.getDisparo().getFila()][registro
-						                                                                            						.getDisparo().getColumna() - 1].estaOcupada()) {
+						                                                                            						.getDisparo().getColumna() - 1].estaOcupada())) {
 			retorno = true;
 		}
 		return retorno;
@@ -382,9 +382,9 @@ public class JuegoBatallaNaval{
 	public boolean puedoIrHaciaAbajo(RegistroDisparo registro) {
 		boolean retorno = false;
 		if (registro.getDisparo().getFila() + 1 < tableroJugador1.tabla.length
-				&& tableroJugador1.tabla[registro.getDisparo().getFila() + 1][registro
+				&& (tableroJugador1.tabla[registro.getDisparo().getFila() + 1][registro
 						.getDisparo().getColumna()].estaVacio()||tableroJugador1.tabla[registro.getDisparo().getFila() + 1][registro
-						                                                                            						.getDisparo().getColumna()].estaOcupada()) {
+						                                                                            						.getDisparo().getColumna()].estaOcupada())) {
 			retorno = true;
 		}
 		return retorno;
@@ -393,9 +393,9 @@ public class JuegoBatallaNaval{
 	public boolean puedoIrHaciaArriba(RegistroDisparo registro) {
 		boolean retorno = false;
 		if (registro.getDisparo().getFila() - 1 >= 0
-				&& tableroJugador1.tabla[registro.getDisparo().getFila() - 1][registro
+				&& (tableroJugador1.tabla[registro.getDisparo().getFila() - 1][registro
 						.getDisparo().getColumna()].estaVacio()||tableroJugador1.tabla[registro.getDisparo().getFila() - 1][registro
-						                                                                            						.getDisparo().getColumna()].estaOcupada()) {
+						                                                                            						.getDisparo().getColumna()].estaOcupada())) {
 			retorno = true;
 		}
 		return retorno;
