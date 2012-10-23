@@ -14,7 +14,7 @@ public interface BatallaNavalDAO {
 	public void registrarDisparo(Disparo disparo, Estados estado, int idUsuario, int idPartida);
 	public Tablero getTablero(int idPartidia,int idUsuario);
 	public void regstrarTablero(Tablero tablero, int idPartida);
-
+	
 
 
 }
