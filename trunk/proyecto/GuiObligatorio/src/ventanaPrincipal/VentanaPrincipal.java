@@ -62,8 +62,8 @@ public class VentanaPrincipal extends JFrame {
 	 */
 	public VentanaPrincipal(UsuarioVO usuarioVO) {
 		super();
-		initialize();
 		usuario=usuarioVO;
+		initialize();
 		this.setExtendedState(this.getExtendedState()|JFrame.MAXIMIZED_BOTH);//mi frame arranca maximizada
 	}
 
@@ -78,8 +78,6 @@ public class VentanaPrincipal extends JFrame {
 		this.setBounds(new Rectangle(0, 0, 834, 632));
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		preguntarRanking();
-		//this.partidaEnCurso();
-
 	}
 
 	/**
@@ -264,18 +262,7 @@ public class VentanaPrincipal extends JFrame {
 			}
 		}
 	}
-	private void partidaEnCurso(){
-		try{
-			Registry registry = LocateRegistry.getRegistry(host);
-			ServiciosBatallaNaval stub = (ServiciosBatallaNaval) registry.lookup("BatallaNavalServices");
-			if(stub.hayPartidaEnCurso(usuario)){
-				this.dispose();
-				BatallaNavalVentana l = new BatallaNavalVentana(this.usuario);
-				l.setVisible(true);
-			}
-		}catch(Exception e){
-
-		}
-	}
+	//METODO QUE VE SI HAY ALGUNA PARTIDA EN CURSO Y ME LLEVA AL JUEGO
+	
 
 } // @jve:decl-index=0:visual-constraint="39,-35"

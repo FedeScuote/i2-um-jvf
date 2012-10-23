@@ -17,7 +17,9 @@ import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import javax.swing.JPasswordField;
 
+import ventanaJuego.BatallaNavalVentana;
 import ventanaPrincipal.VentanaPrincipal;
+import comm.ServiciosBatallaNaval;
 import comm.ServiciosUsuario;
 import comm.UsuarioVO;
 import commExceptions.ContrasenaInvalidaException;
@@ -155,7 +157,7 @@ public class LoginVentana extends JFrame {
 	 * @return javax.swing.JButton
 	 */
 	// BOTON LOGIN
-	private JButton getLogin(final JFrame pantalla) {
+	private JButton getLogin(final LoginVentana pantalla) {
 		if (Login == null) {
 			Login = new JButton();
 			Login.setName("");
@@ -171,15 +173,14 @@ public class LoginVentana extends JFrame {
 					try { // try y catch para verificar si esta el usuario o
 						// no
 						Registry registry = LocateRegistry.getRegistry(host);
-						ServiciosUsuario stub = (ServiciosUsuario) registry
+						ServiciosUsuario stub1 = (ServiciosUsuario) registry
 								.lookup("Hello");
-						UsuarioVO response = stub.login(datosUsuario,
+						UsuarioVO response = stub1.login(datosUsuario,
 								datosPassword);
 						JOptionPane.showMessageDialog(new JFrame(),
 						"BIENVENIDO "+response.getNombreB());
-						pantalla.dispose();
-						VentanaPrincipal l = new VentanaPrincipal(response);
-						l.setVisible(true);
+						pantalla.partidaEnCurso(response);
+
 					} catch (Exception error) {
 						// si no se encuentra el usuario la excepcion es
 						// NoSeEncuentraUsuarioExcption
@@ -238,8 +239,26 @@ public class LoginVentana extends JFrame {
 		return aux;
 	}
 
+	private void partidaEnCurso(UsuarioVO usuario){
+		try{
+			Registry registry = LocateRegistry.getRegistry(host);
+			ServiciosBatallaNaval stub = (ServiciosBatallaNaval) registry.lookup("BatallaNavalServices");
+			if(stub.hayPartidaEnCurso(usuario)){
+				BatallaNavalVentana l = new BatallaNavalVentana(usuario);
+				this.setVisible(false);
+				l.setVisible(true);
+			}else{
+				VentanaPrincipal l = new VentanaPrincipal(usuario);
+				l.setVisible(true);
+			}
+		}catch(Exception e){
+
+		}
+	}
+
 	public static void main(String[] args) {
 		LoginVentana l = new LoginVentana();
 		l.setVisible(true);
 	}
+
 } // @jve:decl-index=0:visual-constraint="67,38"
