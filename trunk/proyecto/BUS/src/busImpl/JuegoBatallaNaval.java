@@ -7,6 +7,8 @@ import comm.TableroVO;
 import comm.UsuarioVO;
 import commExceptions.CoordenadasInvalidasException;
 import commExceptions.NoInicioJuegoException;
+import daoInterfaces.BatallaNavalDAO;
+import daoInterfaces.DesafioDAO;
 import excepcionesB.CoordenadasCeldasInvalidasException;
 
 public class JuegoBatallaNaval{
@@ -26,7 +28,7 @@ public class JuegoBatallaNaval{
 	private Tablero tableroJugador2;
 	private ArrayList<RegistroDisparo> listaDisparosAOponente2;
 
-
+	
 
 	public boolean esta(UsuarioVO usuario){
 		return tableroJugador1.getJugador().getUsuarioB().equals(usuario.getUsuarioB())||tableroJugador1.getJugador().getUsuarioB().equals(usuario.getUsuarioB());
@@ -72,7 +74,7 @@ public class JuegoBatallaNaval{
 
 	public void agregarBarco(UsuarioVO usuario, int coordenadaInicialX,int coordenadaInicialY, int coordenadaFinalX, int coordenadaFinalY, String tipoBarco)
 			throws RemoteException, CoordenadasInvalidasException {
-
+		
 		if (tableroJugador1.getJugador().getIdUsuarioB() == usuario.getIdUsuario()) {
 
 			if (coordenadasEnDirY(coordenadaInicialX, coordenadaFinalX)) {
@@ -92,7 +94,6 @@ public class JuegoBatallaNaval{
 			}else{
 				throw new CoordenadasInvalidasException();
 			}
-
 		}else{
 			if (coordenadasEnDirY(coordenadaInicialX, coordenadaFinalX)) {
 				try {
@@ -594,5 +595,9 @@ public class JuegoBatallaNaval{
 			return listaDisparosAOponente2;
 		}
 	}
+
+
+
+
 
 }

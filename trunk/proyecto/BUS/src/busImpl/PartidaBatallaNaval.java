@@ -9,6 +9,7 @@ import comm.UsuarioVO;
 import commExceptions.CoordenadasInvalidasException;
 import commExceptions.NoInicioJuegoException;
 import commExceptions.NoSeEncuentraUsuarioException;
+import daoInterfaces.BatallaNavalDAO;
 
 public class PartidaBatallaNaval{
 
@@ -34,13 +35,20 @@ public class PartidaBatallaNaval{
 	}
 
 	public void agregarBarco(UsuarioVO usuario, int coordenadaInicialX, int coordenadaInicialY, int coordenadaFinalX, int coordenadaFinalY, String tipoBarco) throws RemoteException, CoordenadasInvalidasException {
+		BatallaNavalDAO dao = getDAO();
 		juego.agregarBarco(usuario, coordenadaInicialX, coordenadaInicialY, coordenadaFinalX, coordenadaFinalY, tipoBarco);
+		dao.regstrarTablero(this.juego.getTableroJugador1(), this.idPartida);
+		dao.regstrarTablero(this.juego.getTableroJugador2(), this.idPartida);
+		
 	}
 
 
 	public void disparar(UsuarioVO usuario, int coordenadaX, int coordenadaY) throws RemoteException, CoordenadasInvalidasException{
 		try {
+			BatallaNavalDAO dao = getDAO();
 			juego.disparar(usuario, coordenadaX, coordenadaY);
+			dao.regstrarTablero(this.juego.getTableroJugador1(), this.idPartida);
+			dao.regstrarTablero(this.juego.getTableroJugador2(), this.idPartida);
 		} catch (NoInicioJuegoException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -84,4 +92,23 @@ public class PartidaBatallaNaval{
 		return juego.obtenerListaDisparos(usuario);
 	}
 
+	private static BatallaNavalDAO getDAO() {
+		try {
+			return (BatallaNavalDAO) Class.forName("daoImpl.BatallaNavalDAODB")
+					.newInstance();
+		} catch (InstantiationException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IllegalAccessException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return null;
+	}
+	
+	
+	
 }
