@@ -249,6 +249,16 @@ public class Conexion {
 
 	}
 
+	public void actualizarTuplaDeUnaColumna3(String tabla, String atributoCondicionUno,String atributoCondicionDos,String atributoCondicionTres, int valorCondicionUno, int valorCondicionDos, int valorCondicionTres,
+			String columnaUno, int valorUno) throws SQLException {
+		Statement pregunta;
+		pregunta = (conn).createStatement();
+		pregunta.executeUpdate("UPDATE " + tabla + " SET " + columnaUno + "='"+valorUno+"' WHERE "+ atributoCondicionUno + "='"
+				+ valorCondicionUno + "' AND "+atributoCondicionDos+ "='" + valorCondicionDos + "' AND "+atributoCondicionTres+ "='"+valorCondicionTres+"'");
+
+	}
+
+
 	public void actualizarTuplaDeNueveColumnas(String tabla, String atributoCondicionUno,String atributoCondicionDos, int valorCondicionUno, String valorCondicionDos,
 			String columnaUno, String columnaDos,String columnaTres,
 			String columnaCuatro, String columnaCinco, String columnaSeis, String columnaSiete, String columnaOcho,
