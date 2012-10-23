@@ -13,7 +13,7 @@ import excepcionesB.NotDataFoundException;
 import excepcionesD.NoExisteUsuarioException;
 
 public class PartidaDAODB implements PartidaDAO {
-	private static Logger logger = Logger.getLogger(DAOPruebas.class);
+	private static Logger logger = Logger.getLogger(PartidaDAODB.class);
 
 	//devuelve idDesafio
 	public int concretarDesafio(int idDesafio,int idDesafiante){
@@ -74,6 +74,8 @@ public class PartidaDAODB implements PartidaDAO {
 		return idPartida;
 	}
 
+
+
 	public Usuario oponente(int idUsuario) {
 		Usuario u=new Usuario();
 		UsuarioDAODB ud=new UsuarioDAODB();
@@ -97,5 +99,68 @@ public class PartidaDAODB implements PartidaDAO {
 		}
 
 		return u;
+	}
+
+
+
+
+
+	public Usuario oponente2(int idUsuario, int idDesafio) {
+		Usuario u=new Usuario();
+		UsuarioDAODB ud=new UsuarioDAODB();
+		Conexion c=new Conexion();
+		int idPartida=idDesafio;
+		int idOponente=0;
+		try {
+			ResultSet r=c.devolverResutado("SELECT usuarios_idusuario FROM usuarios_has_juegos_desafios WHERE usuarios_idusuario !='"+idUsuario+"' AND desafios_idDesafio='"+idPartida+"'");
+			r.next();
+			idOponente=r.getInt("usuarios_idusuario");
+			String oponente=ud.getUsuario(idOponente);
+			u=ud.findByName(oponente);
+		} catch (SQLException e) {
+			logger.info("Ya se terminó la partida");
+		} catch (NoExisteUsuarioException e) {
+			logger.info("Ya se terminó la partida");
+		} catch (NotDataFoundException e) {
+			logger.info("Ya se terminó la partida");
+		}
+
+		return u;
+	}
+
+
+
+	public void terminarPartida(int idPartida, int idUsuario, boolean gane) {
+		if(gane){
+			try {
+				Conexion c=new Conexion();
+				PartidaDAODB p=new PartidaDAODB();
+				Usuario u=p.oponente2(idUsuario,idPartida);
+				int idOponente=u.getIdUsuarioB();
+				c.actualizarTuplaDeUnaColumna3("usuarios_has_juegos_desafios", "juegos_idJuego", "desafios_idDesafio", "usuarios_idusuario", 1, idPartida, idUsuario, "usuarioGanadorD", idUsuario);
+				c.actualizarTuplaDeUnaColumna3("usuarios_has_juegos_desafios", "juegos_idJuego", "desafios_idDesafio", "usuarios_idusuario", 1, idPartida, idOponente, "usuarioGanadorD", idUsuario);
+				c.actualizarTuplaDeUnaColumna("desafios", "estadoD", "Finalizado", "idDesafio", idPartida);
+
+			} catch (SQLException e) {
+				logger.info("La partida ya está terminada");
+			}
+		}else{
+			try {
+				Conexion c=new Conexion();
+				PartidaDAODB p=new PartidaDAODB();
+				Usuario u=p.oponente2(idUsuario,idPartida);
+				int idOponente=u.getIdUsuarioB();
+				c.actualizarTuplaDeUnaColumna3("usuarios_has_juegos_desafios", "juegos_idJuego", "desafios_idDesafio", "usuarios_idusuario", 1, idPartida, idUsuario, "usuarioGanadorD", idOponente);
+				c.actualizarTuplaDeUnaColumna3("usuarios_has_juegos_desafios", "juegos_idJuego", "desafios_idDesafio", "usuarios_idusuario", 1, idPartida, idOponente, "usuarioGanadorD", idOponente);
+				c.actualizarTuplaDeUnaColumna("desafios", "estadoD", "Finalizado", "idDesafio", idPartida);
+
+			} catch (SQLException e) {
+				logger.info("La partida ya está terminada");
+			}
+
+		}
+
+
+
 	}
 }

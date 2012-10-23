@@ -27,8 +27,10 @@ public class DAOPruebas {
 	 * @param args
 	 */
 	public static void main(String[] args) {
+
 		PartidaDAODB p=new PartidaDAODB();
-		logger.debug(p.oponente(1).getUsuarioB());
+		p.terminarPartida(17, 4,false);
+		//logger.debug(p.oponente(4).getUsuarioB());
 
 
 		/*

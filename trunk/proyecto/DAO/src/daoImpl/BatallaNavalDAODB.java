@@ -196,7 +196,7 @@ public class BatallaNavalDAODB implements BatallaNavalDAO {
 					"resultadoD", "xD", "yD", idTablero, idUsuario, resultadoD,
 					xD, yD);
 
-			c.actualizarTuplaDeUnaColumna2("celdas", "t_batalla_naval_idTBatallaNaval", "xC", "yC", idTablero, xD, yD, "estado", resultadoD);
+			//c.actualizarTuplaDeUnaColumna2("celdas", "t_batalla_naval_idTBatallaNaval", "xC", "yC", idTablero, xD, yD, "estado", resultadoD);
 
 		} catch (SQLException e) {
 			// logger.error("Error de sql");
