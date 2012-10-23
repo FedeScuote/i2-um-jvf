@@ -296,7 +296,7 @@ public class BatallaNavalVentana extends JFrame {
 						.lookup("BatallaNavalServices");
 				refrescarTableroJugador();
 				refrescarTableroOponente();
-				if(stub.esMiTurno(usuario)==true){
+				if(stub.esMiTurno(usuario)){
 					temporizador.stop();
 				}
 				return stub.esMiTurno(usuario);
