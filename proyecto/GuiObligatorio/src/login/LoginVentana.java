@@ -247,9 +247,11 @@ public class LoginVentana extends JFrame {
 				BatallaNavalVentana l = new BatallaNavalVentana(usuario);
 				this.setVisible(false);
 				l.setVisible(true);
+				this.dispose();
 			}else{
 				VentanaPrincipal l = new VentanaPrincipal(usuario);
 				l.setVisible(true);
+				this.dispose();
 			}
 		}catch(Exception e){
 

@@ -98,7 +98,6 @@ public class BatallaNavalVentana extends JFrame {
 			public void actionPerformed(ActionEvent evt) {
 				esMiTurno = preguntarTurno(usuario);
 				if (!esMiTurno) {
-					temporizador.restart();
 					indicadorTurno.setText("NO ES TU TURNO");
 					indicadorTurno.setForeground(Color.RED);
 				} else {
@@ -249,10 +248,8 @@ public class BatallaNavalVentana extends JFrame {
 				ServiciosBatallaNaval stub = (ServiciosBatallaNaval) registry
 						.lookup("BatallaNavalServices");
 				stub.disparar(this.usuario, fila, columna);
-				JOptionPane
-						.showMessageDialog(new JFrame(), "DISPARO REALIZADO");
-				refrescarTableroOponente();
 				esMiTurno = false;
+				this.refrescarTableroOponente();
 				indicadorTurno.setText("NO ES TU TURNO");
 				indicadorTurno.setForeground(Color.RED);
 				if (stub.hundi(this.usuario)) {
@@ -276,14 +273,17 @@ public class BatallaNavalVentana extends JFrame {
 			JOptionPane.showMessageDialog(new JFrame(), "HAS GANADO",
 					"ENHORABUENA", JOptionPane.INFORMATION_MESSAGE);
 			temporizador.stop();
+			this.terminoPartida(true);
 			this.dispose();
 			VentanaPrincipal l = new VentanaPrincipal(this.usuario);
 			l.setVisible(true);
+
 			return true;
 		} else if (this.perdi()){
 			JOptionPane.showMessageDialog(new JFrame(), "HAS PERDIDO",
 					"LO SIENTO", JOptionPane.INFORMATION_MESSAGE);
 			temporizador.stop();
+			this.terminoPartida(false);
 			this.dispose();
 			VentanaPrincipal l = new VentanaPrincipal(this.usuario);
 			l.setVisible(true);
@@ -424,6 +424,25 @@ public class BatallaNavalVentana extends JFrame {
 
 			e.printStackTrace();
 			return false;
+		}
+	}
+	private void terminoPartida(boolean gane){
+		try { // try y catch para verificar si esta el usuario o
+			// no
+			Registry registry = LocateRegistry.getRegistry(host);
+			ServiciosBatallaNaval stub = (ServiciosBatallaNaval) registry
+					.lookup("BatallaNavalServices");
+
+			stub.terminarPartida(usuario, gane);
+		} catch (Exception e) {
+			if (e instanceof RemoteException) {
+				JOptionPane
+						.showMessageDialog(new JFrame(), "ERROR DE CONEXION",
+								"ERROR", JOptionPane.ERROR_MESSAGE);
+			}
+
+			e.printStackTrace();
+
 		}
 	}
 
