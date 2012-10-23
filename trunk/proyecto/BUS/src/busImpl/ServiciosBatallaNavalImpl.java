@@ -56,10 +56,10 @@ public class ServiciosBatallaNavalImpl implements ServiciosBatallaNaval{
 			Usuario jugador1=Usuario.findByName(desafiante.getUsuarioB());
 			Usuario jugador2=Usuario.findByName(desafio.getUsuario().getUsuarioB());
 			JuegoBatallaNaval juego = new JuegoBatallaNaval(jugador1,jugador2,modoRobot);
-			PartidaBatallaNaval nueva = new PartidaBatallaNaval(idPartida,juego);
+			PartidaBatallaNaval nueva = new PartidaBatallaNaval(idDesafio,juego);
 			this.partidas.add(nueva);
-			dao2.regstrarTablero(juego.getTableroJugador1(), idPartida);
-			dao2.regstrarTablero(juego.getTableroJugador2(), idPartida);
+			dao2.regstrarTablero(juego.getTableroJugador1(), idDesafio);
+			dao2.regstrarTablero(juego.getTableroJugador2(), idDesafio);
 		} catch (NoSeEncuentraUsuarioException e) {
 			e.printStackTrace();
 		}
@@ -181,6 +181,7 @@ public class ServiciosBatallaNavalImpl implements ServiciosBatallaNaval{
 				int idPartida=dao.idPartida(usuario.getIdUsuario());
 				Usuario oponente=dao.oponente(usuario.getIdUsuario());
 				JuegoBatallaNaval juego = new JuegoBatallaNaval(us,oponente,true);
+				Tablero tabl=dao1.getTablero(idPartida, usuario.getIdUsuario());
 				juego.setTableroJugador1(dao1.getTablero(idPartida, usuario.getIdUsuario()));
 				juego.setTableroJugador2(dao1.getTablero(idPartida, oponente.getIdUsuarioB()));
 				PartidaBatallaNaval continuacion = new PartidaBatallaNaval(idPartida,juego);
