@@ -7,6 +7,7 @@ import org.apache.log4j.Logger;
 
 import conexion.Conexion;
 import daoInterfaces.PartidaDAO;
+import excepcionesD.NoExisteUsuarioException;
 
 public class PartidaDAODB implements PartidaDAO {
 	private static Logger logger = Logger.getLogger(DAOPruebas.class);
@@ -31,5 +32,27 @@ public class PartidaDAODB implements PartidaDAO {
 
 
 		return idD;
+	}
+
+	public boolean partidaPendiente(int idUsuario) {
+		Conexion c=new Conexion();
+		UsuarioDAODB ud=new UsuarioDAODB();
+		String jugador;
+		try {
+			jugador = ud.getUsuario(idUsuario);
+			ResultSet r=c.devolverResutado("SELECT estadoD FROM desafios, t_batalla_naval WHERE idDesafio=desafios_idDesafio AND jugador='"+jugador+"'");
+			r.next();
+			String estadoDesafio=r.getString("estadoD");
+			if(estadoDesafio.equals("En curso")){
+				return true;
+			}
+		} catch (NoExisteUsuarioException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return false;
 	}
 }
