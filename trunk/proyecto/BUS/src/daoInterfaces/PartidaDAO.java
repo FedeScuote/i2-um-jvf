@@ -11,4 +11,6 @@ public interface PartidaDAO {
 	public int idPartida(int idUsuario);
 	//terminado, devuelve el Usuario oponente o retorna null
 	public Usuario oponente(int idUsuario);
+	//metodo que finaliza la partida indicando que usuario en q partido si gano o perdio dependiendo del boolean
+	//public void terminarPartida(int idPartida,int idUsuario, boolean gane);
 }
