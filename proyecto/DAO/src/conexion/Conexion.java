@@ -107,6 +107,23 @@ public class Conexion {
 
 	}
 
+	public void ingresarNuevaTuplaDeCincoColumnas2(String tabla,
+			String idTabla, String columnaUno, String columnaDos,
+			String columnaTres, String columnaCuatro, String columnaCinco, int valorUno,
+			int valorDos, int valorTres, int valorCuatro, String valorCinco)
+			throws SQLException {
+		Statement pregunta;
+		pregunta = (conn).createStatement();
+		pregunta.executeUpdate("INSERT INTO " + tabla + "(" + idTabla + ","
+				+ columnaUno + "," + columnaDos + "," + columnaTres + ","
+				+ columnaCuatro + ") VALUES(NULL,'" + valorUno + "','"
+				+ valorDos + "','" + valorTres + "','" + valorCuatro + "','" + valorCinco +"')");
+
+	}
+
+
+
+
 	public void ingresarNuevaTuplaDeCincoColumnas(String tabla, String idTabla,
 			String columnaUno, String columnaDos, String columnaTres,
 			String columnaCuatro, String columnaCinco, String valorUno,
@@ -138,7 +155,7 @@ public class Conexion {
 	}
 
 
-	public void ingresarNuevaTuplaDe11Columnas(String tabla, String idTabla,String columnaCero,
+	public void ingresarNuevaTuplaDeOnceColumnas(String tabla, String idTabla,String columnaCero,
 			String columnaUno, String columnaDos,String columnaTres,
 			String columnaCuatro, String columnaCinco, String columnaSeis, String columnaSiete, String columnaOcho,
 			String columnaNueve, String columnaDiez, int valorCero, String valorUno,
@@ -203,8 +220,8 @@ public class Conexion {
 				+ "','" + valorDos + "','" + valorTres + "','" + valorCuatro+"')");
 	}
 
-	public void borrarTuplaCondicionUnAtributo(String tabla,
-			String atributoUno, String valorUno) throws SQLException {
+	public void borrarTuplasCondicionUnAtributo(String tabla,
+			String atributoUno, int valorUno) throws SQLException {
 		Statement pregunta;
 		pregunta = (conn).createStatement();
 		pregunta.executeUpdate("DELETE FROM " + tabla + " WHERE " + atributoUno
@@ -221,5 +238,37 @@ public class Conexion {
 				+ valorUno + "' WHERE " + atributoCondicion + "='"
 				+ valorCondicion + "'");
 	}
+
+
+	public void actualizarTuplaDeUnaColumna2(String tabla, String atributoCondicionUno,String atributoCondicionDos,String atributoCondicionTres, int valorCondicionUno, int valorCondicionDos, int valorCondicionTres,
+			String columnaUno, String valorUno) throws SQLException {
+		Statement pregunta;
+		pregunta = (conn).createStatement();
+		pregunta.executeUpdate("UPDATE " + tabla + " SET " + columnaUno + "='"+valorUno+"' WHERE "+ atributoCondicionUno + "='"
+				+ valorCondicionUno + "' AND "+atributoCondicionDos+ "='" + valorCondicionDos + "' AND "+atributoCondicionTres+ "='"+valorCondicionTres+"'");
+
+	}
+
+	public void actualizarTuplaDeNueveColumnas(String tabla, String atributoCondicionUno,String atributoCondicionDos, int valorCondicionUno, String valorCondicionDos,
+			String columnaUno, String columnaDos,String columnaTres,
+			String columnaCuatro, String columnaCinco, String columnaSeis, String columnaSiete, String columnaOcho,
+			String columnaNueve, int valorUno,
+			int valorDos, int valorTres, int valorCuatro,
+			int valorCinco, int valorSeis,
+			int valorSiete, int valorOcho, int valorNueve) throws SQLException {
+		Statement pregunta;
+		pregunta = (conn).createStatement();
+		pregunta.executeUpdate("UPDATE " + tabla + " SET " + columnaUno + "='"+valorUno+"'," + columnaDos + "='"+valorDos+ "'," + columnaTres + "='"+valorTres+ "',"
+				+ columnaCuatro + "='"+valorCuatro+ "'," + columnaCinco + "='"+valorCinco+ "',"+columnaSeis + "='"+ valorSeis + "'," + columnaSiete + "='"+valorSiete + "'," + columnaOcho + "='"+ valorOcho + "',"
+				+ columnaNueve+ "='"+ valorNueve +"' WHERE "+ atributoCondicionUno + "='"
+				+ valorCondicionUno + "' AND "+atributoCondicionDos+ "='" + valorCondicionDos + "'");
+
+	}
+
+
+
+
+
+
 
 }

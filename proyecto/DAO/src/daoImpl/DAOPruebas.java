@@ -13,6 +13,7 @@ import excepcionesB.NoHayDesafioException;
 import excepcionesB.NoHayRankingException;
 import excepcionesB.NotDataFoundException;
 import excepcionesD.NoExisteUsuarioException;
+import busImpl.Celda;
 import busImpl.Disparo;
 import busImpl.Estados;
 import busImpl.Tablero;
@@ -25,19 +26,149 @@ public class DAOPruebas {
 	 * @param args
 	 */
 	public static void main(String[] args) {
-		// TODO Auto-generated method stub
+		Celda[][] c=new Celda[10][10];
+		Celda d=new Celda();
+		int largoi=c.length;
+		int largoj=c[0].length;
 
+
+		for(int i=0; i<largoi; i++ ){
+			for(int j=0;j<largoj;j++){
+
+				c[i][j]=d;
+
+			}
+		}
+
+		BatallaNavalDAODB b=new BatallaNavalDAODB();
+		int idPartida=20;
+
+		Tablero tablero=new Tablero(null);
+		tablero.setTabla(c);
+		tablero.setCantBarcosAcorazado(2);
+		tablero.setCantBarcosAcorazadoColocados(2);
+		tablero.setCantBarcosCruceros(2);
+		tablero.setCantBarcosCrucerosColocados(2);
+		tablero.setCantBarcosDestructores(2);
+		tablero.setCantBarcosDestructoresColocados(2);
+		tablero.setCantBarcosSubmarino(2);
+		tablero.setCantBarcosSubmarinoColocados(2);
+		Usuario u=new Usuario();
+		u.setUsuarioB("jhirata");
+		tablero.setJugador(u);
+		tablero.setMiTurno(true);
+		b.regstrarTablero(tablero, idPartida);
+
+	/*
+
+		Tablero tablero2=new Tablero(null);
+		tablero2.setTabla(c);
+		tablero2.setCantBarcosAcorazado(2);
+		tablero2.setCantBarcosAcorazadoColocados(2);
+		tablero2.setCantBarcosCruceros(2);
+		tablero2.setCantBarcosCrucerosColocados(2);
+		tablero2.setCantBarcosDestructores(2);
+		tablero2.setCantBarcosDestructoresColocados(2);
+		tablero2.setCantBarcosSubmarino(2);
+		tablero2.setCantBarcosSubmarinoColocados(2);
+		Usuario u2=new Usuario();
+		u2.setUsuarioB("vtuyare");
+		tablero.setJugador(u2);
+		tablero.setMiTurno(false);
+
+
+
+
+		b.regstrarTablero(tablero2, idPartida);
+
+
+
+
+
+
+
+	/*
+
+	PartidaDAODB p=new PartidaDAODB();
+	System.out.println(p.partidaPendiente(2));
+
+	/*
+
+	BatallaNavalDAODB b=new BatallaNavalDAODB();
+	Disparo disparo=new Disparo();
+	disparo.setColumna(0);
+	disparo.setFila(0);
+	Estados estado=Estados.AGUA;
+	int idUsuario=1;
+	int idPartida=23;
+	b.registrarDisparo(disparo, estado, idUsuario, idPartida);
+
+
+
+	/*
+
+
+	BatallaNavalDAODB b=new BatallaNavalDAODB();
+	Tablero t=b.getTablero(23, 1);
+	Celda[][] celda=t.getTabla();
+
+	logger.debug(t.getJugador().getUsuarioB());
+	logger.debug(t.getCantBarcosAcorazado());
+
+	logger.debug(celda[0][0].getEstado());
+	logger.debug(celda[0][0].getId());
+
+
+
+
+	/*
+		Celda[][] c=new Celda[2][5];
+		Celda d=new Celda();
+
+		d.setOcupada();
+		c[0][0]=d;
+
+
+		int largoi=c.length;
+		int largoj=c[0].length;
+
+
+		for(int i=0; i<largoi; i++ ){
+			for(int j=0;j<largoj;j++){
+				if(c[i][j]==null){
+					System.out.println("Celda["+i+"]["+j+"] vacía");
+				}else{
+					System.out.println(c[i][j].getEstado());
+				}
+
+			}
+		}
+	*/
+
+
+
+
+
+	/*
 
 		BatallaNavalDAODB b=new BatallaNavalDAODB();
 		Tablero t=b.getTablero(23, 1);
 		//System.out.println((t.getTabla());
 		System.out.println(t.getCantBarcosCruceros());
+	*/
 
 	/*
+
+		Celda[][] c=new Celda[2][5];
+		Celda d=new Celda();
+
+		d.setOcupada();
+		c[0][0]=d;
 
 		BatallaNavalDAODB b=new BatallaNavalDAODB();
 
 		Tablero tablero=new Tablero(null);
+		tablero.setTabla(c);
 		tablero.setCantBarcosAcorazado(2);
 		tablero.setCantBarcosAcorazadoColocados(2);
 		tablero.setCantBarcosCruceros(2);
@@ -70,8 +201,8 @@ public class DAOPruebas {
 
 
 
-	/*
-		int idDesafio=19;
+
+		int idDesafio=20;
 		int idDesafiante=2;
 		PartidaDAODB p =new PartidaDAODB();
 		p.concretarDesafio(idDesafio, idDesafiante);
