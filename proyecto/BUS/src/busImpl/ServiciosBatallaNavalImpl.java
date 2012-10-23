@@ -43,27 +43,36 @@ public class ServiciosBatallaNavalImpl implements ServiciosBatallaNaval{
 
 
 	public void iniciarPartida(DesafioBatallaNavalVO desafio, UsuarioVO desafiante) throws RemoteException{
-		PartidaDAO dao = getDAO();
-		DesafioDAO dao1 = getDAO1();
-		BatallaNavalDAO dao2 = getDAO2();
-		boolean modoRobot=esBot(desafio.getUsuario().getUsuarioB());
-		int idDesafio=desafio.getIdDesafio();
-		if(modoRobot){
-			idDesafio=dao1.crearDesafio(desafio.getUsuario().getUsuarioB(), desafio.getApuesta());
-		}
-		int idPartida=dao.concretarDesafio(idDesafio, desafiante.getIdUsuario());
+//		PartidaDAO dao = getDAO();
+//		DesafioDAO dao1 = getDAO1();
+//		BatallaNavalDAO dao2 = getDAO2();
+//		boolean modoRobot=esBot(desafio.getUsuario().getUsuarioB());
+//		int idDesafio=desafio.getIdDesafio();
+//		if(modoRobot){
+//			idDesafio=dao1.crearDesafio(desafio.getUsuario().getUsuarioB(), desafio.getApuesta());
+//		}
+//		int idPartida=dao.concretarDesafio(idDesafio, desafiante.getIdUsuario());
+//		try {
+//			Usuario jugador1=Usuario.findByName(desafiante.getUsuarioB());
+//			Usuario jugador2=Usuario.findByName(desafio.getUsuario().getUsuarioB());
+//			JuegoBatallaNaval juego = new JuegoBatallaNaval(jugador1,jugador2,modoRobot);
+//			PartidaBatallaNaval nueva = new PartidaBatallaNaval(idPartida,juego);
+//			this.partidas.add(nueva);
+//			dao2.regstrarTablero(juego.getTableroJugador1(), idPartida);
+//			dao2.regstrarTablero(juego.getTableroJugador2(), idPartida);
+//		} catch (NoSeEncuentraUsuarioException e) {
+//			e.printStackTrace();
+//		}
+
 		try {
 			Usuario jugador1=Usuario.findByName(desafiante.getUsuarioB());
 			Usuario jugador2=Usuario.findByName(desafio.getUsuario().getUsuarioB());
-			JuegoBatallaNaval juego = new JuegoBatallaNaval(jugador1,jugador2,modoRobot);
-			PartidaBatallaNaval nueva = new PartidaBatallaNaval(idPartida,juego);
+			JuegoBatallaNaval juego = new JuegoBatallaNaval(jugador1,jugador2,true);
+			PartidaBatallaNaval nueva = new PartidaBatallaNaval(0,juego);
 			this.partidas.add(nueva);
-			dao2.regstrarTablero(juego.getTableroJugador1(), idPartida);
-			dao2.regstrarTablero(juego.getTableroJugador2(), idPartida);
-		} catch (NoSeEncuentraUsuarioException e) {
+			} catch (NoSeEncuentraUsuarioException e) {
 			e.printStackTrace();
 		}
-
 	}
 
 
@@ -163,26 +172,26 @@ public class ServiciosBatallaNavalImpl implements ServiciosBatallaNaval{
 	}
 
 	public boolean hayPartidaEnCurso(UsuarioVO usuario) throws RemoteException {
-		PartidaDAO dao = getDAO();
-		BatallaNavalDAO dao1 = getDAO2();
-		boolean retorno=dao.partidaPendiente(usuario.getIdUsuario());
-		if(retorno){
-			try {
-				Usuario us=Usuario.findByName(usuario.getUsuarioB());
-				int idPartida=dao.idPartida(usuario.getIdUsuario());
-				Usuario oponente=dao.oponente(usuario.getIdUsuario());
-				JuegoBatallaNaval juego = new JuegoBatallaNaval(us,oponente,true);
-				juego.setTableroJugador1(dao1.getTablero(idPartida, usuario.getIdUsuario()));
-				juego.setTableroJugador2(dao1.getTablero(idPartida, oponente.getIdUsuarioB()));
-				PartidaBatallaNaval continuacion = new PartidaBatallaNaval(idPartida,juego);
-				partidas.add(continuacion);
-			} catch (NoSeEncuentraUsuarioException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-
-		}
-		return retorno;
+//		PartidaDAO dao = getDAO();
+//		BatallaNavalDAO dao1 = getDAO2();
+//		boolean retorno=dao.partidaPendiente(usuario.getIdUsuario());
+//		if(retorno){
+//			try {
+//				Usuario us=Usuario.findByName(usuario.getUsuarioB());
+//				int idPartida=dao.idPartida(usuario.getIdUsuario());
+//				Usuario oponente=dao.oponente(usuario.getIdUsuario());
+//				JuegoBatallaNaval juego = new JuegoBatallaNaval(us,oponente,true);
+//				juego.setTableroJugador1(dao1.getTablero(idPartida, usuario.getIdUsuario()));
+//				juego.setTableroJugador2(dao1.getTablero(idPartida, oponente.getIdUsuarioB()));
+//				PartidaBatallaNaval continuacion = new PartidaBatallaNaval(idPartida,juego);
+//				partidas.add(continuacion);
+//			} catch (NoSeEncuentraUsuarioException e) {
+//				// TODO Auto-generated catch block
+//				e.printStackTrace();
+//			}
+//
+//		}
+		return false;
 	}
 
 }
