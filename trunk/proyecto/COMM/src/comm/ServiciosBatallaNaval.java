@@ -1,3 +1,4 @@
+
 package comm;
 import java.rmi.Remote;
 import java.rmi.RemoteException;
@@ -36,6 +37,6 @@ public interface ServiciosBatallaNaval extends Remote {
 
 	//public ArrayList<RegistroDisparo> obtenerListaDisparos(UsuarioVO usuario) throws RemoteException;
 
-
+	public boolean hayPartidaEnCurso(UsuarioVO usuario) throws RemoteException;
 
 }
