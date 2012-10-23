@@ -12,6 +12,7 @@ import conexion.Conexion;
 import excepcionesB.NoHayDesafioException;
 import excepcionesB.NoHayRankingException;
 import excepcionesB.NotDataFoundException;
+import excepcionesD.NoExisteTableroException;
 import excepcionesD.NoExisteUsuarioException;
 import busImpl.Celda;
 import busImpl.Disparo;
@@ -27,7 +28,27 @@ public class DAOPruebas {
 	 */
 	public static void main(String[] args) {
 
-		/*
+
+
+
+		DesafioDAODB d=new DesafioDAODB();
+		try {
+			ArrayList desafios=d.getDesafiosUsuariosDisponibleBatallaNaval();
+
+			for(int i=0;i<desafios.size();i++){
+				System.out.println(((Desafio)desafios.get(i)).getUsuarioDesafio());
+
+			}
+
+		} catch (NoHayDesafioException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+
+
+
+		/*//pruebas registrar celdas
 		Conexion c=new Conexion();
 		Celda[][] celda=new Celda[10][10];
 		Celda caux=new Celda();
@@ -58,7 +79,8 @@ public class DAOPruebas {
 			}
 		}
 		/*
-		*/
+
+
 
 
 
@@ -78,7 +100,7 @@ public class DAOPruebas {
 		}
 
 
-
+		//prueba registrar Tablero
 
 		BatallaNavalDAODB b=new BatallaNavalDAODB();
 		int idPartida=20;
@@ -94,10 +116,37 @@ public class DAOPruebas {
 		tablero.setCantBarcosSubmarino(2);
 		tablero.setCantBarcosSubmarinoColocados(2);
 		Usuario u=new Usuario();
-		u.setUsuarioB("jhirata");
+		u.setUsuarioB("vtuyare");
 		tablero.setJugador(u);
 		tablero.setMiTurno(true);
 		b.regstrarTablero(tablero, idPartida);
+
+		int idUsuario;
+		try {
+			idUsuario = b.getIdTablero(idPartida, "vtuyare");
+			Tablero t=b.getTablero(idPartida, idUsuario);
+			Celda[][] celda2=t.getTabla();
+			int a=0;
+			for(int i=0; i<largoi; i++ ){
+				for(int j=0;j<largoj;j++){
+
+					a++;
+					System.out.println(celda2[i][j].getEstado()+" "+a);
+
+
+				}
+			}
+
+
+
+
+
+		} catch (NoExisteTableroException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+
 
 	/*
 
