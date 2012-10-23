@@ -41,6 +41,12 @@ public class ServiciosBatallaNavalImpl implements ServiciosBatallaNaval{
 		return obtenerPartida(usuario).refrescarTablero(usuario);
 	}
 
+	public void terminarPartida(UsuarioVO usuario, boolean gane) throws RemoteException{
+		PartidaDAO dao = getDAO();
+		int idPartida=dao.idPartida(usuario.getIdUsuario());
+		dao.terminarPartida(idPartida, usuario.getIdUsuario(), gane);
+	}
+
 
 	public void iniciarPartida(DesafioBatallaNavalVO desafio, UsuarioVO desafiante) throws RemoteException{
 		PartidaDAO dao = getDAO();
