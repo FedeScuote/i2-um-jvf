@@ -4,5 +4,6 @@
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="src" path="/COMM"/>
 	<classpathentry kind="lib" path="/Resources/conf"/>
+	<classpathentry kind="lib" path="/Resources/lib"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

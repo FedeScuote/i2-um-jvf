@@ -111,8 +111,8 @@ public class LoginVentana extends JFrame {
 			gridBagConstraints2.gridy = 0;
 			imagenDeFondo = new JLabel();
 			imagenDeFondo.setText("");
-			imagenDeFondo.setIcon(new ImageIcon(getClass().getResource(
-					labels.getString("url_fotoLogin"))));
+//			imagenDeFondo.setIcon(new ImageIcon(getClass().getResource(
+//					labels.getString("URL_FOTOLOGIN"+".jpg"))));
 			GridBagConstraints gridBagConstraints = new GridBagConstraints();
 			gridBagConstraints.gridx = 9;
 			gridBagConstraints.gridy = 1;
