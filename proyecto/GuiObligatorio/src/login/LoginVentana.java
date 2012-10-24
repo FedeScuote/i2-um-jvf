@@ -12,6 +12,8 @@ import javax.swing.JButton;
 import java.awt.Insets;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
+import java.util.ResourceBundle;
+
 import javax.swing.JLabel;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
@@ -29,6 +31,8 @@ public class LoginVentana extends JFrame {
 	private static final String host = null;
 
 	private static final long serialVersionUID = 1L;
+
+	private ResourceBundle labels = ResourceBundle.getBundle("Gui");
 
 	private JPanel jContentPane = null;
 
@@ -66,7 +70,7 @@ public class LoginVentana extends JFrame {
 	private void initialize() {
 		this.setSize(819, 573);
 		this.setContentPane(getJContentPane());
-		this.setTitle("JFrame");
+		this.setTitle(labels.getString("nombre_empresa"));
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	}
 
@@ -108,7 +112,7 @@ public class LoginVentana extends JFrame {
 			imagenDeFondo = new JLabel();
 			imagenDeFondo.setText("");
 			imagenDeFondo.setIcon(new ImageIcon(getClass().getResource(
-					"/guiObligatorio/LasVegas-Casino.jpg")));
+					labels.getString("url_fotoLogin"))));
 			GridBagConstraints gridBagConstraints = new GridBagConstraints();
 			gridBagConstraints.gridx = 9;
 			gridBagConstraints.gridy = 1;
@@ -133,9 +137,9 @@ public class LoginVentana extends JFrame {
 			gridBagConstraints1.insets = new Insets(0, 0, 0, 0);
 			gridBagConstraints1.gridy = 3;
 			labelPassword = new JLabel();
-			labelPassword.setText("Password");
+			labelPassword.setText(labels.getString("LABEL_PASSWORD"));//busco en mis properties
 			labelUsuario = new JLabel();
-			labelUsuario.setText("Usuario");
+			labelUsuario.setText(labels.getString("LABEL_USERNAME"));//busco en mis properties el texto
 			panelLogin = new JPanel();
 			panelLogin.setLayout(new GridBagLayout());
 			panelLogin.setPreferredSize(new Dimension(10, 10));
@@ -160,8 +164,7 @@ public class LoginVentana extends JFrame {
 	private JButton getLogin(final LoginVentana pantalla) {
 		if (Login == null) {
 			Login = new JButton();
-			Login.setName("");
-			Login.setText("LOGIN");
+			Login.setText(labels.getString("LABEL_BOTON_LOGIN"));
 			Login.addActionListener(new java.awt.event.ActionListener() {
 				public void actionPerformed(java.awt.event.ActionEvent e) {
 					// RECIBO LOS DATOS Y LOS MANDO AL BUS
@@ -178,23 +181,23 @@ public class LoginVentana extends JFrame {
 						UsuarioVO response = stub1.login(datosUsuario,
 								datosPassword);
 						JOptionPane.showMessageDialog(new JFrame(),
-						"BIENVENIDO "+response.getNombreB());
+						labels.getString("LABEL_BOTON_LOGIN")+response.getNombreB());
 						pantalla.partidaEnCurso(response);
 
 					} catch (Exception error) {
 						// si no se encuentra el usuario la excepcion es
 						// NoSeEncuentraUsuarioExcption
 						if (error instanceof NoSeEncuentraUsuarioException) {
-							JOptionPane.showMessageDialog(new JFrame(),"usuario invalido", "ERROR", JOptionPane.ERROR_MESSAGE);
+							JOptionPane.showMessageDialog(new JFrame(),labels.getString("LABEL_USUARIO_INVALIDO"), labels.getString("LABEL_ERROR"), JOptionPane.ERROR_MESSAGE);
 
 						} else {
 							if (error instanceof ContrasenaInvalidaException) {
 								JOptionPane.showMessageDialog(new JFrame(),
-										"password invalido", "ERROR", JOptionPane.ERROR_MESSAGE);
+										labels.getString("LABEL_PASSWORD_INVALIDO"), labels.getString("LABEL_ERROR"), JOptionPane.ERROR_MESSAGE);
 							} else {
 
 								error.printStackTrace();
-								JOptionPane.showMessageDialog(new JFrame(),"ERROR DESCONOCIDO", "ERROR", JOptionPane.ERROR_MESSAGE);
+								JOptionPane.showMessageDialog(new JFrame(),labels.getString("LABEL_ERROR_DESCONOCIDO"), labels.getString("LABEL_ERROR"), JOptionPane.ERROR_MESSAGE);
 								pantalla.dispose();
 							}
 
@@ -230,7 +233,7 @@ public class LoginVentana extends JFrame {
 		}
 		return password;
 	}
-
+	//METODO QUE RECIBE UN ARRAY DE CHAR Y DEVUELVE UN STRING
 	public static String deCharArrayAString(char[] array) {
 		String aux = "";
 		for (int i = 0; i < array.length; i++) {
@@ -238,12 +241,13 @@ public class LoginVentana extends JFrame {
 		}
 		return aux;
 	}
-
+	//METODO QUE PREGUNTA SI HAY UNA PARTIDA EN CURSO
 	private void partidaEnCurso(UsuarioVO usuario){
 		try{
 			Registry registry = LocateRegistry.getRegistry(host);
 			ServiciosBatallaNaval stub = (ServiciosBatallaNaval) registry.lookup("BatallaNavalServices");
 			if(stub.hayPartidaEnCurso(usuario)){
+				JOptionPane.showMessageDialog(new JFrame(),labels.getString("LABEL_PARTIDA_EN_CURSO"), labels.getString("nombre_empresa"), JOptionPane.INFORMATION_MESSAGE);
 				BatallaNavalVentana l = new BatallaNavalVentana(usuario);
 				this.setVisible(false);
 				l.setVisible(true);
