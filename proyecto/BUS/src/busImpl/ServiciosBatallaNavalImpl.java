@@ -127,7 +127,7 @@ public class ServiciosBatallaNavalImpl implements ServiciosBatallaNaval{
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (ClassNotFoundException e) {
-			// TODO Auto-generated catch block
+			// TODO Auto-generated catch block 
 			e.printStackTrace();
 		}
 		return null;
@@ -191,7 +191,7 @@ public class ServiciosBatallaNavalImpl implements ServiciosBatallaNaval{
 				juego.setTableroJugador1(dao1.getTablero(idPartida, usuario.getIdUsuario()));
 				juego.setTableroJugador2(dao1.getTablero(idPartida, oponente.getIdUsuarioB()));
 				PartidaBatallaNaval continuacion = new PartidaBatallaNaval(idPartida,juego);
-				partidas.add(continuacion);
+				this.partidas.add(continuacion);
 			} catch (NoSeEncuentraUsuarioException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
