@@ -41,11 +41,14 @@ public class PartidaDAODB implements PartidaDAO {
 		Conexion c=new Conexion();
 		UsuarioDAODB ud=new UsuarioDAODB();
 		String jugador;
+		boolean pendiente=false;
 		try {
 			jugador = ud.getUsuario(idUsuario);
-			ResultSet r=c.devolverResutado("SELECT usuarioGanadorD FROM usuarios_has_juegos_desafios WHERE usuarios_idusuario='"+idUsuario+"'");
-			while(r.next()){
-				return r.getInt("usuarioGanadorD")==0;
+			ResultSet r=c.devolverResutado("SELECT usuarioGanadorD FROM usuarios_has_juegos_desafios WHERE usuarios_idusuario='"+idUsuario+"' AND usuarioGanadorD='0'");
+			if(r.first()){
+				pendiente=true;
+			}else{
+				pendiente=false;
 			}
 		} catch (NoExisteUsuarioException e) {
 			// TODO Auto-generated catch block
@@ -54,7 +57,7 @@ public class PartidaDAODB implements PartidaDAO {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		return false;
+		return pendiente;
 	}
 
 	//Devuelve la idPartida En curso pasandole un idUsuario
