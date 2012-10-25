@@ -27,7 +27,10 @@ public class DAOPruebas {
 	 * @param args
 	 */
 	public static void main(String[] args) {
+		BatallaNavalDAODB td=new BatallaNavalDAODB();
+		td.actualizarTablero(20, "jhirata", false, 1, 1, 1, 1, 1, 1, 1, 1);
 
+		/*
 		PartidaDAODB pd=new PartidaDAODB();
 		int idPartida=pd.idPartida(10);
 		System.out.println(idPartida);
