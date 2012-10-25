@@ -44,7 +44,7 @@ public class PartidaDAODB implements PartidaDAO {
 		boolean pendiente=false;
 		try {
 			jugador = ud.getUsuario(idUsuario);
-			ResultSet r=c.devolverResutado("SELECT usuarioGanadorD FROM usuarios_has_juegos_desafios WHERE usuarios_idusuario='"+idUsuario+"' AND usuarioGanadorD='0'");
+			ResultSet r=c.devolverResutado("SELECT usuarioGanadorD FROM desafios, usuarios_has_juegos_desafios WHERE idDesafio=desafios_idDesafio AND usuarios_idusuario='"+idUsuario+"' AND estadoD='En curso' AND usuarioGanadorD='0'");
 			if(r.first()){
 				pendiente=true;
 			}else{
@@ -57,17 +57,19 @@ public class PartidaDAODB implements PartidaDAO {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		c.disconnect();
 		return pendiente;
 	}
 
-	//Devuelve la idPartida En curso pasandole un idUsuario
+	//Devuelve la idPartida En curso pasandole un idUsuario, retorna cero si no hay partida.
 	public int idPartida(int idUsuario) {
 		int idPartida=0;
 		Conexion c=new Conexion();
 		try {
 			ResultSet r=c.devolverResutado("SELECT desafios_idDesafio FROM usuarios_has_juegos_desafios WHERE usuarios_idusuario='"+idUsuario+"' AND usuarioGanadorD='0'");
-			r.next();
-			idPartida=r.getInt("desafios_idDesafio");
+			if(r.first()){
+				idPartida=r.getInt("desafios_idDesafio");
+			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
