@@ -369,6 +369,27 @@ c.disconnect();
 return a;
 }
 
+	public boolean aceptaronDesafio(int idUsuario) {
+
+		Conexion c=new Conexion();
+		try {
+			ResultSet r=c.devolverResutado("SELECT estadoD FROM desafios,usuarios_has_juegos_desafios WHERE idDesafio=desafios_idDesafio AND usuarios_idusuario='"+idUsuario+"' AND estadoD='En curso'");
+			r.next();
+			if(r.first()){
+				return true;
+			}else{
+				return false;
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return false;
+		}
+
+
+
+	}
+
 
 
 

@@ -15,7 +15,7 @@ import excepcionesD.NoExisteUsuarioException;
 public class PartidaDAODB implements PartidaDAO {
 	private static Logger logger = Logger.getLogger(PartidaDAODB.class);
 
-	//devuelve idDesafio
+	//Una vez creado el desafío, se debe concretar, devuelve idDesafio al concretar el desafio
 	public int concretarDesafio(int idDesafio,int idDesafiante){
 		int idD=0;
 		Conexion c=new Conexion();
@@ -36,7 +36,7 @@ public class PartidaDAODB implements PartidaDAO {
 
 		return idD;
 	}
-
+	//Devuelve si true si existe partida pendiente pasándole un idUsuario
 	public boolean partidaPendiente(int idUsuario) {
 		Conexion c=new Conexion();
 		UsuarioDAODB ud=new UsuarioDAODB();
@@ -57,6 +57,7 @@ public class PartidaDAODB implements PartidaDAO {
 		return false;
 	}
 
+	//Devuelve la idPartida En curso pasandole un idUsuario
 	public int idPartida(int idUsuario) {
 		int idPartida=0;
 		Conexion c=new Conexion();
@@ -72,7 +73,7 @@ public class PartidaDAODB implements PartidaDAO {
 	}
 
 
-
+	//Devuelve un objeto Usuario del oponente, al pasarle la idUsuario
 	public Usuario oponente(int idUsuario) {
 		Usuario u=new Usuario();
 		UsuarioDAODB ud=new UsuarioDAODB();
@@ -85,7 +86,7 @@ public class PartidaDAODB implements PartidaDAO {
 				idOponente=r.getInt("usuarios_idusuario");
 			}
 			String oponente=ud.getUsuario(idOponente);
-			u=ud.findByName(oponente);
+			u=ud.findByName(oponente); //carga todos los datos del oponente al objeto usuario u
 		} catch (SQLException e) {
 			logger.info("Aún no hay contrincante");
 		} catch (NoExisteUsuarioException e) {
@@ -102,7 +103,7 @@ public class PartidaDAODB implements PartidaDAO {
 
 
 
-
+	//Devuelve un objeto Usuario del oponente, al pasarle la idUsuario. Esto se hace, una vez que el usuario ya ganó.
 	public Usuario oponente2(int idUsuario, int idDesafio) {
 		Usuario u=new Usuario();
 		UsuarioDAODB ud=new UsuarioDAODB();
