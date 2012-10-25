@@ -253,13 +253,17 @@ public class LoginVentana extends JFrame {
 				l.setVisible(true);
 				this.dispose();
 			}else{
-				VentanaPrincipal l = new VentanaPrincipal(usuario);
-				l.setVisible(true);
-				this.dispose();
+				this.cambiarVentana(usuario);
 			}
 		}catch(Exception e){
 
 		}
+	}
+
+	private void cambiarVentana(UsuarioVO usuario){
+		VentanaPrincipal l = new VentanaPrincipal(usuario);
+		l.setVisible(true);
+		this.dispose();
 	}
 
 	public static void main(String[] args) {
