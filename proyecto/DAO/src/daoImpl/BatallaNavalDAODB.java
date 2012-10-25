@@ -333,6 +333,30 @@ public class BatallaNavalDAODB implements BatallaNavalDAO {
 
 	}
 
+	//actualiza tablero pero no celdas
+	public void actualizarTablero(int idPartida, String usuario, boolean miTurno,int barcosSubmarinos, int barcosDestructores,int barcosCruceros,int barcosAcorazados,int barcosSubmarinosColocados, int barcosDestructoresColocados,int barcosCrucerosColocados,int barcosAcorazadosColocados ){
+		Conexion c=new Conexion();
+		int idDesafio=idPartida;
+		int idTablero=0;
+		try {
+			idTablero = this.getIdTablero(idDesafio, usuario);
+			int miTurno2=3;
+			if(miTurno){
+				miTurno2=1;
+			}else{
+				miTurno2=0;
+			}
+			c.actualizarTuplaDeNueveColumnas("t_batalla_naval", "idTBatallaNaval", "jugador", idTablero, usuario,"miTurno", "barcosSubmarinos", "barcosDestructores", "barcosCruceros", "barcosAcorazados", "barcosSubmarinosColocados", "barcosDestructoresColocados", "barcosCrucerosColocados", "barcosAcorazadosColocados", miTurno2,barcosSubmarinos, barcosDestructores, barcosCruceros, barcosAcorazados, barcosSubmarinosColocados, barcosDestructoresColocados, barcosCrucerosColocados, barcosAcorazadosColocados);
+		} catch (NoExisteTableroException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+
+
 	public int getIdTablero(int idDesafio,String jugador) throws NoExisteTableroException {
 
 		Conexion c = new Conexion();
