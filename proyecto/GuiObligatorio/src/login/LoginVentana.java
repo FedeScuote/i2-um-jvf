@@ -19,6 +19,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import javax.swing.JPasswordField;
 
+import util.ImagePanel;
 import ventanaJuego.BatallaNavalVentana;
 import ventanaPrincipal.VentanaPrincipal;
 import comm.ServiciosBatallaNaval;
@@ -36,7 +37,7 @@ public class LoginVentana extends JFrame {
 
 	private JPanel jContentPane = null;
 
-	private JPanel panelLogin = null;
+	private ImagePanel panelLogin = null;
 
 	private JLabel labelUsuario = null;
 
@@ -68,7 +69,6 @@ public class LoginVentana extends JFrame {
 	 * @return void
 	 */
 	private void initialize() {
-		this.setSize(819, 573);
 		this.setContentPane(getJContentPane());
 		this.setTitle(labels.getString("nombre_empresa"));
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -140,7 +140,7 @@ public class LoginVentana extends JFrame {
 			labelPassword.setText(labels.getString("LABEL_PASSWORD"));//busco en mis properties
 			labelUsuario = new JLabel();
 			labelUsuario.setText(labels.getString("LABEL_USERNAME"));//busco en mis properties el texto
-			panelLogin = new JPanel();
+			panelLogin = new ImagePanel(new ImageIcon("src/LasVegas-Casino.jpg").getImage());
 			panelLogin.setLayout(new GridBagLayout());
 			panelLogin.setPreferredSize(new Dimension(10, 10));
 			panelLogin.setSize(new Dimension(10, 10));
