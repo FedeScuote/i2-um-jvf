@@ -28,14 +28,22 @@ public class DAOPruebas {
 	 */
 	public static void main(String[] args) {
 
+		DesafioDAODB dd=new DesafioDAODB();
+		boolean aceptaron=dd.aceptaronDesafio(1);
+		System.out.println(aceptaron);
+
+
+		/*
 		PartidaDAODB p=new PartidaDAODB();
 		p.terminarPartida(17, 4,false);
 		//logger.debug(p.oponente(4).getUsuarioB());
 
 
-		/*
+
 		DesafioDAODB d=new DesafioDAODB();
-		logger.debug(d.crearDesafio("jdiaz", 1600));
+		logger.debug(d.crearDesafio("jrodriguez", 2600));
+		logger.debug(d.crearDesafio("dgonzalez", 2600));
+
 
 		/*
 
@@ -299,11 +307,12 @@ public class DAOPruebas {
 		BatallaNavalDAODB b=new BatallaNavalDAODB();
 		b.registrarDisparo(disparo, estado, idUsuario, idPartida);
 
+*/
 
-
-
-		int idDesafio=20;
-		int idDesafiante=2;
+	/*
+		//Concretar desafios
+		int idDesafio=34;
+		int idDesafiante=8;
 		PartidaDAODB p =new PartidaDAODB();
 		p.concretarDesafio(idDesafio, idDesafiante);
 
