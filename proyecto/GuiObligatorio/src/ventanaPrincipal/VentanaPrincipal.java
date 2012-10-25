@@ -55,7 +55,7 @@ public class VentanaPrincipal extends JFrame {
 
 	private JButton jugarBackgammon = null;
 
-	private JLabel imagenFondo = null;
+	//private JLabel imagenFondo = null;
 
 	/**
 	 * This is the default constructor
@@ -107,11 +107,11 @@ public class VentanaPrincipal extends JFrame {
 			gridBagConstraints8.anchor = GridBagConstraints.NORTH;
 			gridBagConstraints8.gridwidth = 5;
 			gridBagConstraints8.gridy = 0;
-			imagenFondo = new JLabel();
-			imagenFondo.setText("");
-			imagenFondo.setBackground(Color.white);
-			imagenFondo.setIcon(new ImageIcon(getClass().getResource(
-					"/guiObligatorio/Sin título.jpg")));
+//			imagenFondo = new JLabel();
+//			imagenFondo.setText("");
+//			imagenFondo.setBackground(Color.white);
+//			imagenFondo.setIcon(new ImageIcon(getClass().getResource(
+//					"/guiObligatorio/Sin título.jpg")));
 			GridBagConstraints gridBagConstraints3 = new GridBagConstraints();
 			gridBagConstraints3.gridx = 0;
 			gridBagConstraints3.ipadx = 48;
@@ -149,7 +149,7 @@ public class VentanaPrincipal extends JFrame {
 			panelVentanaPrincipal.add(getJugarBatalla(this), gridBagConstraints2);
 			panelVentanaPrincipal
 					.add(getJugarBackgammon(), gridBagConstraints3);
-			panelVentanaPrincipal.add(imagenFondo, gridBagConstraints8);
+		//	panelVentanaPrincipal.add(imagenFondo, gridBagConstraints8);
 		}
 		return panelVentanaPrincipal;
 	}
@@ -263,6 +263,12 @@ public class VentanaPrincipal extends JFrame {
 		}
 	}
 	//METODO QUE VE SI HAY ALGUNA PARTIDA EN CURSO Y ME LLEVA AL JUEGO
-	
 
+public static void main(String[] args) {
+
+	UsuarioVO usuario = new UsuarioVO("fscouteguazza");
+
+	VentanaPrincipal l = new VentanaPrincipal(usuario);
+	l.setVisible(true);
+}
 } // @jve:decl-index=0:visual-constraint="39,-35"
