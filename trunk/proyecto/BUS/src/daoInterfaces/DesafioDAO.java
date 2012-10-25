@@ -20,8 +20,10 @@ public interface DesafioDAO {
 
 	//terminado, devuelve idDesafio, si existe desafio retorna cero
 	public int crearDesafio(String usuario,int monto);
+
+	//construcción
 	//metodo para saber si luego de creado un desafio alguien lo acepto lo que transformo el desafio en una partida
-	//public boolean aceptaronDesafio(int idUsuario);
+	public boolean aceptaronDesafio(int idUsuario);
 
 
 }
