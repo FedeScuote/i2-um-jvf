@@ -28,6 +28,14 @@ public class DAOPruebas {
 	 */
 	public static void main(String[] args) {
 
+		PartidaDAODB pd=new PartidaDAODB();
+		int idPartida=pd.idPartida(10);
+		System.out.println(idPartida);
+		/*
+		PartidaDAODB pd=new PartidaDAODB();
+		boolean pendiente=pd.partidaPendiente(6);
+		System.out.println(pendiente);
+		/*
 		DesafioDAODB dd=new DesafioDAODB();
 		boolean aceptaron=dd.aceptaronDesafio(1);
 		System.out.println(aceptaron);
