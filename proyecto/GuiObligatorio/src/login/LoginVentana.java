@@ -181,7 +181,7 @@ public class LoginVentana extends JFrame {
 						UsuarioVO response = stub1.login(datosUsuario,
 								datosPassword);
 						JOptionPane.showMessageDialog(new JFrame(),
-						labels.getString("LABEL_BOTON_LOGIN")+response.getNombreB());
+						labels.getString("LABEL_BIENVENIDO")+" "+response.getNombreB());
 						pantalla.partidaEnCurso(response);
 
 					} catch (Exception error) {
