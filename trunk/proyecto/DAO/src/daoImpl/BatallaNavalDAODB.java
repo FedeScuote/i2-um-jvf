@@ -112,19 +112,21 @@ public class BatallaNavalDAODB implements BatallaNavalDAO {
 			.devolverResutado("SELECT jugador, miTurno, barcosSubmarinos, barcosDestructores, barcosCruceros, barcosAcorazados, barcosSubmarinosColocados, barcosDestructoresColocados, barcosCrucerosColocados, barcosAcorazadosColocados FROM t_batalla_naval WHERE desafios_idDesafio='"
 					+ idDesafio + "' AND jugador='"+usuario+"'");
 
-			r.next();
-			jugador = r.getString("jugador");
-			miTurno= r.getInt("miTurno");
+			if(r.first()){
+				jugador = r.getString("jugador");
+				miTurno= r.getInt("miTurno");
 
-			barcosSubmarinos=r.getInt("barcosSubmarinos");
-			barcosDestructores=r.getInt("barcosDestructores");
-			barcosCruceros=r.getInt("barcosCruceros");
-			barcosAcorazados=r.getInt("barcosAcorazados");
-			barcosSubmarinosColocados=r.getInt("barcosSubmarinosColocados");
-			barcosDestructoresColocados=r.getInt("barcosDestructoresColocados");
-			barcosCrucerosColocados=r.getInt("barcosCrucerosColocados");
-			barcosAcorazadosColocados=r.getInt("barcosAcorazadosColocados");
-
+				barcosSubmarinos=r.getInt("barcosSubmarinos");
+				barcosDestructores=r.getInt("barcosDestructores");
+				barcosCruceros=r.getInt("barcosCruceros");
+				barcosAcorazados=r.getInt("barcosAcorazados");
+				barcosSubmarinosColocados=r.getInt("barcosSubmarinosColocados");
+				barcosDestructoresColocados=r.getInt("barcosDestructoresColocados");
+				barcosCrucerosColocados=r.getInt("barcosCrucerosColocados");
+				barcosAcorazadosColocados=r.getInt("barcosAcorazadosColocados");
+			}else{
+				throw new NoExisteTableroException();
+			}
 
 			if(miTurno==1){
 				miTurno2=true;
@@ -368,9 +370,11 @@ public class BatallaNavalDAODB implements BatallaNavalDAO {
 					.devolverResutado("SELECT idTBatallaNaval FROM t_batalla_naval WHERE desafios_idDesafio='"
 							+ idDesafio + "' AND jugador='"+jugador+"'");
 
-			r.next();
-			idTablero = r.getInt("idTBatallaNaval");
-
+			if(r.first()){
+				idTablero = r.getInt("idTBatallaNaval");
+			}else{
+				throw new NoExisteTableroException();
+			}
 		} catch (SQLException ex) {
 			throw new NoExisteTableroException();
 

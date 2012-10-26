@@ -28,6 +28,11 @@ public class DAOPruebas {
 	 */
 	public static void main(String[] args) {
 		BatallaNavalDAODB td=new BatallaNavalDAODB();
+		System.out.println(td.getTablero(44, 1).getCantBarcosAcorazado());
+
+
+		/*
+		BatallaNavalDAODB td=new BatallaNavalDAODB();
 		td.actualizarTablero(20, "jhirata", false, 1, 1, 1, 1, 1, 1, 1, 1);
 
 		/*
