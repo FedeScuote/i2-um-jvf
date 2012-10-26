@@ -16,8 +16,13 @@ import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+
+import org.apache.log4j.Logger;
+
 import java.awt.GridBagLayout;
 import java.awt.GridBagConstraints;
+
+import login.LoginVentana;
 
 public class ColocarBarcosVentana extends JFrame {
 
@@ -80,17 +85,23 @@ public class ColocarBarcosVentana extends JFrame {
 
 	private JLabel CantidadDestructores = null;
 
+	private JLabel CantidadCruceros = null;
+
+	private JLabel CantidadAcorazado = null;
+
+	private static Logger logger = Logger.getLogger(ColocarBarcosVentana.class);
+
 	/**
 	 * This is the default constructor
 	 */
 	public ColocarBarcosVentana(UsuarioVO usuario) {
 		super();
 		initialize();
+
 		this.agregarBotonesAGroup();
 		this.usuario = usuario;
 		this.crearCabezal(PanelTablero);
 		this.crearTablero(PanelTablero, arrayBotones);
-		this.pedirDistribucion();
 		this.setExtendedState(JFrame.MAXIMIZED_BOTH);
 	}
 
@@ -100,6 +111,7 @@ public class ColocarBarcosVentana extends JFrame {
 	 * @return void
 	 */
 	private void initialize() {
+		this.pedirDistribucion();
 		this.setSize(300, 200);
 		this.setContentPane(getJContentPane());
 		this.setTitle("JFrame");
@@ -310,6 +322,7 @@ public class ColocarBarcosVentana extends JFrame {
 						.mandarCasilleroABus(coordenadaFinalX), this
 						.mandarCasilleroABus(coordenadaFinalY), tipoBarco);
 				this.actualizarDistribucion();
+				this.refrescarLabels();
 				if(this.agregoEnSentidoX(coordenadaInicialX, coordenadaInicialY, coordenadaFinalX, coordenadaFinalY)){
 					this.pintarCasillerosOcupadosX(coordenadaInicialX, yPrimerClick,
 					 coordenadaFinalX);
@@ -464,26 +477,59 @@ public class ColocarBarcosVentana extends JFrame {
 		if (PanelColocarBarcos == null) {
 			GridBagConstraints gridBagConstraints11 = new GridBagConstraints();
 			gridBagConstraints11.gridx = 0;
-			gridBagConstraints11.gridy = 2;
+			gridBagConstraints11.gridy = 4;
 			CantidadDestructores = new JLabel();
-			CantidadDestructores.setText("DESTRUCTORES:");
+			CantidadDestructores.setText("DESTRUCTORES:"+getCantidadDestructores());
 			GridBagConstraints gridBagConstraints1 = new GridBagConstraints();
 			gridBagConstraints1.gridx = 0;
-			gridBagConstraints1.gridy = 1;
+			gridBagConstraints1.gridy = 3;
 			CantidadSubmarinos = new JLabel();
-			CantidadSubmarinos.setText("SUBMARINO:");
+			CantidadSubmarinos.setText("SUBMARINO:"+getCantidadSubmarinos());
 			GridBagConstraints gridBagConstraints = new GridBagConstraints();
 			gridBagConstraints.gridx = 0;
-			gridBagConstraints.gridy = 0;
+			gridBagConstraints.gridy = 2;
+
+			CantidadCruceros = new JLabel();
+			CantidadCruceros.setText("CRUCEROS:"+getCantidadCruceros());
+			GridBagConstraints gridBagConstraints111 = new GridBagConstraints();
+			gridBagConstraints111.gridx = 0;
+			gridBagConstraints111.gridy = 1;
+
+			CantidadAcorazado = new JLabel();
+			CantidadAcorazado.setText("ACORAZADO:"+getCantidadAcorazado());
+			GridBagConstraints gridBagConstraints1111 = new GridBagConstraints();
+			gridBagConstraints1111.gridx = 0;
+			gridBagConstraints1111.gridy = 0;
+
 			CantidadBarcosAColocar = new JLabel();
 			CantidadBarcosAColocar.setText("CANTIDAD DE BARCOS A COLOCAR");
 			PanelColocarBarcos = new JPanel();
 			PanelColocarBarcos.setLayout(new GridBagLayout());
-			PanelColocarBarcos.add(CantidadBarcosAColocar, gridBagConstraints);
+			PanelColocarBarcos.add(CantidadBarcosAColocar, gridBagConstraints11);
 			PanelColocarBarcos.add(CantidadSubmarinos, gridBagConstraints1);
-			PanelColocarBarcos.add(CantidadDestructores, gridBagConstraints11);
+			PanelColocarBarcos.add(CantidadDestructores, gridBagConstraints);
+			PanelColocarBarcos.add(CantidadCruceros, gridBagConstraints111);
+			PanelColocarBarcos.add(CantidadAcorazado, gridBagConstraints1111);
 		}
 		return PanelColocarBarcos;
+	}
+	private Integer getCantidadSubmarinos(){
+		return distribucion[0];
+	}
+	private Integer getCantidadDestructores(){
+		return distribucion[1];
+	}
+	private Integer getCantidadCruceros(){
+		return distribucion[2];
+	}
+	private Integer getCantidadAcorazado(){
+		return distribucion[3];
+	}
+	private void refrescarLabels(){
+		CantidadAcorazado.setText("ACORAZADO:"+getCantidadAcorazado());
+		CantidadCruceros.setText("CRUCEROS:"+getCantidadCruceros());
+		CantidadDestructores.setText("DESTRUCTORES:"+getCantidadDestructores());
+		CantidadSubmarinos.setText("SUBMARINO:"+getCantidadSubmarinos());
 	}
 
 } // @jve:decl-index=0:visual-constraint="120,2"
