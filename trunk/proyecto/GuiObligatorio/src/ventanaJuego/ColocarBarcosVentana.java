@@ -97,7 +97,7 @@ public class ColocarBarcosVentana extends JFrame {
 	public ColocarBarcosVentana(UsuarioVO usuario) {
 		super();
 		initialize();
-
+		logger.debug("Constructor ColocarBarcosVentana");
 		this.agregarBotonesAGroup();
 		this.usuario = usuario;
 		this.crearCabezal(PanelTablero);
@@ -231,6 +231,7 @@ public class ColocarBarcosVentana extends JFrame {
 	// indicado en los atributos
 	private void crearTablero(JPanel panel, JButton[][] botones) {
 		// crear botones y agregarlos al panel
+		logger.debug("Metodo Creartablero");
 		panel.setLayout(new GridLayout(TAMANO_TABLERO, TAMANO_TABLERO));
 		for (int i = 1; i < TAMANO_TABLERO; i++) {
 			this.crearFila(panel, i, botones);
@@ -241,7 +242,7 @@ public class ColocarBarcosVentana extends JFrame {
 	// metodo que me crea mi cabezal con mis letras
 	private void crearCabezal(JPanel panel) {
 		panel.setLayout(new GridLayout(TAMANO_TABLERO, TAMANO_TABLERO));
-
+		logger.debug("CrearCabezal");
 		for (int i = 0; i < TAMANO_TABLERO; i++) {
 			JLabel jlabel = new JLabel();
 			panel.add(jlabel);
@@ -254,6 +255,7 @@ public class ColocarBarcosVentana extends JFrame {
 	// metodo que le paso numero de fila y me agrega la fila con jlabel
 	// correspondiente
 	private void crearFila(JPanel panel, Integer numeroFila, JButton[][] botones) {
+		logger.debug("Crear Fila");
 		for (int j = 0; j < TAMANO_TABLERO; j++) {
 			if (j == 0) {
 				JLabel jlabel = new JLabel();
@@ -310,6 +312,7 @@ public class ColocarBarcosVentana extends JFrame {
 	private void colocarBarco(UsuarioVO usuario, int coordenadaInicialX,
 			int coordenadaInicialY, int coordenadaFinalX, int coordenadaFinalY,
 			String tipoBarco) {
+		logger.debug("ColocarBarco"+(Integer)coordenadaInicialX+(Integer)coordenadaInicialY+coordenadaFinalX+coordenadaFinalY);
 		if (quedanBarcos(tipoBarco)) {
 			try { // try y catch para verificar si esta el usuario o
 				// no
@@ -362,6 +365,7 @@ public class ColocarBarcosVentana extends JFrame {
 
 	// Metodo que me devuelve que boton esta seleccionado
 	private String getBotonSelected() {
+		logger.debug("getBotonSelected");
 		if (BotonCruzero.isSelected()) {
 			return CRUCEROS;
 		}
@@ -391,6 +395,7 @@ public class ColocarBarcosVentana extends JFrame {
 	}
 
 	private void restarDelArray(int[] array, int index) {
+		logger.debug("restarDelArray de la posicion "+(Integer) index);
 		if (array[index] != 0) {
 			array[index] -= 1;
 		} else {
@@ -411,6 +416,7 @@ public class ColocarBarcosVentana extends JFrame {
 	}
 
 	private boolean quedanBarcos(String tipoBarco) {
+		logger.debug("quedanBarcos"+tipoBarco);
 		if (tipoBarco.equals(SUBMARINO)) {
 			return distribucion[0] != 0;
 		} else if (tipoBarco.equals(DESTRUCTORES)) {
@@ -423,6 +429,7 @@ public class ColocarBarcosVentana extends JFrame {
 	}
 
 	private void pedirDistribucion() {
+		logger.debug("PedirDistribucion");
 		try { // try y catch para verificar si esta el usuario o
 			// no
 			Registry registry = LocateRegistry.getRegistry(host);
@@ -454,11 +461,13 @@ public class ColocarBarcosVentana extends JFrame {
 	//METODOS PARA PINTAR LOS CASILLEROS PARA INDICAR DONDE SE AGREGO
 	private void pintarCasillerosOcupadosX(int XInicial, int YInicial,
 			int XFinal) {
+		logger.debug("pintarCasillerosOcupadosX");
 		for (int i = XInicial; i <= XFinal; i++) {
 				arrayBotones[i+1][YInicial+1].setBackground(Color.black);
 		}
 	}
 	private void pintarCasillerosOcupadosY(int XInicial, int YInicial, int YFinal){
+		logger.debug("pintarCasillerosOcupadosY");
 		for (int i = YInicial; i <= YFinal; i++) {
 			arrayBotones[XInicial+1][i+1].setBackground(Color.black);
 		}
@@ -526,6 +535,7 @@ public class ColocarBarcosVentana extends JFrame {
 		return distribucion[3];
 	}
 	private void refrescarLabels(){
+		logger.debug("refrescarLabels");
 		CantidadAcorazado.setText("ACORAZADO:"+getCantidadAcorazado());
 		CantidadCruceros.setText("CRUCEROS:"+getCantidadCruceros());
 		CantidadDestructores.setText("DESTRUCTORES:"+getCantidadDestructores());
