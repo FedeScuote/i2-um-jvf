@@ -5,5 +5,6 @@
 	<classpathentry combineaccessrules="false" kind="src" path="/BUS"/>
 	<classpathentry kind="lib" path="/Resources/lib/log4j-1.2.15.jar"/>
 	<classpathentry kind="lib" path="/Resources/lib/mysql-connector-java-3.0.17-ga-bin.jar"/>
+	<classpathentry kind="lib" path="/Resources/lib/junit-4.10.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
