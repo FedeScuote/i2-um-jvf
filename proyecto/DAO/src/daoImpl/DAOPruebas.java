@@ -28,7 +28,7 @@ public class DAOPruebas {
 	 */
 	public static void main(String[] args) {
 		BatallaNavalDAODB td=new BatallaNavalDAODB();
-		System.out.println(td.getTablero(44, 1).getCantBarcosAcorazado());
+		logger.debug(td.getTablero(44, 1).getCantBarcosAcorazado());
 
 
 		/*
