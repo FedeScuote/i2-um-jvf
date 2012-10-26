@@ -132,6 +132,14 @@ public class Desafio implements ServiciosDesafio {
 	public void setIdUsuario(int idUsuario) {
 		this.idUsuario = idUsuario;
 	}
+	public boolean aceptaronDesafio(UsuarioVO usuario) throws RemoteException {
+		// TODO Auto-generated method stub
+		return false;
+	}
+	public void crearDesafio(UsuarioVO usuario, int monto) throws RemoteException {
+		// TODO Auto-generated method stub
+
+	}
 
 
 

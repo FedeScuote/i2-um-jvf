@@ -508,6 +508,18 @@ public class Tablero {
 		this.cantBarcosAcorazadoColocados = cantBarcosAcorazadoColocados;
 	}
 
+
+	public void generarTablero(ArrayList<RegistroDisparo> listaDeDisparos){
+		int i=0;
+		while(i<listaDeDisparos.size()){
+			try {
+				this.dispararACelda(listaDeDisparos.get(i).getDisparo().getFila(), listaDeDisparos.get(i).getDisparo().getColumna());
+			} catch (CoordenadasCeldasInvalidasException e) {
+				e.printStackTrace();
+			}
+		}
+	}
+
 }
 
 
