@@ -6,5 +6,6 @@
 	<classpathentry kind="lib" path="/Resources/conf"/>
 	<classpathentry kind="lib" path="/Resources/lib"/>
 	<classpathentry kind="lib" path="/Resources/lib/log4j-1.2.15.jar"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/3.8.1"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
