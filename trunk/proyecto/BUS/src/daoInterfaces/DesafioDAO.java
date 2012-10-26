@@ -15,15 +15,12 @@ public interface DesafioDAO {
 	public ArrayList getDesafiosUsuariosDisponibleLudo() throws NoHayDesafioException;
 	//terminado, idem anterior pero solo para Backgammon
 	public ArrayList getDesafiosUsuariosDisponibleBackgammon() throws NoHayDesafioException;
-
-	public ArrayList getDesafiosBatallaNaval() throws NoHayDesafioException;
-
 	//terminado, devuelve idDesafio, si existe desafio retorna cero
 	public int crearDesafio(String usuario,int monto);
-
-	//construcción
-	//metodo para saber si luego de creado un desafio alguien lo acepto lo que transformo el desafio en una partida
+	//terminado, metodo para saber si luego de creado un desafio alguien lo acepto lo que transformo el desafio en una partida
 	public boolean aceptaronDesafio(int idUsuario);
 
+
+	public ArrayList getDesafiosBatallaNaval() throws NoHayDesafioException;
 
 }
