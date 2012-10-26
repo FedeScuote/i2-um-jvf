@@ -20,12 +20,13 @@ import excepcionesD.NoExisteTableroException;
 import excepcionesD.NoExisteUsuarioException;
 
 public class BatallaNavalDAODB implements BatallaNavalDAO {
-	private static Logger logger = Logger.getLogger(DAOPruebas.class);
+	private static Logger logger = Logger.getLogger(BatallaNavalDAODB.class);
 
 
 	//terminados
 
 	public ArrayList<RegistroDisparo> getListaDeTiros(int idPartida,int idUsuario) {
+		logger.debug("Empiezo a cargar datos");
 		ArrayList<RegistroDisparo> ard=new ArrayList();
 		UsuarioDAODB ud=new UsuarioDAODB();
 		Conexion c=new Conexion();
@@ -55,7 +56,9 @@ public class BatallaNavalDAODB implements BatallaNavalDAO {
 				disparo.setFila(fila);
 				disparo.setColumna(r.getInt(columna));
 				RegistroDisparo rd=new RegistroDisparo(estado,disparo);
+				logger.debug("idPartida= "+idPartida+" idUsuario= "+idUsuario+" idTablero= "+idTablero+" xD= "+fila+" yD= "+columna+" estado= "+estado);
 				ard.add(rd);
+				logger.debug("Ya cargué los datos al array");
 			}
 
 		} catch (NoExisteUsuarioException e) {
@@ -68,18 +71,20 @@ public class BatallaNavalDAODB implements BatallaNavalDAO {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+
 		c.disconnect();
 		return ard;
 	}
 
 	public Tablero getTablero(int idPartida, int idUsuario) {
-
+		logger.debug("Empiezo a cargar datos");
 		Usuario u=new Usuario();
 		UsuarioDAODB ud=new UsuarioDAODB();
 		String usuario=null;
 		try {
 			usuario=ud.getUsuario(idUsuario);
 			u=ud.findByName(usuario);
+			logger.debug("usuario= "+usuario);
 		} catch (NoExisteUsuarioException e2) {
 			// TODO Auto-generated catch block
 			e2.printStackTrace();
@@ -89,7 +94,6 @@ public class BatallaNavalDAODB implements BatallaNavalDAO {
 		}
 		Tablero t=new Tablero(u);
 		try {
-
 			int idDesafio = idPartida;
 			int idTablero=this.getIdTablero(idDesafio, usuario);
 			Conexion c=new Conexion();
@@ -107,7 +111,7 @@ public class BatallaNavalDAODB implements BatallaNavalDAO {
 			int barcosDestructoresColocados=0;
 			int barcosCrucerosColocados=0;
 			int barcosAcorazadosColocados=0;
-
+			logger.debug("idDesafio= "+idDesafio+" idTablero= "+idTablero+" miTurno= "+miTurno+" barcosSubmarinos= ");
 			//obtengo los registros del tablero de Batalla Naval
 			r = c
 			.devolverResutado("SELECT jugador, miTurno, barcosSubmarinos, barcosDestructores, barcosCruceros, barcosAcorazados, barcosSubmarinosColocados, barcosDestructoresColocados, barcosCrucerosColocados, barcosAcorazadosColocados FROM t_batalla_naval WHERE desafios_idDesafio='"
