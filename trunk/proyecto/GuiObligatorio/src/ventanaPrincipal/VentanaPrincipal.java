@@ -16,6 +16,8 @@ import java.awt.Insets;
 import javax.swing.JButton;
 import javax.swing.table.DefaultTableModel;
 
+import org.apache.log4j.Logger;
+
 import pantallaElegirDesafioOJuego.SegundaPantallaBatallaN;
 import util.ImagePanel;
 import ventanaJuego.BatallaNavalVentana;
@@ -33,6 +35,8 @@ import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 import java.util.ArrayList;
 import java.util.Iterator;
+
+import login.LoginVentana;
 
 public class VentanaPrincipal extends JFrame {
 
@@ -56,13 +60,14 @@ public class VentanaPrincipal extends JFrame {
 
 	private JButton jugarBackgammon = null;
 
-	//private JLabel imagenFondo = null;
+	private static Logger logger = Logger.getLogger(LoginVentana.class);
 
 	/**
 	 * This is the default constructor
 	 */
 	public VentanaPrincipal(UsuarioVO usuarioVO) {
 		super();
+		logger.debug("Constructor VentanaPrincipal");
 		usuario=usuarioVO;
 		initialize();
 		this.setExtendedState(this.getExtendedState()|JFrame.MAXIMIZED_BOTH);//mi frame arranca maximizada
@@ -75,6 +80,7 @@ public class VentanaPrincipal extends JFrame {
 	 * @return void
 	 */
 	private void initialize() {
+		logger.debug("Inicializar");
 		this.setContentPane(getJContentPane());
 		this.setTitle("Ventana Principal");
 		this.setBounds(new Rectangle(0, 0, 834, 632));
@@ -109,11 +115,6 @@ public class VentanaPrincipal extends JFrame {
 			gridBagConstraints8.anchor = GridBagConstraints.NORTH;
 			gridBagConstraints8.gridwidth = 5;
 			gridBagConstraints8.gridy = 0;
-//			imagenFondo = new JLabel();
-//			imagenFondo.setText("");
-//			imagenFondo.setBackground(Color.white);
-//			imagenFondo.setIcon(new ImageIcon(getClass().getResource(
-//					"/guiObligatorio/Sin título.jpg")));
 			GridBagConstraints gridBagConstraints3 = new GridBagConstraints();
 			gridBagConstraints3.gridx = 0;
 			gridBagConstraints3.ipadx = 48;
@@ -228,6 +229,7 @@ public class VentanaPrincipal extends JFrame {
 	}
 	//METODO PARA LLENAR UNA JTABLE CON UN ARRAY DE OBJETOS
 	private void llenarTabla(JTable tabla, ArrayList<RankingVO> lista){
+		logger.debug("");
 		DefaultTableModel model = new DefaultTableModel() { // me hago mi modelo
 			// para que no puedan editar la tabla
 			@Override
