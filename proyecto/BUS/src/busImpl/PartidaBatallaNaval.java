@@ -41,13 +41,13 @@ public class PartidaBatallaNaval{
 
 
 	public void disparar(UsuarioVO usuario, int coordenadaX, int coordenadaY) throws RemoteException, CoordenadasInvalidasException{
-		try {
-			BatallaNavalDAO dao = getDAO();
-			juego.disparar(usuario, coordenadaX, coordenadaY);
-		} catch (NoInicioJuegoException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+//		try {
+//			BatallaNavalDAO dao = getDAO();
+//			juego.disparar(usuario, coordenadaX, coordenadaY);
+//		} catch (NoInicioJuegoException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
 	}
 
 
