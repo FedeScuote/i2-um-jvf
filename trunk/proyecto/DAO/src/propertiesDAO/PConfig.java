@@ -4,7 +4,7 @@ public class PConfig {
 
 
 	 private ResourceBundleP RBN;
-	 private static String ConexionBundle = "propertiesDAO.db"; //dirección del archivo "propertiesDAO.db"
+	 private static String ConexionBundle = "conf.db"; //dirección del archivo "propertiesDAO.db"
 	 private static String driverKey = "driver";
 	 private static String urlKey = "url";
 	 private static String userKey= "user";
