@@ -81,6 +81,7 @@ public class UsuarioDAODB implements UsuarioDAO {
 		} catch (SQLException ex) {
 
 		}
+		c.disconnect();
 		return usuario;
 
 	}

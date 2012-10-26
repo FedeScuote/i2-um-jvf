@@ -68,6 +68,7 @@ public class BatallaNavalDAODB implements BatallaNavalDAO {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		c.disconnect();
 		return ard;
 	}
 
@@ -356,6 +357,7 @@ public class BatallaNavalDAODB implements BatallaNavalDAO {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		c.disconnect();
 	}
 
 
@@ -379,6 +381,7 @@ public class BatallaNavalDAODB implements BatallaNavalDAO {
 			throw new NoExisteTableroException();
 
 		}
+		c.disconnect();
 		return idTablero;
 
 	}
