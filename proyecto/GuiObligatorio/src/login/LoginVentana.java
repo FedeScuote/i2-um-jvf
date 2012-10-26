@@ -140,7 +140,7 @@ public class LoginVentana extends JFrame {
 			labelPassword.setText(labels.getString("LABEL_PASSWORD"));//busco en mis properties
 			labelUsuario = new JLabel();
 			labelUsuario.setText(labels.getString("LABEL_USERNAME"));//busco en mis properties el texto
-			panelLogin = new ImagePanel(new ImageIcon("src/LasVegas-Casino.jpg").getImage());
+			panelLogin = new ImagePanel(new ImageIcon("src/fichas_de_un_casino-1920x1200.jpg").getImage());
 			panelLogin.setLayout(new GridBagLayout());
 			panelLogin.setPreferredSize(new Dimension(10, 10));
 			panelLogin.setSize(new Dimension(10, 10));
