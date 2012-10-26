@@ -51,7 +51,8 @@ public class LoginVentana extends JFrame {
 
 	private JPasswordField password = null;
 
-	private static Logger logger = Logger.getLogger(LoginVentana.class);  //  @jve:decl-index=0:
+	private static Logger logger = Logger.getLogger(LoginVentana.class);
+	//  @jve:decl-index=0:
 	/**
 	 * This is the default constructor
 	 */
