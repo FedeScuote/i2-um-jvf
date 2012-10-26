@@ -19,6 +19,8 @@ import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import javax.swing.JPasswordField;
 
+import org.apache.log4j.Logger;
+
 import util.ImagePanel;
 import ventanaJuego.BatallaNavalVentana;
 import ventanaPrincipal.VentanaPrincipal;
@@ -51,6 +53,7 @@ public class LoginVentana extends JFrame {
 
 	private JPasswordField password = null;
 
+	private static Logger logger = Logger.getLogger(LoginVentana.class);  //  @jve:decl-index=0:
 	/**
 	 * This is the default constructor
 	 */
@@ -58,7 +61,7 @@ public class LoginVentana extends JFrame {
 		super();
 		initialize();
 		this.setExtendedState(this.getExtendedState() | JFrame.MAXIMIZED_BOTH);// mi
-																				// frame
+		logger.debug("Inicio mi ventana");														// frame
 																				// arranca
 																				// maximizada
 	}
@@ -180,6 +183,7 @@ public class LoginVentana extends JFrame {
 								.lookup("Hello");
 						UsuarioVO response = stub1.login(datosUsuario,
 								datosPassword);
+						logger.debug("Se logeo");
 						JOptionPane.showMessageDialog(new JFrame(),
 						labels.getString("LABEL_BIENVENIDO")+" "+response.getNombreB());
 						pantalla.partidaEnCurso(response);
@@ -249,6 +253,7 @@ public class LoginVentana extends JFrame {
 			if(stub.hayPartidaEnCurso(usuario)){
 				JOptionPane.showMessageDialog(new JFrame(),labels.getString("LABEL_PARTIDA_EN_CURSO"), labels.getString("nombre_empresa"), JOptionPane.INFORMATION_MESSAGE);
 				BatallaNavalVentana l = new BatallaNavalVentana(usuario);
+				logger.debug("Partida en curso?");
 				this.setVisible(false);
 				l.setVisible(true);
 				this.dispose();
