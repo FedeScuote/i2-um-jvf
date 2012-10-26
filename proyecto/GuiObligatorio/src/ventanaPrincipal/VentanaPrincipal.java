@@ -80,7 +80,7 @@ public class VentanaPrincipal extends JFrame {
 	 * @return void
 	 */
 	private void initialize() {
-		logger.debug("Inicializar");
+		logger.debug("Inicializar Ventana Principal");
 		this.setContentPane(getJContentPane());
 		this.setTitle("Ventana Principal");
 		this.setBounds(new Rectangle(0, 0, 834, 632));
@@ -229,7 +229,7 @@ public class VentanaPrincipal extends JFrame {
 	}
 	//METODO PARA LLENAR UNA JTABLE CON UN ARRAY DE OBJETOS
 	private void llenarTabla(JTable tabla, ArrayList<RankingVO> lista){
-		logger.debug("");
+		logger.debug("metodo llenar tabla");
 		DefaultTableModel model = new DefaultTableModel() { // me hago mi modelo
 			// para que no puedan editar la tabla
 			@Override
@@ -250,6 +250,7 @@ public class VentanaPrincipal extends JFrame {
 	}
 	private void preguntarRanking(){
 		try { // intento recibir datos para el ranking
+			logger.debug("preguntar Ranking");
 			Registry registry = LocateRegistry.getRegistry(host);
 			ServiciosRanking stub = (ServiciosRanking) registry.lookup("Ranking");
 			ArrayList<RankingVO> response = stub.preguntarRanking();
@@ -266,13 +267,5 @@ public class VentanaPrincipal extends JFrame {
 			}
 		}
 	}
-	//METODO QUE VE SI HAY ALGUNA PARTIDA EN CURSO Y ME LLEVA AL JUEGO
 
-public static void main(String[] args) {
-
-	UsuarioVO usuario = new UsuarioVO("fscouteguazza");
-
-	VentanaPrincipal l = new VentanaPrincipal(usuario);
-	l.setVisible(true);
-}
 } // @jve:decl-index=0:visual-constraint="39,-35"
