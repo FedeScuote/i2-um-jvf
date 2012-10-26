@@ -49,8 +49,6 @@ public class LoginVentana extends JFrame {
 
 	private JTextField usuario = null;
 
-	private JLabel imagenDeFondo = null;
-
 	private JPasswordField password = null;
 
 	private static Logger logger = Logger.getLogger(LoginVentana.class);  //  @jve:decl-index=0:
@@ -112,10 +110,6 @@ public class LoginVentana extends JFrame {
 			gridBagConstraints2.gridheight = 7;
 			gridBagConstraints2.insets = new Insets(0, 0, 1, 0);
 			gridBagConstraints2.gridy = 0;
-			imagenDeFondo = new JLabel();
-			imagenDeFondo.setText("");
-//			imagenDeFondo.setIcon(new ImageIcon(getClass().getResource(
-//					labels.getString("URL_FOTOLOGIN"+".jpg"))));
 			GridBagConstraints gridBagConstraints = new GridBagConstraints();
 			gridBagConstraints.gridx = 9;
 			gridBagConstraints.gridy = 1;
@@ -153,7 +147,6 @@ public class LoginVentana extends JFrame {
 			panelLogin.add(getUsuario(), gridBagConstraints21);
 			panelLogin.add(labelUsuario, gridBagConstraints);
 			panelLogin.add(getPassword(), gridBagConstraints10);
-			panelLogin.add(imagenDeFondo, gridBagConstraints2);
 		}
 		return panelLogin;
 	}

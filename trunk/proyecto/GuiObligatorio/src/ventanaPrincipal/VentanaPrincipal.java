@@ -17,6 +17,7 @@ import javax.swing.JButton;
 import javax.swing.table.DefaultTableModel;
 
 import pantallaElegirDesafioOJuego.SegundaPantallaBatallaN;
+import util.ImagePanel;
 import ventanaJuego.BatallaNavalVentana;
 
 import comm.RankingVO;
@@ -43,7 +44,7 @@ public class VentanaPrincipal extends JFrame {
 
 	private JPanel jContentPane = null;
 
-	private JPanel panelVentanaPrincipal = null;
+	private ImagePanel panelVentanaPrincipal = null;
 
 	private JScrollPane panelRanking = null;
 
@@ -143,7 +144,7 @@ public class VentanaPrincipal extends JFrame {
 			gridBagConstraints.ipadx = 322;
 			gridBagConstraints.ipady = 215;
 			gridBagConstraints.gridx = 0;
-			panelVentanaPrincipal = new JPanel();
+			panelVentanaPrincipal = new ImagePanel(new ImageIcon("src/palazzo_resort_hotel_casino-1920x1080.jpg").getImage());
 			panelVentanaPrincipal.setLayout(new GridBagLayout());
 			panelVentanaPrincipal.add(getPanelRanking(), gridBagConstraints);
 			panelVentanaPrincipal.add(getJugarLudo(), gridBagConstraints1);
