@@ -74,6 +74,7 @@ public class PartidaDAODB implements PartidaDAO {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		c.disconnect();
 		return idPartida;
 	}
 
@@ -101,7 +102,7 @@ public class PartidaDAODB implements PartidaDAO {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-
+		c.disconnect();
 		return u;
 	}
 
@@ -121,6 +122,7 @@ public class PartidaDAODB implements PartidaDAO {
 			idOponente=r.getInt("usuarios_idusuario");
 			String oponente=ud.getUsuario(idOponente);
 			u=ud.findByName(oponente);
+
 		} catch (SQLException e) {
 			logger.info("Ya se terminó la partida");
 		} catch (NoExisteUsuarioException e) {
@@ -128,7 +130,7 @@ public class PartidaDAODB implements PartidaDAO {
 		} catch (NotDataFoundException e) {
 			logger.info("Ya se terminó la partida");
 		}
-
+		c.disconnect();
 		return u;
 	}
 
@@ -144,7 +146,7 @@ public class PartidaDAODB implements PartidaDAO {
 				c.actualizarTuplaDeUnaColumna3("usuarios_has_juegos_desafios", "juegos_idJuego", "desafios_idDesafio", "usuarios_idusuario", 1, idPartida, idUsuario, "usuarioGanadorD", idUsuario);
 				c.actualizarTuplaDeUnaColumna3("usuarios_has_juegos_desafios", "juegos_idJuego", "desafios_idDesafio", "usuarios_idusuario", 1, idPartida, idOponente, "usuarioGanadorD", idUsuario);
 				c.actualizarTuplaDeUnaColumna("desafios", "estadoD", "Finalizado", "idDesafio", idPartida);
-
+				c.disconnect();
 			} catch (SQLException e) {
 				logger.info("La partida ya está terminada");
 			}
@@ -157,7 +159,7 @@ public class PartidaDAODB implements PartidaDAO {
 				c.actualizarTuplaDeUnaColumna3("usuarios_has_juegos_desafios", "juegos_idJuego", "desafios_idDesafio", "usuarios_idusuario", 1, idPartida, idUsuario, "usuarioGanadorD", idOponente);
 				c.actualizarTuplaDeUnaColumna3("usuarios_has_juegos_desafios", "juegos_idJuego", "desafios_idDesafio", "usuarios_idusuario", 1, idPartida, idOponente, "usuarioGanadorD", idOponente);
 				c.actualizarTuplaDeUnaColumna("desafios", "estadoD", "Finalizado", "idDesafio", idPartida);
-
+				c.disconnect();
 			} catch (SQLException e) {
 				logger.info("La partida ya está terminada");
 			}

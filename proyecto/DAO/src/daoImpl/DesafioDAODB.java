@@ -376,8 +376,10 @@ return a;
 			ResultSet r=c.devolverResutado("SELECT estadoD FROM desafios,usuarios_has_juegos_desafios WHERE idDesafio=desafios_idDesafio AND usuarios_idusuario='"+idUsuario+"' AND estadoD='En curso'");
 			r.next();
 			if(r.first()){
+				c.disconnect();
 				return true;
 			}else{
+				c.disconnect();
 				return false;
 			}
 		} catch (SQLException e) {
