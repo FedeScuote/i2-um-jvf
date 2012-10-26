@@ -21,9 +21,6 @@ import javax.swing.JLabel;
 import javax.swing.SwingConstants;
 
 import ventanaPrincipal.VentanaPrincipal;
-
-import com.sun.jmx.remote.internal.RMIExporter;
-
 import comm.CeldaVO;
 import comm.ServiciosBatallaNaval;
 import comm.TableroVO;
@@ -64,6 +61,10 @@ public class BatallaNavalVentana extends JFrame {
 			"s", "t", "u", "v", "w", "x", "y", "z" };// primero el vacio// porque no va nada en// esa linea
 
 	private JLabel indicadorTurno = null;
+
+	private JLabel indicadorBarcosHundidos = null;
+
+	private Integer cantidadBarcosHundidos= 0;
 
 	// ///////////////////////////////////////VARIABLES Y
 	// CONSTANTES//////////////////////////////
@@ -135,6 +136,11 @@ public class BatallaNavalVentana extends JFrame {
 			indicadorTurno.setForeground(Color.RED);
 			indicadorTurno.setHorizontalAlignment(SwingConstants.CENTER);
 			indicadorTurno.setHorizontalTextPosition(SwingConstants.CENTER);
+			indicadorBarcosHundidos = new JLabel();
+			indicadorBarcosHundidos.setText("BARCOS HUNDIDOS" + cantidadBarcosHundidos);
+			indicadorBarcosHundidos.setForeground(Color.magenta);
+			indicadorBarcosHundidos.setHorizontalAlignment(SwingConstants.CENTER);
+			indicadorBarcosHundidos.setHorizontalTextPosition(SwingConstants.CENTER);
 			jContentPane = new JPanel();
 			jContentPane.setLayout(borderLayout);
 			jContentPane.add(getPanelJugador(), BorderLayout.WEST);
@@ -253,6 +259,7 @@ public class BatallaNavalVentana extends JFrame {
 				indicadorTurno.setText("NO ES TU TURNO");
 				indicadorTurno.setForeground(Color.RED);
 				if (stub.hundi(this.usuario)) {
+					cantidadBarcosHundidos++;
 					JOptionPane.showMessageDialog(new JFrame(),
 							"HAS HUNDIDO UN BARCO", "ENHORABUENA",
 							JOptionPane.INFORMATION_MESSAGE);

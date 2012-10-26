@@ -14,6 +14,10 @@ import java.awt.event.ActionListener;
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import java.awt.GridBagLayout;
+import java.awt.GridBagConstraints;
 
 public class ColocarBarcosVentana extends JFrame {
 
@@ -58,6 +62,8 @@ public class ColocarBarcosVentana extends JFrame {
 
 	private int[] distribucion;
 
+
+
 	private static final String SUBMARINO = "SUBMARINO";
 
 	private static final String DESTRUCTORES = "DESTRUCTORES";
@@ -65,6 +71,14 @@ public class ColocarBarcosVentana extends JFrame {
 	private static final String CRUCEROS = "CRUCEROS";
 
 	private static final String ACORAZADO = "ACORAZADO";
+
+	private JPanel PanelColocarBarcos = null;
+
+	private JLabel CantidadBarcosAColocar = null;
+
+	private JLabel CantidadSubmarinos = null;
+
+	private JLabel CantidadDestructores = null;
 
 	/**
 	 * This is the default constructor
@@ -102,6 +116,7 @@ public class ColocarBarcosVentana extends JFrame {
 			jContentPane.setLayout(new BorderLayout());
 			jContentPane.add(getPanelElegirBarco(), BorderLayout.EAST);
 			jContentPane.add(getPanelTablero(), BorderLayout.WEST);
+			jContentPane.add(getPanelColocarBarcos(), BorderLayout.CENTER);
 		}
 		return jContentPane;
 	}
@@ -438,6 +453,37 @@ public class ColocarBarcosVentana extends JFrame {
 
 	private int mandarCasilleroABus(int i) {
 		return i--;
+	}
+
+	/**
+	 * This method initializes PanelColocarBarcos
+	 *
+	 * @return javax.swing.JPanel
+	 */
+	private JPanel getPanelColocarBarcos() {
+		if (PanelColocarBarcos == null) {
+			GridBagConstraints gridBagConstraints11 = new GridBagConstraints();
+			gridBagConstraints11.gridx = 0;
+			gridBagConstraints11.gridy = 2;
+			CantidadDestructores = new JLabel();
+			CantidadDestructores.setText("DESTRUCTORES:");
+			GridBagConstraints gridBagConstraints1 = new GridBagConstraints();
+			gridBagConstraints1.gridx = 0;
+			gridBagConstraints1.gridy = 1;
+			CantidadSubmarinos = new JLabel();
+			CantidadSubmarinos.setText("SUBMARINO:");
+			GridBagConstraints gridBagConstraints = new GridBagConstraints();
+			gridBagConstraints.gridx = 0;
+			gridBagConstraints.gridy = 0;
+			CantidadBarcosAColocar = new JLabel();
+			CantidadBarcosAColocar.setText("CANTIDAD DE BARCOS A COLOCAR");
+			PanelColocarBarcos = new JPanel();
+			PanelColocarBarcos.setLayout(new GridBagLayout());
+			PanelColocarBarcos.add(CantidadBarcosAColocar, gridBagConstraints);
+			PanelColocarBarcos.add(CantidadSubmarinos, gridBagConstraints1);
+			PanelColocarBarcos.add(CantidadDestructores, gridBagConstraints11);
+		}
+		return PanelColocarBarcos;
 	}
 
 } // @jve:decl-index=0:visual-constraint="120,2"
