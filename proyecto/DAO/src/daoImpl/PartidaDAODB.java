@@ -17,16 +17,22 @@ public class PartidaDAODB implements PartidaDAO {
 
 	//Una vez creado el desafío, se debe concretar, devuelve idDesafio al concretar el desafio
 	public int concretarDesafio(int idDesafio,int idDesafiante){
+		logger.debug("Entro a concretarDesafio con parámetros de entrada idDesafio= "+idDesafio+" idDesafiante= "+idDesafiante);
 		int idD=0;
 		Conexion c=new Conexion();
 		try {
+			logger.debug("Primero actualizo en la tabla desafios");
 			c.actualizarTuplaDeUnaColumna("desafios", "estadoD", "En curso", "idDesafio", idDesafio);
 			ResultSet resultado = c.devolverResutado("SELECT juegos_idJuego,usuarios_idusuario FROM usuarios_has_juegos_desafios WHERE desafios_idDesafio='"+idDesafio+"'");
 			resultado.next();
 			int idJuego=resultado.getInt("juegos_idJuego");
+			idD=idDesafio;
 			int idUsuario=idDesafiante;
-			logger.debug(idJuego);
 			int usuarioGanadorD=0; //El cero significa que nadie ganó aún
+			logger.debug("Luego ingreso un nuevo registro en la relación a usuarios_has_juegos_desafios");
+			logger.debug("idJuego= "+idJuego);
+			logger.debug("idDesafiante= "+idUsuario);
+			logger.debug("usuarioGanadorD= "+usuarioGanadorD);
 			c.ingresarNuevaTuplaDeCuatroColumnasIntEnTablasRelacionadas("usuarios_has_juegos_desafios", "juegos_idJuego", "desafios_idDesafio", "usuarios_idusuario", "usuarioGanadorD", idJuego, idDesafio, idUsuario,usuarioGanadorD);
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
