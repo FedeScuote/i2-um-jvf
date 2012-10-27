@@ -24,27 +24,52 @@ public class UsuarioDAODB implements UsuarioDAO {
 	private static Logger logger = Logger.getLogger(UsuarioDAODB.class);
 
 	public Usuario findByName(String usuario) throws NotDataFoundException {
+		logger.debug("Entro a findByName con parametro de entrada usuario= "+usuario);
 		Usuario u = new Usuario();
-		Conexion conexion = new Conexion();
+		Conexion c = new Conexion();
 		try {
 
-			ResultSet resultado = conexion
+			ResultSet resultado = c
 					.devolverResutado("SELECT * FROM usuarios WHERE usuario='"+usuario+"'");
 			boolean esta=false;
 			while (resultado.next()) {
-					u.setClaveB(resultado.getString("clave"));
-					u.setIdUsuarioB(resultado.getInt("idUsuario"));
-					u.setUsuarioB(resultado.getString("usuario"));
-					u.setNombreB(resultado.getString("nombre"));
-					u.setApellidoB(resultado.getString("apellido"));
-					u.setNivelPrivilegioB(resultado.getInt("nivelPrivilegio"));
-					u.setPaisB(resultado.getString("pais"));
-					u.setCreditoB(resultado.getInt("credito"));
-					u.setVirtualB(resultado.getInt("virtual"));
-					u.setPartidasGanadasB(resultado.getInt("partidasGanadas"));
+					logger.debug("El usuario tiene los siguientes datos");
+					String clave=resultado.getString("clave");
+					int idUsuario=resultado.getInt("idUsuario");
+					String usuarioString=resultado.getString("usuario");
+					String nombre=resultado.getString("nombre");
+					String apellido=resultado.getString("apellido");
+					int nivelPrivilegio=resultado.getInt("nivelPrivilegio");
+					String pais=resultado.getString("pais");
+					int credito=resultado.getInt("credito");
+					int virtual=resultado.getInt("virtual");
+					int partidasGanadas=resultado.getInt("partidasGanadas");
+
+					logger.debug("usuario= "+usuarioString);
+					logger.debug("clave= "+clave);
+					logger.debug("idUsuario= "+idUsuario);
+					logger.debug("nombre= "+nombre);
+					logger.debug("apellido= "+apellido);
+					logger.debug("nivelPrivilegio= "+nivelPrivilegio);
+					logger.debug("pais= "+pais);
+					logger.debug("credito= "+credito);
+					logger.debug("virtual= "+virtual);
+					logger.debug("partidasGanadas= "+partidasGanadas);
+
+					u.setClaveB(clave);
+					u.setIdUsuarioB(idUsuario);
+					u.setUsuarioB(usuarioString);
+					u.setNombreB(nombre);
+					u.setApellidoB(apellido);
+					u.setNivelPrivilegioB(nivelPrivilegio);
+					u.setPaisB(pais);
+					u.setCreditoB(credito);
+					u.setVirtualB(virtual);
+					u.setPartidasGanadasB(partidasGanadas);
 					esta=true;
 			}
-			conexion.disconnect();
+			logger.debug("Me desconecto de la base de datos del método findByName");
+			c.disconnect();
 			if(esta){
 				return u;
 			}else{
@@ -68,22 +93,21 @@ public class UsuarioDAODB implements UsuarioDAO {
 	}
 
 	public String getUsuario(int idUsuario) throws NoExisteUsuarioException {
+		logger.debug("Entro a getUsuario con parámetro de entrada idUsuario= "+idUsuario);
 		Conexion c = new Conexion();
-
 		ResultSet r = null;
 		String usuario = null;
 		try {
 			r = c.devolverResutado("SELECT usuario FROM usuarios WHERE idusuario='"+ idUsuario + "'");
-
 			r.next();
 			usuario = r.getString("usuario");
-
 		} catch (SQLException ex) {
 
 		}
+		logger.debug("Me desconecto de la base de datos del método getUsuario");
 		c.disconnect();
+		logger.debug("usuario= "+usuario);
 		return usuario;
-
 	}
 
 

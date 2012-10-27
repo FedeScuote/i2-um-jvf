@@ -30,7 +30,7 @@ public class BatallaNavalUnit extends TestCase {
 	}
 
 	public void testXXX(){
-		//b.getXXX
+		b.getTablero(21, 1);
 	}
 
 	public void testXXX2(){
