@@ -60,6 +60,7 @@ public class DesafioDAODB implements DesafioDAO {
 	}
 
 	public ArrayList getDesafios() throws NoHayDesafioException {
+		logger.debug("Entro a getDesafios");
 		ArrayList a = new ArrayList();
 
 		Conexion c = new Conexion();
@@ -71,14 +72,21 @@ public class DesafioDAODB implements DesafioDAO {
 			while (resultado.next()) {
 				Desafio d = new Desafio();
 				// cargo los datos en el objeto d de Desafio
+				logger.debug("Cargo los datos en el objeto de Desafio");
 				int idDesafio = resultado.getInt("idDesafio");
 				int monto = resultado.getInt("monto");
 				int idUsuario = resultado.getInt("usuarios_idusuario");
 				Date fecha = resultado.getDate("fechaHoraInicioD");
 				String estadoD = resultado.getString("estadoD");
-
 				UsuarioDAODB ud = new UsuarioDAODB();
 				String usuarioDesafio = ud.getUsuario(idUsuario);
+
+				logger.debug("idDesafio= " + idDesafio);
+				logger.debug("monto= " + monto);
+				logger.debug("idUsuario= " + idUsuario);
+				logger.debug("fecha= " + fecha);
+				logger.debug("estado= " + estadoD);
+				logger.debug("usuarioDesafio= " + usuarioDesafio);
 
 				d.setUsuarioDesafio(usuarioDesafio);
 				d.setIdDesafio(idDesafio);
@@ -100,7 +108,8 @@ public class DesafioDAODB implements DesafioDAO {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-
+		logger
+				.debug("Me desconecto de la base de datos del método getDesafios");
 		c.disconnect();
 		return a;
 	}
@@ -144,6 +153,7 @@ public class DesafioDAODB implements DesafioDAO {
 
 	public ArrayList getDesafiosUsuariosDisponibleBatallaNaval()
 			throws NoHayDesafioException {
+		logger.debug("Entro a getDesafiosUsuariosDisponibleBatallaNaval");
 		ArrayList a = new ArrayList();
 
 		Conexion c = new Conexion();
@@ -152,6 +162,234 @@ public class DesafioDAODB implements DesafioDAO {
 
 			ResultSet resultado = c
 					.devolverResutado("SELECT idDesafio, monto, fechaHoraInicioD, estadoD, usuarios_idusuario FROM desafios,usuarios_has_juegos_desafios WHERE estadoD='En hora' AND idDesafio=desafios_idDesafio AND juegos_idJuego='1'  ");
+			while (resultado.next()) {
+				Desafio d = new Desafio();
+
+				int idDesafio = resultado.getInt("idDesafio");
+				int idUsuario = resultado.getInt("usuarios_idusuario");
+				int monto = resultado.getInt("monto");
+				Date fecha = resultado.getDate("fechaHoraInicioD");
+				String estadoD = resultado.getString("estadoD");
+				UsuarioDAODB ud = new UsuarioDAODB();
+				String usuarioDesafio = ud.getUsuario(idUsuario);
+
+				logger.debug("idDesafio= " + idDesafio);
+				logger.debug("monto= " + monto);
+				logger.debug("idUsuario= " + idUsuario);
+				logger.debug("fecha= " + fecha);
+				logger.debug("estado= " + estadoD);
+				logger.debug("usuarioDesafio= " + usuarioDesafio);
+
+				d.setIdDesafio(idDesafio);
+				d.setMonto(monto);
+				d.setFechaHoraInicioD(fecha);
+				d.setEstado(estadoD);
+				d.setIdUsuario(idUsuario);
+
+				d.setUsuarioDesafio(usuarioDesafio);
+
+				a.add(d);
+			}
+			a.get(0);
+
+		} catch (SQLException ex) {
+
+			throw new NoHayDesafioException();
+
+		} catch (IndexOutOfBoundsException i) {
+			throw new NoHayDesafioException();
+		} catch (NoExisteUsuarioException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		logger
+				.debug("Me desconecto de la base de datos del método getDesafiosUsuariosDisponibleBatallaNaval");
+		c.disconnect();
+		return a;
+	}
+
+	public ArrayList getDesafiosUsuariosDisponibleLudo()
+			throws NoHayDesafioException {
+		logger.debug("Entro a getDesafiosUsuariosDisponiblesLudo");
+		ArrayList a = new ArrayList();
+
+		Conexion c = new Conexion();
+
+		try {
+
+			ResultSet resultado = c
+					.devolverResutado("SELECT idDesafio, monto, fechaHoraInicioD, estadoD, usuarios_idusuario FROM desafios,usuarios_has_juegos_desafios WHERE estadoD='En hora' AND idDesafio=desafios_idDesafio AND juegos_idJuego='2'  ");
+			while (resultado.next()) {
+				Desafio d = new Desafio();
+
+				int idDesafio = resultado.getInt("idDesafio");
+				int idUsuario = resultado.getInt("usuarios_idusuario");
+				int monto = resultado.getInt("monto");
+				Date fecha = resultado.getDate("fechaHoraInicioD");
+				String estadoD = resultado.getString("estadoD");
+				UsuarioDAODB ud = new UsuarioDAODB();
+				String usuarioDesafio = ud.getUsuario(idUsuario);
+
+				logger.debug("idDesafio= " + idDesafio);
+				logger.debug("monto= " + monto);
+				logger.debug("idUsuario= " + idUsuario);
+				logger.debug("fecha= " + fecha);
+				logger.debug("estado= " + estadoD);
+				logger.debug("usuarioDesafio= " + usuarioDesafio);
+
+				d.setIdDesafio(idDesafio);
+				d.setMonto(monto);
+				d.setFechaHoraInicioD(fecha);
+				d.setEstado(estadoD);
+				d.setUsuarioDesafio(usuarioDesafio);
+
+				a.add(d);
+			}
+			a.get(0);
+
+		} catch (SQLException ex) {
+
+			throw new NoHayDesafioException();
+
+		} catch (IndexOutOfBoundsException i) {
+			throw new NoHayDesafioException();
+		} catch (NoExisteUsuarioException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		logger
+				.debug("Me desconecto de la base de datos del método getDesafiosUsuariosDisponiblesLudo");
+		c.disconnect();
+		return a;
+	}
+
+	public ArrayList getDesafiosUsuariosDisponibleBackgammon()
+			throws NoHayDesafioException {
+		logger.debug("Entro a getDesafiosUsuariosDisponibleBackgammon");
+		ArrayList a = new ArrayList();
+
+		Conexion c = new Conexion();
+
+		try {
+
+			ResultSet resultado = c
+					.devolverResutado("SELECT idDesafio, monto, fechaHoraInicioD, estadoD, usuarios_idusuario FROM desafios,usuarios_has_juegos_desafios WHERE estadoD='En hora' AND idDesafio=desafios_idDesafio AND juegos_idJuego='3'  ");
+			while (resultado.next()) {
+				Desafio d = new Desafio();
+
+				int idDesafio = resultado.getInt("idDesafio");
+				int idUsuario = resultado.getInt("usuarios_idusuario");
+				int monto = resultado.getInt("monto");
+				Date fecha = resultado.getDate("fechaHoraInicioD");
+				String estadoD = resultado.getString("estadoD");
+				UsuarioDAODB ud = new UsuarioDAODB();
+				String usuarioDesafio = ud.getUsuario(idUsuario);
+
+				logger.debug("idDesafio= " + idDesafio);
+				logger.debug("monto= " + monto);
+				logger.debug("idUsuario= " + idUsuario);
+				logger.debug("fecha= " + fecha);
+				logger.debug("estado= " + estadoD);
+				logger.debug("usuarioDesafio= " + usuarioDesafio);
+
+				d.setIdDesafio(idDesafio);
+				d.setMonto(monto);
+				d.setFechaHoraInicioD(fecha);
+				d.setEstado(estadoD);
+				d.setUsuarioDesafio(usuarioDesafio);
+
+				a.add(d);
+			}
+			a.get(0);
+
+		} catch (SQLException ex) {
+
+			throw new NoHayDesafioException();
+
+		} catch (IndexOutOfBoundsException i) {
+			throw new NoHayDesafioException();
+		} catch (NoExisteUsuarioException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		logger
+				.debug("Me desconecto de la base de datos del método getDesafiosUsuariosDisponibleBackgammon");
+		c.disconnect();
+		return a;
+	}
+
+	// devuelve la idDesafio de BatallaNaval
+	public int crearDesafio(String usuario, int monto) {
+		logger.debug("Entro a crearDesafios con parámetros de entrada usuario= "+usuario+" monto= "+monto);
+		UsuarioDAODB ud = new UsuarioDAODB();
+		Usuario u;
+		Conexion c = new Conexion();
+		int idDesafio = 0;
+		int idUsuario = 0;
+		int idJuego = 1; // Batalla Naval
+		int usuarioGanadorD = 0; // El cero representa a ningun usuario
+
+		try {
+			u = ud.findByName(usuario);
+			idUsuario = u.getIdUsuarioB();
+			this.getDesafiosUsuariosDisponibleBatallaNaval(idUsuario);
+			logger.debug("Ya existe desafio del usuario: " + usuario);
+
+		} catch (NotDataFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (NoHayDesafioException e) {
+			// ingreso en desafios
+			try {
+				logger.debug("primero ingreso en la tabla desafios");
+				logger.debug("idDesafio= " + idDesafio);
+				logger.debug("monto= " + monto);
+				logger.debug("fechaHoraInicioD= " + fechaHoraInicioD);
+				logger.debug("estado= En hora");
+
+				c.ingresarNuevaTuplaDeTresColumnas2("desafios", "idDesafio",
+						"monto", "fechaHoraInicioD", "estadoD", monto, "now()",
+						"En hora");
+				ResultSet r = c
+						.devolverResutado("SELECT MAX(idDesafio)FROM desafios");
+				r.next();
+				idDesafio = r.getInt("MAX(idDesafio)");
+				// ingreso en la relacion usuarios_has_juegos_desafios
+				logger.debug("luego ingreso en la relación usuarios_has_juegos_desafios");
+				logger.debug("idUsuario= " + idUsuario);
+				logger.debug("juegos_idJuego= 1");
+				logger.debug("desafios_idDesafio= "+idDesafio);
+				logger.debug("usuarioGanadorD= "+usuarioGanadorD );
+
+				c.ingresarNuevaTuplaDeCuatroColumnasIntEnTablasRelacionadas(
+						"usuarios_has_juegos_desafios", "juegos_idJuego",
+						"desafios_idDesafio", "usuarios_idUsuario",
+						"usuarioGanadorD", 1, idDesafio, idUsuario,
+						usuarioGanadorD);
+
+			} catch (SQLException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+		}
+		logger.debug("Me desconecto de la base de datos del método crearDesafios");
+		c.disconnect();
+		logger.debug("idDesafio= "+idDesafio);
+		return idDesafio;
+	}
+
+	public ArrayList getDesafiosUsuariosDisponibleBatallaNaval(int idUser)
+			throws NoHayDesafioException {
+		logger.debug("Entro a getDesafiosUsuariosDisponibleBatallaNaval con parámetro de entrada idUsuario= "+idUser);
+		ArrayList a = new ArrayList();
+
+		Conexion c = new Conexion();
+
+		try {
+
+			ResultSet resultado = c
+					.devolverResutado("SELECT idDesafio, monto, fechaHoraInicioD, estadoD, usuarios_idusuario FROM desafios,usuarios_has_juegos_desafios WHERE estadoD='En hora' AND idDesafio=desafios_idDesafio AND juegos_idJuego='1' AND usuarios_idusuario='"
+							+ idUser + "'");
 			while (resultado.next()) {
 				Desafio d = new Desafio();
 
@@ -184,201 +422,25 @@ public class DesafioDAODB implements DesafioDAO {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-
+		logger.debug("Me desconecto de la base de datos del método getDesafiosUsuariosDisponibleBatallaNaval");
 		c.disconnect();
 		return a;
 	}
-
-	public ArrayList getDesafiosUsuariosDisponibleLudo()
-			throws NoHayDesafioException {
-		ArrayList a = new ArrayList();
-
-		Conexion c = new Conexion();
-
-		try {
-
-			ResultSet resultado = c
-					.devolverResutado("SELECT idDesafio, monto, fechaHoraInicioD, estadoD, usuarios_idusuario FROM desafios,usuarios_has_juegos_desafios WHERE estadoD='En hora' AND idDesafio=desafios_idDesafio AND juegos_idJuego='2'  ");
-			while (resultado.next()) {
-				Desafio d = new Desafio();
-
-				int idDesafio = resultado.getInt("idDesafio");
-				int idUsuario = resultado.getInt("usuarios_idusuario");
-				int monto = resultado.getInt("monto");
-				Date fecha = resultado.getDate("fechaHoraInicioD");
-				String estadoD = resultado.getString("estadoD");
-
-				d.setIdDesafio(idDesafio);
-				d.setMonto(monto);
-				d.setFechaHoraInicioD(fecha);
-				d.setEstado(estadoD);
-
-				UsuarioDAODB ud = new UsuarioDAODB();
-				String usuarioDesafio = ud.getUsuario(idUsuario);
-				d.setUsuarioDesafio(usuarioDesafio);
-
-				a.add(d);
-			}
-			a.get(0);
-
-		} catch (SQLException ex) {
-
-			throw new NoHayDesafioException();
-
-		} catch (IndexOutOfBoundsException i) {
-			throw new NoHayDesafioException();
-		} catch (NoExisteUsuarioException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-
-		c.disconnect();
-		return a;
-	}
-
-	public ArrayList getDesafiosUsuariosDisponibleBackgammon()
-	throws NoHayDesafioException {
-ArrayList a = new ArrayList();
-
-
-Conexion c = new Conexion();
-
-try {
-
-	ResultSet resultado = c
-			.devolverResutado("SELECT idDesafio, monto, fechaHoraInicioD, estadoD, usuarios_idusuario FROM desafios,usuarios_has_juegos_desafios WHERE estadoD='En hora' AND idDesafio=desafios_idDesafio AND juegos_idJuego='3'  ");
-	while (resultado.next()) {
-		Desafio d = new Desafio();
-
-		int idDesafio = resultado.getInt("idDesafio");
-		int idUsuario = resultado.getInt("usuarios_idusuario");
-		int monto = resultado.getInt("monto");
-		Date fecha = resultado.getDate("fechaHoraInicioD");
-		String estadoD = resultado.getString("estadoD");
-
-		d.setIdDesafio(idDesafio);
-		d.setMonto(monto);
-		d.setFechaHoraInicioD(fecha);
-		d.setEstado(estadoD);
-
-		UsuarioDAODB ud = new UsuarioDAODB();
-		String usuarioDesafio = ud.getUsuario(idUsuario) ;
-		d.setUsuarioDesafio(usuarioDesafio);
-
-		a.add(d);
-	}
-	a.get(0);
-
-} catch (SQLException ex) {
-
-	throw new NoHayDesafioException();
-
-} catch (IndexOutOfBoundsException i) {
-	throw new NoHayDesafioException();
-} catch (NoExisteUsuarioException e) {
-	// TODO Auto-generated catch block
-	e.printStackTrace();
-}
-
-c.disconnect();
-return a;
-}
-
-	//devuelve la idDesafio de BatallaNaval
-	public int crearDesafio(String usuario, int monto) {
-		UsuarioDAODB ud=new UsuarioDAODB();
-		Usuario u;
-		Conexion c=new Conexion();
-		int idDesafio=0;
-		int idUsuario=0;
-		int idJuego=1; //Batalla Naval
-		int usuarioGanadorD=0; //El cero representa a ningun usuario
-
-		try {
-			u = ud.findByName(usuario);
-			idUsuario=u.getIdUsuarioB();
-			this.getDesafiosUsuariosDisponibleBatallaNaval(idUsuario);
-			logger.info("Ya existe desafio del usuario: "+usuario);
-
-		} catch (NotDataFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (NoHayDesafioException e) {
-			//ingreso en desafios
-			try {
-				c.ingresarNuevaTuplaDeTresColumnas2("desafios", "idDesafio", "monto", "fechaHoraInicioD", "estadoD", monto, "now()", "En hora");
-				ResultSet r=c.devolverResutado("SELECT MAX(idDesafio)FROM desafios");
-				r.next();
-				idDesafio=r.getInt("MAX(idDesafio)");
-				//ingreso en la relacion usuarios_has_juegos_desafios
-				c.ingresarNuevaTuplaDeCuatroColumnasIntEnTablasRelacionadas("usuarios_has_juegos_desafios", "juegos_idJuego", "desafios_idDesafio", "usuarios_idUsuario", "usuarioGanadorD", 1, idDesafio, idUsuario, usuarioGanadorD);
-
-			} catch (SQLException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			}
-		}
-		return idDesafio;
-	}
-
-
-
-	public ArrayList getDesafiosUsuariosDisponibleBatallaNaval(int idUser)throws NoHayDesafioException {
-ArrayList a = new ArrayList();
-
-Conexion c = new Conexion();
-
-try {
-
-	ResultSet resultado = c
-			.devolverResutado("SELECT idDesafio, monto, fechaHoraInicioD, estadoD, usuarios_idusuario FROM desafios,usuarios_has_juegos_desafios WHERE estadoD='En hora' AND idDesafio=desafios_idDesafio AND juegos_idJuego='1' AND usuarios_idusuario='"+idUser+"'");
-	while (resultado.next()) {
-		Desafio d = new Desafio();
-
-		int idDesafio = resultado.getInt("idDesafio");
-		int idUsuario = resultado.getInt("usuarios_idusuario");
-		int monto = resultado.getInt("monto");
-		Date fecha = resultado.getDate("fechaHoraInicioD");
-		String estadoD = resultado.getString("estadoD");
-
-		d.setIdDesafio(idDesafio);
-		d.setMonto(monto);
-		d.setFechaHoraInicioD(fecha);
-		d.setEstado(estadoD);
-		d.setIdUsuario(idUsuario);
-		UsuarioDAODB ud = new UsuarioDAODB();
-		String usuarioDesafio = ud.getUsuario(idUsuario);
-		d.setUsuarioDesafio(usuarioDesafio);
-
-		a.add(d);
-	}
-	a.get(0);
-
-} catch (SQLException ex) {
-
-	throw new NoHayDesafioException();
-
-} catch (IndexOutOfBoundsException i) {
-	throw new NoHayDesafioException();
-} catch (NoExisteUsuarioException e) {
-	// TODO Auto-generated catch block
-	e.printStackTrace();
-}
-
-c.disconnect();
-return a;
-}
 
 	public boolean aceptaronDesafio(int idUsuario) {
-
-		Conexion c=new Conexion();
+		logger.debug("Entro a aceptaronDesafio con parámetro de entrada idUsuario= "+idUsuario);
+		Conexion c = new Conexion();
 		try {
-			ResultSet r=c.devolverResutado("SELECT estadoD FROM desafios,usuarios_has_juegos_desafios WHERE idDesafio=desafios_idDesafio AND usuarios_idusuario='"+idUsuario+"' AND estadoD='En curso'");
-			r.next();
-			if(r.first()){
+			ResultSet r = c
+					.devolverResutado("SELECT estadoD FROM desafios,usuarios_has_juegos_desafios WHERE idDesafio=desafios_idDesafio AND usuarios_idusuario='"
+							+ idUsuario + "' AND estadoD='En curso'");
+
+			if (r.first()) {
+				logger.debug("Me desconecto de la base de datos del método aceptaronDesafio");
 				c.disconnect();
 				return true;
-			}else{
+			} else {
+				logger.debug("Me desconecto de la base de datos del método aceptaronDesafio");
 				c.disconnect();
 				return false;
 			}
@@ -388,15 +450,6 @@ return a;
 			return false;
 		}
 
-
-
 	}
-
-
-
-
-
-
-
 
 }
