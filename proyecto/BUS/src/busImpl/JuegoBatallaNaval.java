@@ -107,7 +107,7 @@ public class JuegoBatallaNaval{
 				} catch (CoordenadasCeldasInvalidasException e) {
 					throw new CoordenadasInvalidasException();
 				}
-				daoBatallaNaval.regstrarTablero(tableroJugador1, idPartida);
+				daoBatallaNaval.registrarTablero(tableroJugador1, idPartida);
 			}else{
 				throw new CoordenadasInvalidasException();
 			}
@@ -127,7 +127,7 @@ public class JuegoBatallaNaval{
 				} catch (CoordenadasCeldasInvalidasException e) {
 					throw new CoordenadasInvalidasException();
 				}
-				daoBatallaNaval.regstrarTablero(tableroJugador2, idPartida);
+				daoBatallaNaval.registrarTablero(tableroJugador2, idPartida);
 			}else{
 				throw new CoordenadasInvalidasException();
 			}

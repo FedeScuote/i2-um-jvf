@@ -83,8 +83,8 @@ public class ServiciosBatallaNavalImpl implements ServiciosBatallaNaval{
 				tableroJugador1.setMiTurno(true);
 				tableroJugador2.agregarCeldas(distribucion);
 			}
-			dao2.regstrarTablero(tableroJugador1, idDesafio);
-			dao2.regstrarTablero(tableroJugador2, idDesafio);
+			dao2.registrarTablero(tableroJugador1, idDesafio);
+			dao2.registrarTablero(tableroJugador2, idDesafio);
 		} catch (NoSeEncuentraUsuarioException e) {
 			e.printStackTrace();
 		}
