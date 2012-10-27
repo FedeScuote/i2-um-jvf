@@ -331,7 +331,7 @@ public class BatallaNavalDAODB implements BatallaNavalDAO {
 			int barcosAcorazados=tablero.getCantBarcosAcorazado();
 			int barcosSubmarinosColocados=tablero.getCantBarcosSubmarinoColocados();
 			int barcosDestructoresColocados=tablero.getCantBarcosDestructoresColocados();
-			int barcosCrucerosColocados=tablero.getCantBarcosDestructoresColocados();
+			int barcosCrucerosColocados=tablero.getCantBarcosCrucerosColocados();
 			int barcosAcorazadosColocados=tablero.getCantBarcosAcorazadoColocados();
 			logger.debug("El parámetro de entrada tablero se compone de los siguientes parámetros");
 			logger.debug("idDesafio= "+idDesafio);
