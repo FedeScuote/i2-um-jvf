@@ -54,7 +54,7 @@ public class BatallaNavalDAODB implements BatallaNavalDAO {
 				}
 
 				disparo.setFila(fila);
-				disparo.setColumna(r.getInt(columna));
+				disparo.setColumna(columna);
 				RegistroDisparo rd=new RegistroDisparo(estado,disparo);
 
 				logger.debug("idPartida= "+idPartida);
