@@ -329,7 +329,6 @@ public class Tablero {
 	public Estados dispararACelda(int coordenadaX,int coordenadaY) throws CoordenadasCeldasInvalidasException{
 		Estados retorno=null;
 		int largoBarco=0;
-
 		if(tabla[coordenadaX][coordenadaY].estaVacio()){
 			tabla[coordenadaX][coordenadaY].setTiroErrado();
 			retorno=Estados.AGUA;
@@ -343,7 +342,7 @@ public class Tablero {
 			}
 
 		}else{
-			throw new CoordenadasCeldasInvalidasException();
+			//throw new CoordenadasCeldasInvalidasException();
 		}
 		if(retorno==Estados.HUNDIDO){
 			if(largoBarco==LARGO_ACORAZADO){
@@ -513,7 +512,7 @@ public class Tablero {
 		int i=0;
 		while(i<listaDeDisparos.size()){
 			try {
-				this.dispararACelda(listaDeDisparos.get(i).getDisparo().getFila(), listaDeDisparos.get(i).getDisparo().getColumna());
+				Estados estado=this.dispararACelda(listaDeDisparos.get(i).getDisparo().getFila(), listaDeDisparos.get(i).getDisparo().getColumna());
 			} catch (CoordenadasCeldasInvalidasException e) {
 				e.printStackTrace();
 			}
