@@ -28,6 +28,11 @@ public class ServiciosBatallaNavalImpl implements ServiciosBatallaNaval{
 	public void agregarBarco(UsuarioVO usuario, int coordenadaInicialX, int coordenadaInicialY, int coordenadaFinalX, int coordenadaFinalY, String tipoBarco) throws RemoteException, CoordenadasInvalidasException {
 		juego=JuegoBatallaNaval.crearJuegoBN(usuario, true);
 		juego.agregarBarco(usuario, coordenadaInicialX, coordenadaInicialY, coordenadaFinalX, coordenadaFinalY, tipoBarco);
+		BatallaNavalDAO daoBatallaNaval = getDAO2();
+		PartidaDAO daoPartida = getDAO();
+		int idPartida=daoPartida.idPartida(usuario.getIdUsuario());
+		daoBatallaNaval.registrarTablero(juego.getTableroJugador1(), idPartida);
+		daoBatallaNaval.registrarTablero(juego.getTableroJugador2(), idPartida);
 	}
 
 	public void disparar(UsuarioVO usuario, int coordenadaX, int coordenadaY) throws RemoteException, CoordenadasInvalidasException{
@@ -35,10 +40,12 @@ public class ServiciosBatallaNavalImpl implements ServiciosBatallaNaval{
 		DesafioDAO dao1 = getDAO1();
 		BatallaNavalDAO dao2 = getDAO2();
 		juego=JuegoBatallaNaval.crearJuegoBN(usuario, true);
-		juego.disparar(usuario, coordenadaX, coordenadaY);
+		Estados resultado=juego.disparar(usuario, coordenadaX, coordenadaY);
 		int idPartida=dao.idPartida(usuario.getIdUsuario());
-		String usuarioOpontente=dao.oponente(usuario.getIdUsuario()).getUsuarioB();
-		//dao2.actualizarTablero(idPartida, usuario, juegomiTurno, barcosSubmarinos, barcosDestructores, barcosCruceros, barcosAcorazados, barcosSubmarinosColocados, barcosDestructoresColocados, barcosCrucerosColocados, barcosAcorazadosColocados)
+		int idUsuarioOponente=dao.oponente(usuario.getIdUsuario()).getIdUsuarioB();
+		String usuarioOponente=dao.oponente(usuario.getIdUsuario()).getUsuarioB();
+		dao2.actualizarTablero(idPartida, usuario.getUsuarioB(), juego.getTableroJugador1().isMiTurno(), juego.getTableroJugador1().getCantBarcosSubmarino(), juego.getTableroJugador1().getCantBarcosDestructores(), juego.getTableroJugador1().getCantBarcosCruceros(), juego.getTableroJugador1().getCantBarcosAcorazado(), juego.getTableroJugador1().getCantBarcosSubmarinoColocados(), juego.getTableroJugador1().getCantBarcosDestructoresColocados(), juego.getTableroJugador1().getCantBarcosCrucerosColocados(), juego.getTableroJugador1().getCantBarcosAcorazadoColocados());
+		dao2.actualizarTablero(idPartida, usuarioOponente, juego.getTableroJugador2().isMiTurno(), juego.getTableroJugador2().getCantBarcosSubmarino(), juego.getTableroJugador2().getCantBarcosDestructores(), juego.getTableroJugador2().getCantBarcosCruceros(), juego.getTableroJugador2().getCantBarcosAcorazado(), juego.getTableroJugador2().getCantBarcosSubmarinoColocados(), juego.getTableroJugador2().getCantBarcosDestructoresColocados(), juego.getTableroJugador2().getCantBarcosCrucerosColocados(), juego.getTableroJugador2().getCantBarcosAcorazadoColocados());
 	}
 
 	public boolean esMiTurno(UsuarioVO usuario) throws RemoteException {
