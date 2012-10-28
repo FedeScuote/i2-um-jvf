@@ -10,6 +10,7 @@ import busImpl.Usuario;
 import conexion.Conexion;
 import daoInterfaces.PartidaDAO;
 import excepcionesB.NotDataFoundException;
+import excepcionesD.NoExisteOponenteException;
 import excepcionesD.NoExisteUsuarioException;
 
 public class PartidaDAODB implements PartidaDAO {
@@ -97,11 +98,13 @@ public class PartidaDAODB implements PartidaDAO {
 			ResultSet r=c.devolverResutado("SELECT usuarios_idusuario FROM usuarios_has_juegos_desafios WHERE usuarios_idusuario !='"+idUsuario+"' AND desafios_idDesafio='"+idPartida+"' AND usuarioGanadorD='0'");
 			if(r.first()){
 				idOponente=r.getInt("usuarios_idusuario");
+				logger.debug("oponente= "+u.getIdUsuarioB());
+				String oponente=ud.getUsuario(idOponente);
+				u=ud.findByName(oponente); //carga todos los datos del oponente al objeto usuario u
 			}else{
-				throw new NoExisteUsuarioException();
+				throw new NoExisteOponenteException();
 			}
-			String oponente=ud.getUsuario(idOponente);
-			u=ud.findByName(oponente); //carga todos los datos del oponente al objeto usuario u
+
 		} catch (SQLException e) {
 			logger.info("Aún no hay contrincante");
 		} catch (NoExisteUsuarioException e) {
@@ -110,8 +113,10 @@ public class PartidaDAODB implements PartidaDAO {
 		} catch (NotDataFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+		} catch (NoExisteOponenteException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
-		logger.debug("oponente= "+u.getIdUsuarioB());
 		logger.debug("Me desconecto de la base de datos del método oponente");
 		c.disconnect();
 		return u;
