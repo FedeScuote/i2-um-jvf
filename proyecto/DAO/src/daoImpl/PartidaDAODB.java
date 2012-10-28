@@ -153,6 +153,7 @@ public class PartidaDAODB implements PartidaDAO {
 
 
 	public void terminarPartida(int idPartida, int idUsuario, boolean gane) {
+		logger.info("Entro a terminarPartida con parámetros de entrada idPartida= "+idPartida+" idUsuario= "+idUsuario+" gane= "+gane);
 		if(gane){
 			try {
 				Conexion c=new Conexion();
@@ -162,6 +163,8 @@ public class PartidaDAODB implements PartidaDAO {
 				c.actualizarTuplaDeUnaColumna3("usuarios_has_juegos_desafios", "juegos_idJuego", "desafios_idDesafio", "usuarios_idusuario", 1, idPartida, idUsuario, "usuarioGanadorD", idUsuario);
 				c.actualizarTuplaDeUnaColumna3("usuarios_has_juegos_desafios", "juegos_idJuego", "desafios_idDesafio", "usuarios_idusuario", 1, idPartida, idOponente, "usuarioGanadorD", idUsuario);
 				c.actualizarTuplaDeUnaColumna("desafios", "estadoD", "Finalizado", "idDesafio", idPartida);
+				//c.ingresarNuevaTuplaDeTresColumnas2("ranking","usuarios_idUsuario", "juegos_idJuego", "ganadas", idUsuario, "1", )
+				logger.info("Me desconecto de la base de datos del método terminarPartida");
 				c.disconnect();
 			} catch (SQLException e) {
 				logger.info("La partida ya está terminada");
@@ -175,6 +178,8 @@ public class PartidaDAODB implements PartidaDAO {
 				c.actualizarTuplaDeUnaColumna3("usuarios_has_juegos_desafios", "juegos_idJuego", "desafios_idDesafio", "usuarios_idusuario", 1, idPartida, idUsuario, "usuarioGanadorD", idOponente);
 				c.actualizarTuplaDeUnaColumna3("usuarios_has_juegos_desafios", "juegos_idJuego", "desafios_idDesafio", "usuarios_idusuario", 1, idPartida, idOponente, "usuarioGanadorD", idOponente);
 				c.actualizarTuplaDeUnaColumna("desafios", "estadoD", "Finalizado", "idDesafio", idPartida);
+
+				logger.info("Me desconecto de la base de datos del método terminarPartida");
 				c.disconnect();
 			} catch (SQLException e) {
 				logger.info("La partida ya está terminada");
