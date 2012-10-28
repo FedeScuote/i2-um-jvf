@@ -87,6 +87,7 @@ public class PartidaDAODB implements PartidaDAO {
 
 	//Devuelve un objeto Usuario del oponente, al pasarle la idUsuario
 	public Usuario oponente(int idUsuario) {
+		logger.debug("Entro a oponente con parámetro de entrada idUsuario= "+idUsuario);
 		Usuario u=new Usuario();
 		UsuarioDAODB ud=new UsuarioDAODB();
 		Conexion c=new Conexion();
@@ -94,8 +95,10 @@ public class PartidaDAODB implements PartidaDAO {
 		int idOponente=0;
 		try {
 			ResultSet r=c.devolverResutado("SELECT usuarios_idusuario FROM usuarios_has_juegos_desafios WHERE usuarios_idusuario !='"+idUsuario+"' AND desafios_idDesafio='"+idPartida+"' AND usuarioGanadorD='0'");
-			while(r.next()){
+			if(r.first()){
 				idOponente=r.getInt("usuarios_idusuario");
+			}else{
+				throw new NoExisteUsuarioException();
 			}
 			String oponente=ud.getUsuario(idOponente);
 			u=ud.findByName(oponente); //carga todos los datos del oponente al objeto usuario u
@@ -108,6 +111,8 @@ public class PartidaDAODB implements PartidaDAO {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		logger.debug("oponente= "+u.getIdUsuarioB());
+		logger.debug("Me desconecto de la base de datos del método oponente");
 		c.disconnect();
 		return u;
 	}

@@ -4,6 +4,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import busImpl.Celda;
+import busImpl.Disparo;
+import busImpl.Estados;
 import busImpl.Tablero;
 import busImpl.Usuario;
 import conexion.Conexion;
@@ -21,6 +23,17 @@ public class BatallaNavalUnit extends TestCase {
 	public void setUp(){
 		//se cargan los datos
 		b=new BatallaNavalDAODB();
+		Estados estado;
+		estado=Estados.TOCADO;
+
+		Disparo disparo=new Disparo();
+		int idUsuario=1;
+		int idPartida=33;
+		disparo.setColumna(2);
+		disparo.setFila(2);
+
+		BatallaNavalDAODB b=new BatallaNavalDAODB();
+		b.registrarDisparo(disparo, estado, idUsuario, idPartida);
 		//b.cargarDatos
 
 	}
@@ -29,12 +42,12 @@ public class BatallaNavalUnit extends TestCase {
 		b.getTablero(33, 1);
 	}
 
-	public void testXXX(){
+	public void testGetTablero2(){
 		b.getTablero(21, 1);
 	}
 
-	public void testXXX2(){
-		//b.getXXX2
+	public void testGetListaDeTiros(){
+		b.getListaDeTiros(33, 1);
 	}
 
 	public void testGetIdTablero(){
