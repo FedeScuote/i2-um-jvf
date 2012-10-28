@@ -133,12 +133,12 @@ public class Desafio implements ServiciosDesafio {
 		this.idUsuario = idUsuario;
 	}
 	public boolean aceptaronDesafio(UsuarioVO usuario) throws RemoteException {
-		// TODO Auto-generated method stub
-		return false;
+		DesafioDAO dao = getDAO();
+		return dao.aceptaronDesafio(usuario.getIdUsuario());
 	}
 	public void crearDesafio(UsuarioVO usuario, int monto) throws RemoteException {
-		// TODO Auto-generated method stub
-
+		DesafioDAO dao = getDAO();
+		dao.crearDesafio(usuario.getUsuarioB(), monto);
 	}
 
 

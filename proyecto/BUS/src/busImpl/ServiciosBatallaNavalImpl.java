@@ -67,11 +67,7 @@ public class ServiciosBatallaNavalImpl implements ServiciosBatallaNaval{
 
 
 	public void iniciarPartida(DesafioBatallaNavalVO desafio, UsuarioVO desafiante) throws RemoteException{
-		int[] distribucion = new int[4];
-		distribucion[0]=3;
-		distribucion[1]=2;
-		distribucion[2]=1;
-		distribucion[3]=1;
+		int[] distribucion = JuegoBatallaNaval.distribucion1();
 		PartidaDAO dao = getDAO();
 		DesafioDAO dao1 = getDAO1();
 		BatallaNavalDAO dao2 = getDAO2();
@@ -155,13 +151,7 @@ public class ServiciosBatallaNavalImpl implements ServiciosBatallaNaval{
 		return null;
 		}
 	public int[] distribucion(UsuarioVO usuario) throws RemoteException {
-//		juego=JuegoBatallaNaval.crearJuegoBN(usuario, true);
-//		return juego.distribucion();
-		int[] distribucion = new int[4];
-		distribucion[0]=3;
-		distribucion[1]=2;
-		distribucion[2]=1;
-		distribucion[3]=1;
+		int[] distribucion = JuegoBatallaNaval.distribucion1();
 		return distribucion;
 	}
 
@@ -213,26 +203,7 @@ public class ServiciosBatallaNavalImpl implements ServiciosBatallaNaval{
 
 	public boolean hayPartidaEnCurso(UsuarioVO usuario) throws RemoteException {
 		PartidaDAO dao = getDAO();
-		//BatallaNavalDAO dao1 = getDAO2();
-		boolean retorno=dao.partidaPendiente(usuario.getIdUsuario());
-//		if(retorno){
-//			try {
-//				Usuario us=Usuario.findByName(usuario.getUsuarioB());
-//				int idPartida=dao.idPartida(usuario.getIdUsuario());
-//				Usuario oponente=dao.oponente(usuario.getIdUsuario());
-//				JuegoBatallaNaval juego = new JuegoBatallaNaval(us,oponente,true);
-//				Tablero tabl=dao1.getTablero(idPartida, usuario.getIdUsuario());
-//				juego.setTableroJugador1(dao1.getTablero(idPartida, usuario.getIdUsuario()));
-//				juego.setTableroJugador2(dao1.getTablero(idPartida, oponente.getIdUsuarioB()));
-//				PartidaBatallaNaval continuacion = new PartidaBatallaNaval(idPartida,juego);
-//				this.partidas.add(continuacion);
-//			} catch (NoSeEncuentraUsuarioException e) {
-//				// TODO Auto-generated catch block
-//				e.printStackTrace();
-//			}
-//
-//		}
-		return retorno;
+		return dao.partidaPendiente(usuario.getIdUsuario());
 	}
 
 }
