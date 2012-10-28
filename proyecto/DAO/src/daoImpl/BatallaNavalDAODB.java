@@ -327,7 +327,7 @@ public class BatallaNavalDAODB implements BatallaNavalDAO {
 
 			int barcosSubmarinos=tablero.getCantBarcosSubmarino();
 			int barcosDestructores=tablero.getCantBarcosDestructores();
-			int barcosCruceros=tablero.getCantBarcosDestructores();
+			int barcosCruceros=tablero.getCantBarcosCruceros();
 			int barcosAcorazados=tablero.getCantBarcosAcorazado();
 			int barcosSubmarinosColocados=tablero.getCantBarcosSubmarinoColocados();
 			int barcosDestructoresColocados=tablero.getCantBarcosDestructoresColocados();
