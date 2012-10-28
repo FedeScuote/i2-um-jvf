@@ -516,6 +516,7 @@ public class Tablero {
 			} catch (CoordenadasCeldasInvalidasException e) {
 				e.printStackTrace();
 			}
+			i++;
 		}
 	}
 

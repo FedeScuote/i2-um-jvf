@@ -69,6 +69,14 @@ public class JuegoBatallaNaval{
 		retorno[3]=CANTIDAD_INICIAL_ACORAZADO;
 		return retorno;
 	}
+	public static int[] distribucion1(){
+		int[] retorno = new int[4];
+		retorno[0]=CANTIDAD_INICIAL_SUBMARINO;
+		retorno[1]=CANTIDAD_INICIAL_DESTRUCTORES;
+		retorno[2]=CANTIDAD_INICIAL_CRUCEROS;
+		retorno[3]=CANTIDAD_INICIAL_ACORAZADO;
+		return retorno;
+	}
 
 	public Tablero getTableroJugador1() {
 		return tableroJugador1;
@@ -186,8 +194,8 @@ public class JuegoBatallaNaval{
 				disparo.setFila(coordenadaX);
 				disparo.setColumna(coordenadaY);
 				RegistroDisparo registro= new RegistroDisparo(retorno,disparo);
-				this.listaDisparosAOponente1.add(registro);
-				bnDAO.registrarDisparo(disparo, retorno, idJugador2, idPartida);
+				//this.listaDisparosAOponente1.add(registro);
+				bnDAO.registrarDisparo(disparo, retorno, idJugador1, idPartida);
 				this.tableroJugador1.setMiTurno(false);
 				this.tableroJugador2.setMiTurno(true);
 //				bnDAO.actualizarTablero(idPartida, usuario.getUsuarioB(), tableroJugador1.isMiTurno(), tableroJugador1.getCantBarcosSubmarino(), tableroJugador1.getCantBarcosDestructores(), tableroJugador1.getCantBarcosCruceros(), tableroJugador1.getCantBarcosAcorazado(), tableroJugador1.getCantBarcosSubmarinoColocados(), tableroJugador1.getCantBarcosDestructoresColocados(), tableroJugador1.getCantBarcosCrucerosColocados(), tableroJugador1.getCantBarcosAcorazadoColocados());
@@ -210,8 +218,8 @@ public class JuegoBatallaNaval{
 				disparo.setFila(coordenadaX);
 				disparo.setColumna(coordenadaY);
 				RegistroDisparo registro= new RegistroDisparo(retorno,disparo);
-				this.listaDisparosAOponente2.add(registro);
-				bnDAO.registrarDisparo(disparo, retorno, idJugador2, idPartida);
+				//this.listaDisparosAOponente2.add(registro);
+				bnDAO.registrarDisparo(disparo, retorno, idJugador1, idPartida);
 				this.tableroJugador2.setMiTurno(false);
 				this.tableroJugador1.setMiTurno(true);
 //				bnDAO.actualizarTablero(idPartida, usuario.getUsuarioB(), tableroJugador1.isMiTurno(), tableroJugador1.getCantBarcosSubmarino(), tableroJugador1.getCantBarcosDestructores(), tableroJugador1.getCantBarcosCruceros(), tableroJugador1.getCantBarcosAcorazado(), tableroJugador1.getCantBarcosSubmarinoColocados(), tableroJugador1.getCantBarcosDestructoresColocados(), tableroJugador1.getCantBarcosCrucerosColocados(), tableroJugador1.getCantBarcosAcorazadoColocados());
