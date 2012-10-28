@@ -12,6 +12,7 @@ public interface ServiciosBatallaNaval extends Remote {
 	public void agregarBarco(UsuarioVO usuario, int coordenadaInicialX, int coordenadaInicialY, int coordenadaFinalX, int coordenadaFinalY, String tipoBarco) throws RemoteException, CoordenadasInvalidasException;
 
 	//Metodo para disparar
+	//public Estados disparar(UsuarioVO usuario, int coordenadaX,int coordenadaY) throws RemoteException, CoordenadasInvalidasException, NoInicioJuegoException;
 	public void disparar(UsuarioVO usuario, int coordenadaX,int coordenadaY) throws RemoteException, CoordenadasInvalidasException, NoInicioJuegoException;
 
 	//Metodo recibir distribucion
@@ -25,7 +26,6 @@ public interface ServiciosBatallaNaval extends Remote {
 	//Metodo para indicar el turno de un jugador
 	public boolean esMiTurno(UsuarioVO usuario) throws RemoteException;
 
-	///iniciar partida
 	//Metodo para comenzar una partida a partir de un desafio!
 	public void iniciarPartida(DesafioBatallaNavalVO desafio, UsuarioVO desafiante) throws RemoteException;
 
