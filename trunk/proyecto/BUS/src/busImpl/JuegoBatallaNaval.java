@@ -715,6 +715,17 @@ public class JuegoBatallaNaval{
 		}
 		tableroInicialJugador1.generarTablero(listaJugador2);
 		tableroInicialJugador2.generarTablero(listaJugador1);
+		boolean turno1=tableroInicialJugador1.isMiTurno();
+		boolean turno2=tableroInicialJugador2.isMiTurno();
+		if(listaJugador1.size()!=listaJugador2.size()){
+			if(listaJugador1.size()>listaJugador2.size()){
+				turno2=true;
+			}else{
+				turno1=true;
+			}
+		}
+		tableroInicialJugador1.setMiTurno(turno1);
+		tableroInicialJugador2.setMiTurno(turno2);
 		JuegoBatallaNaval juego = new JuegoBatallaNaval(modo,tableroInicialJugador1,listaJugador1,tableroInicialJugador2,listaJugador2);
 		return juego;
 	}
