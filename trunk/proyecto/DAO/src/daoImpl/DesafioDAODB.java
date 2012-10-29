@@ -16,6 +16,8 @@ import daoInterfaces.DesafioDAO;
 import excepcionesB.NoHayDesafioException;
 import excepcionesB.NoHayRankingException;
 import excepcionesB.NotDataFoundException;
+import excepcionesD.NoExisteCreditoSuficiente;
+import excepcionesD.NoExisteDesafioException;
 import excepcionesD.NoExisteUsuarioException;
 
 public class DesafioDAODB implements DesafioDAO {
@@ -332,6 +334,13 @@ public class DesafioDAODB implements DesafioDAO {
 		try {
 			u = ud.findByName(usuario);
 			idUsuario = u.getIdUsuarioB();
+			boolean creditoSuficiente;
+			int credito=u.getCreditoB();
+			creditoSuficiente=ud.creditoSuficiente(credito, idUsuario);
+			if(!creditoSuficiente){
+				throw new NoExisteCreditoSuficiente();
+			}
+			logger.debug("Crédito suficiente!");
 			this.getDesafiosUsuariosDisponibleBatallaNaval(idUsuario);
 			logger.debug("Ya existe desafio del usuario: " + usuario);
 
@@ -371,6 +380,8 @@ public class DesafioDAODB implements DesafioDAO {
 				// TODO Auto-generated catch block
 				e1.printStackTrace();
 			}
+		} catch (NoExisteCreditoSuficiente e) {
+			logger.debug("Crédito insuficiente para crear un Desafio");
 		}
 		logger.debug("Me desconecto de la base de datos del método crearDesafios");
 		c.disconnect();
@@ -451,5 +462,48 @@ public class DesafioDAODB implements DesafioDAO {
 		}
 
 	}
+
+	public boolean desafioFinalizado(int idDesafio) throws NoExisteDesafioException{
+		boolean finalizado=false;
+		Conexion c=new Conexion();
+		try {
+			ResultSet r=c.devolverResutado("SELECT estadoD FROM desafios WHERE idDesafio='"+idDesafio+"'");
+			if(r.first()){
+				if((r.getString("estadoD")).equals("Finalizado")){
+					finalizado=true;
+				}
+			}else{
+				throw new NoExisteDesafioException();
+			}
+
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		return finalizado;
+	}
+
+	public int getMontoDesafio(int idDesafio) throws NoHayDesafioException{
+		int monto=0;
+		Conexion c=new Conexion();
+		try {
+			ResultSet r=c.devolverResutado("SELECT monto FROM desafios WHERE idDesafio="+idDesafio);
+			if(r.first()){
+				monto=r.getInt("monto");
+			}else{
+				throw new NoHayDesafioException();
+			}
+
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		return monto;
+
+	}
+
+
 
 }
