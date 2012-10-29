@@ -47,7 +47,7 @@ public class SegundaPantalla extends JFrame {
 
 	private JLabel torneosDisponiblesLabel = null;
 
-	private JButton crearDesafioBoton = null;
+	protected JButton crearDesafioBoton = null;
 
 	private JButton BotonRetorno = null;
 

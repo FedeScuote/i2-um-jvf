@@ -20,6 +20,7 @@ import javax.swing.table.DefaultTableModel;
 
 import util.EstadoElegirDesafio;
 import ventanaJuego.ColocarBarcosVentana;
+import ventanaPrincipal.VentanaPrincipal;
 
 import comm.DesafioBatallaNavalVO;
 import comm.DesafioVO;
@@ -72,6 +73,7 @@ public class SegundaPantallaBatallaN extends SegundaPantalla {
 		temporizador = new Timer(pause, taskPerformer);
 		temporizador.setInitialDelay(pause);
 		temporizador.addActionListener(taskPerformer);
+		this.crearDesafioBoton.addActionListener(new ListenerBotonCrearDesafio());
 	}
 
 	private void aceptaronDesafio(){
@@ -79,6 +81,20 @@ public class SegundaPantallaBatallaN extends SegundaPantalla {
 		ColocarBarcosVentana l = new ColocarBarcosVentana(this.usuario);
 		l.setVisible(true);
 	}
+
+
+	private class ListenerBotonCrearDesafio implements ActionListener {
+		public void actionPerformed(ActionEvent e) {
+			// cuando se presiona un boton se ejecutara este metodo
+			clickBotonCrearDesafio();//pongo menos uno para que el bus lo recibe de 0 a 9
+		}
+	}
+
+	// METODO DE MIS BOTONES
+	private void clickBotonCrearDesafio() {
+		this.crearDesafio(this.usuario);
+	}
+
 
 	private void llenarListaDesafio() {
 		try { // intento recibir datos para el ranking/
