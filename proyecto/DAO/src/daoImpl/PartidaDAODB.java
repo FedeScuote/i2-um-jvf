@@ -9,9 +9,15 @@ import busImpl.Usuario;
 
 import conexion.Conexion;
 import daoInterfaces.PartidaDAO;
+import excepcionesB.NoHayDesafioException;
+import excepcionesB.NoHayRankingException;
 import excepcionesB.NotDataFoundException;
+import excepcionesD.DesafioTerminadoException;
+import excepcionesD.NoExisteCreditoSuficiente;
+import excepcionesD.NoExisteDesafioException;
 import excepcionesD.NoExisteOponenteException;
 import excepcionesD.NoExisteUsuarioException;
+import excepcionesD.PartidaTerminadaException;
 
 public class PartidaDAODB implements PartidaDAO {
 	private static Logger logger = Logger.getLogger(PartidaDAODB.class);
@@ -21,7 +27,33 @@ public class PartidaDAODB implements PartidaDAO {
 		logger.debug("Entro a concretarDesafio con parámetros de entrada idDesafio= "+idDesafio+" idDesafiante= "+idDesafiante);
 		int idD=0;
 		Conexion c=new Conexion();
+		DesafioDAODB dd=new DesafioDAODB();
+		boolean desafioTerminado=false;
+		boolean creditoSuficiente=false;
+		UsuarioDAODB ud=new UsuarioDAODB();
+		logger.debug("Verifico crédito suficiente");
 		try {
+			desafioTerminado=dd.desafioFinalizado(idDesafio);
+			if(desafioTerminado){
+				throw new DesafioTerminadoException();
+			}
+			String usuarioDesafiante;
+			try {
+				usuarioDesafiante = ud.getUsuario(idDesafiante);
+				Usuario u= ud.findByName(usuarioDesafiante);
+				int credito=u.getCreditoB();
+				creditoSuficiente=ud.creditoSuficiente(credito, idDesafiante);
+			} catch (NoExisteUsuarioException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			} catch (NotDataFoundException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			if(!creditoSuficiente){
+				throw new NoExisteCreditoSuficiente();
+			}
+			logger.debug("Crédito suficiente!");
 			logger.debug("Primero actualizo en la tabla desafios");
 			c.actualizarTuplaDeUnaColumna("desafios", "estadoD", "En curso", "idDesafio", idDesafio);
 			ResultSet resultado = c.devolverResutado("SELECT juegos_idJuego,usuarios_idusuario FROM usuarios_has_juegos_desafios WHERE desafios_idDesafio='"+idDesafio+"'");
@@ -38,12 +70,17 @@ public class PartidaDAODB implements PartidaDAO {
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+		} catch (NoExisteDesafioException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (DesafioTerminadoException e) {
+			logger.debug("El desafío ya estaba terminado");
+		} catch (NoExisteCreditoSuficiente e) {
+			logger.debug("Credito insuficiente");
 		}
-
-
 		return idD;
 	}
-	//Devuelve si true si existe partida pendiente pasándole un idUsuario
+	//Devuelve true si existe partida pendiente pasándole un idUsuario
 	public boolean partidaPendiente(int idUsuario) {
 		Conexion c=new Conexion();
 		UsuarioDAODB ud=new UsuarioDAODB();
@@ -127,6 +164,7 @@ public class PartidaDAODB implements PartidaDAO {
 
 	//Devuelve un objeto Usuario del oponente, al pasarle la idUsuario. Esto se hace, una vez que el usuario ya ganó.
 	public Usuario oponente2(int idUsuario, int idDesafio) {
+		logger.debug("Entro al oponente2 con parámetros de entrada idUsuario= "+idUsuario+" idDesafio= "+idDesafio);
 		Usuario u=new Usuario();
 		UsuarioDAODB ud=new UsuarioDAODB();
 		Conexion c=new Conexion();
@@ -142,10 +180,11 @@ public class PartidaDAODB implements PartidaDAO {
 		} catch (SQLException e) {
 			logger.info("Ya se terminó la partida");
 		} catch (NoExisteUsuarioException e) {
-			logger.info("Ya se terminó la partida");
+			e.printStackTrace();
 		} catch (NotDataFoundException e) {
-			logger.info("Ya se terminó la partida");
+			e.printStackTrace();
 		}
+		logger.debug("Me desconecto de la base de datos del método oponente2");
 		c.disconnect();
 		return u;
 	}
@@ -154,40 +193,111 @@ public class PartidaDAODB implements PartidaDAO {
 
 	public void terminarPartida(int idPartida, int idUsuario, boolean gane) {
 		logger.info("Entro a terminarPartida con parámetros de entrada idPartida= "+idPartida+" idUsuario= "+idUsuario+" gane= "+gane);
+		Conexion c=new Conexion();
+		PartidaDAODB p=new PartidaDAODB();
+		RankingDAODB r=new RankingDAODB();
+		DesafioDAODB d=new DesafioDAODB();
+		UsuarioDAODB ud=new UsuarioDAODB();
+
 		if(gane){
 			try {
-				Conexion c=new Conexion();
-				PartidaDAODB p=new PartidaDAODB();
+
+
+				boolean partidaTerminada=d.desafioFinalizado(idPartida);
+				if(partidaTerminada){
+					throw new PartidaTerminadaException();
+				}
 				Usuario u=p.oponente2(idUsuario,idPartida);
 				int idOponente=u.getIdUsuarioB();
+
+				int credito =d.getMontoDesafio(idPartida);
+				int nuevoCreditoTotalUsuario=ud.getResultadoCredito(credito, idUsuario);
+				logger.debug("Nuevo crédito del usuario ganador= "+nuevoCreditoTotalUsuario);
+				int nuevoCreditoTotalUsuario2=ud.getResultadoCredito(-credito, idOponente);
+				logger.debug("Nuevo crédito del usuario oponente perdedor= "+nuevoCreditoTotalUsuario2);
+
 				c.actualizarTuplaDeUnaColumna3("usuarios_has_juegos_desafios", "juegos_idJuego", "desafios_idDesafio", "usuarios_idusuario", 1, idPartida, idUsuario, "usuarioGanadorD", idUsuario);
 				c.actualizarTuplaDeUnaColumna3("usuarios_has_juegos_desafios", "juegos_idJuego", "desafios_idDesafio", "usuarios_idusuario", 1, idPartida, idOponente, "usuarioGanadorD", idUsuario);
 				c.actualizarTuplaDeUnaColumna("desafios", "estadoD", "Finalizado", "idDesafio", idPartida);
-				//c.ingresarNuevaTuplaDeTresColumnas2("ranking","usuarios_idUsuario", "juegos_idJuego", "ganadas", idUsuario, "1", )
+
+
+
+				try {
+					int ganadas=r.getGanadasBatallaNaval(idUsuario);
+					ganadas++;
+					c.actualizarTuplaDeUnaColumna4("ranking","juegos_idJuego", "usuarios_idUsuario",1,idUsuario, "ganadas", ganadas);
+					logger.debug("ganadas en total= "+ganadas+" del idUsuario= "+idUsuario);
+				} catch (NoHayRankingException e) {
+					c.ingresarNuevaTuplaDeTresColumnasIntEnTablasRelacionadas("ranking","usuarios_idUsuario", "juegos_idJuego", "ganadas", idUsuario, 1,1);
+					logger.debug("ganadas en total= 1 del idUsuario= "+idUsuario);
+				}
 				logger.info("Me desconecto de la base de datos del método terminarPartida");
 				c.disconnect();
+
 			} catch (SQLException e) {
-				logger.info("La partida ya está terminada");
+
+			} catch (NoExisteDesafioException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (PartidaTerminadaException e) {
+				logger.debug("La partida ya está terminada");
+			} catch (NoHayDesafioException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
 			}
 		}else{
 			try {
-				Conexion c=new Conexion();
-				PartidaDAODB p=new PartidaDAODB();
+
+				boolean partidaTerminada=d.desafioFinalizado(idPartida);
+				if(partidaTerminada){
+					throw new PartidaTerminadaException();
+				}
 				Usuario u=p.oponente2(idUsuario,idPartida);
 				int idOponente=u.getIdUsuarioB();
+
+				int credito =d.getMontoDesafio(idPartida);
+				int nuevoCreditoTotalUsuario1=ud.getResultadoCredito(credito, idOponente);
+				logger.debug("Nuevo crédito del usuario oponente ganador= "+nuevoCreditoTotalUsuario1);
+				int nuevoCreditoTotalUsuario2=ud.getResultadoCredito(-credito, idUsuario);
+				logger.debug("Nuevo crédito del usuario perdedor= "+nuevoCreditoTotalUsuario2);
+
 				c.actualizarTuplaDeUnaColumna3("usuarios_has_juegos_desafios", "juegos_idJuego", "desafios_idDesafio", "usuarios_idusuario", 1, idPartida, idUsuario, "usuarioGanadorD", idOponente);
 				c.actualizarTuplaDeUnaColumna3("usuarios_has_juegos_desafios", "juegos_idJuego", "desafios_idDesafio", "usuarios_idusuario", 1, idPartida, idOponente, "usuarioGanadorD", idOponente);
 				c.actualizarTuplaDeUnaColumna("desafios", "estadoD", "Finalizado", "idDesafio", idPartida);
 
+				try {
+					int ganadas=r.getGanadasBatallaNaval(idOponente);
+					ganadas++;
+					c.actualizarTuplaDeUnaColumna4("ranking","juegos_idJuego", "usuarios_idUsuario",1,idOponente, "ganadas", ganadas);
+					logger.debug("ganadas en total= "+ganadas+" del idUsuario= "+idOponente);
+				} catch (NoHayRankingException e) {
+					c.ingresarNuevaTuplaDeTresColumnasIntEnTablasRelacionadas("ranking","usuarios_idUsuario", "juegos_idJuego", "ganadas", idOponente, 1,1);
+					logger.debug("ganadas en total= 1 del idUsuario= "+idOponente);
+				}
+
 				logger.info("Me desconecto de la base de datos del método terminarPartida");
 				c.disconnect();
 			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (NoExisteDesafioException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (PartidaTerminadaException e) {
 				logger.info("La partida ya está terminada");
+			} catch (NoHayDesafioException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
 			}
 
 		}
 
-
-
 	}
+
+
+
+
+
+
+
 }

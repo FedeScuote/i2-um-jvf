@@ -5,6 +5,8 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashSet;
 
+import org.apache.log4j.Logger;
+
 import busImpl.Ranking;
 
 import conexion.Conexion;
@@ -14,7 +16,7 @@ import excepcionesB.NotDataFoundException;
 import excepcionesD.NoExisteUsuarioException;
 
 public class RankingDAODB implements RankingDAO {
-
+	private static Logger logger = Logger.getLogger(RankingDAODB.class);
 	private String usuario;
 	private int ganadas=0;
 
@@ -209,6 +211,30 @@ public class RankingDAODB implements RankingDAO {
 
 		c.disconnect();
 		return a;
+	}
+
+
+	public int getGanadasBatallaNaval(int idUsuario) throws NoHayRankingException {
+		logger.debug("Entro a getGanadasBatallaNaval con parámetro de entrada idUsuario= "+idUsuario);
+		Conexion c=new Conexion();
+		int ganadas=0;
+		try {
+			ResultSet r=c.devolverResutado("SELECT ganadas FROM ranking WHERE usuarios_idUsuario='"+idUsuario+"' AND juegos_idJuego='1'");
+			if(r.first()){
+				ganadas=r.getInt("ganadas");
+			}else{
+				logger.debug("Me desconecto de la base de datos del método getGanadasBatallaNaval");
+				c.disconnect();
+				throw new NoHayRankingException();
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		logger.debug("ganadas= "+ganadas);
+		logger.debug("Me desconecto de la base de datos del método getGanadasBatallaNaval");
+		c.disconnect();
+		return ganadas;
 	}
 
 

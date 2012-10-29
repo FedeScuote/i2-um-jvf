@@ -110,6 +110,62 @@ public class UsuarioDAODB implements UsuarioDAO {
 		return usuario;
 	}
 
+	public boolean creditoSuficiente(int credito, int idUsuario){
+		logger.debug("Entro a creditoSuficiente con parámetros de entrada credito= "+credito+" idUsuario= "+idUsuario);
+		boolean suficiente=false;
+		Conexion c=new Conexion();
+		try {
+			ResultSet r=c.devolverResutado("SELECT credito FROM usuarios WHERE idusuario="+idUsuario);
+			if(r.first()){
+				int creditoUsuario=r.getInt("credito");
+				if(creditoUsuario>=credito){
+					suficiente=true;
+				}
+			}else{
+				throw new NoExisteUsuarioException();
+			}
+
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (NoExisteUsuarioException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		logger.debug(suficiente);
+		logger.debug("Me desconecto de la base de datos del método creditoSuficiente");
+		c.disconnect();
+		return suficiente;
+	}
+
+	public int getResultadoCredito(int credito, int idUsuario){
+		logger.debug("Entro a getResultadoCredito con parámetros de entrada credito= "+credito+" idUsuario= "+idUsuario);
+		int resultado=0;
+		Conexion c=new Conexion();
+		try {
+
+			c.actualizarTuplaCreditoUsuario("usuarios", "credito", credito, "idusuario", idUsuario);
+			ResultSet r=c.devolverResutado("SELECT credito FROM usuarios WHERE idusuario='"+idUsuario+"'");
+
+			if(r.first()){
+				resultado=r.getInt("credito");
+			}else{
+				throw new NoExisteUsuarioException();
+			}
+
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (NoExisteUsuarioException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		logger.debug("resultado= "+resultado);
+		logger.debug("Me desconecto de la base de datos del método getResultadoCredito");
+		c.disconnect();
+		return resultado;
+	}
+
 
 
 
