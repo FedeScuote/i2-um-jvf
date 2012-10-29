@@ -16,13 +16,18 @@ import excepcionesB.CoordenadasCeldasInvalidasException;
 public class JuegoBatallaNaval{
 
 
+	private static final String USUARIO_BOT_1 = "jhirata";
+	private static final String USUARIO_BOT_2 = "vtuyare";
+	private static final String USUARIO_BOT_3 = "fkono";
+	private static final String USUARIO_BOT_4 = "jdiaz";
+
 	private static final String SUBMARINO = "SUBMARINO";
 	private static final String DESTRUCTORES = "DESTRUCTORES";
 	private static final String CRUCEROS = "CRUCEROS";
 	private static final String ACORAZADO = "ACORAZADO";
-	private static final int CANTIDAD_INICIAL_SUBMARINO = 3;
-	private static final int CANTIDAD_INICIAL_DESTRUCTORES = 2;
-	private static final int CANTIDAD_INICIAL_CRUCEROS = 1;
+	private static final int CANTIDAD_INICIAL_SUBMARINO = 0;
+	private static final int CANTIDAD_INICIAL_DESTRUCTORES = 0;
+	private static final int CANTIDAD_INICIAL_CRUCEROS = 0;
 	private static final int CANTIDAD_INICIAL_ACORAZADO = 1;
 
 	private boolean modoRobot;
@@ -45,20 +50,6 @@ public class JuegoBatallaNaval{
 	public boolean esta(UsuarioVO usuario){
 		return tableroJugador1.getJugador().getUsuarioB().equals(usuario.getUsuarioB())||tableroJugador1.getJugador().getUsuarioB().equals(usuario.getUsuarioB());
 	}
-
-//	public JuegoBatallaNaval(Usuario jugador1, Usuario jugador2, boolean modoRobot) {
-//		super();
-//		this.modoRobot=modoRobot;
-//		this.listaDisparosAOponente1=new ArrayList<RegistroDisparo>();
-//		this.listaDisparosAOponente2=new ArrayList<RegistroDisparo>();
-//		this.tableroJugador1 = new Tablero(jugador1);
-//		this.tableroJugador2 = new Tablero(jugador2);
-//		if(modoRobot){
-//			this.tableroJugador2.agregarCeldas(distribucion());
-//			this.tableroJugador1.setMiTurno(true);
-//		}
-//	}
-
 
 
 	public int[] distribucion(){
@@ -149,10 +140,6 @@ public class JuegoBatallaNaval{
 		}else if(tipoBarco.equals(ACORAZADO)){
 			tableroJugador1.decrementarBarcosAcorazadoColocados();
 		}
-//		if(tableroJugador1.getCantBarcosSubmarino()==0&&tableroJugador1.getCantBarcosDestructoresColocados()==0&&tableroJugador1.getCantBarcosCrucerosColocados()==0&&tableroJugador1.getCantBarcosAcorazadoColocados()==0){
-//			int idPartida=daoPartida.idPartida(tableroJugador1.getJugador().getIdUsuarioB());
-//			daoBatallaNaval.regstrarTablero(tableroJugador1, idPartida);
-//		}
 	}
 	private void quitarBarcoStockJugador2(String tipoBarco) {
 		if(tipoBarco.equals(SUBMARINO)){
@@ -164,9 +151,6 @@ public class JuegoBatallaNaval{
 		}else if(tipoBarco.equals(ACORAZADO)){
 			tableroJugador2.decrementarBarcosAcorazadoColocados();
 		}
-//		if(tableroJugador2.getCantBarcosSubmarinoColocados()==0&&tableroJugador2.getCantBarcosDestructoresColocados()==0&&tableroJugador2.getCantBarcosCrucerosColocados()==0&&tableroJugador2.getCantBarcosAcorazadoColocados()==0&&tableroJugador1.getCantBarcosSubmarinoColocados()==0&&tableroJugador1.getCantBarcosDestructoresColocados()==0&&tableroJugador1.getCantBarcosCrucerosColocados()==0&&tableroJugador1.getCantBarcosAcorazadoColocados()==0){
-//			tableroJugador1.setMiTurno(true);
-//		}
 	}
 
 	private Boolean coordenadasEnDirY(int coordenadaInicialX,
@@ -194,12 +178,7 @@ public class JuegoBatallaNaval{
 				disparo.setFila(coordenadaX);
 				disparo.setColumna(coordenadaY);
 				RegistroDisparo registro= new RegistroDisparo(retorno,disparo);
-				//this.listaDisparosAOponente1.add(registro);
 				bnDAO.registrarDisparo(disparo, retorno, idJugador1, idPartida);
-				this.tableroJugador1.setMiTurno(false);
-				this.tableroJugador2.setMiTurno(true);
-//				bnDAO.actualizarTablero(idPartida, usuario.getUsuarioB(), tableroJugador1.isMiTurno(), tableroJugador1.getCantBarcosSubmarino(), tableroJugador1.getCantBarcosDestructores(), tableroJugador1.getCantBarcosCruceros(), tableroJugador1.getCantBarcosAcorazado(), tableroJugador1.getCantBarcosSubmarinoColocados(), tableroJugador1.getCantBarcosDestructoresColocados(), tableroJugador1.getCantBarcosCrucerosColocados(), tableroJugador1.getCantBarcosAcorazadoColocados());
-//				bnDAO.actualizarTablero(idPartida, daoPartida.oponente(usuario.getIdUsuario()).getUsuarioB(), tableroJugador2.isMiTurno(), tableroJugador2.getCantBarcosSubmarino(), tableroJugador2.getCantBarcosDestructores(), tableroJugador2.getCantBarcosCruceros(), tableroJugador2.getCantBarcosAcorazado(), tableroJugador2.getCantBarcosSubmarinoColocados(), tableroJugador2.getCantBarcosDestructoresColocados(), tableroJugador2.getCantBarcosCrucerosColocados(), tableroJugador2.getCantBarcosAcorazadoColocados());
 				if(this.modoRobot){
 					//Se deberia esperar un tiempo aleatorio relativamente corto para no ocacionar sospechas
 					Disparo dis= proximoDisparo("");
@@ -218,32 +197,13 @@ public class JuegoBatallaNaval{
 				disparo.setFila(coordenadaX);
 				disparo.setColumna(coordenadaY);
 				RegistroDisparo registro= new RegistroDisparo(retorno,disparo);
-				//this.listaDisparosAOponente2.add(registro);
 				bnDAO.registrarDisparo(disparo, retorno, idJugador1, idPartida);
-				this.tableroJugador2.setMiTurno(false);
-				this.tableroJugador1.setMiTurno(true);
-//				bnDAO.actualizarTablero(idPartida, usuario.getUsuarioB(), tableroJugador1.isMiTurno(), tableroJugador1.getCantBarcosSubmarino(), tableroJugador1.getCantBarcosDestructores(), tableroJugador1.getCantBarcosCruceros(), tableroJugador1.getCantBarcosAcorazado(), tableroJugador1.getCantBarcosSubmarinoColocados(), tableroJugador1.getCantBarcosDestructoresColocados(), tableroJugador1.getCantBarcosCrucerosColocados(), tableroJugador1.getCantBarcosAcorazadoColocados());
-//				bnDAO.actualizarTablero(idPartida, daoPartida.oponente(usuario.getIdUsuario()).getUsuarioB(), tableroJugador2.isMiTurno(), tableroJugador2.getCantBarcosSubmarino(), tableroJugador2.getCantBarcosDestructores(), tableroJugador2.getCantBarcosCruceros(), tableroJugador2.getCantBarcosAcorazado(), tableroJugador2.getCantBarcosSubmarinoColocados(), tableroJugador2.getCantBarcosDestructoresColocados(), tableroJugador2.getCantBarcosCrucerosColocados(), tableroJugador2.getCantBarcosAcorazadoColocados());
 			} catch (CoordenadasCeldasInvalidasException e) {
 				throw new CoordenadasInvalidasException();
 			}
 		}
 		return retorno;
 	}
-
-//	private void cargarDatos(UsuarioVO usuario) {
-//		BatallaNavalDAO daoBatallaNaval = getBattallaNavalDAO();
-//		PartidaDAO daoPartida = getPartidaDAO();
-//		int idPartida=daoPartida.idPartida(usuario.getIdUsuario());
-//		int idJugador1=usuario.getIdUsuario();
-//		int idJugador2=daoPartida.oponente(usuario.getIdUsuario()).getIdUsuarioB();
-//		Tablero tableroInicialJugador1=daoBatallaNaval.getTablero(idPartida, idJugador1);
-//		Tablero tableroInicialJugador2=daoBatallaNaval.getTablero(idPartida, idJugador2);
-//		listaDisparosAOponente1=daoBatallaNaval.getListaDeTiros(idPartida, idJugador1);
-//		listaDisparosAOponente2=daoBatallaNaval.getListaDeTiros(idPartida, idJugador2);
-//		tableroJugador1=generarTablero(tableroInicialJugador1, listaDisparosAOponente2);
-//		tableroJugador2=generarTablero(tableroInicialJugador2, listaDisparosAOponente1);
-//	}
 
 	public boolean gane(UsuarioVO usuario){
 		boolean retorno=false;
@@ -620,23 +580,6 @@ public class JuegoBatallaNaval{
 		return i;
 	}
 
-//	public static void main(String[] args) {
-//		UsuarioVO jugador = new UsuarioVO("Yo");
-//		Usuario jugador1 = new Usuario();
-//		jugador1.setUsuarioB("Yo");
-//		Usuario jugador2 = new Usuario();
-//		jugador2.setUsuarioB("Oponente");
-//		JuegoBatallaNaval juego = new JuegoBatallaNaval(jugador1,jugador2,true);
-//
-//		try {
-//			juego.agregarBarco(jugador, 5, 5, 5, 6, SUBMARINO);
-//		} catch (RemoteException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		} catch (CoordenadasInvalidasException e) {
-//			System.out.println("Coordenadas Invalidas!");
-//		}
-//	}
 
 	public ArrayList<RegistroDisparo> obtenerListaDisparos(UsuarioVO usuario) {
 		if (tableroJugador1.getJugador().getIdUsuarioB() == usuario.getIdUsuario()) {
@@ -701,6 +644,7 @@ public class JuegoBatallaNaval{
 		int idJugador2=daoPartida.oponente(usuario.getIdUsuario()).getIdUsuarioB();
 		Tablero tableroInicialJugador1=daoBatallaNaval.getTablero(idPartida, idJugador1);
 		Tablero tableroInicialJugador2=daoBatallaNaval.getTablero(idPartida, idJugador2);
+		modo=JuegoBatallaNaval.esBot(daoPartida.oponente(usuario.getIdUsuario()).getUsuarioB());
 		ArrayList<RegistroDisparo> listaJugador1 =daoBatallaNaval.getListaDeTiros(idPartida, idJugador1);
 		for(int i=0;i<listaJugador1.size();i++){
 			log.debug(listaJugador1.get(i).getDisparo().getFila());
@@ -730,6 +674,9 @@ public class JuegoBatallaNaval{
 		return juego;
 	}
 
+	private static boolean esBot(String usuario) {
+		return usuario.equals(USUARIO_BOT_1)||usuario.equals(USUARIO_BOT_2)||usuario.equals(USUARIO_BOT_3)||usuario.equals(USUARIO_BOT_4);
+	}
 
 
 

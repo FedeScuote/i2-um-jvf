@@ -11,9 +11,9 @@ public class Tablero {
 	private static final String DESTRUCTORES = "DESTRUCTORES";
 	private static final String CRUCEROS = "CRUCEROS";
 	private static final String ACORAZADO = "ACORAZADO";
-	private static final int CANTIDAD_INICIAL_SUBMARINO = 3;
-	private static final int CANTIDAD_INICIAL_DESTRUCTORES = 2;
-	private static final int CANTIDAD_INICIAL_CRUCEROS = 1;
+	private static final int CANTIDAD_INICIAL_SUBMARINO = 0;
+	private static final int CANTIDAD_INICIAL_DESTRUCTORES = 0;
+	private static final int CANTIDAD_INICIAL_CRUCEROS = 0;
 	private static final int CANTIDAD_INICIAL_ACORAZADO = 1;
 	private static final int LARGO_SUBMARINO = 1;
 	private static final int LARGO_DESTRUCTORES = 2;

@@ -198,4 +198,5 @@ public class ServiciosBatallaNavalImpl implements ServiciosBatallaNaval{
 		return dao.partidaPendiente(usuario.getIdUsuario());
 	}
 
+
 }
