@@ -1,12 +1,12 @@
 ﻿
 
-DROP TABLE usuarios_has_torneos_posiciones;
-
-DROP TABLE usuarios_has_juegos_torneos;
-
 DROP TABLE usuarios_has_juegos_partidas;
 
 DROP TABLE usuarios_has_juegos_desafios;
+
+DROP TABLE usuarios_has_juegos_torneos;
+
+DROP TABLE usuarios_has_torneos_posiciones;
 
 DROP TABLE usuarios;
 
@@ -23,15 +23,18 @@ DROP TABLE juegos;
 DROP TABLE desafios;
 
 
+DROP TABLE t_batalla_naval;
 
+DROP TABLE celdas;
 
+DROP TABLE disparos;
 
 -- phpMyAdmin SQL Dump
 -- version 3.4.5
 -- http://www.phpmyadmin.net
 --
 -- Servidor: localhost
--- Tiempo de generación: 12-10-2012 a las 21:04:07
+-- Tiempo de generación: 29-10-2012 a las 07:57:00
 -- Versión del servidor: 5.5.16
 -- Versión de PHP: 5.3.8
 
@@ -51,6 +54,23 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
+-- Estructura de tabla para la tabla `celdas`
+--
+
+CREATE TABLE IF NOT EXISTS `celdas` (
+  `idCelda` int(11) NOT NULL AUTO_INCREMENT,
+  `t_batalla_naval_idTBatallaNaval` int(11) NOT NULL,
+  `xC` int(11) NOT NULL,
+  `yC` int(11) NOT NULL,
+  `id` int(11) NOT NULL,
+  `estado` varchar(16) NOT NULL,
+  PRIMARY KEY (`idCelda`),
+  KEY `celdas_FKIndex1` (`t_batalla_naval_idTBatallaNaval`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=1404 ;
+
+-- --------------------------------------------------------
+
+--
 -- Estructura de tabla para la tabla `desafios`
 --
 
@@ -60,7 +80,7 @@ CREATE TABLE IF NOT EXISTS `desafios` (
   `fechaHoraInicioD` datetime DEFAULT NULL,
   `estadoD` varchar(10) NOT NULL,
   PRIMARY KEY (`idDesafio`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=24 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=37 ;
 
 --
 -- Volcado de datos para la tabla `desafios`
@@ -83,13 +103,75 @@ INSERT INTO `desafios` (`idDesafio`, `monto`, `fechaHoraInicioD`, `estadoD`) VAL
 (14, 900, '2012-09-17 12:00:00', 'Finalizado'),
 (15, 1000, '2012-09-19 12:00:00', 'Finalizado'),
 (16, 1050, '2012-09-08 18:00:00', 'Finalizado'),
-(17, 500, '2012-10-24 18:00:00', 'En hora'),
+(17, 500, '2012-10-24 18:00:00', 'Finalizado'),
 (18, 1500, '2012-10-16 15:00:00', 'En hora'),
-(19, 30, '2012-10-31 16:00:00', 'En hora'),
+(19, 30, '2012-10-31 16:00:00', 'Finalizado'),
 (20, 5000, '2012-11-13 13:00:00', 'En hora'),
 (21, 450, '2012-12-19 00:00:00', 'En hora'),
 (22, 300, '2012-12-14 00:00:00', 'En hora'),
-(23, 250, '2012-01-24 17:00:00', 'En hora');
+(23, 250, '2012-01-24 17:00:00', 'En hora'),
+(31, 1600, '2012-10-23 13:19:54', 'En hora'),
+(32, 1600, '2012-10-23 13:21:09', 'En hora'),
+(33, 2600, '2012-10-23 16:55:16', 'Finalizado'),
+(34, 2600, '2012-10-23 16:55:16', 'Finalizado'),
+(35, 1500, '2012-10-29 03:15:50', 'Finalizado'),
+(36, 1500, '2012-10-29 03:43:38', 'Finalizado');
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `disparos`
+--
+
+CREATE TABLE IF NOT EXISTS `disparos` (
+  `idDisparo` int(11) NOT NULL AUTO_INCREMENT,
+  `t_batalla_naval_idTBatallaNaval` int(11) NOT NULL,
+  `idUsuarioD` int(11) NOT NULL,
+  `resultadoD` varchar(16) NOT NULL,
+  `xD` int(11) NOT NULL,
+  `yD` int(11) NOT NULL,
+  PRIMARY KEY (`idDisparo`),
+  KEY `disparos_FKIndex1` (`t_batalla_naval_idTBatallaNaval`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=34 ;
+
+--
+-- Volcado de datos para la tabla `disparos`
+--
+
+INSERT INTO `disparos` (`idDisparo`, `t_batalla_naval_idTBatallaNaval`, `idUsuarioD`, `resultadoD`, `xD`, `yD`) VALUES
+(1, 8, 1, 'TOCADO', 2, 2),
+(2, 8, 1, 'TOCADO', 2, 2),
+(3, 8, 1, 'TOCADO', 2, 2),
+(4, 8, 1, 'TOCADO', 2, 2),
+(5, 8, 1, 'TOCADO', 2, 2),
+(6, 8, 1, 'TOCADO', 2, 2),
+(7, 8, 1, 'TOCADO', 2, 2),
+(8, 8, 1, 'TOCADO', 2, 2),
+(9, 8, 1, 'TOCADO', 2, 2),
+(10, 8, 1, 'TOCADO', 2, 2),
+(11, 8, 1, 'TOCADO', 2, 2),
+(12, 8, 1, 'TOCADO', 2, 2),
+(13, 8, 1, 'TOCADO', 2, 2),
+(14, 8, 1, 'TOCADO', 2, 2),
+(15, 8, 1, 'TOCADO', 2, 2),
+(16, 8, 1, 'TOCADO', 2, 2),
+(17, 8, 1, 'TOCADO', 2, 2),
+(18, 8, 1, 'TOCADO', 2, 2),
+(19, 8, 1, 'TOCADO', 2, 2),
+(20, 8, 1, 'TOCADO', 2, 2),
+(21, 8, 1, 'TOCADO', 2, 2),
+(22, 8, 1, 'TOCADO', 2, 2),
+(23, 8, 1, 'TOCADO', 2, 2),
+(24, 8, 1, 'TOCADO', 2, 2),
+(25, 8, 1, 'TOCADO', 2, 2),
+(26, 8, 1, 'TOCADO', 2, 2),
+(27, 8, 1, 'TOCADO', 2, 2),
+(28, 8, 1, 'TOCADO', 2, 2),
+(29, 8, 1, 'TOCADO', 2, 2),
+(30, 8, 1, 'TOCADO', 2, 2),
+(31, 8, 1, 'TOCADO', 2, 2),
+(32, 8, 1, 'TOCADO', 2, 2),
+(33, 8, 1, 'TOCADO', 2, 2);
 
 -- --------------------------------------------------------
 
@@ -223,9 +305,11 @@ INSERT INTO `ranking` (`usuarios_idUsuario`, `juegos_idJuego`, `ganadas`) VALUES
 (6, 2, 1),
 (3, 2, 3),
 (8, 2, 2),
-(1, 1, 1),
-(3, 1, 1),
-(4, 1, 1);
+(1, 1, 5),
+(3, 1, 5),
+(4, 1, 1),
+(8, 1, 4),
+(2, 1, 1);
 
 -- --------------------------------------------------------
 
@@ -255,6 +339,37 @@ INSERT INTO `torneos` (`idTorneo`, `descripcion`, `pozo`, `costoInscripcion`, `f
 -- --------------------------------------------------------
 
 --
+-- Estructura de tabla para la tabla `t_batalla_naval`
+--
+
+CREATE TABLE IF NOT EXISTS `t_batalla_naval` (
+  `idTBatallaNaval` int(11) NOT NULL AUTO_INCREMENT,
+  `desafios_idDesafio` int(11) NOT NULL,
+  `jugador` varchar(16) NOT NULL,
+  `miTurno` tinyint(1) NOT NULL,
+  `barcosSubmarinos` int(11) NOT NULL,
+  `barcosDestructores` int(11) NOT NULL,
+  `barcosCruceros` int(11) NOT NULL,
+  `barcosAcorazados` int(11) NOT NULL,
+  `barcosSubmarinosColocados` int(11) NOT NULL,
+  `barcosDestructoresColocados` int(11) NOT NULL,
+  `barcosCrucerosColocados` int(11) NOT NULL,
+  `barcosAcorazadosColocados` int(11) NOT NULL,
+  PRIMARY KEY (`idTBatallaNaval`,`jugador`),
+  KEY `desafios_idDesafio` (`desafios_idDesafio`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=14 ;
+
+--
+-- Volcado de datos para la tabla `t_batalla_naval`
+--
+
+INSERT INTO `t_batalla_naval` (`idTBatallaNaval`, `desafios_idDesafio`, `jugador`, `miTurno`, `barcosSubmarinos`, `barcosDestructores`, `barcosCruceros`, `barcosAcorazados`, `barcosSubmarinosColocados`, `barcosDestructoresColocados`, `barcosCrucerosColocados`, `barcosAcorazadosColocados`) VALUES
+(8, 33, 'jhirata', 0, 3, 2, 2, 1, 3, 2, 2, 1),
+(9, 33, 'jrodriguez', 0, 3, 2, 2, 1, 3, 2, 2, 1);
+
+-- --------------------------------------------------------
+
+--
 -- Estructura de tabla para la tabla `usuarios`
 --
 
@@ -277,16 +392,16 @@ CREATE TABLE IF NOT EXISTS `usuarios` (
 --
 
 INSERT INTO `usuarios` (`idusuario`, `usuario`, `clave`, `nivelPrivilegio`, `virtual`, `credito`, `partidasGanadas`, `nombre`, `apellido`, `pais`) VALUES
-(1, 'jhirata', 'jh', 1, 0, 200, 5, 'John', 'Hirata', 'Inglaterra'),
-(2, 'vtuyare', 'vt', 1, 0, 200, 9, 'Vicente', 'Tuyare', 'Uruguay'),
-(3, 'fscouteguazza', 'fs', 1, 0, 300, 4, 'Federico', 'Scuoteguazza', 'Inglaterra'),
-(4, 'pvaztourem', 'pv', 2, 1, 400, 45, 'Patricia', 'Vaztourem', 'Uruguay'),
-(5, 'ahirata', 'ah', 2, 1, 300, 69, 'Andrés', 'Hirata', 'Inglaterra'),
-(6, 'dgonzalez', 'dg', 1, 0, 908, 78, 'Diego', 'Gonzalez', 'Inglaterra'),
-(7, 'fkono', 'fk', 2, 1, 3000, 87, 'Fumie', 'Kono', 'Inglaterra'),
-(8, 'thirata', 'th', 2, 0, 398, 98, 'Tomiyoshi', 'Hirata', 'Inglaterra'),
-(9, 'jdiaz', 'jd', 2, 1, 500, 78, 'Javier', 'Diaz', 'Uruguay'),
-(10, 'jrodriguez', 'jr', 2, 1, 300, 33, 'Javier', 'Rodriguez', 'Uruguay');
+(1, 'jhirata', 'jh', 1, 0, 30000, 5, 'John', 'Hirata', 'Inglaterra'),
+(2, 'vtuyare', 'vt', 1, 0, 30000, 9, 'Vicente', 'Tuyare', 'Uruguay'),
+(3, 'fscouteguazza', 'fs', 1, 0, 30000, 4, 'Federico', 'Scuoteguazza', 'Inglaterra'),
+(4, 'pvaztourem', 'pv', 2, 1, 40000, 45, 'Patricia', 'Vaztourem', 'Uruguay'),
+(5, 'ahirata', 'ah', 2, 1, 30000, 69, 'Andrés', 'Hirata', 'Inglaterra'),
+(6, 'dgonzalez', 'dg', 1, 0, 9000, 78, 'Diego', 'Gonzalez', 'Inglaterra'),
+(7, 'fkono', 'fk', 2, 1, 30000, 87, 'Fumie', 'Kono', 'Inglaterra'),
+(8, 'thirata', 'th', 2, 0, 5000, 98, 'Tomiyoshi', 'Hirata', 'Inglaterra'),
+(9, 'jdiaz', 'jd', 2, 1, 5000, 78, 'Javier', 'Diaz', 'Uruguay'),
+(10, 'jrodriguez', 'jr', 2, 1, 30000, 33, 'Javier', 'Rodriguez', 'Uruguay');
 
 -- --------------------------------------------------------
 
@@ -316,8 +431,23 @@ INSERT INTO `usuarios_has_juegos_desafios` (`juegos_idJuego`, `desafios_idDesafi
 (1, 2, 4, 3),
 (1, 3, 4, 4),
 (1, 3, 5, 4),
-(1, 19, 1, 1),
-(1, 20, 1, 1),
+(1, 17, 4, 8),
+(1, 17, 8, 8),
+(1, 18, 1, 0),
+(1, 19, 1, 2),
+(1, 19, 2, 2),
+(1, 21, 2, 0),
+(1, 22, 3, 0),
+(1, 31, 7, 0),
+(1, 32, 9, 0),
+(1, 33, 1, 1),
+(1, 33, 10, 1),
+(1, 34, 6, 8),
+(1, 34, 8, 8),
+(1, 35, 1, 1),
+(1, 35, 2, 1),
+(1, 36, 1, 2),
+(1, 36, 2, 2),
 (2, 4, 6, 6),
 (2, 4, 7, 6),
 (2, 5, 3, 3),
