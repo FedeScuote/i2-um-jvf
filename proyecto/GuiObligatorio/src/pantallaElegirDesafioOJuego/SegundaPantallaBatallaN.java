@@ -51,10 +51,11 @@ public class SegundaPantallaBatallaN extends SegundaPantalla {
 					Registry registry = LocateRegistry.getRegistry(host);
 					ServiciosDesafio stub = (ServiciosDesafio) registry
 							.lookup("Desafio");
-//					if(stub.aceptaronDesafio(usuario)){
-//						temporizador.stop();
-//						iniciarPartida
-//					}
+					if(stub.aceptaronDesafio(usuario)){
+						temporizador.stop();
+						JOptionPane.showMessageDialog(new JFrame(),"ACEPTARON TU DESAFIO");
+						aceptaronDesafio();
+					}
 
 				}
 				catch (Exception remoteExceptionrmi) {
@@ -71,6 +72,12 @@ public class SegundaPantallaBatallaN extends SegundaPantalla {
 		temporizador = new Timer(pause, taskPerformer);
 		temporizador.setInitialDelay(pause);
 		temporizador.addActionListener(taskPerformer);
+	}
+
+	private void aceptaronDesafio(){
+		this.dispose();
+		ColocarBarcosVentana l = new ColocarBarcosVentana(this.usuario);
+		l.setVisible(true);
 	}
 
 	private void llenarListaDesafio() {
@@ -159,7 +166,11 @@ public class SegundaPantallaBatallaN extends SegundaPantalla {
 			Registry registry = LocateRegistry.getRegistry(host);
 			ServiciosDesafio stub = (ServiciosDesafio) registry
 					.lookup("Desafio");
-			//stub.crearDesafio(this.usuario);
+			String monto = JOptionPane.showInputDialog(new JFrame(), "INGRESE UN MONTO", "Crear Desafio", JOptionPane.QUESTION_MESSAGE);
+			while(pasarStringAInt(monto) == -1){
+				monto = JOptionPane.showInputDialog(new JFrame(), "INGRESE UN MONTO", "Crear Desafio", JOptionPane.QUESTION_MESSAGE);
+			}
+			stub.crearDesafio(this.usuario,this.pasarStringAInt(monto));
 			temporizador.start();
 		}
 		catch (Exception remoteExceptionrmi) {
@@ -173,6 +184,18 @@ public class SegundaPantallaBatallaN extends SegundaPantalla {
 
 		}
 
+	}
+	private int pasarStringAInt(String montoString){
+		int montoInt =0;
+		try{
+			montoInt = Integer.parseInt(montoString);
+			return montoInt;
+		}catch(NumberFormatException e){
+			JOptionPane.showMessageDialog(new JFrame(),
+					"Ingrese un numero correcto", "ERROR",
+					JOptionPane.ERROR_MESSAGE);
+			return -1;
+		}
 	}
 
 }
