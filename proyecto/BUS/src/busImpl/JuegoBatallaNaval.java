@@ -721,12 +721,6 @@ public class JuegoBatallaNaval{
 		if(ganeJ1||ganeJ2){
 			turno1=false;
 			turno2=false;
-			if(ganeJ1){
-				if(modo){
-					daoPartida.terminarPartida(idPartida, tableroInicialJugador2.getJugador().getIdUsuarioB(), false);
-				}
-			}
-
 		}
 		tableroInicialJugador1.setMiTurno(turno1);
 		tableroInicialJugador2.setMiTurno(turno2);
