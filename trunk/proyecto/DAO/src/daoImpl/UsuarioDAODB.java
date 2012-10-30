@@ -77,6 +77,8 @@ public class UsuarioDAODB implements UsuarioDAO {
 			}
 		} catch (SQLException ex) {
 			logger.error("error de my sql");
+			logger.debug("Me desconecto de la base de datos del método findByName");
+			c.disconnect();
 			throw new NotDataFoundException();
 
 		}
@@ -104,9 +106,9 @@ public class UsuarioDAODB implements UsuarioDAO {
 		} catch (SQLException ex) {
 
 		}
+		logger.debug("usuario= "+usuario);
 		logger.debug("Me desconecto de la base de datos del método getUsuario");
 		c.disconnect();
-		logger.debug("usuario= "+usuario);
 		return usuario;
 	}
 

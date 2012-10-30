@@ -82,6 +82,7 @@ public class PartidaDAODB implements PartidaDAO {
 	}
 	//Devuelve true si existe partida pendiente pasándole un idUsuario
 	public boolean partidaPendiente(int idUsuario) {
+		logger.debug("Entro a partidaPendiente con parámetro de entrada idUsuario= "+idUsuario);
 		Conexion c=new Conexion();
 		UsuarioDAODB ud=new UsuarioDAODB();
 		String jugador;
@@ -101,12 +102,15 @@ public class PartidaDAODB implements PartidaDAO {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		logger.debug("pendiente= "+pendiente);
+		logger.debug("Me desconecto de la base de datos del método partidaPendiente");
 		c.disconnect();
 		return pendiente;
 	}
 
 	//Devuelve la idPartida En curso pasandole un idUsuario, retorna cero si no hay partida.
 	public int idPartida(int idUsuario) {
+		logger.debug("Entro a idPartida con parámetro de entrada idUsuario= "+idUsuario);
 		int idPartida=0;
 		Conexion c=new Conexion();
 		try {
@@ -118,6 +122,8 @@ public class PartidaDAODB implements PartidaDAO {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		logger.debug("idPartida= "+idPartida);
+		logger.debug("Me desconecto de la base de datos con el método idPartida");
 		c.disconnect();
 		return idPartida;
 	}

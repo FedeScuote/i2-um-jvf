@@ -129,6 +129,7 @@ public class RankingDAODB implements RankingDAO {
 
 	//terminado
 	public ArrayList getRankingBatallaNaval() throws NoHayRankingException {
+		logger.debug("Entro a getRankingBatallaNaval");
 		ArrayList a=new ArrayList();
 
 		ArrayList usuarios=new ArrayList();
@@ -164,13 +165,14 @@ public class RankingDAODB implements RankingDAO {
 		}
 
 
-
+		logger.debug("Me desconecto de la base de datos del método getRankingBatallaNaval");
 		c.disconnect();
 		return a;
 
 	}
 	//terminado
 	public ArrayList getRankingGeneral() throws NoHayRankingException {
+		logger.debug("Entro a getRankingGeneral");
 		ArrayList a=new ArrayList();
 
 		ArrayList usuarios=new ArrayList();
@@ -208,7 +210,7 @@ public class RankingDAODB implements RankingDAO {
 		}
 
 
-
+		logger.debug("Me desconecto de la base de datos del método getRankingGeneral");
 		c.disconnect();
 		return a;
 	}

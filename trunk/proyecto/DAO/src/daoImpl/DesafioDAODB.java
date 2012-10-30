@@ -383,9 +383,9 @@ public class DesafioDAODB implements DesafioDAO {
 		} catch (NoExisteCreditoSuficiente e) {
 			logger.debug("Crédito insuficiente para crear un Desafio");
 		}
+		logger.debug("idDesafio= "+idDesafio);
 		logger.debug("Me desconecto de la base de datos del método crearDesafios");
 		c.disconnect();
-		logger.debug("idDesafio= "+idDesafio);
 		return idDesafio;
 	}
 
@@ -456,6 +456,8 @@ public class DesafioDAODB implements DesafioDAO {
 				return false;
 			}
 		} catch (SQLException e) {
+			logger.debug("Me desconecto de la base de datos del método aceptaronDesafio");
+			c.disconnect();
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 			return false;
@@ -464,6 +466,7 @@ public class DesafioDAODB implements DesafioDAO {
 	}
 
 	public boolean desafioFinalizado(int idDesafio) throws NoExisteDesafioException{
+		logger.debug("Entro a desafioFinalizado con parámetro de entrada idDesafio= "+idDesafio);
 		boolean finalizado=false;
 		Conexion c=new Conexion();
 		try {
@@ -480,11 +483,14 @@ public class DesafioDAODB implements DesafioDAO {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-
+		logger.debug("finalizado= "+finalizado);
+		logger.debug("Me desconecto de la base de datos del método desafioFinalizado");
+		c.disconnect();
 		return finalizado;
 	}
 
 	public int getMontoDesafio(int idDesafio) throws NoHayDesafioException{
+		logger.debug("Entro a getMontoDesafio con parámetros de entrada idDesafio= "+idDesafio);
 		int monto=0;
 		Conexion c=new Conexion();
 		try {
@@ -499,7 +505,9 @@ public class DesafioDAODB implements DesafioDAO {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-
+		logger.debug("monto= "+monto);
+		logger.debug("Me desconecto de la base de datos del método getMontoDesafio");
+		c.disconnect();
 		return monto;
 
 	}
