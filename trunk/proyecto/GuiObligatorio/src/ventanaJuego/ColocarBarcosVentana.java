@@ -14,6 +14,8 @@ import java.awt.event.ActionListener;
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
+
+import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
@@ -98,6 +100,7 @@ public class ColocarBarcosVentana extends JFrame {
 		super();
 		initialize();
 		logger.debug("Constructor ColocarBarcosVentana");
+		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.agregarBotonesAGroup();
 		this.usuario = usuario;
 		this.crearCabezal(PanelTablero);

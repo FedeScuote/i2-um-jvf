@@ -16,6 +16,7 @@ import javax.swing.JList;
 import java.awt.Insets;
 import javax.swing.JButton;
 
+import util.ImagePanel;
 import ventanaPrincipal.VentanaPrincipal;
 
 import comm.DesafioBatallaNavalVO;
@@ -41,7 +42,7 @@ public class SegundaPantalla extends JFrame {
 
 	private JPanel jContentPane = null;
 
-	private JPanel panelSegundaPantalla = null;
+	private ImagePanel panelSegundaPantalla = null;
 
 	protected JLabel desafiosDisponiblesLabel = null;
 
@@ -155,7 +156,7 @@ public class SegundaPantalla extends JFrame {
 			gridBagConstraints.gridwidth = 0;
 			gridBagConstraints.gridheight = 0;
 			gridBagConstraints.gridy = 5;
-			panelSegundaPantalla = new JPanel();
+			panelSegundaPantalla = new ImagePanel(new ImageIcon("src/Battleship-069.jpg").getImage());
 			panelSegundaPantalla.setLayout(new GridBagLayout());
 			panelSegundaPantalla.setBackground(Color.black);
 			panelSegundaPantalla.add(desafiosDisponiblesLabel, gridBagConstraints5);

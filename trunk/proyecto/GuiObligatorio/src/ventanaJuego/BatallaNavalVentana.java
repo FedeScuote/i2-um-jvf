@@ -60,13 +60,15 @@ public class BatallaNavalVentana extends JFrame {
 
 	private final static String[] ALFABETO = { " ", "a", "b", "c", "d", "e",
 			"f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r",
-			"s", "t", "u", "v", "w", "x", "y", "z" };// primero el vacio// porque no va nada en// esa linea
+			"s", "t", "u", "v", "w", "x", "y", "z" };// primero el vacio//
+														// porque no va nada
+														// en// esa linea
 
 	private JLabel indicadorTurno = null;
 
 	private JLabel indicadorBarcosHundidos = null;
 
-	private Integer cantidadBarcosHundidos= 0;
+	private Integer cantidadBarcosHundidos = 0;
 
 	private int bandera = 1;
 
@@ -85,6 +87,7 @@ public class BatallaNavalVentana extends JFrame {
 		super();
 		logger.debug("***creo BatallaNavalVentana***");
 		initialize();
+		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.usuario = usuario;
 		this.crearCabezal(PanelJugador);
 		this.crearTablero(PanelJugador, botonesJugador); // creo mi tablero
@@ -105,11 +108,11 @@ public class BatallaNavalVentana extends JFrame {
 		ActionListener taskPerformer = new ActionListener() {
 			public void actionPerformed(ActionEvent evt) {
 				esMiTurno = preguntarTurno(usuario);
-				if (!esMiTurno && bandera==1) {
+				if (!esMiTurno && bandera == 1) {
 					indicadorTurno.setText("NO ES TU TURNO");
 					indicadorTurno.setForeground(Color.RED);
 					temporizador.restart();
-				} else if(bandera==1) {
+				} else if (bandera == 1) {
 					indicadorTurno.setText("ES TU TURNO");
 					indicadorTurno.setForeground(Color.GREEN);
 				}
@@ -146,10 +149,13 @@ public class BatallaNavalVentana extends JFrame {
 			indicadorTurno.setHorizontalAlignment(SwingConstants.CENTER);
 			indicadorTurno.setHorizontalTextPosition(SwingConstants.CENTER);
 			indicadorBarcosHundidos = new JLabel();
-			indicadorBarcosHundidos.setText("BARCOS HUNDIDOS" + cantidadBarcosHundidos);
+			indicadorBarcosHundidos.setText("BARCOS HUNDIDOS"
+					+ cantidadBarcosHundidos);
 			indicadorBarcosHundidos.setForeground(Color.magenta);
-			indicadorBarcosHundidos.setHorizontalAlignment(SwingConstants.CENTER);
-			indicadorBarcosHundidos.setHorizontalTextPosition(SwingConstants.CENTER);
+			indicadorBarcosHundidos
+					.setHorizontalAlignment(SwingConstants.CENTER);
+			indicadorBarcosHundidos
+					.setHorizontalTextPosition(SwingConstants.CENTER);
 			jContentPane = new JPanel();
 			jContentPane.setLayout(borderLayout);
 			jContentPane.add(getPanelJugador(), BorderLayout.WEST);
@@ -221,14 +227,14 @@ public class BatallaNavalVentana extends JFrame {
 				JLabel jlabel = new JLabel();
 				panel.add(jlabel);
 				jlabel.setText(numeroFila.toString()); // alfabeto menos uno
-														// porque
+				// porque
 				jlabel.setHorizontalAlignment(SwingConstants.CENTER);
 				jlabel.setVerticalAlignment(SwingConstants.CENTER);
 			} else {
 				JButton jButton = new JButton();
 				if (panel.equals(PanelContrincante)) {// solo añado mis
-														// listeners si es panel
-														// contr
+					// listeners si es panel
+					// contr
 					jButton.addActionListener(new ListenerBoton(numeroFila, j));
 				}
 				panel.add(jButton);
@@ -252,7 +258,8 @@ public class BatallaNavalVentana extends JFrame {
 
 		public void actionPerformed(ActionEvent e) {
 			// cuando se presiona un boton se ejecutara este metodo
-			clickBoton(x-1, y-1);//pongo menos uno para que el bus lo recibe de 0 a 9
+			clickBoton(x - 1, y - 1);// pongo menos uno para que el bus lo
+										// recibe de 0 a 9
 		}
 	}
 
@@ -289,26 +296,39 @@ public class BatallaNavalVentana extends JFrame {
 	// METODO PARA PREGUNTAR TURNO
 	public boolean preguntarTurno(UsuarioVO usuario) {
 		logger.debug("preguntarTurno");
-		if ( bandera==1 &&this.gane()) {
+		if (bandera == 1 && this.gane()) {
 			bandera--;
 			JOptionPane.showMessageDialog(new JFrame(), "HAS GANADO",
 					"ENHORABUENA", JOptionPane.INFORMATION_MESSAGE);
 			temporizador.stop();
+			Registry registry;
+			try {
+				registry = LocateRegistry.getRegistry(host);
+				ServiciosBatallaNaval stub = (ServiciosBatallaNaval) registry
+						.lookup("BatallaNavalServices");
+				if (stub.esBot(this.usuario)) {
+					this.terminoPartida(true);
+				}
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+
 			this.dispose();
 			VentanaPrincipal l = new VentanaPrincipal(this.usuario);
 			l.setVisible(true);
 			return true;
-		} else if (bandera==1 && this.perdi()){
+		} else if (bandera == 1 && this.perdi()) {
 			bandera--;
 			JOptionPane.showMessageDialog(new JFrame(), "HAS PERDIDO",
 					"LO SIENTO", JOptionPane.INFORMATION_MESSAGE);
 			temporizador.stop();
-			this.terminoPartida(false);//solo termina mi partida cuando perdi
+			this.terminoPartida(false);// solo termina mi partida cuando perdi
 			this.dispose();
 			VentanaPrincipal l = new VentanaPrincipal(this.usuario);
 			l.setVisible(true);
 			return true;
-		}else if(bandera==1){
+		} else if (bandera == 1) {
 			try { // try y catch para verificar si esta el usuario o
 				// no
 				Registry registry = LocateRegistry.getRegistry(host);
@@ -316,7 +336,7 @@ public class BatallaNavalVentana extends JFrame {
 						.lookup("BatallaNavalServices");
 				refrescarTableroJugador();
 				refrescarTableroOponente();
-				if(stub.esMiTurno(usuario)){
+				if (stub.esMiTurno(usuario)) {
 					temporizador.stop();
 				}
 				return stub.esMiTurno(usuario);
@@ -327,8 +347,6 @@ public class BatallaNavalVentana extends JFrame {
 		}
 		return false;
 	}
-
-
 
 	// METODO PARA REFRESCAR TABLERO DEL JUGADOR
 	public void refrescarTableroJugador() {
@@ -400,7 +418,7 @@ public class BatallaNavalVentana extends JFrame {
 							.setBackground(Color.GREEN);
 				} else if (tabla[i][j].getEstado().equals("HUNDIDO")) {
 					botones[iArrayBotones][jArrayBotones]
-											.setBackground(Color.GREEN);
+							.setBackground(Color.GREEN);
 				} else {
 					botones[iArrayBotones][jArrayBotones]
 							.setBackground(Color.RED); // esto quiere decir
@@ -411,7 +429,7 @@ public class BatallaNavalVentana extends JFrame {
 		}
 	}
 
-	 //METODO PARA PREGUNTAR SI GANE
+	// METODO PARA PREGUNTAR SI GANE
 	public boolean gane() {
 		logger.debug("gane");
 		try { // try y catch para verificar si esta el usuario o
@@ -419,6 +437,7 @@ public class BatallaNavalVentana extends JFrame {
 			Registry registry = LocateRegistry.getRegistry(host);
 			ServiciosBatallaNaval stub = (ServiciosBatallaNaval) registry
 					.lookup("BatallaNavalServices");
+
 			return stub.gane(usuario);
 		} catch (Exception e) {
 			if (e instanceof RemoteException) {
@@ -431,6 +450,7 @@ public class BatallaNavalVentana extends JFrame {
 			return false;
 		}
 	}
+
 	private boolean perdi() {
 		logger.debug("perdi");
 		try { // try y catch para verificar si esta el usuario o
@@ -451,7 +471,8 @@ public class BatallaNavalVentana extends JFrame {
 			return false;
 		}
 	}
-	private void terminoPartida(boolean gane){
+
+	private void terminoPartida(boolean gane) {
 		logger.debug("terminoPartida");
 		try { // try y catch para verificar si esta el usuario o
 			// no
