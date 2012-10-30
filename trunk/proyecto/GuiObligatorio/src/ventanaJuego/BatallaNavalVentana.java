@@ -20,6 +20,8 @@ import java.rmi.registry.Registry;
 import javax.swing.JLabel;
 import javax.swing.SwingConstants;
 
+import org.apache.log4j.Logger;
+
 import ventanaPrincipal.VentanaPrincipal;
 import comm.CeldaVO;
 import comm.ServiciosBatallaNaval;
@@ -68,6 +70,8 @@ public class BatallaNavalVentana extends JFrame {
 
 	private int bandera = 1;
 
+	private static Logger logger = Logger.getLogger(ColocarBarcosVentana.class);
+
 	// ///////////////////////////////////////VARIABLES Y
 	// CONSTANTES//////////////////////////////
 
@@ -79,6 +83,7 @@ public class BatallaNavalVentana extends JFrame {
 	 */
 	public BatallaNavalVentana(final UsuarioVO usuario) {
 		super();
+		logger.debug("***creo BatallaNavalVentana***");
 		initialize();
 		this.usuario = usuario;
 		this.crearCabezal(PanelJugador);
@@ -185,6 +190,7 @@ public class BatallaNavalVentana extends JFrame {
 	// indicado en los atributos
 	private void crearTablero(JPanel panel, JButton[][] botones) {
 		// crear botones y agregarlos al panel
+		logger.debug("crear Tablero");
 		panel.setLayout(new GridLayout(TAMANO_TABLERO, TAMANO_TABLERO));
 		for (int i = 1; i < TAMANO_TABLERO; i++) {
 			this.crearFila(panel, i, botones);
@@ -195,6 +201,7 @@ public class BatallaNavalVentana extends JFrame {
 
 	// metodo que me crea mi cabezal con mis letras
 	private void crearCabezal(JPanel panel) {
+		logger.debug("CrearCabezal");
 		panel.setLayout(new GridLayout(TAMANO_TABLERO, TAMANO_TABLERO));
 
 		for (int i = 0; i < TAMANO_TABLERO; i++) {
@@ -251,6 +258,7 @@ public class BatallaNavalVentana extends JFrame {
 
 	// METODO DE MIS BOTONES
 	private void clickBoton(int fila, int columna) {
+		logger.debug("ClickBoton");
 		if (esMiTurno) {
 			try { // try y catch para verificar si esta el usuario o
 				// no
@@ -280,6 +288,7 @@ public class BatallaNavalVentana extends JFrame {
 
 	// METODO PARA PREGUNTAR TURNO
 	public boolean preguntarTurno(UsuarioVO usuario) {
+		logger.debug("preguntarTurno");
 		if ( bandera==1 &&this.gane()) {
 			bandera--;
 			JOptionPane.showMessageDialog(new JFrame(), "HAS GANADO",
@@ -325,6 +334,7 @@ public class BatallaNavalVentana extends JFrame {
 
 	// METODO PARA REFRESCAR TABLERO DEL JUGADOR
 	public void refrescarTableroJugador() {
+		logger.debug("refrescarTableroJugador");
 		try { // try y catch para verificar si esta el usuario o
 			// no
 			Registry registry = LocateRegistry.getRegistry(host);
@@ -348,6 +358,7 @@ public class BatallaNavalVentana extends JFrame {
 
 	// METODO PARA REFRESCAR TABLERO DEL OPONENTE
 	public void refrescarTableroOponente() {
+		logger.debug("refrescarTableroOponente");
 		try { // try y catch para verificar si esta el usuario o
 			// no
 			Registry registry = LocateRegistry.getRegistry(host);
@@ -404,6 +415,7 @@ public class BatallaNavalVentana extends JFrame {
 
 	 //METODO PARA PREGUNTAR SI GANE
 	public boolean gane() {
+		logger.debug("gane");
 		try { // try y catch para verificar si esta el usuario o
 			// no
 			Registry registry = LocateRegistry.getRegistry(host);
@@ -422,6 +434,7 @@ public class BatallaNavalVentana extends JFrame {
 		}
 	}
 	private boolean perdi() {
+		logger.debug("perdi");
 		try { // try y catch para verificar si esta el usuario o
 			// no
 			Registry registry = LocateRegistry.getRegistry(host);
@@ -441,6 +454,7 @@ public class BatallaNavalVentana extends JFrame {
 		}
 	}
 	private void terminoPartida(boolean gane){
+		logger.debug("terminoPartida");
 		try { // try y catch para verificar si esta el usuario o
 			// no
 			Registry registry = LocateRegistry.getRegistry(host);
