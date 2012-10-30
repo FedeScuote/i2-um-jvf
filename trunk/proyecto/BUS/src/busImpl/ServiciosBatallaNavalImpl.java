@@ -38,10 +38,7 @@ public class ServiciosBatallaNavalImpl implements ServiciosBatallaNaval{
 	public void disparar(UsuarioVO usuario, int coordenadaX, int coordenadaY) throws RemoteException, CoordenadasInvalidasException{
 		juego=JuegoBatallaNaval.crearJuegoBN(usuario, true);
 		Estados resultado=juego.disparar(usuario, coordenadaX, coordenadaY);
-		boolean modo=esBot(juego.getTableroJugador2().getJugador().getUsuarioB());
-		if(modo&&gane(usuario)){
-			terminarPartida(usuario, true);
-		}
+
 	}
 
 	public boolean esMiTurno(UsuarioVO usuario) throws RemoteException {
@@ -173,7 +170,12 @@ public class ServiciosBatallaNavalImpl implements ServiciosBatallaNaval{
 
 	public boolean gane(UsuarioVO usuario) throws RemoteException {
 		juego=JuegoBatallaNaval.crearJuegoBN(usuario, true);
-		return juego.gane(usuario);
+		boolean retorno=juego.gane(usuario);
+		boolean modo=esBot(juego.getTableroJugador2().getJugador().getUsuarioB());
+		if(modo&&gane(usuario)){
+			terminarPartida(usuario, true);
+		}
+		return retorno;
 	}
 
 	public boolean perdi(UsuarioVO usuario) throws RemoteException {
