@@ -294,18 +294,16 @@ public class BatallaNavalVentana extends JFrame {
 			JOptionPane.showMessageDialog(new JFrame(), "HAS GANADO",
 					"ENHORABUENA", JOptionPane.INFORMATION_MESSAGE);
 			temporizador.stop();
-			this.terminoPartida(true);
 			this.dispose();
 			VentanaPrincipal l = new VentanaPrincipal(this.usuario);
 			l.setVisible(true);
-
 			return true;
 		} else if (bandera==1 && this.perdi()){
 			bandera--;
 			JOptionPane.showMessageDialog(new JFrame(), "HAS PERDIDO",
 					"LO SIENTO", JOptionPane.INFORMATION_MESSAGE);
 			temporizador.stop();
-			this.terminoPartida(false);
+			this.terminoPartida(false);//solo termina mi partida cuando perdi
 			this.dispose();
 			VentanaPrincipal l = new VentanaPrincipal(this.usuario);
 			l.setVisible(true);
