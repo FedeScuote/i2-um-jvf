@@ -66,6 +66,8 @@ public class BatallaNavalVentana extends JFrame {
 
 	private Integer cantidadBarcosHundidos= 0;
 
+	private int bandera = 1;
+
 	// ///////////////////////////////////////VARIABLES Y
 	// CONSTANTES//////////////////////////////
 
@@ -98,10 +100,11 @@ public class BatallaNavalVentana extends JFrame {
 		ActionListener taskPerformer = new ActionListener() {
 			public void actionPerformed(ActionEvent evt) {
 				esMiTurno = preguntarTurno(usuario);
-				if (!esMiTurno) {
+				if (!esMiTurno && bandera==1) {
 					indicadorTurno.setText("NO ES TU TURNO");
 					indicadorTurno.setForeground(Color.RED);
-				} else {
+					temporizador.restart();
+				} else if(bandera==1) {
 					indicadorTurno.setText("ES TU TURNO");
 					indicadorTurno.setForeground(Color.GREEN);
 				}
@@ -110,6 +113,7 @@ public class BatallaNavalVentana extends JFrame {
 		temporizador = new Timer(pause, taskPerformer);
 		temporizador.setInitialDelay(pause);
 		temporizador.addActionListener(taskPerformer);
+		temporizador.setRepeats(false);
 		temporizador.start();
 	}
 
@@ -264,7 +268,7 @@ public class BatallaNavalVentana extends JFrame {
 							"HAS HUNDIDO UN BARCO", "ENHORABUENA",
 							JOptionPane.INFORMATION_MESSAGE);
 				}
-				temporizador.start();
+				temporizador.restart();
 			} catch (Exception e) {
 
 			}
@@ -276,7 +280,8 @@ public class BatallaNavalVentana extends JFrame {
 
 	// METODO PARA PREGUNTAR TURNO
 	public boolean preguntarTurno(UsuarioVO usuario) {
-		if (this.gane()) {
+		if ( bandera==1 &&this.gane()) {
+			bandera--;
 			JOptionPane.showMessageDialog(new JFrame(), "HAS GANADO",
 					"ENHORABUENA", JOptionPane.INFORMATION_MESSAGE);
 			temporizador.stop();
@@ -286,7 +291,8 @@ public class BatallaNavalVentana extends JFrame {
 			l.setVisible(true);
 
 			return true;
-		} else if (this.perdi()){
+		} else if (bandera==1 && this.perdi()){
+			bandera--;
 			JOptionPane.showMessageDialog(new JFrame(), "HAS PERDIDO",
 					"LO SIENTO", JOptionPane.INFORMATION_MESSAGE);
 			temporizador.stop();
@@ -295,7 +301,7 @@ public class BatallaNavalVentana extends JFrame {
 			VentanaPrincipal l = new VentanaPrincipal(this.usuario);
 			l.setVisible(true);
 			return true;
-		}else{
+		}else if(bandera==1){
 			try { // try y catch para verificar si esta el usuario o
 				// no
 				Registry registry = LocateRegistry.getRegistry(host);
@@ -312,6 +318,7 @@ public class BatallaNavalVentana extends JFrame {
 				return false;
 			}
 		}
+		return false;
 	}
 
 
