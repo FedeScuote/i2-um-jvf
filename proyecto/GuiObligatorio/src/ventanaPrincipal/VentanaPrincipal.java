@@ -35,6 +35,7 @@ import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.ResourceBundle;
 
 import login.LoginVentana;
 
@@ -43,6 +44,8 @@ public class VentanaPrincipal extends JFrame {
 	private static final long serialVersionUID = 1L;
 
 	private static final String host = null;
+
+	private ResourceBundle labels = ResourceBundle.getBundle("Gui");
 
 	private UsuarioVO usuario;
 
@@ -71,6 +74,7 @@ public class VentanaPrincipal extends JFrame {
 		usuario=usuarioVO;
 		initialize();
 		this.setExtendedState(this.getExtendedState()|JFrame.MAXIMIZED_BOTH);//mi frame arranca maximizada
+		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
 	}
 
