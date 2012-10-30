@@ -50,7 +50,13 @@ public class JuegoBatallaNaval{
 	public boolean esta(UsuarioVO usuario){
 		return tableroJugador1.getJugador().getUsuarioB().equals(usuario.getUsuarioB())||tableroJugador1.getJugador().getUsuarioB().equals(usuario.getUsuarioB());
 	}
-
+	public JuegoBatallaNaval(Usuario jugador1,Usuario jugador2) {
+		super();
+		this.tableroJugador1 = new Tablero(jugador1);
+		this.listaDisparosAOponente1 = new ArrayList<RegistroDisparo>();
+		this.tableroJugador2 = new Tablero(jugador2);
+		this.listaDisparosAOponente2 = new ArrayList<RegistroDisparo>();
+	}
 
 	public int[] distribucion(){
 		int[] retorno = new int[4];
@@ -715,6 +721,12 @@ public class JuegoBatallaNaval{
 		if(ganeJ1||ganeJ2){
 			turno1=false;
 			turno2=false;
+			if(ganeJ1){
+				if(modo){
+					daoPartida.terminarPartida(idPartida, tableroInicialJugador2.getJugador().getIdUsuarioB(), false);
+				}
+			}
+
 		}
 		tableroInicialJugador1.setMiTurno(turno1);
 		tableroInicialJugador2.setMiTurno(turno2);
