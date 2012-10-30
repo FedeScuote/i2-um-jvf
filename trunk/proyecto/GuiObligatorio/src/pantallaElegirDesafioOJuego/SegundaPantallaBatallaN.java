@@ -203,7 +203,6 @@ public class SegundaPantallaBatallaN extends SegundaPantalla {
 					.lookup("Desafio");
 			String monto = JOptionPane.showInputDialog(new JFrame(), "INGRESE UN MONTO", "Crear Desafio", JOptionPane.QUESTION_MESSAGE);
 			if(pasarStringAInt(monto) == -1){
-				monto = JOptionPane.showInputDialog(new JFrame(), "INGRESE UN MONTO", "Crear Desafio", JOptionPane.QUESTION_MESSAGE);
 				stub.crearDesafio(this.usuario,this.pasarStringAInt(monto));
 			}else{
 				JOptionPane.showMessageDialog(new JFrame(),
