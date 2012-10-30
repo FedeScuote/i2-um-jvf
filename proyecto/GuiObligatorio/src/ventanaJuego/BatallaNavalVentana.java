@@ -70,7 +70,7 @@ public class BatallaNavalVentana extends JFrame {
 
 	private int bandera = 1;
 
-	private static Logger logger = Logger.getLogger(ColocarBarcosVentana.class);
+	private static Logger logger = Logger.getLogger(BatallaNavalVentana.class);
 
 	// ///////////////////////////////////////VARIABLES Y
 	// CONSTANTES//////////////////////////////
