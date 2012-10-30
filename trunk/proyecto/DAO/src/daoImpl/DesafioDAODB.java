@@ -447,15 +447,18 @@ public class DesafioDAODB implements DesafioDAO {
 							+ idUsuario + "' AND estadoD='En curso'");
 
 			if (r.first()) {
+				logger.debug("aceptaro= "+true);
 				logger.debug("Me desconecto de la base de datos del método aceptaronDesafio");
 				c.disconnect();
 				return true;
 			} else {
+				logger.debug("aceptaro= "+false);
 				logger.debug("Me desconecto de la base de datos del método aceptaronDesafio");
 				c.disconnect();
 				return false;
 			}
 		} catch (SQLException e) {
+			logger.debug("aceptaro= "+false);
 			logger.debug("Me desconecto de la base de datos del método aceptaronDesafio");
 			c.disconnect();
 			// TODO Auto-generated catch block
