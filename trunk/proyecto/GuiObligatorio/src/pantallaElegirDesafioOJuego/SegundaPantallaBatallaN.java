@@ -202,7 +202,7 @@ public class SegundaPantallaBatallaN extends SegundaPantalla {
 			ServiciosDesafio stub = (ServiciosDesafio) registry
 					.lookup("Desafio");
 			String monto = JOptionPane.showInputDialog(new JFrame(), "INGRESE UN MONTO", "Crear Desafio", JOptionPane.QUESTION_MESSAGE);
-			if(pasarStringAInt(monto) == -1){
+			if(pasarStringAInt(monto) != -1){
 				stub.crearDesafio(this.usuario,this.pasarStringAInt(monto));
 			}else{
 				JOptionPane.showMessageDialog(new JFrame(),
