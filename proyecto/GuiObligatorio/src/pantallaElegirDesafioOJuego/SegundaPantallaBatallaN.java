@@ -190,10 +190,15 @@ public class SegundaPantallaBatallaN extends SegundaPantalla {
 			ServiciosDesafio stub = (ServiciosDesafio) registry
 					.lookup("Desafio");
 			String monto = JOptionPane.showInputDialog(new JFrame(), "INGRESE UN MONTO", "Crear Desafio", JOptionPane.QUESTION_MESSAGE);
-			while(pasarStringAInt(monto) == -1){
+			if(pasarStringAInt(monto) == -1){
 				monto = JOptionPane.showInputDialog(new JFrame(), "INGRESE UN MONTO", "Crear Desafio", JOptionPane.QUESTION_MESSAGE);
+				stub.crearDesafio(this.usuario,this.pasarStringAInt(monto));
+			}else{
+				JOptionPane.showMessageDialog(new JFrame(),
+						"NO SE PUDO CREAR EL DESAFIO", "ERROR",
+						JOptionPane.ERROR_MESSAGE);
 			}
-			stub.crearDesafio(this.usuario,this.pasarStringAInt(monto));
+
 			temporizador.start();
 		}
 		catch (Exception remoteExceptionrmi) {
