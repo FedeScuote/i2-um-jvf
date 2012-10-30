@@ -18,7 +18,10 @@ import javax.swing.JTable;
 import javax.swing.Timer;
 import javax.swing.table.DefaultTableModel;
 
+import org.apache.log4j.Logger;
+
 import util.EstadoElegirDesafio;
+import ventanaJuego.BatallaNavalVentana;
 import ventanaJuego.ColocarBarcosVentana;
 import ventanaPrincipal.VentanaPrincipal;
 
@@ -44,8 +47,11 @@ public class SegundaPantallaBatallaN extends SegundaPantalla {
 
 	private Timer temporizador;
 
+	private static Logger logger = Logger.getLogger(SegundaPantallaBatallaN.class);
+
 	public SegundaPantallaBatallaN(final UsuarioVO usuario) {
 		super();
+		logger.debug("***creo SegundaPantallaBatallaN***");
 		this.llenarListaDesafio();
 		this.usuario = usuario;
 		ActionListener taskPerformer = new ActionListener() {
@@ -84,6 +90,7 @@ public class SegundaPantallaBatallaN extends SegundaPantalla {
 	}
 
 	private void aceptaronDesafio(){
+		logger.debug("aceptaronDesafio");
 		this.dispose();
 		ColocarBarcosVentana l = new ColocarBarcosVentana(this.usuario);
 		l.setVisible(true);
@@ -99,11 +106,13 @@ public class SegundaPantallaBatallaN extends SegundaPantalla {
 
 	// METODO DE MIS BOTONES
 	private void clickBotonCrearDesafio() {
+		logger.debug("clickBotonCrearDesafio");
 		this.crearDesafio(this.usuario);
 	}
 
 
 	private void llenarListaDesafio() {
+		logger.debug("llenarListaDesafio");
 		try { // intento recibir datos para el ranking/
 			Registry registry = LocateRegistry.getRegistry(host);
 			ServiciosDesafio stub = (ServiciosDesafio) registry
@@ -122,7 +131,8 @@ public class SegundaPantallaBatallaN extends SegundaPantalla {
 	// METODO PARA LLENAR UNA JTABLE CON UN ARRAY DE OBJETOS
 	private void llenarTabla(JTable tabla,
 			ArrayList<DesafioBatallaNavalVO> lista,
-			final SegundaPantallaBatallaN pantalla) {
+			final SegundaPantallaBatallaN pantalla){
+		logger.debug("llenarTabla");
 		DefaultTableModel model = new DefaultTableModel() { // me hago mi modelo
 			// para que no puedan editar la tabla
 			@Override
@@ -164,6 +174,7 @@ public class SegundaPantallaBatallaN extends SegundaPantalla {
 	// metodo para iniciar mi partida
 	private void iniciarPartida(DesafioBatallaNavalVO desafio,
 			UsuarioVO desafiante) {
+		logger.debug("iniciarPartida");
 		try { // intento recibir datos para el ranking
 			Registry registry = LocateRegistry.getRegistry(host);
 			ServiciosBatallaNaval stub = (ServiciosBatallaNaval) registry
@@ -185,6 +196,7 @@ public class SegundaPantallaBatallaN extends SegundaPantalla {
 	}
 
 	private void crearDesafio(UsuarioVO desafiante) {
+		logger.debug("crearDesafio");
 		try { // intento recibir datos para el ranking/
 			Registry registry = LocateRegistry.getRegistry(host);
 			ServiciosDesafio stub = (ServiciosDesafio) registry
@@ -214,6 +226,7 @@ public class SegundaPantallaBatallaN extends SegundaPantalla {
 
 	}
 	private int pasarStringAInt(String montoString){
+		logger.debug("pasarStringAInt");
 		int montoInt =0;
 		try{
 			montoInt = Integer.parseInt(montoString);
