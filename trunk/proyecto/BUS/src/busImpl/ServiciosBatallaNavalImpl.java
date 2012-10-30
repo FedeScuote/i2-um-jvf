@@ -74,8 +74,8 @@ public class ServiciosBatallaNavalImpl implements ServiciosBatallaNaval{
 			Usuario jugador2=Usuario.findByName(desafio.getUsuario().getUsuarioB());
 			Tablero tableroJugador1= new Tablero(jugador1);
 			Tablero tableroJugador2= new Tablero(jugador2);
+			tableroJugador1.setMiTurno(true);
 			if(modoRobot){
-				tableroJugador1.setMiTurno(true);
 				tableroJugador2.agregarCeldas(distribucion);
 			}
 			dao2.registrarTablero(tableroJugador1, idDesafio);

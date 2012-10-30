@@ -58,6 +58,10 @@ public class JuegoBatallaNaval{
 		retorno[1]=CANTIDAD_INICIAL_DESTRUCTORES;
 		retorno[2]=CANTIDAD_INICIAL_CRUCEROS;
 		retorno[3]=CANTIDAD_INICIAL_ACORAZADO;
+		log.debug("Cantidad de submaninos a agregar: "+CANTIDAD_INICIAL_SUBMARINO);
+		log.debug("Cantidad de submaninos a agregar: "+CANTIDAD_INICIAL_DESTRUCTORES);
+		log.debug("Cantidad de submaninos a agregar: "+CANTIDAD_INICIAL_CRUCEROS);
+		log.debug("Cantidad de submaninos a agregar: "+CANTIDAD_INICIAL_ACORAZADO);
 		return retorno;
 	}
 	public static int[] distribucion1(){
@@ -66,6 +70,10 @@ public class JuegoBatallaNaval{
 		retorno[1]=CANTIDAD_INICIAL_DESTRUCTORES;
 		retorno[2]=CANTIDAD_INICIAL_CRUCEROS;
 		retorno[3]=CANTIDAD_INICIAL_ACORAZADO;
+		log.debug("Cantidad de submaninos a agregar: "+CANTIDAD_INICIAL_SUBMARINO);
+		log.debug("Cantidad de submaninos a agregar: "+CANTIDAD_INICIAL_DESTRUCTORES);
+		log.debug("Cantidad de submaninos a agregar: "+CANTIDAD_INICIAL_CRUCEROS);
+		log.debug("Cantidad de submaninos a agregar: "+CANTIDAD_INICIAL_ACORAZADO);
 		return retorno;
 	}
 
@@ -91,6 +99,8 @@ public class JuegoBatallaNaval{
 			if (coordenadasEnDirY(coordenadaInicialX, coordenadaFinalX)) {
 				try {
 					tableroJugador1.agregarCeldasDirY(coordenadaInicialX,coordenadaInicialY, coordenadaFinalY,tipoBarco);
+					log.debug("Agrego barco tipo tipo: "+tipoBarco+"al usuario"+tableroJugador1.getJugador().getUsuarioB());
+					log.debug("Largo barco: "+(coordenadaFinalX-coordenadaInicialX));
 					quitarBarcoStockJugador1(tipoBarco);
 				} catch (CoordenadasCeldasInvalidasException e) {
 					throw new CoordenadasInvalidasException();
@@ -98,6 +108,8 @@ public class JuegoBatallaNaval{
 			}else if(coordenadasEnDirX(coordenadaInicialY, coordenadaFinalY)){
 				try {
 					tableroJugador1.agregarCeldasDirX(coordenadaInicialY,coordenadaInicialX, coordenadaFinalX,tipoBarco);
+					log.debug("Agrego barco tipo tipo: "+tipoBarco+"al usuario"+tableroJugador1.getJugador().getUsuarioB());
+					log.debug("Largo barco: "+(coordenadaFinalY-coordenadaInicialY));
 					quitarBarcoStockJugador1(tipoBarco);
 				} catch (CoordenadasCeldasInvalidasException e) {
 					throw new CoordenadasInvalidasException();
@@ -110,6 +122,8 @@ public class JuegoBatallaNaval{
 			if (coordenadasEnDirY(coordenadaInicialX, coordenadaFinalX)) {
 				try {
 					tableroJugador2.agregarCeldasDirY(coordenadaInicialX,coordenadaInicialY, coordenadaFinalY,tipoBarco);
+					log.debug("Agrego barco tipo tipo: "+tipoBarco+"al usuario"+tableroJugador2.getJugador().getUsuarioB());
+					log.debug("Largo barco: "+(coordenadaFinalX-coordenadaInicialX));
 					quitarBarcoStockJugador2(tipoBarco);
 				} catch (CoordenadasCeldasInvalidasException e) {
 					throw new CoordenadasInvalidasException();
@@ -117,6 +131,8 @@ public class JuegoBatallaNaval{
 			}else if(coordenadasEnDirX(coordenadaInicialY, coordenadaFinalY)){
 				try {
 					tableroJugador2.agregarCeldasDirX(coordenadaInicialY,coordenadaInicialX, coordenadaFinalX,tipoBarco);
+					log.debug("Agrego barco tipo tipo: "+tipoBarco+"al usuario"+tableroJugador2.getJugador().getUsuarioB());
+					log.debug("Largo barco: "+(coordenadaFinalY-coordenadaInicialY));
 					quitarBarcoStockJugador2(tipoBarco);
 				} catch (CoordenadasCeldasInvalidasException e) {
 					throw new CoordenadasInvalidasException();
@@ -133,23 +149,39 @@ public class JuegoBatallaNaval{
 		PartidaDAO daoPartida = getPartidaDAO();
 		if(tipoBarco.equals(SUBMARINO)){
 			tableroJugador1.decrementarBarcosSubmarinoColocados();
+			log.debug("decremento barco: "+tipoBarco);
+			log.debug("al usuario "+tableroJugador1.getJugador().getUsuarioB());
 		}else if(tipoBarco.equals(DESTRUCTORES)){
 			tableroJugador1.decrementarBarcosDestructoresColocados();
+			log.debug("decremento barco: "+tipoBarco);
+			log.debug("al usuario "+tableroJugador1.getJugador().getUsuarioB());
 		}else if(tipoBarco.equals(CRUCEROS)){
 			tableroJugador1.decrementarBarcosCrucerosColocados();
+			log.debug("decremento barco: "+tipoBarco);
+			log.debug("al usuario "+tableroJugador1.getJugador().getUsuarioB());
 		}else if(tipoBarco.equals(ACORAZADO)){
 			tableroJugador1.decrementarBarcosAcorazadoColocados();
+			log.debug("decremento barco: "+tipoBarco);
+			log.debug("al usuario "+tableroJugador1.getJugador().getUsuarioB());
 		}
 	}
 	private void quitarBarcoStockJugador2(String tipoBarco) {
 		if(tipoBarco.equals(SUBMARINO)){
 			tableroJugador2.decrementarBarcosSubmarinoColocados();
+			log.debug("decremento barco: "+tipoBarco);
+			log.debug("al usuario "+tableroJugador2.getJugador().getUsuarioB());
 		}else if(tipoBarco.equals(DESTRUCTORES)){
 			tableroJugador2.decrementarBarcosDestructoresColocados();
+			log.debug("decremento barco: "+tipoBarco);
+			log.debug("al usuario "+tableroJugador2.getJugador().getUsuarioB());
 		}else if(tipoBarco.equals(CRUCEROS)){
 			tableroJugador2.decrementarBarcosCrucerosColocados();
+			log.debug("decremento barco: "+tipoBarco);
+			log.debug("al usuario "+tableroJugador2.getJugador().getUsuarioB());
 		}else if(tipoBarco.equals(ACORAZADO)){
 			tableroJugador2.decrementarBarcosAcorazadoColocados();
+			log.debug("decremento barco: "+tipoBarco);
+			log.debug("al usuario "+tableroJugador2.getJugador().getUsuarioB());
 		}
 	}
 
@@ -639,6 +671,8 @@ public class JuegoBatallaNaval{
 	public static JuegoBatallaNaval crearJuegoBN(UsuarioVO usuario, boolean modo){
 		BatallaNavalDAO daoBatallaNaval = getBattallaNavalDAO();
 		PartidaDAO daoPartida = getPartidaDAO();
+		int cantHundidosJ1=0;
+		int cantHundidosJ2=0;
 		int idPartida=daoPartida.idPartida(usuario.getIdUsuario());
 		int idJugador1=usuario.getIdUsuario();
 		int idJugador2=daoPartida.oponente(usuario.getIdUsuario()).getIdUsuarioB();
@@ -650,23 +684,37 @@ public class JuegoBatallaNaval{
 			log.debug(listaJugador1.get(i).getDisparo().getFila());
 			log.debug(listaJugador1.get(i).getDisparo().getColumna());
 			log.debug(listaJugador1.get(i).getResultado());
+			if(listaJugador1.get(i).getResultado()==Estados.HUNDIDO){
+				cantHundidosJ1++;
+			}
 		}
 		ArrayList<RegistroDisparo> listaJugador2 =daoBatallaNaval.getListaDeTiros(idPartida, idJugador2);
 		for(int i=0;i<listaJugador2.size();i++){
 			log.debug(listaJugador2.get(i).getDisparo().getFila());
 			log.debug(listaJugador2.get(i).getDisparo().getColumna());
 			log.debug(listaJugador2.get(i).getResultado());
+			if(listaJugador2.get(i).getResultado()==Estados.HUNDIDO){
+				cantHundidosJ2++;
+			}
 		}
+		boolean ganeJ1=CANTIDAD_INICIAL_ACORAZADO+CANTIDAD_INICIAL_CRUCEROS+CANTIDAD_INICIAL_DESTRUCTORES+CANTIDAD_INICIAL_SUBMARINO==cantHundidosJ1;
+		boolean ganeJ2=CANTIDAD_INICIAL_ACORAZADO+CANTIDAD_INICIAL_CRUCEROS+CANTIDAD_INICIAL_DESTRUCTORES+CANTIDAD_INICIAL_SUBMARINO==cantHundidosJ2;
 		tableroInicialJugador1.generarTablero(listaJugador2);
 		tableroInicialJugador2.generarTablero(listaJugador1);
 		boolean turno1=tableroInicialJugador1.isMiTurno();
 		boolean turno2=tableroInicialJugador2.isMiTurno();
 		if(listaJugador1.size()!=listaJugador2.size()){
-			if(listaJugador1.size()>listaJugador2.size()){
+			if((listaJugador1.size()>listaJugador2.size())){
 				turno2=true;
+				turno1=false;
 			}else{
 				turno1=true;
+				turno2=false;
 			}
+		}
+		if(ganeJ1||ganeJ2){
+			turno1=false;
+			turno2=false;
 		}
 		tableroInicialJugador1.setMiTurno(turno1);
 		tableroInicialJugador2.setMiTurno(turno2);
@@ -678,6 +726,12 @@ public class JuegoBatallaNaval{
 		return usuario.equals(USUARIO_BOT_1)||usuario.equals(USUARIO_BOT_2)||usuario.equals(USUARIO_BOT_3)||usuario.equals(USUARIO_BOT_4);
 	}
 
+	public static void main(String[] args) {
+		UsuarioVO nuevo= new UsuarioVO("fscouteguazza");
+		nuevo.setIdUsuario(3);
+		JuegoBatallaNaval juego = crearJuegoBN(nuevo, true);
+
+	}
 
 
 }
