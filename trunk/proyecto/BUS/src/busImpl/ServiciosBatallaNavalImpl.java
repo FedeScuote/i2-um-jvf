@@ -92,6 +92,10 @@ public class ServiciosBatallaNavalImpl implements ServiciosBatallaNaval{
 		return usuario.equals(USUARIO_BOT_1)||usuario.equals(USUARIO_BOT_2)||usuario.equals(USUARIO_BOT_3)||usuario.equals(USUARIO_BOT_4);
 	}
 
+	public boolean esBot(UsuarioVO usuario) throws RemoteException{
+		juego=JuegoBatallaNaval.crearJuegoBN(usuario, true);
+		return juego.getTableroJugador2().getJugador().getUsuarioB().equals(USUARIO_BOT_1)||juego.getTableroJugador2().getJugador().getUsuarioB().equals(USUARIO_BOT_2)||juego.getTableroJugador2().getJugador().getUsuarioB().equals(USUARIO_BOT_3)||juego.getTableroJugador2().getJugador().getUsuarioB().equals(USUARIO_BOT_4);
+	}
 
 	private static PartidaDAO getDAO() {
 		try {
