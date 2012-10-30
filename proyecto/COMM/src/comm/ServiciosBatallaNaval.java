@@ -41,4 +41,5 @@ public interface ServiciosBatallaNaval extends Remote {
 
 	public boolean hayPartidaEnCurso(UsuarioVO usuario) throws RemoteException;
 
+	public boolean esBot(UsuarioVO usuario) throws RemoteException;
 }
