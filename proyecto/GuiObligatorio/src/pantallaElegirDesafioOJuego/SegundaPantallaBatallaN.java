@@ -34,9 +34,11 @@ import commExceptions.NoSeEncuentraUsuarioException;
 
 public class SegundaPantallaBatallaN extends SegundaPantalla {
 
+	private int bandera = 1;
+
 	private final static String host = null;
 
-	private final static int pause = 10000;
+	private final static int pause = 1000;
 
 	private ArrayList<DesafioBatallaNavalVO> arrayDesafio = null;
 
@@ -52,10 +54,13 @@ public class SegundaPantallaBatallaN extends SegundaPantalla {
 					Registry registry = LocateRegistry.getRegistry(host);
 					ServiciosDesafio stub = (ServiciosDesafio) registry
 							.lookup("Desafio");
-					if(stub.aceptaronDesafio(usuario)){
-						temporizador.stop();
-						JOptionPane.showMessageDialog(new JFrame(),"ACEPTARON TU DESAFIO");
+
+					if(stub.aceptaronDesafio(usuario)&& bandera==1){
+						bandera--;
 						aceptaronDesafio();
+						temporizador.stop();
+					}else{
+						temporizador.restart();
 					}
 
 				}
@@ -70,9 +75,11 @@ public class SegundaPantallaBatallaN extends SegundaPantalla {
 			}
 			}
 		};
+
 		temporizador = new Timer(pause, taskPerformer);
 		temporizador.setInitialDelay(pause);
 		temporizador.addActionListener(taskPerformer);
+		temporizador.setRepeats(false);
 		this.crearDesafioBoton.addActionListener(new ListenerBotonCrearDesafio());
 	}
 
