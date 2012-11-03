@@ -18,7 +18,7 @@ public interface UsuarioDAO {
 
 	public ArrayList<Usuario> getUsuariosVirtuales();
 
-	public boolean esUsuarioVirtual(int idUsuario);
+	public boolean esUsuarioVirtual(String usuario);
 
 
 
