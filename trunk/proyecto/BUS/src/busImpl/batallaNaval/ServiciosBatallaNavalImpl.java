@@ -1,7 +1,10 @@
-package busImpl;
+package busImpl.batallaNaval;
 
 import java.rmi.RemoteException;
 import java.util.ArrayList;
+
+import busImpl.Estados;
+import busImpl.Usuario;
 import comm.DesafioBatallaNavalVO;
 import comm.DesafioVO;
 import comm.ServiciosBatallaNaval;
@@ -18,15 +21,10 @@ import daoInterfaces.UsuarioDAO;
 
 public class ServiciosBatallaNavalImpl implements ServiciosBatallaNaval{
 
-	private static final String USUARIO_BOT_1 = "jhirata";
-	private static final String USUARIO_BOT_2 = "vtuyare";
-	private static final String USUARIO_BOT_3 = "fkono";
-	private static final String USUARIO_BOT_4 = "jdiaz";
-
 	private JuegoBatallaNaval juego;
 
 	public void agregarBarco(UsuarioVO usuario, int coordenadaInicialX, int coordenadaInicialY, int coordenadaFinalX, int coordenadaFinalY, String tipoBarco) throws RemoteException, CoordenadasInvalidasException {
-		juego=JuegoBatallaNaval.crearJuegoBN(usuario, true);
+		juego=JuegoBatallaNaval.crearJuegoBN(usuario);
 		juego.agregarBarco(usuario, coordenadaInicialX, coordenadaInicialY, coordenadaFinalX, coordenadaFinalY, tipoBarco);
 		BatallaNavalDAO daoBatallaNaval = getDAO2();
 		PartidaDAO daoPartida = getDAO();
@@ -36,19 +34,19 @@ public class ServiciosBatallaNavalImpl implements ServiciosBatallaNaval{
 	}
 
 	public void disparar(UsuarioVO usuario, int coordenadaX, int coordenadaY) throws RemoteException, CoordenadasInvalidasException{
-		juego=JuegoBatallaNaval.crearJuegoBN(usuario, true);
+		juego=JuegoBatallaNaval.crearJuegoBN(usuario);
 		Estados resultado=juego.disparar(usuario, coordenadaX, coordenadaY);
 
 	}
 
 	public boolean esMiTurno(UsuarioVO usuario) throws RemoteException {
-		juego=JuegoBatallaNaval.crearJuegoBN(usuario, true);
+		juego=JuegoBatallaNaval.crearJuegoBN(usuario);
 		return juego.esMiTurno(usuario);
 	}
 
 
 	public TableroVO refrescarTablero(UsuarioVO usuario) throws RemoteException {
-		juego=JuegoBatallaNaval.crearJuegoBN(usuario, true);
+		juego=JuegoBatallaNaval.crearJuegoBN(usuario);
 		return juego.refrescarTablero(usuario);
 	}
 
@@ -89,12 +87,14 @@ public class ServiciosBatallaNavalImpl implements ServiciosBatallaNaval{
 
 
 	private boolean esBot(String usuario) {
-		return usuario.equals(USUARIO_BOT_1)||usuario.equals(USUARIO_BOT_2)||usuario.equals(USUARIO_BOT_3)||usuario.equals(USUARIO_BOT_4);
+		UsuarioDAO dao =getDAO4();
+		return dao.esUsuarioVirtual(usuario);
 	}
 
 	public boolean esBot(UsuarioVO usuario) throws RemoteException{
-		juego=JuegoBatallaNaval.crearJuegoBN(usuario, true);
-		return juego.getTableroJugador2().getJugador().getUsuarioB().equals(USUARIO_BOT_1)||juego.getTableroJugador2().getJugador().getUsuarioB().equals(USUARIO_BOT_2)||juego.getTableroJugador2().getJugador().getUsuarioB().equals(USUARIO_BOT_3)||juego.getTableroJugador2().getJugador().getUsuarioB().equals(USUARIO_BOT_4);
+		UsuarioDAO dao =getDAO4();
+		juego=JuegoBatallaNaval.crearJuegoBN(usuario);
+		return dao.esUsuarioVirtual(juego.getTableroJugador2().getJugador().getUsuarioB());
 	}
 
 	private static PartidaDAO getDAO() {
@@ -153,17 +153,17 @@ public class ServiciosBatallaNavalImpl implements ServiciosBatallaNaval{
 	}
 
 	public TableroVO refrescarTableroOponente(UsuarioVO usuario) throws RemoteException {
-		juego=JuegoBatallaNaval.crearJuegoBN(usuario, true);
+		juego=JuegoBatallaNaval.crearJuegoBN(usuario);
 		return juego.refrescarTableroOponente(usuario);
 	}
 
 	public ArrayList<RegistroDisparo> obtenerListaDisparos(UsuarioVO usuario) throws RemoteException {
-		juego=JuegoBatallaNaval.crearJuegoBN(usuario, true);
+		juego=JuegoBatallaNaval.crearJuegoBN(usuario);
 		return juego.obtenerListaDisparos(usuario);
 	}
 
 	public boolean hundi(UsuarioVO usuario) throws RemoteException {
-		juego=JuegoBatallaNaval.crearJuegoBN(usuario, true);
+		juego=JuegoBatallaNaval.crearJuegoBN(usuario);
 		ArrayList<RegistroDisparo> nuevo=obtenerListaDisparos(usuario);
 		if(nuevo!=null){
 			return nuevo.get(nuevo.size()-1).getResultado()==Estados.HUNDIDO;
@@ -173,12 +173,12 @@ public class ServiciosBatallaNavalImpl implements ServiciosBatallaNaval{
 	}
 
 	public boolean gane(UsuarioVO usuario) throws RemoteException {
-		juego=JuegoBatallaNaval.crearJuegoBN(usuario, true);
+		juego=JuegoBatallaNaval.crearJuegoBN(usuario);
 		return juego.gane(usuario);
 	}
 
 	public boolean perdi(UsuarioVO usuario) throws RemoteException {
-		juego=JuegoBatallaNaval.crearJuegoBN(usuario, true);
+		juego=JuegoBatallaNaval.crearJuegoBN(usuario);
 		return juego.perdi(usuario);
 	}
 	private static BatallaNavalDAO getDAO2() {

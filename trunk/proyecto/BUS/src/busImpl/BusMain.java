@@ -5,6 +5,8 @@ import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 import java.rmi.server.UnicastRemoteObject;
 
+import busImpl.batallaNaval.ServiciosBatallaNavalImpl;
+
 import comm.ServiciosBatallaNaval;
 import comm.ServiciosDesafio;
 import comm.ServiciosRanking;

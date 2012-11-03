@@ -1,4 +1,4 @@
-package busImpl;
+package busImpl.batallaNaval;
 
 import java.io.Serializable;
 

@@ -2,10 +2,10 @@ package daoInterfaces;
 
 import java.util.ArrayList;
 
-import busImpl.Disparo;
 import busImpl.Estados;
-import busImpl.RegistroDisparo;
-import busImpl.Tablero;
+import busImpl.batallaNaval.Disparo;
+import busImpl.batallaNaval.RegistroDisparo;
+import busImpl.batallaNaval.Tablero;
 
 public interface BatallaNavalDAO {
 

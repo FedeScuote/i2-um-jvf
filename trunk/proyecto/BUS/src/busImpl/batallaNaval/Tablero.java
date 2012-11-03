@@ -1,6 +1,9 @@
-package busImpl;
+package busImpl.batallaNaval;
 
 import java.util.ArrayList;
+
+import busImpl.Estados;
+import busImpl.Usuario;
 
 import excepcionesB.CoordenadasCeldasInvalidasException;
 
@@ -143,6 +146,11 @@ public class Tablero {
 				throw new CoordenadasCeldasInvalidasException();
 			}
 			idBarco=Integer.parseInt(LARGO_ACORAZADO+""+cantBarcosAcorazadoColocados);
+		}
+		if(coordenadaInicialY>coordenadaFinalY){
+			int aux=coordenadaInicialY;
+			coordenadaInicialY=coordenadaFinalY;
+			coordenadaFinalY=aux;
 		}
 		if (!(coordenadaInicialY > coordenadaFinalY)&& !(coordenadaFinalY >= tabla.length)&&!(coordenadaInicialY<0) ) {
 			for (int i = coordenadaInicialY; i <= coordenadaFinalY; i++) {
@@ -305,6 +313,11 @@ public class Tablero {
 				throw new CoordenadasCeldasInvalidasException();
 			}
 			idBarco=Integer.parseInt(LARGO_ACORAZADO+""+cantBarcosAcorazadoColocados);
+		}
+		if(coordenadaInicialX>coordenadaFinalX){
+			int aux=coordenadaInicialX;
+			coordenadaInicialX=coordenadaFinalX;
+			coordenadaFinalX=aux;
 		}
 		if (!(coordenadaInicialX > coordenadaFinalX)&&!(coordenadaFinalX >= tabla.length)&&!(coordenadaInicialX<0)) {
 			for (int i = coordenadaInicialX; i <= coordenadaFinalX; i++) {

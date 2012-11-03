@@ -1,6 +1,8 @@
-package busImpl;
+package busImpl.batallaNaval;
 
 import java.io.Serializable;
+
+import busImpl.Estados;
 
 public class RegistroDisparo implements Serializable {
 
