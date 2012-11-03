@@ -1,4 +1,4 @@
-package busImpl;
+package busImpl.batallaNaval;
 
 public class Celda {
 	private static final String AGUA = "AGUA";

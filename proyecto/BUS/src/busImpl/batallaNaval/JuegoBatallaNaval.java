@@ -1,8 +1,11 @@
-package busImpl;
+package busImpl.batallaNaval;
 
 import java.rmi.RemoteException;
 import java.util.ArrayList;
 import org.apache.log4j.Logger;
+
+import busImpl.Estados;
+import busImpl.Usuario;
 import comm.CeldaVO;
 import comm.TableroVO;
 import comm.UsuarioVO;
@@ -11,15 +14,10 @@ import commExceptions.NoInicioJuegoException;
 import daoInterfaces.BatallaNavalDAO;
 import daoInterfaces.DesafioDAO;
 import daoInterfaces.PartidaDAO;
+import daoInterfaces.UsuarioDAO;
 import excepcionesB.CoordenadasCeldasInvalidasException;
 
 public class JuegoBatallaNaval{
-
-
-	private static final String USUARIO_BOT_1 = "jhirata";
-	private static final String USUARIO_BOT_2 = "vtuyare";
-	private static final String USUARIO_BOT_3 = "fkono";
-	private static final String USUARIO_BOT_4 = "jdiaz";
 
 	private static final String SUBMARINO = "SUBMARINO";
 	private static final String DESTRUCTORES = "DESTRUCTORES";
@@ -644,7 +642,22 @@ public class JuegoBatallaNaval{
 		}
 		return null;
 	}
-
+	private static UsuarioDAO getUsuarioDAO() {
+		try {
+			return (UsuarioDAO) Class.forName("daoImpl.UsuarioDAODB")
+					.newInstance();
+		} catch (InstantiationException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IllegalAccessException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return null;
+	}
 	private static PartidaDAO getPartidaDAO() {
 		try {
 			return (PartidaDAO) Class.forName("daoImpl.PartidaDAODB")
@@ -674,9 +687,10 @@ public class JuegoBatallaNaval{
 		return tableroInicial;
 	}
 
-	public static JuegoBatallaNaval crearJuegoBN(UsuarioVO usuario, boolean modo){
+	public static JuegoBatallaNaval crearJuegoBN(UsuarioVO usuario){
 		BatallaNavalDAO daoBatallaNaval = getBattallaNavalDAO();
 		PartidaDAO daoPartida = getPartidaDAO();
+		UsuarioDAO daoUsuario =getUsuarioDAO();
 		int cantHundidosJ1=0;
 		int cantHundidosJ2=0;
 		int idPartida=daoPartida.idPartida(usuario.getIdUsuario());
@@ -684,7 +698,7 @@ public class JuegoBatallaNaval{
 		int idJugador2=daoPartida.oponente(usuario.getIdUsuario()).getIdUsuarioB();
 		Tablero tableroInicialJugador1=daoBatallaNaval.getTablero(idPartida, idJugador1);
 		Tablero tableroInicialJugador2=daoBatallaNaval.getTablero(idPartida, idJugador2);
-		modo=JuegoBatallaNaval.esBot(daoPartida.oponente(usuario.getIdUsuario()).getUsuarioB());
+		boolean modo=daoUsuario.esUsuarioVirtual(daoPartida.oponente(usuario.getIdUsuario()).getUsuarioB());
 		ArrayList<RegistroDisparo> listaJugador1 =daoBatallaNaval.getListaDeTiros(idPartida, idJugador1);
 		for(int i=0;i<listaJugador1.size();i++){
 			log.debug(listaJugador1.get(i).getDisparo().getFila());
@@ -728,14 +742,11 @@ public class JuegoBatallaNaval{
 		return juego;
 	}
 
-	private static boolean esBot(String usuario) {
-		return usuario.equals(USUARIO_BOT_1)||usuario.equals(USUARIO_BOT_2)||usuario.equals(USUARIO_BOT_3)||usuario.equals(USUARIO_BOT_4);
-	}
 
 	public static void main(String[] args) {
 		UsuarioVO nuevo= new UsuarioVO("fscouteguazza");
 		nuevo.setIdUsuario(3);
-		JuegoBatallaNaval juego = crearJuegoBN(nuevo, true);
+		JuegoBatallaNaval juego = crearJuegoBN(nuevo);
 
 	}
 
