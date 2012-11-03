@@ -2,6 +2,7 @@ package daoImpl;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 import conexion.Conexion;
 import busImpl.Usuario;
@@ -22,6 +23,7 @@ public class UsuarioDAODB implements UsuarioDAO {
 	private String paisD;
 	private int creditoD;
 	private static Logger logger = Logger.getLogger(UsuarioDAODB.class);
+
 
 	public Usuario findByName(String usuario) throws NotDataFoundException {
 		logger.debug("Entro a findByName con parametro de entrada usuario= "+usuario);
@@ -166,6 +168,52 @@ public class UsuarioDAODB implements UsuarioDAO {
 		logger.debug("Me desconecto de la base de datos del método getResultadoCredito");
 		c.disconnect();
 		return resultado;
+	}
+
+	public boolean esUsuarioVirtual(String usuario) {
+		Conexion c=new Conexion();
+		boolean virtual=false;
+		UsuarioDAODB ud=new UsuarioDAODB();
+
+		try {
+			Usuario u=ud.findByName(usuario);
+			int idUsuario=u.getIdUsuarioB();
+			ResultSet rs=c.devolverResutado("SELECT idUsuario FROM usuarios WHERE idusuario='"+idUsuario+"' AND virtual='1'");
+			if(rs.first()){
+				virtual=true;
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (NotDataFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return virtual;
+	}
+
+	public ArrayList<Usuario> getUsuariosVirtuales() {
+		ArrayList a=new ArrayList();
+		Conexion c=new Conexion();
+		Usuario u=new Usuario();
+		UsuarioDAODB ud=new UsuarioDAODB();
+		try {
+			ResultSet rs=c.devolverResutado("SELECT usuario FROM usuarios, usuarios_has_juegos_desafios, desafios WHERE idusuario=usuarios_idusuario AND virtual='1' AND estadoD='En curso'");
+			while(rs.next()){
+				String usuario=rs.getString("usuario");
+				u=ud.findByName(usuario);
+			}
+
+		} catch (SQLException e) {
+			logger.debug("No existe usuario Virtual disponible");
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (NotDataFoundException e) {
+			logger.debug("No existe usuario Virtual disponible");
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return a;
 	}
 
 
