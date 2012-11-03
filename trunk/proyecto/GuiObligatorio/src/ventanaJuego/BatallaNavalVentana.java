@@ -200,7 +200,6 @@ public class BatallaNavalVentana extends JFrame {
 		panel.setLayout(new GridLayout(TAMANO_TABLERO, TAMANO_TABLERO));
 		for (int i = 1; i < TAMANO_TABLERO; i++) {
 			this.crearFila(panel, i, botones);
-
 		}
 
 	}
