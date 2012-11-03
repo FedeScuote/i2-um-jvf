@@ -11,4 +11,5 @@ public interface ServiciosDesafio extends Remote{
 	public ArrayList<DesafioBatallaNavalVO> getDesafios() throws RemoteException, NoHayDesafiosDisponiblesException;
 	public boolean aceptaronDesafio(UsuarioVO usuario) throws RemoteException;
 	public void crearDesafio(UsuarioVO usuario,int monto) throws RemoteException;
+	public ArrayList<DesafioVO> getDesafiosLudo() throws RemoteException;
 }
