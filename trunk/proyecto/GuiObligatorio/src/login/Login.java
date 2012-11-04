@@ -140,6 +140,7 @@ public class Login extends JFrame {
 	private JPanel getPanelCentro() {
 		if (PanelCentro == null) {
 			PanelCentro = new TransparentPanel();
+			PanelCentro.setOpaque(false);
 			PanelCentro.setLayout(new GridBagLayout());
 			GridBagConstraints gridBagConstraints12 =  new GridBagConstraints() ;
 			gridBagConstraints12.gridx = 9;
