@@ -110,15 +110,18 @@ public class SegundaPantalla extends JFrame {
 		if (panelSegundaPantalla == null) {
 			GridBagConstraints gridBagConstraints4 = new GridBagConstraints();
 			gridBagConstraints4.fill = GridBagConstraints.BOTH;
-			gridBagConstraints4.gridy = 3;
+			gridBagConstraints4.gridy = 2;
 			gridBagConstraints4.weightx = 1.0;
 			gridBagConstraints4.weighty = 1.0;
+			gridBagConstraints4.gridheight = 3;
 			gridBagConstraints4.gridx = 4;
 			GridBagConstraints gridBagConstraints3 = new GridBagConstraints();
 			gridBagConstraints3.fill = GridBagConstraints.BOTH;
-			gridBagConstraints3.gridy = 3;
+			gridBagConstraints3.gridy = 2;
 			gridBagConstraints3.weightx = 1.0;
 			gridBagConstraints3.weighty = 1.0;
+			gridBagConstraints3.gridwidth = 1;
+			gridBagConstraints3.gridheight = 3;
 			gridBagConstraints3.gridx = 1;
 			GridBagConstraints gridBagConstraints11 = new GridBagConstraints();
 			gridBagConstraints11.gridx = 2;

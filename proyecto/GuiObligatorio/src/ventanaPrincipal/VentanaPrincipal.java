@@ -37,6 +37,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.ResourceBundle;
 
+import login.Login;
 import login.LoginVentana;
 
 public class VentanaPrincipal extends JFrame {
@@ -64,6 +65,8 @@ public class VentanaPrincipal extends JFrame {
 	private JButton jugarBackgammon = null;
 
 	private static Logger logger = Logger.getLogger(LoginVentana.class);
+
+	private JButton DesconexionBoton = null;
 
 	/**
 	 * This is the default constructor
@@ -113,6 +116,11 @@ public class VentanaPrincipal extends JFrame {
 	 */
 	private JPanel getPanelVentanaPrincipal() {
 		if (panelVentanaPrincipal == null) {
+			GridBagConstraints gridBagConstraints11 = new GridBagConstraints() ;
+			gridBagConstraints11.gridx = 0;
+			gridBagConstraints11.ipadx = 90;
+			gridBagConstraints11.ipady = 40;
+			gridBagConstraints11.gridy = 4;
 			GridBagConstraints gridBagConstraints8 = new GridBagConstraints();
 			gridBagConstraints8.gridx = 0;
 			gridBagConstraints8.gridheight = 10;
@@ -139,7 +147,7 @@ public class VentanaPrincipal extends JFrame {
 			gridBagConstraints1.gridy = 3;
 			GridBagConstraints gridBagConstraints = new GridBagConstraints();
 			gridBagConstraints.fill = GridBagConstraints.NONE;
-			gridBagConstraints.gridy = 4;
+			gridBagConstraints.gridy = 5;
 			gridBagConstraints.weightx = 1.0;
 			gridBagConstraints.weighty = 1.0;
 			gridBagConstraints.anchor = GridBagConstraints.CENTER;
@@ -157,6 +165,7 @@ public class VentanaPrincipal extends JFrame {
 			panelVentanaPrincipal
 					.add(getJugarBackgammon(), gridBagConstraints3);
 		//	panelVentanaPrincipal.add(imagenFondo, gridBagConstraints8);
+			panelVentanaPrincipal.add(getDesconexionBoton(), gridBagConstraints11);
 		}
 		return panelVentanaPrincipal;
 	}
@@ -270,6 +279,30 @@ public class VentanaPrincipal extends JFrame {
 				remoteExceptionrmi.printStackTrace();
 			}
 		}
+	}
+	/**
+	 * This method initializes DesconexionBoton
+	 *
+	 * @return javax.swing.JButton
+	 */
+	private JButton getDesconexionBoton() {
+		if (DesconexionBoton == null) {
+			DesconexionBoton = new JButton();
+			DesconexionBoton.setText("Desconectar");
+			DesconexionBoton.addActionListener(new java.awt.event.ActionListener() {
+				public void actionPerformed(java.awt.event.ActionEvent e) {
+					dispose();
+					Login l = new Login();
+					l.setVisible(true);
+				}
+			});
+		}
+		return DesconexionBoton;
+	}
+
+	public static void main(String[] args) {
+		VentanaPrincipal l = new VentanaPrincipal(null);
+		l.setVisible(true);
 	}
 
 } // @jve:decl-index=0:visual-constraint="39,-35"

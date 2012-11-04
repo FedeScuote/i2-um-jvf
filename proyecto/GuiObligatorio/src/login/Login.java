@@ -10,6 +10,7 @@ import javax.swing.JPanel;
 import javax.swing.JFrame;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
+import javax.swing.RepaintManager;
 
 import org.apache.log4j.Logger;
 
@@ -19,6 +20,7 @@ import comm.UsuarioVO;
 import commExceptions.ContrasenaInvalidaException;
 import commExceptions.NoSeEncuentraUsuarioException;
 
+import util.CustomGlassPane;
 import util.ImagePanel;
 import util.AnimatedPanel;
 import ventanaJuego.BatallaNavalVentana;
@@ -52,7 +54,7 @@ public class Login extends JFrame {
 	private JTextField usuario = null;
 	private JPasswordField password = null;
 	private static Logger logger = Logger.getLogger(LoginVentana.class);
-	private ResourceBundle labels = ResourceBundle.getBundle("Gui");
+	private ResourceBundle labels = ResourceBundle.getBundle("Gui");  //  @jve:decl-index=0:
 	/**
 	 * This method initializes PanelLogin
 	 *
@@ -258,6 +260,8 @@ public class Login extends JFrame {
 			botonLogin.addActionListener(new java.awt.event.ActionListener() {
 				public void actionPerformed(java.awt.event.ActionEvent e) {
 					// RECIBO LOS DATOS Y LOS MANDO AL BUS
+					CustomGlassPane glassPane = new CustomGlassPane();
+					pantalla.setGlassPane(glassPane);
 					String datosUsuario = usuario.getText();
 					char[] charPassword = password.getPassword();
 					String datosPassword = Login
@@ -271,8 +275,8 @@ public class Login extends JFrame {
 						UsuarioVO response = stub1.login(datosUsuario,
 								datosPassword);
 						logger.debug("Se logeo");
-						JOptionPane.showMessageDialog(new JFrame(),
-						labels.getString("LABEL_BIENVENIDO")+" "+response.getNombreB());
+						JOptionPane.showMessageDialog(glassPane,
+								labels.getString("LABEL_BIENVENIDO")+" "+response.getNombreB());
 					    partidaEnCurso(response);
 
 					} catch (Exception error) {
@@ -286,9 +290,9 @@ public class Login extends JFrame {
 								JOptionPane.showMessageDialog(new JFrame(),
 										labels.getString("LABEL_PASSWORD_INVALIDO"), labels.getString("LABEL_ERROR"), JOptionPane.ERROR_MESSAGE);
 							} else {
-
+								logger.error("error de conexion");
 								error.printStackTrace();
-								JOptionPane.showMessageDialog(new JFrame(),labels.getString("LABEL_ERROR_DESCONOCIDO"), labels.getString("LABEL_ERROR"), JOptionPane.ERROR_MESSAGE);
+								JOptionPane.showMessageDialog(pantalla,"HOLA", labels.getString("LABEL_ERROR"), JOptionPane.ERROR_MESSAGE);
 								pantalla.dispose();
 							}
 

@@ -31,5 +31,10 @@ public class ImagePanel extends JPanel{
 		  g.setClip(0, 0, this.getWidth(), this.getHeight());
 		  g.drawImage(img, 0, 0, null);
 	  }
+	  @Override
+	  public void paint(Graphics g){
+		  this.paintComponent(g);
+			this.paintChildren(g);
+	  }
 
 }
