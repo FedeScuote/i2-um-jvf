@@ -7,4 +7,5 @@ import commExceptions.ContrasenaInvalidaException;
 import commExceptions.NoSeEncuentraUsuarioException;
 public interface ServiciosUsuario extends Remote{
 	public UsuarioVO login(String usuario,String contraseña) throws RemoteException, NoSeEncuentraUsuarioException, ContrasenaInvalidaException;
+	//public int getSaldo(UsuarioVO usuario) throws RemoteException;
 }
