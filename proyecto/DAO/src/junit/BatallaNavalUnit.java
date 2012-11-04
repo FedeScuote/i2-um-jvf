@@ -3,10 +3,10 @@ package junit;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-import busImpl.Celda;
-import busImpl.Disparo;
+import busImpl.batallaNaval.*;
+
 import busImpl.Estados;
-import busImpl.Tablero;
+
 import busImpl.Usuario;
 import conexion.Conexion;
 import daoImpl.BatallaNavalDAODB;

@@ -193,15 +193,18 @@ public class UsuarioDAODB implements UsuarioDAO {
 	}
 
 	public ArrayList<Usuario> getUsuariosVirtuales() {
-		ArrayList a=new ArrayList();
+		logger.debug("Entro a getUsuariosVirtuales");
+		ArrayList<Usuario> a=new ArrayList<Usuario>();
 		Conexion c=new Conexion();
 		Usuario u=new Usuario();
 		UsuarioDAODB ud=new UsuarioDAODB();
 		try {
-			ResultSet rs=c.devolverResutado("SELECT usuario FROM usuarios, usuarios_has_juegos_desafios, desafios WHERE idusuario=usuarios_idusuario AND virtual='1' AND estadoD='En curso'");
+			ResultSet rs=c.devolverResutado("SELECT usuario FROM usuarios WHERE virtual='1' AND (usuario) NOT IN(SELECT usuario FROM usuarios,usuarios_has_juegos_desafios,desafios WHERE usuarios_idusuario=idusuario AND desafios_idDesafio=idDesafio AND estadoD='En curso' AND virtual='1')");
 			while(rs.next()){
 				String usuario=rs.getString("usuario");
+				logger.debug("Usuario virtual: "+usuario);
 				u=ud.findByName(usuario);
+				a.add(u);
 			}
 
 		} catch (SQLException e) {
@@ -213,6 +216,8 @@ public class UsuarioDAODB implements UsuarioDAO {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		logger.debug("Me desconecto de la base de datos del método getUsuariosVirtuales");
+		c.disconnect();
 		return a;
 	}
 
