@@ -45,13 +45,16 @@ public class LoginVentana extends JFrame {
 
 	private JLabel labelPassword = null;
 
-	private JButton Login = null;
+	private JButton botonLogin = null;
 
 	private JTextField usuario = null;
 
 	private JPasswordField password = null;
 
 	private static Logger logger = Logger.getLogger(LoginVentana.class);
+
+	private JPanel PanelTranslucent = null;
+
 	//  @jve:decl-index=0:
 	/**
 	 * This is the default constructor
@@ -73,6 +76,7 @@ public class LoginVentana extends JFrame {
 	private void initialize() {
 		this.setContentPane(getJContentPane());
 		this.setTitle(labels.getString("nombre_empresa"));
+		this.setSize(new Dimension(881, 334));
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	}
 
@@ -97,57 +101,15 @@ public class LoginVentana extends JFrame {
 	 */
 	private JPanel getPanelLogin() {
 		if (panelLogin == null) {
-			GridBagConstraints gridBagConstraints10 = new GridBagConstraints();
-			gridBagConstraints10.fill = GridBagConstraints.NONE;
-			gridBagConstraints10.gridy = 4;
-			gridBagConstraints10.weightx = 1.0;
-			gridBagConstraints10.ipadx = 100;
-			gridBagConstraints10.insets = new Insets(10, 0, 0, 0);
-			gridBagConstraints10.gridx = 9;
-			GridBagConstraints gridBagConstraints2 = new GridBagConstraints();
-			gridBagConstraints2.gridx = 9;
-			gridBagConstraints2.ipadx = 0;
-			gridBagConstraints2.ipady = 0;
-			gridBagConstraints2.gridheight = 7;
-			gridBagConstraints2.insets = new Insets(0, 0, 1, 0);
-			gridBagConstraints2.gridy = 0;
-			GridBagConstraints gridBagConstraints = new GridBagConstraints();
-			gridBagConstraints.gridx = 9;
-			gridBagConstraints.gridy = 1;
-			GridBagConstraints gridBagConstraints21 = new GridBagConstraints();
-			gridBagConstraints21.fill = GridBagConstraints.NONE;
-			gridBagConstraints21.gridy = 2;
-			gridBagConstraints21.weightx = 1.0;
-			gridBagConstraints21.insets = new Insets(10, 0, 0, 0);
-			gridBagConstraints21.ipadx = 100;
-			gridBagConstraints21.gridx = 9;
-			GridBagConstraints gridBagConstraints11 = new GridBagConstraints();
-			gridBagConstraints11.gridx = 9;
-			gridBagConstraints11.ipadx = 100;
-			gridBagConstraints11.ipady = 15;
-			gridBagConstraints11.anchor = GridBagConstraints.SOUTH;
-			gridBagConstraints11.gridwidth = 1;
-			gridBagConstraints11.fill = GridBagConstraints.NONE;
-			gridBagConstraints11.insets = new Insets(10, 0, 0, 0);
-			gridBagConstraints11.gridy = 5;
-			GridBagConstraints gridBagConstraints1 = new GridBagConstraints();
-			gridBagConstraints1.gridx = 9;
-			gridBagConstraints1.insets = new Insets(0, 0, 0, 0);
-			gridBagConstraints1.gridy = 3;
-			labelPassword = new JLabel();
-			labelPassword.setText(labels.getString("LABEL_PASSWORD"));//busco en mis properties
-			labelUsuario = new JLabel();
-			labelUsuario.setText(labels.getString("LABEL_USERNAME"));//busco en mis properties el texto
+
 			panelLogin = new ImagePanel(new ImageIcon("src/fichas_de_un_casino-1920x1200.jpg").getImage());
-			panelLogin.setLayout(new GridBagLayout());
+			panelLogin.setLayout(new BorderLayout());
 			panelLogin.setPreferredSize(new Dimension(10, 10));
 			panelLogin.setSize(new Dimension(10, 10));
 			panelLogin.setVisible(true);
-			panelLogin.add(labelPassword, gridBagConstraints1);
-			panelLogin.add(getLogin(this), gridBagConstraints11);
-			panelLogin.add(getUsuario(), gridBagConstraints21);
-			panelLogin.add(labelUsuario, gridBagConstraints);
-			panelLogin.add(getPassword(), gridBagConstraints10);
+			panelLogin.add(this.getPanelTranslucent(), BorderLayout.CENTER);
+
+
 		}
 		return panelLogin;
 	}
@@ -159,10 +121,10 @@ public class LoginVentana extends JFrame {
 	 */
 	// BOTON LOGIN
 	private JButton getLogin(final LoginVentana pantalla) {
-		if (Login == null) {
-			Login = new JButton();
-			Login.setText(labels.getString("LABEL_BOTON_LOGIN"));
-			Login.addActionListener(new java.awt.event.ActionListener() {
+		if (botonLogin == null) {
+			botonLogin = new JButton();
+			botonLogin.setText(labels.getString("LABEL_BOTON_LOGIN"));
+			botonLogin.addActionListener(new java.awt.event.ActionListener() {
 				public void actionPerformed(java.awt.event.ActionEvent e) {
 					// RECIBO LOS DATOS Y LOS MANDO AL BUS
 					String datosUsuario = usuario.getText();
@@ -205,7 +167,7 @@ public class LoginVentana extends JFrame {
 				}
 			});
 		}
-		return Login;
+		return botonLogin;
 	}
 
 	/**
@@ -263,6 +225,73 @@ public class LoginVentana extends JFrame {
 		VentanaPrincipal l = new VentanaPrincipal(usuario);
 		l.setVisible(true);
 		this.dispose();
+	}
+
+	/**
+	 * This method initializes PanelTranslucent
+	 *
+	 * @return javax.swing.JPanel
+	 */
+	private JPanel getPanelTranslucent() {
+		if (PanelTranslucent == null) {
+			PanelTranslucent = new JPanel();
+			PanelTranslucent.setLayout(new GridBagLayout());
+			GridBagConstraints gridBagConstraints12 =  new GridBagConstraints() ;
+			gridBagConstraints12.gridx = 9;
+			gridBagConstraints12.gridy = 0;
+			GridBagConstraints gridBagConstraints10 = new GridBagConstraints();
+			gridBagConstraints10.fill = GridBagConstraints.NONE;
+			gridBagConstraints10.gridy = 4;
+			gridBagConstraints10.weightx = 1.0;
+			gridBagConstraints10.ipadx = 100;
+			gridBagConstraints10.insets = new Insets(10, 0, 0, 0);
+			gridBagConstraints10.gridx = 9;
+			GridBagConstraints gridBagConstraints2 = new GridBagConstraints();
+			gridBagConstraints2.gridx = 9;
+			gridBagConstraints2.ipadx = 0;
+			gridBagConstraints2.ipady = 0;
+			gridBagConstraints2.gridheight = 7;
+			gridBagConstraints2.insets = new Insets(0, 0, 1, 0);
+			gridBagConstraints2.gridy = 0;
+			GridBagConstraints gridBagConstraints = new GridBagConstraints();
+			gridBagConstraints.gridx = 9;
+			gridBagConstraints.gridy = 1;
+			GridBagConstraints gridBagConstraints21 = new GridBagConstraints();
+			gridBagConstraints21.fill = GridBagConstraints.NONE;
+			gridBagConstraints21.gridy = 2;
+			gridBagConstraints21.weightx = 1.0;
+			gridBagConstraints21.insets = new Insets(10, 0, 0, 0);
+			gridBagConstraints21.ipadx = 100;
+			gridBagConstraints21.gridx = 9;
+			GridBagConstraints gridBagConstraints11 = new GridBagConstraints();
+			gridBagConstraints11.gridx = 9;
+			gridBagConstraints11.ipadx = 100;
+			gridBagConstraints11.ipady = 15;
+			gridBagConstraints11.anchor = GridBagConstraints.SOUTH;
+			gridBagConstraints11.gridwidth = 1;
+			gridBagConstraints11.fill = GridBagConstraints.NONE;
+			gridBagConstraints11.insets = new Insets(10, 0, 0, 0);
+			gridBagConstraints11.gridy = 5;
+			GridBagConstraints gridBagConstraints1 = new GridBagConstraints();
+			gridBagConstraints1.gridx = 9;
+			gridBagConstraints1.insets = new Insets(0, 0, 0, 0);
+			gridBagConstraints1.gridy = 3;
+			labelPassword = new JLabel();
+			labelPassword.setText(labels.getString("LABEL_PASSWORD"));//busco en mis properties
+			labelUsuario = new JLabel();
+			labelUsuario.setText(labels.getString("LABEL_USERNAME"));//busco en mis properties el texto
+			labelPassword = new JLabel();
+			labelPassword.setText(labels.getString("LABEL_PASSWORD"));//busco en mis properties
+			labelUsuario = new JLabel();
+			labelUsuario.setText(labels.getString("LABEL_USERNAME"));//busco en mis properties el texto
+			PanelTranslucent.add(labelPassword, gridBagConstraints1);
+			PanelTranslucent.add(getLogin(this), gridBagConstraints11);
+			PanelTranslucent.add(getUsuario(), gridBagConstraints21);
+			PanelTranslucent.add(labelUsuario, gridBagConstraints);
+			PanelTranslucent.add(getPassword(), gridBagConstraints10);
+
+		}
+		return PanelTranslucent;
 	}
 
 	public static void main(String[] args) {

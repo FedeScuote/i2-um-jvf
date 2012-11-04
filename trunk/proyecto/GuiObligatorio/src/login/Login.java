@@ -20,7 +20,7 @@ import commExceptions.ContrasenaInvalidaException;
 import commExceptions.NoSeEncuentraUsuarioException;
 
 import util.ImagePanel;
-import util.TransparentPanel;
+import util.AnimatedPanel;
 import ventanaJuego.BatallaNavalVentana;
 import ventanaPrincipal.VentanaPrincipal;
 
@@ -45,7 +45,7 @@ public class Login extends JFrame {
 	private JPanel PanelSur = null;
 	private JPanel PanelEste = null;
 	private JPanel PanelOeste = null;
-	private TransparentPanel PanelCentro = null;
+	private AnimatedPanel PanelCentro = null;
 	private JLabel labelUsuario = null;
 	private JLabel labelPassword = null;
 	private JButton botonLogin = null;
@@ -139,7 +139,7 @@ public class Login extends JFrame {
 	 */
 	private JPanel getPanelCentro() {
 		if (PanelCentro == null) {
-			PanelCentro = new TransparentPanel();
+			PanelCentro = new AnimatedPanel();
 			PanelCentro.setOpaque(false);
 			PanelCentro.setLayout(new GridBagLayout());
 			GridBagConstraints gridBagConstraints12 =  new GridBagConstraints() ;
