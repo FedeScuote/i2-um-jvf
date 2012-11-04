@@ -8,11 +8,8 @@ import org.apache.log4j.Logger;
 
 import conexion.Conexion;
 
-import busImpl.Celda;
-import busImpl.Disparo;
+import busImpl.batallaNaval.*;
 import busImpl.Estados;
-import busImpl.RegistroDisparo;
-import busImpl.Tablero;
 import busImpl.Usuario;
 import daoInterfaces.BatallaNavalDAO;
 import excepcionesB.NotDataFoundException;

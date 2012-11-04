@@ -1,25 +1,11 @@
 package daoImpl;
 
 
-import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Date;
 
 import org.apache.log4j.Logger;
 
-import conexion.Conexion;
-
-import excepcionesB.NoHayDesafioException;
-import excepcionesB.NoHayRankingException;
-import excepcionesB.NotDataFoundException;
-import excepcionesD.NoExisteTableroException;
-import excepcionesD.NoExisteUsuarioException;
-import busImpl.Celda;
-import busImpl.Disparo;
-import busImpl.Estados;
-import busImpl.Tablero;
 import busImpl.Usuario;
-import busImpl.Desafio;
 
 public class DAOPruebas {
 	private static Logger logger = Logger.getLogger(DAOPruebas.class);
@@ -28,7 +14,12 @@ public class DAOPruebas {
 	 */
 	public static void main(String[] args) {
 		BatallaNavalDAODB td=new BatallaNavalDAODB();
-		logger.debug(td.getTablero(44, 1).getCantBarcosAcorazado());
+		//logger.debug(td.getTablero(44, 1).getCantBarcosAcorazado());
+
+		UsuarioDAODB dd=new UsuarioDAODB();
+		ArrayList<Usuario> a=dd.getUsuariosVirtuales();
+		System.out.println((a.get(0)).equals(null));
+		System.out.println((a.get(0)).getApellidoB());
 
 
 		/*
