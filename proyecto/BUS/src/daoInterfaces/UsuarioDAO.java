@@ -15,9 +15,8 @@ public interface UsuarioDAO {
 	//No implementado
 	public boolean agregarUsuario(String usuario, String clave, int nivelPrilegio, int virtual, int credito, int partidasGanadas, String nombre, String apellido, String pais) throws YaExisteUsuarioException;
 
-
+	//terminados y probados
 	public ArrayList<Usuario> getUsuariosVirtuales();
-
 	public boolean esUsuarioVirtual(String usuario);
 
 
