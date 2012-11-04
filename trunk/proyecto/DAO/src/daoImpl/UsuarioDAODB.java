@@ -75,6 +75,7 @@ public class UsuarioDAODB implements UsuarioDAO {
 			if(esta){
 				return u;
 			}else{
+				logger.debug("No existe usuario");
 				throw new NotDataFoundException();
 			}
 		} catch (SQLException ex) {
@@ -171,6 +172,7 @@ public class UsuarioDAODB implements UsuarioDAO {
 	}
 
 	public boolean esUsuarioVirtual(String usuario) {
+		logger.debug("Entro a esUsuarioVirtual con parámetros de entrada usuario= "+usuario);
 		Conexion c=new Conexion();
 		boolean virtual=false;
 		UsuarioDAODB ud=new UsuarioDAODB();
@@ -186,9 +188,11 @@ public class UsuarioDAODB implements UsuarioDAO {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (NotDataFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			logger.debug("No existe usuario");
 		}
+		logger.debug("Me desconecto de la base de datos del método esUsuarioVirtual");
+		c.disconnect();
+		logger.debug("virtual= "+virtual);
 		return virtual;
 	}
 
