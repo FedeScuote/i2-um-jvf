@@ -23,6 +23,8 @@ import commExceptions.NoSeEncuentraUsuarioException;
 import util.CustomGlassPane;
 import util.ImagePanel;
 import util.AnimatedPanel;
+import util.JOptionPaneMensajes;
+import util.TransparentPanel;
 import ventanaJuego.BatallaNavalVentana;
 import ventanaPrincipal.VentanaPrincipal;
 
@@ -43,10 +45,10 @@ public class Login extends JFrame {
 	private static final String host = null;
 	private JPanel jContentPane = null;
 	private ImagePanel PanelLogin = null;
-	private JPanel PanelNorte = null;
-	private JPanel PanelSur = null;
-	private JPanel PanelEste = null;
-	private JPanel PanelOeste = null;
+	private TransparentPanel PanelNorte = null;
+	private TransparentPanel PanelSur = null;
+	private TransparentPanel PanelEste = null;
+	private TransparentPanel PanelOeste = null;
 	private AnimatedPanel PanelCentro = null;
 	private JLabel labelUsuario = null;
 	private JLabel labelPassword = null;
@@ -80,10 +82,9 @@ public class Login extends JFrame {
 	 */
 	private JPanel getPanelNorte() {
 		if (PanelNorte == null) {
-			PanelNorte = new JPanel();
+			PanelNorte = new TransparentPanel();
 			PanelNorte.setLayout(new GridBagLayout());
-			PanelNorte.setPreferredSize(new Dimension(0, 200));
-			PanelNorte.setOpaque(false);
+			PanelNorte.setPreferredSize(new Dimension(0, this.getHeight()/3));
 
 		}
 		return PanelNorte;
@@ -96,10 +97,9 @@ public class Login extends JFrame {
 	 */
 	private JPanel getPanelSur() {
 		if (PanelSur == null) {
-			PanelSur = new JPanel();
+			PanelSur = new TransparentPanel();
 			PanelSur.setLayout(new GridBagLayout());
-			PanelSur.setPreferredSize(new Dimension(0, 200));
-			PanelSur.setOpaque(false);
+			PanelSur.setPreferredSize(new Dimension(0, this.getHeight()/3));
 		}
 		return PanelSur;
 	}
@@ -111,10 +111,10 @@ public class Login extends JFrame {
 	 */
 	private JPanel getPanelEste() {
 		if (PanelEste == null) {
-			PanelEste = new JPanel();
+			PanelEste = new TransparentPanel();
 			PanelEste.setLayout(new GridBagLayout());
-			PanelEste.setPreferredSize(new Dimension(200, 0));
-			PanelEste.setOpaque(false);
+			PanelEste.setPreferredSize(new Dimension(this.getWidth()/5, 0));
+
 		}
 		return PanelEste;
 	}
@@ -126,10 +126,9 @@ public class Login extends JFrame {
 	 */
 	private JPanel getPanelOeste() {
 		if (PanelOeste == null) {
-			PanelOeste = new JPanel();
+			PanelOeste = new TransparentPanel();
 			PanelOeste.setLayout(new GridBagLayout());
-			PanelOeste.setPreferredSize(new Dimension(200, 0));
-			PanelOeste.setOpaque(false);
+			PanelOeste.setPreferredSize(new Dimension(this.getWidth()/5, 0));
 		}
 		return PanelOeste;
 	}
@@ -292,7 +291,7 @@ public class Login extends JFrame {
 							} else {
 								logger.error("error de conexion");
 								error.printStackTrace();
-								JOptionPane.showMessageDialog(pantalla,"HOLA", labels.getString("LABEL_ERROR"), JOptionPane.ERROR_MESSAGE);
+								JOptionPaneMensajes.getError(pantalla, "ERROR");
 								pantalla.dispose();
 							}
 
