@@ -123,6 +123,7 @@ public class BatallaNavalVentana extends JFrame {
 		ActionListener ListenerInicioPartida = new ActionListener() {
 			public void actionPerformed(ActionEvent evt) {
 				try {
+					logger.debug("temporizadorInicioTurno");
 					Registry registry = LocateRegistry.getRegistry(host);
 					ServiciosBatallaNaval stub = (ServiciosBatallaNaval) registry
 							.lookup("BatallaNavalServices");
