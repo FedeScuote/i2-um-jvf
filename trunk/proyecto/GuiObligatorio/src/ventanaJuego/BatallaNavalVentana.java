@@ -127,6 +127,7 @@ public class BatallaNavalVentana extends JFrame {
 					ServiciosBatallaNaval stub = (ServiciosBatallaNaval) registry
 							.lookup("BatallaNavalServices");
 					if(stub.inicioPartida(usuario)){
+						logger.debug("Pregunto Si es mi turno");
 						temporizador.start();
 						temporizadorInicioPartida.stop();
 					}else{
