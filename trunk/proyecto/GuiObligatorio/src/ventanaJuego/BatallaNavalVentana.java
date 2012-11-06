@@ -145,6 +145,7 @@ public class BatallaNavalVentana extends JFrame {
 		temporizadorInicioPartida.setInitialDelay(pause);
 		temporizadorInicioPartida.addActionListener(ListenerInicioPartida);
 		temporizadorInicioPartida.setRepeats(false);
+		temporizadorInicioPartida.start();
 		temporizador = new Timer(pause, taskPerformer);
 		temporizador.setInitialDelay(pause);
 		temporizador.addActionListener(taskPerformer);
