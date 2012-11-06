@@ -49,6 +49,8 @@ public class BatallaNavalVentana extends JFrame {
 
 	private Timer temporizador;
 
+	private Timer temporizadorInicioPartida;
+
 	private JButton[][] botonesJugador = new JButton[TAMANO_TABLERO][TAMANO_TABLERO];
 
 	// botones que voy a
@@ -118,11 +120,32 @@ public class BatallaNavalVentana extends JFrame {
 				}
 			}
 		};
+		ActionListener ListenerInicioPartida = new ActionListener() {
+			public void actionPerformed(ActionEvent evt) {
+				try {
+					Registry registry = LocateRegistry.getRegistry(host);
+					ServiciosBatallaNaval stub = (ServiciosBatallaNaval) registry
+							.lookup("BatallaNavalServices");
+					if(stub.inicioPartida(usuario)){
+						temporizador.start();
+					}else{
+						temporizadorInicioPartida.start();
+					}
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+		};
+
+		temporizadorInicioPartida = new Timer(pause, taskPerformer);
+		temporizadorInicioPartida.setInitialDelay(pause);
+		temporizadorInicioPartida.addActionListener(taskPerformer);
+		temporizadorInicioPartida.setRepeats(false);
 		temporizador = new Timer(pause, taskPerformer);
 		temporizador.setInitialDelay(pause);
 		temporizador.addActionListener(taskPerformer);
 		temporizador.setRepeats(false);
-		temporizador.start();
 	}
 
 	/**
