@@ -461,6 +461,11 @@ public class ColocarBarcos extends JFrame {
 		if (BotonCrucero == null) {
 			BotonCrucero = new TransparentButton();
 			BotonCrucero.setText("CRUCERO");
+			BotonDestructor.addActionListener(new java.awt.event.ActionListener() {
+				public void actionPerformed(java.awt.event.ActionEvent e) {
+					BarcoSeleccionado= CRUCEROS;
+				}
+			});
 		}
 		return BotonCrucero;
 	}
@@ -474,6 +479,11 @@ public class ColocarBarcos extends JFrame {
 		if (BotonAcorazado == null) {
 			BotonAcorazado = new TransparentButton();
 			BotonAcorazado.setText("Acorazado");
+			BotonDestructor.addActionListener(new java.awt.event.ActionListener() {
+				public void actionPerformed(java.awt.event.ActionEvent e) {
+					BarcoSeleccionado= ACORAZADO;
+				}
+			});
 		}
 		return BotonAcorazado;
 	}
