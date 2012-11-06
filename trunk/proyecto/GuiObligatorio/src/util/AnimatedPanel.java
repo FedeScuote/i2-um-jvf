@@ -68,12 +68,8 @@ public class AnimatedPanel extends JPanel implements ActionListener {
 		g2.dispose();
 		// Draws the image onto the screen
 		g.drawImage(image, 0, 0, null);
-	}
-
-	@Override
-	public void paint(Graphics g) {
-		this.paintComponent(g);
 		this.paintChildren(g);
 	}
+
 
 }
