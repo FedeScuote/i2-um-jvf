@@ -35,6 +35,8 @@ public class BatallaNavalVentana extends JFrame {
 
 	private static final int pause = 2000;
 
+	private static final int pause2 = 4000;
+
 	private static final String host = null;
 
 	private UsuarioVO usuario;
@@ -141,8 +143,8 @@ public class BatallaNavalVentana extends JFrame {
 			}
 		};
 
-		temporizadorInicioPartida = new Timer(pause, ListenerInicioPartida);
-		temporizadorInicioPartida.setInitialDelay(pause);
+		temporizadorInicioPartida = new Timer(pause2, ListenerInicioPartida);
+		temporizadorInicioPartida.setInitialDelay(pause2);
 		temporizadorInicioPartida.addActionListener(ListenerInicioPartida);
 		temporizadorInicioPartida.setRepeats(false);
 		temporizadorInicioPartida.start();
