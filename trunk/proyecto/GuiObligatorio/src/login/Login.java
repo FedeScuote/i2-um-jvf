@@ -23,7 +23,6 @@ import commExceptions.NoSeEncuentraUsuarioException;
 import util.CustomGlassPane;
 import util.ImagePanel;
 import util.AnimatedPanel;
-import util.JOptionPaneMensajes;
 import util.TransparentPanel;
 import ventanaJuego.BatallaNavalVentana;
 import ventanaPrincipal.VentanaPrincipal;
