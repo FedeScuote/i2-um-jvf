@@ -291,7 +291,8 @@ public class Login extends JFrame {
 							} else {
 								logger.error("error de conexion");
 								error.printStackTrace();
-								JOptionPaneMensajes.getError(pantalla, "ERROR");
+								JOptionPane.showMessageDialog(new JFrame(),
+										labels.getString("LABEL_PASSWORD_INVALIDO"), labels.getString("LABEL_ERROR"), JOptionPane.ERROR_MESSAGE);
 								pantalla.dispose();
 							}
 
