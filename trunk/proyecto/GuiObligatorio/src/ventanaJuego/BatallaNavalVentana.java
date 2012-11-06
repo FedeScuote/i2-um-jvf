@@ -131,7 +131,7 @@ public class BatallaNavalVentana extends JFrame {
 						temporizador.start();
 						temporizadorInicioPartida.stop();
 					}else{
-						temporizadorInicioPartida.start();
+						temporizadorInicioPartida.restart();
 					}
 				} catch (Exception e) {
 					// TODO Auto-generated catch block
