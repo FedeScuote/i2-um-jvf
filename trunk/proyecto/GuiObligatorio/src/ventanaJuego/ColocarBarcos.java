@@ -1,14 +1,17 @@
 package ventanaJuego;
 
 import java.awt.BorderLayout;
+import java.awt.Dimension;
+import java.awt.GridBagLayout;
 
 import javax.swing.ImageIcon;
-import javax.swing.JPanel;
 import javax.swing.JFrame;
+import javax.swing.JPanel;
 
+import util.AnimatedPanelString;
 import util.ImagePanel;
 
-import java.awt.GridBagLayout;
+import comm.UsuarioVO;
 
 public class ColocarBarcos extends JFrame {
 
@@ -16,13 +19,15 @@ public class ColocarBarcos extends JFrame {
 	private JPanel jContentPane = null;
 	private ImagePanel PanelColocarBarcos = null;
 	private JPanel PanelTablero = null;
-
+	private AnimatedPanelString PanelIngresarBarco = null;
+	private UsuarioVO usuario;
 	/**
 	 * This is the default constructor
 	 */
-	public ColocarBarcos() {
+	public ColocarBarcos(UsuarioVO usu) {
 		super();
 		initialize();
+		usuario=usu;
 	}
 
 	/**
@@ -31,9 +36,10 @@ public class ColocarBarcos extends JFrame {
 	 * @return void
 	 */
 	private void initialize() {
-		this.setSize(300, 200);
+		this.setSize(761, 505);
 		this.setContentPane(getJContentPane());
 		this.setTitle("JFrame");
+		this.setExtendedState(JFrame.MAXIMIZED_BOTH);
 	}
 
 	/**
@@ -60,14 +66,15 @@ public class ColocarBarcos extends JFrame {
 			PanelColocarBarcos = new ImagePanel(new ImageIcon("src/BattleShip-069.jpg").getImage());
 			PanelColocarBarcos.setLayout(new BorderLayout());
 			PanelColocarBarcos.add(getPanelTablero(), BorderLayout.WEST);
+			PanelColocarBarcos.add(getPanelIngresarBarco(), BorderLayout.NORTH);
 		}
 		return PanelColocarBarcos;
 	}
 
 	/**
-	 * This method initializes PanelTablero	
-	 * 	
-	 * @return javax.swing.JPanel	
+	 * This method initializes PanelTablero
+	 *
+	 * @return javax.swing.JPanel
 	 */
 	private JPanel getPanelTablero() {
 		if (PanelTablero == null) {
@@ -77,4 +84,18 @@ public class ColocarBarcos extends JFrame {
 		return PanelTablero;
 	}
 
-}
+	/**
+	 * This method initializes PanelIngresarBarco
+	 *
+	 * @return javax.swing.JPanel
+	 */
+	private JPanel getPanelIngresarBarco() {
+		if (PanelIngresarBarco == null) {
+			PanelIngresarBarco = new AnimatedPanelString("INGRESE SUS BARCOS");
+			PanelIngresarBarco.setPreferredSize(new Dimension(0, this.getHeight()/3));
+			PanelIngresarBarco.setLayout(new GridBagLayout());
+		}
+		return PanelIngresarBarco;
+	}
+
+}  //  @jve:decl-index=0:visual-constraint="10,10"
