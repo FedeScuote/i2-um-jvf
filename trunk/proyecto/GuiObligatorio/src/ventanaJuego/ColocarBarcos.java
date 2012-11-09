@@ -62,19 +62,19 @@ public class ColocarBarcos extends JFrame {
 
 	private static final String SUBMARINO = "SUBMARINO";
 
-	private static final String DESTRUCTORES = "DESTRUCTORES";
+	private static final String DESTRUCTORES = "DESTRUCTORES";  //  @jve:decl-index=0:
 
 	private static final String CRUCEROS = "CRUCEROS";
 
 	private static final String ACORAZADO = "ACORAZADO";
 
 	private static Logger logger = Logger.getLogger(ColocarBarcos.class);
-	private TransparentButton BotonSubmarino = null;
-	private TransparentButton BotonDestructor = null;
-	private TransparentButton BotonCrucero = null;
-	private TransparentButton BotonAcorazado = null;
+	private JButton BotonSubmarino = null;
+	private JButton BotonDestructor = null;
+	private JButton BotonCrucero = null;
+	private JButton BotonAcorazado = null;
 
-	private String BarcoSeleccionado = "SUBMARINO";
+	private String BarcoSeleccionado = "SUBMARINO";  //  @jve:decl-index=0:
 	/**
 	 * This is the default constructor
 	 */
@@ -82,8 +82,10 @@ public class ColocarBarcos extends JFrame {
 		super();
 		initialize();
 		usuario=usu;
-		logger.debug("Constructor ColocarBarcosVentana");
+		logger.debug("Constructor ColocarBarcos" +
+				"");
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		this.setExtendedState(JFrame.MAXIMIZED_BOTH);
 		this.crearCabezal(PanelTablero);
 		this.crearTablero(PanelTablero, arrayBotones);
 		this.pedirDistribucion();
@@ -194,6 +196,7 @@ public class ColocarBarcos extends JFrame {
 		for (int i = 0; i < TAMANO_TABLERO; i++) {
 			JLabel jlabel = new JLabel();
 			panel.add(jlabel);
+			jlabel.setOpaque(false);
 			jlabel.setText(ALFABETO[i]); // alfabeto menos uno porque
 			jlabel.setHorizontalAlignment(SwingConstants.CENTER);
 			jlabel.setVerticalAlignment(SwingConstants.CENTER);
@@ -222,6 +225,7 @@ public class ColocarBarcos extends JFrame {
 				panel.add(jlabel);
 				jlabel.setText(numeroFila.toString()); // alfabeto menos uno
 				// porque
+				jlabel.setOpaque(false);
 				jlabel.setHorizontalAlignment(SwingConstants.CENTER);
 				jlabel.setVerticalAlignment(SwingConstants.CENTER);
 			} else {
@@ -423,7 +427,7 @@ public class ColocarBarcos extends JFrame {
 	 */
 	private JButton getBotonSubmarino() {
 		if (BotonSubmarino == null) {
-			BotonSubmarino = new TransparentButton();
+			BotonSubmarino = new JButton();
 			BotonSubmarino.setText("SUBMARINO");
 			BotonSubmarino.addActionListener(new java.awt.event.ActionListener() {
 				public void actionPerformed(java.awt.event.ActionEvent e) {
@@ -441,7 +445,7 @@ public class ColocarBarcos extends JFrame {
 	 */
 	private JButton getBotonDestructor() {
 		if (BotonDestructor == null) {
-			BotonDestructor = new TransparentButton();
+			BotonDestructor = new JButton();
 			BotonDestructor.setText("Destructor");
 			BotonDestructor.addActionListener(new java.awt.event.ActionListener() {
 				public void actionPerformed(java.awt.event.ActionEvent e) {
@@ -459,9 +463,9 @@ public class ColocarBarcos extends JFrame {
 	 */
 	private JButton getBotonCrucero() {
 		if (BotonCrucero == null) {
-			BotonCrucero = new TransparentButton();
+			BotonCrucero = new JButton();
 			BotonCrucero.setText("CRUCERO");
-			BotonDestructor.addActionListener(new java.awt.event.ActionListener() {
+			BotonCrucero.addActionListener(new java.awt.event.ActionListener() {
 				public void actionPerformed(java.awt.event.ActionEvent e) {
 					BarcoSeleccionado= CRUCEROS;
 				}
@@ -477,11 +481,11 @@ public class ColocarBarcos extends JFrame {
 	 */
 	private JButton getBotonAcorazado() {
 		if (BotonAcorazado == null) {
-			BotonAcorazado = new TransparentButton();
+			BotonAcorazado = new JButton();
 			BotonAcorazado.setText("Acorazado");
-			BotonDestructor.addActionListener(new java.awt.event.ActionListener() {
+			BotonAcorazado.addActionListener(new java.awt.event.ActionListener() {
 				public void actionPerformed(java.awt.event.ActionEvent e) {
-					BarcoSeleccionado= ACORAZADO;
+					BarcoSeleccionado = ACORAZADO;
 				}
 			});
 		}
