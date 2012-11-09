@@ -147,6 +147,9 @@ public class JuegoBatallaNaval{
 		}
 	}
 
+	public boolean inicioPar(){
+		return tableroJugador1.getCantBarcosSubmarinoColocados()==0&&tableroJugador1.getCantBarcosCrucerosColocados()==0&&tableroJugador1.getCantBarcosDestructoresColocados()==0&&tableroJugador1.getCantBarcosAcorazadoColocados()==0&&tableroJugador2.getCantBarcosSubmarinoColocados()==0&&tableroJugador2.getCantBarcosDestructoresColocados()==0&&tableroJugador2.getCantBarcosCrucerosColocados()==0&&tableroJugador2.getCantBarcosAcorazadoColocados()==0;
+	}
 
 	private void quitarBarcoStockJugador1(String tipoBarco) {
 		BatallaNavalDAO daoBatallaNaval = getBattallaNavalDAO();
@@ -168,8 +171,15 @@ public class JuegoBatallaNaval{
 			log.debug("decremento barco: "+tipoBarco);
 			log.debug("al usuario "+tableroJugador1.getJugador().getUsuarioB());
 		}
+		if(tableroJugador1.getCantBarcosSubmarinoColocados()==0&&tableroJugador1.getCantBarcosCrucerosColocados()==0&&tableroJugador1.getCantBarcosDestructoresColocados()==0&&tableroJugador1.getCantBarcosAcorazadoColocados()==0&&tableroJugador2.getCantBarcosSubmarinoColocados()==0&&tableroJugador2.getCantBarcosDestructoresColocados()==0&&tableroJugador2.getCantBarcosCrucerosColocados()==0&&tableroJugador2.getCantBarcosAcorazadoColocados()==0){
+			tableroJugador1.setMiTurno(true);
+//			daoBatallaNaval.registrarTablero(tableroJugador1, daoPartida.idPartida(tableroJugador1.getJugador().getIdUsuarioB()));
+//			daoBatallaNaval.registrarTablero(tableroJugador2, daoPartida.idPartida(tableroJugador1.getJugador().getIdUsuarioB()));
+		}
 	}
 	private void quitarBarcoStockJugador2(String tipoBarco) {
+		BatallaNavalDAO daoBatallaNaval = getBattallaNavalDAO();
+		PartidaDAO daoPartida = getPartidaDAO();
 		if(tipoBarco.equals(SUBMARINO)){
 			tableroJugador2.decrementarBarcosSubmarinoColocados();
 			log.debug("decremento barco: "+tipoBarco);
@@ -186,6 +196,11 @@ public class JuegoBatallaNaval{
 			tableroJugador2.decrementarBarcosAcorazadoColocados();
 			log.debug("decremento barco: "+tipoBarco);
 			log.debug("al usuario "+tableroJugador2.getJugador().getUsuarioB());
+		}
+		if(tableroJugador1.getCantBarcosSubmarinoColocados()==0&&tableroJugador1.getCantBarcosCrucerosColocados()==0&&tableroJugador1.getCantBarcosDestructoresColocados()==0&&tableroJugador1.getCantBarcosAcorazadoColocados()==0&&tableroJugador2.getCantBarcosSubmarinoColocados()==0&&tableroJugador2.getCantBarcosDestructoresColocados()==0&&tableroJugador2.getCantBarcosCrucerosColocados()==0&&tableroJugador2.getCantBarcosAcorazadoColocados()==0){
+			tableroJugador2.setMiTurno(true);
+//			daoBatallaNaval.registrarTablero(tableroJugador1, daoPartida.idPartida(tableroJugador1.getJugador().getIdUsuarioB()));
+//			daoBatallaNaval.registrarTablero(tableroJugador, daoPartida.idPartida(tableroJugador1.getJugador().getIdUsuarioB()));
 		}
 	}
 

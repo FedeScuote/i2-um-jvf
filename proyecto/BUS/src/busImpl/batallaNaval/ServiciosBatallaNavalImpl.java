@@ -31,6 +31,9 @@ public class ServiciosBatallaNavalImpl implements ServiciosBatallaNaval{
 		int idPartida=daoPartida.idPartida(usuario.getIdUsuario());
 		daoBatallaNaval.registrarTablero(juego.getTableroJugador1(), idPartida);
 		daoBatallaNaval.registrarTablero(juego.getTableroJugador2(), idPartida);
+//		if(juego.inicioPar()){
+//			daoBatallaNaval.actualizarTablero(idPartida, usuario.getUsuarioB(), true, 0, 0, 0, 1, 0, 0, 0, 0);
+//		}
 	}
 
 	public void disparar(UsuarioVO usuario, int coordenadaX, int coordenadaY) throws RemoteException, CoordenadasInvalidasException{
@@ -43,7 +46,11 @@ public class ServiciosBatallaNavalImpl implements ServiciosBatallaNaval{
 		juego=JuegoBatallaNaval.crearJuegoBN(usuario);
 		return juego.esMiTurno(usuario);
 	}
-
+	public boolean inicioPartida(UsuarioVO usuario) throws RemoteException {
+		juego=JuegoBatallaNaval.crearJuegoBN(usuario);
+		//return juego.getTableroJugador1().isMiTurno()||juego.getTableroJugador2().isMiTurno();
+		return juego.inicioPar();
+	}
 
 	public TableroVO refrescarTablero(UsuarioVO usuario) throws RemoteException {
 		juego=JuegoBatallaNaval.crearJuegoBN(usuario);
@@ -73,7 +80,7 @@ public class ServiciosBatallaNavalImpl implements ServiciosBatallaNaval{
 			Usuario jugador2=Usuario.findByName(desafio.getUsuario().getUsuarioB());
 			Tablero tableroJugador1= new Tablero(jugador1);
 			Tablero tableroJugador2= new Tablero(jugador2);
-			tableroJugador1.setMiTurno(true);
+			//tableroJugador1.setMiTurno(true);
 			if(modoRobot){
 				tableroJugador2.agregarCeldas(distribucion);
 			}

@@ -4,6 +4,7 @@ import java.rmi.RemoteException;
 import java.util.ArrayList;
 import java.util.Date;
 import comm.DesafioBatallaNavalVO;
+import comm.DesafioVO;
 import comm.RankingVO;
 import comm.ServiciosDesafio;
 import comm.UsuarioVO;
@@ -174,6 +175,10 @@ public class Desafio implements ServiciosDesafio {
 	public void crearDesafio(UsuarioVO usuario, int monto) throws RemoteException {
 		DesafioDAO dao = getDAO();
 		dao.crearDesafio(usuario.getUsuarioB(), monto);
+	}
+	public ArrayList<DesafioVO> getDesafiosLudo() throws RemoteException {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 
