@@ -22,7 +22,6 @@ import org.apache.log4j.Logger;
 
 import util.EstadoElegirDesafio;
 import ventanaJuego.BatallaNavalVentana;
-import ventanaJuego.ColocarBarcos;
 import ventanaJuego.ColocarBarcosVentana;
 import ventanaPrincipal.VentanaPrincipal;
 
@@ -94,7 +93,7 @@ public class SegundaPantallaBatallaN extends SegundaPantalla {
 		logger.debug("aceptaronDesafio");
 		temporizador.stop();
 		this.dispose();
-		ColocarBarcos l = new ColocarBarcos(this.usuario);
+		ColocarBarcosVentana l = new ColocarBarcosVentana(this.usuario);
 		l.setVisible(true);
 	}
 
@@ -164,7 +163,7 @@ public class SegundaPantallaBatallaN extends SegundaPantalla {
 							pantalla.iniciarPartida(pantalla.arrayDesafio
 									.get(row), pantalla.usuario);
 							pantalla.dispose();
-							ColocarBarcos l = new ColocarBarcos(
+							ColocarBarcosVentana l = new ColocarBarcosVentana(
 									pantalla.usuario);
 							l.setVisible(true);
 						}
