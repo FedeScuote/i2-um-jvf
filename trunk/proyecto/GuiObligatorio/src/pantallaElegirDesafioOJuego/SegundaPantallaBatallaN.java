@@ -92,6 +92,7 @@ public class SegundaPantallaBatallaN extends SegundaPantalla {
 
 	private void aceptaronDesafio(){
 		logger.debug("aceptaronDesafio");
+		temporizador.stop();
 		this.dispose();
 		ColocarBarcos l = new ColocarBarcos(this.usuario);
 		l.setVisible(true);
