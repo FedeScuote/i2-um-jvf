@@ -223,6 +223,7 @@ public class Login extends JFrame {
 		super();
 		initialize();
 		this.setExtendedState(JFrame.MAXIMIZED_BOTH);
+		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	}
 
 	/**
