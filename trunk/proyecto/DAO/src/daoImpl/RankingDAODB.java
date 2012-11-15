@@ -75,11 +75,10 @@ public class RankingDAODB implements RankingDAO {
 			e.printStackTrace();
 		} catch (IndexOutOfBoundsException i) {
 			throw new NoHayRankingException();
+		} finally{
+			logger.debug("Me desconecto de la base de datos del método getRankingLudo()");
+			c.disconnect();
 		}
-
-
-
-		c.disconnect();
 		return a;
 	}
 
@@ -119,11 +118,10 @@ public class RankingDAODB implements RankingDAO {
 			e.printStackTrace();
 		} catch (IndexOutOfBoundsException i) {
 			throw new NoHayRankingException();
+		} finally{
+			logger.debug("Me desconecto de la base de datos del método getRankingBackgammon()");
+			c.disconnect();
 		}
-
-
-
-		c.disconnect();
 		return a;
 	}
 
@@ -162,13 +160,11 @@ public class RankingDAODB implements RankingDAO {
 			e.printStackTrace();
 		} catch (IndexOutOfBoundsException i) {
 			throw new NoHayRankingException();
+		} finally{
+			logger.debug("Me desconecto de la base de datos del método getRankingBatallaNaval");
+			c.disconnect();
 		}
-
-
-		logger.debug("Me desconecto de la base de datos del método getRankingBatallaNaval");
-		c.disconnect();
 		return a;
-
 	}
 	//terminado
 	public ArrayList getRankingGeneral() throws NoHayRankingException {
@@ -207,11 +203,10 @@ public class RankingDAODB implements RankingDAO {
 			e.printStackTrace();
 		} catch (IndexOutOfBoundsException i) {
 			throw new NoHayRankingException();
+		} finally{
+			logger.debug("Me desconecto de la base de datos del método getRankingGeneral()");
+			c.disconnect();
 		}
-
-
-		logger.debug("Me desconecto de la base de datos del método getRankingGeneral");
-		c.disconnect();
 		return a;
 	}
 
@@ -232,10 +227,11 @@ public class RankingDAODB implements RankingDAO {
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+		} finally{
+			logger.debug("ganadas= "+ganadas);
+			logger.debug("Me desconecto de la base de datos del método getGanadasBatallaNaval");
+			c.disconnect();
 		}
-		logger.debug("ganadas= "+ganadas);
-		logger.debug("Me desconecto de la base de datos del método getGanadasBatallaNaval");
-		c.disconnect();
 		return ganadas;
 	}
 

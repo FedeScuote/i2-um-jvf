@@ -109,10 +109,10 @@ public class DesafioDAODB implements DesafioDAO {
 		} catch (NoExisteUsuarioException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+		} finally{
+			logger.debug("Me desconecto de la base de datos del método getDesafios()");
+			c.disconnect();
 		}
-		logger
-				.debug("Me desconecto de la base de datos del método getDesafios");
-		c.disconnect();
 		return a;
 	}
 
@@ -147,9 +147,10 @@ public class DesafioDAODB implements DesafioDAO {
 
 		} catch (IndexOutOfBoundsException i) {
 			throw new NoHayDesafioException();
+		} finally{
+			logger.debug("Me desconecto de la base de datos del método getDesafiosBatallaNaval");
+			c.disconnect();
 		}
-
-		c.disconnect();
 		return a;
 	}
 
@@ -203,10 +204,10 @@ public class DesafioDAODB implements DesafioDAO {
 		} catch (NoExisteUsuarioException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+		} finally{
+			logger.debug("Me desconecto de la base de datos del método getDesafiosUsuariosDisponibleBatallaNaval()");
+			c.disconnect();
 		}
-		logger
-				.debug("Me desconecto de la base de datos del método getDesafiosUsuariosDisponibleBatallaNaval");
-		c.disconnect();
 		return a;
 	}
 
@@ -258,10 +259,10 @@ public class DesafioDAODB implements DesafioDAO {
 		} catch (NoExisteUsuarioException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+		} finally{
+			logger.debug("Me desconecto de la base de datos del método getDesafiosUsuariosDisponibleLudo()");
+			c.disconnect();
 		}
-		logger
-				.debug("Me desconecto de la base de datos del método getDesafiosUsuariosDisponiblesLudo");
-		c.disconnect();
 		return a;
 	}
 
@@ -313,10 +314,10 @@ public class DesafioDAODB implements DesafioDAO {
 		} catch (NoExisteUsuarioException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+		} finally{
+			logger.debug("Me desconecto de la base de datos del método getDesafiosUsuariosDisponibleBackgammon()");
+			c.disconnect();
 		}
-		logger
-				.debug("Me desconecto de la base de datos del método getDesafiosUsuariosDisponibleBackgammon");
-		c.disconnect();
 		return a;
 	}
 
@@ -382,10 +383,11 @@ public class DesafioDAODB implements DesafioDAO {
 			}
 		} catch (NoExisteCreditoSuficiente e) {
 			logger.debug("Crédito insuficiente para crear un Desafio");
+		} finally{
+			logger.debug("idDesafio= "+idDesafio);
+			logger.debug("Me desconecto de la base de datos del método crearDesafio");
+			c.disconnect();
 		}
-		logger.debug("idDesafio= "+idDesafio);
-		logger.debug("Me desconecto de la base de datos del método crearDesafios");
-		c.disconnect();
 		return idDesafio;
 	}
 
@@ -432,9 +434,10 @@ public class DesafioDAODB implements DesafioDAO {
 		} catch (NoExisteUsuarioException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+		} finally{
+			logger.debug("Me desconecto de la base de datos del método getDesafiosUsuariosDisponibleBatallaNaval");
+			c.disconnect();
 		}
-		logger.debug("Me desconecto de la base de datos del método getDesafiosUsuariosDisponibleBatallaNaval");
-		c.disconnect();
 		return a;
 	}
 
@@ -448,22 +451,19 @@ public class DesafioDAODB implements DesafioDAO {
 
 			if (r.first()) {
 				logger.debug("aceptaron= "+true);
-				logger.debug("Me desconecto de la base de datos del método aceptaronDesafio");
-				c.disconnect();
 				return true;
 			} else {
 				logger.debug("aceptaron= "+false);
-				logger.debug("Me desconecto de la base de datos del método aceptaronDesafio");
-				c.disconnect();
 				return false;
 			}
 		} catch (SQLException e) {
 			logger.debug("aceptaron= "+false);
-			logger.debug("Me desconecto de la base de datos del método aceptaronDesafio");
-			c.disconnect();
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 			return false;
+		} finally{
+			logger.debug("Me desconecto de la base de datos del método aceptaronDesafio");
+			c.disconnect();
 		}
 
 	}
@@ -485,10 +485,11 @@ public class DesafioDAODB implements DesafioDAO {
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+		} finally{
+			logger.debug("finalizado= "+finalizado);
+			logger.debug("Me desconecto de la base de datos del método desafioFinalizado");
+			c.disconnect();
 		}
-		logger.debug("finalizado= "+finalizado);
-		logger.debug("Me desconecto de la base de datos del método desafioFinalizado");
-		c.disconnect();
 		return finalizado;
 	}
 
@@ -507,10 +508,11 @@ public class DesafioDAODB implements DesafioDAO {
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+		} finally{
+			logger.debug("monto= "+monto);
+			logger.debug("Me desconecto de la base de datos del método getMontoDesafio");
+			c.disconnect();
 		}
-		logger.debug("monto= "+monto);
-		logger.debug("Me desconecto de la base de datos del método getMontoDesafio");
-		c.disconnect();
 		return monto;
 
 	}

@@ -77,6 +77,9 @@ public class PartidaDAODB implements PartidaDAO {
 			logger.debug("El desafío ya estaba terminado");
 		} catch (NoExisteCreditoSuficiente e) {
 			logger.debug("Credito insuficiente");
+		} finally{
+			logger.debug("Me desconecto de la base de datos del método concretarDesafio");
+			c.disconnect();
 		}
 		return idD;
 	}
@@ -101,10 +104,11 @@ public class PartidaDAODB implements PartidaDAO {
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+		} finally{
+			logger.debug("pendiente= "+pendiente);
+			logger.debug("Me desconecto de la base de datos del método partidaPendiente");
+			c.disconnect();
 		}
-		logger.debug("pendiente= "+pendiente);
-		logger.debug("Me desconecto de la base de datos del método partidaPendiente");
-		c.disconnect();
 		return pendiente;
 	}
 
@@ -121,10 +125,11 @@ public class PartidaDAODB implements PartidaDAO {
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+		} finally{
+			logger.debug("idPartida= "+idPartida);
+			logger.debug("Me desconecto de la base de datos del método idPartida");
+			c.disconnect();
 		}
-		logger.debug("idPartida= "+idPartida);
-		logger.debug("Me desconecto de la base de datos con el método idPartida");
-		c.disconnect();
 		return idPartida;
 	}
 
@@ -159,9 +164,10 @@ public class PartidaDAODB implements PartidaDAO {
 		} catch (NoExisteOponenteException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+		} finally{
+			logger.debug("Me desconecto de la base de datos del método oponente");
+			c.disconnect();
 		}
-		logger.debug("Me desconecto de la base de datos del método oponente");
-		c.disconnect();
 		return u;
 	}
 
@@ -189,9 +195,10 @@ public class PartidaDAODB implements PartidaDAO {
 			e.printStackTrace();
 		} catch (NotDataFoundException e) {
 			e.printStackTrace();
+		} finally{
+			logger.debug("Me desconecto de la base de datos del método oponente2");
+			c.disconnect();
 		}
-		logger.debug("Me desconecto de la base de datos del método oponente2");
-		c.disconnect();
 		return u;
 	}
 
@@ -237,8 +244,6 @@ public class PartidaDAODB implements PartidaDAO {
 					c.ingresarNuevaTuplaDeTresColumnasIntEnTablasRelacionadas("ranking","usuarios_idUsuario", "juegos_idJuego", "ganadas", idUsuario, 1,1);
 					logger.debug("ganadas en total= 1 del idUsuario= "+idUsuario);
 				}
-				logger.info("Me desconecto de la base de datos del método terminarPartida");
-				c.disconnect();
 
 			} catch (SQLException e) {
 
@@ -250,6 +255,9 @@ public class PartidaDAODB implements PartidaDAO {
 			} catch (NoHayDesafioException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
+			} finally{
+				logger.debug("Me desconecto de la base de datos del método terminarPartida");
+				c.disconnect();
 			}
 		}else{
 			try {
@@ -281,8 +289,6 @@ public class PartidaDAODB implements PartidaDAO {
 					logger.debug("ganadas en total= 1 del idUsuario= "+idOponente);
 				}
 
-				logger.info("Me desconecto de la base de datos del método terminarPartida");
-				c.disconnect();
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -294,6 +300,9 @@ public class PartidaDAODB implements PartidaDAO {
 			} catch (NoHayDesafioException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
+			} finally{
+				logger.debug("Me desconecto de la base de datos del método terminarPartida");
+				c.disconnect();
 			}
 
 		}

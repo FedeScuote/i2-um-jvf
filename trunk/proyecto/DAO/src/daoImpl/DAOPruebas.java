@@ -5,6 +5,8 @@ import java.util.ArrayList;
 
 import org.apache.log4j.Logger;
 
+import excepcionesD.NoExisteUsuarioException;
+
 import busImpl.Usuario;
 
 public class DAOPruebas {
@@ -13,13 +15,17 @@ public class DAOPruebas {
 	 * @param args
 	 */
 	public static void main(String[] args) {
-		BatallaNavalDAODB td=new BatallaNavalDAODB();
+		UsuarioDAODB ud=new UsuarioDAODB();
+
+
+		//BatallaNavalDAODB td=new BatallaNavalDAODB();
+
 		//logger.debug(td.getTablero(44, 1).getCantBarcosAcorazado());
 
-		UsuarioDAODB dd=new UsuarioDAODB();
-		ArrayList<Usuario> a=dd.getUsuariosVirtuales();
-		System.out.println((a.get(0)).equals(null));
-		System.out.println((a.get(0)).getApellidoB());
+//		UsuarioDAODB dd=new UsuarioDAODB();
+//		ArrayList<Usuario> a=dd.getUsuariosVirtuales();
+//		System.out.println((a.get(0)).equals(null));
+//		System.out.println((a.get(0)).getApellidoB());
 
 
 		/*

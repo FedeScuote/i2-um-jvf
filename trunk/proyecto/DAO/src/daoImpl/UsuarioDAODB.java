@@ -70,8 +70,6 @@ public class UsuarioDAODB implements UsuarioDAO {
 					u.setPartidasGanadasB(partidasGanadas);
 					esta=true;
 			}
-			logger.debug("Me desconecto de la base de datos del método findByName");
-			c.disconnect();
 			if(esta){
 				return u;
 			}else{
@@ -80,10 +78,11 @@ public class UsuarioDAODB implements UsuarioDAO {
 			}
 		} catch (SQLException ex) {
 			logger.error("error de my sql");
-			logger.debug("Me desconecto de la base de datos del método findByName");
-			c.disconnect();
 			throw new NotDataFoundException();
 
+		} finally{
+			logger.debug("Me desconecto de la base de datos del método findByName");
+			c.disconnect();
 		}
 
 
@@ -104,14 +103,19 @@ public class UsuarioDAODB implements UsuarioDAO {
 		String usuario = null;
 		try {
 			r = c.devolverResutado("SELECT usuario FROM usuarios WHERE idusuario='"+ idUsuario + "'");
-			r.next();
-			usuario = r.getString("usuario");
+			if(r.first()){
+				usuario = r.getString("usuario");
+			}else{
+				throw new NoExisteUsuarioException();
+			}
+
 		} catch (SQLException ex) {
 
+		} finally{
+			logger.debug("usuario= "+usuario);
+			logger.debug("Me desconecto de la base de datos del método getUsuario");
+			c.disconnect();
 		}
-		logger.debug("usuario= "+usuario);
-		logger.debug("Me desconecto de la base de datos del método getUsuario");
-		c.disconnect();
 		return usuario;
 	}
 
@@ -136,10 +140,11 @@ public class UsuarioDAODB implements UsuarioDAO {
 		} catch (NoExisteUsuarioException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+		} finally{
+			logger.debug(suficiente);
+			logger.debug("Me desconecto de la base de datos del método creditoSuficiente");
+			c.disconnect();
 		}
-		logger.debug(suficiente);
-		logger.debug("Me desconecto de la base de datos del método creditoSuficiente");
-		c.disconnect();
 		return suficiente;
 	}
 
@@ -164,10 +169,11 @@ public class UsuarioDAODB implements UsuarioDAO {
 		} catch (NoExisteUsuarioException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+		} finally{
+			logger.debug("resultado= "+resultado);
+			logger.debug("Me desconecto de la base de datos del método getResultadoCredito");
+			c.disconnect();
 		}
-		logger.debug("resultado= "+resultado);
-		logger.debug("Me desconecto de la base de datos del método getResultadoCredito");
-		c.disconnect();
 		return resultado;
 	}
 
@@ -189,10 +195,11 @@ public class UsuarioDAODB implements UsuarioDAO {
 			e.printStackTrace();
 		} catch (NotDataFoundException e) {
 			logger.debug("No existe usuario");
+		} finally{
+			logger.debug("virtual= "+virtual);
+			logger.debug("Me desconecto de la base de datos del método esUsuarioVirtual");
+			c.disconnect();
 		}
-		logger.debug("Me desconecto de la base de datos del método esUsuarioVirtual");
-		c.disconnect();
-		logger.debug("virtual= "+virtual);
 		return virtual;
 	}
 
@@ -219,14 +226,12 @@ public class UsuarioDAODB implements UsuarioDAO {
 			logger.debug("No existe usuario Virtual disponible");
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+		} finally{
+			logger.debug("Me desconecto de la base de datos del método getUsuariosVirtuales");
+			c.disconnect();
 		}
-		logger.debug("Me desconecto de la base de datos del método getUsuariosVirtuales");
-		c.disconnect();
 		return a;
 	}
-
-
-
 
 }
 
