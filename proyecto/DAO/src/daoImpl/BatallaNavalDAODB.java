@@ -73,9 +73,11 @@ public class BatallaNavalDAODB implements BatallaNavalDAO {
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+		} finally{
+			logger.debug("Me desconecto de la base de datos del método getListaDeTiros");
+			c.disconnect();
 		}
-		logger.debug("Me desconecto de la base de datos del método getListaDeTiros");
-		c.disconnect();
+
 		return ard;
 	}
 
@@ -184,9 +186,11 @@ public class BatallaNavalDAODB implements BatallaNavalDAO {
 			e.printStackTrace();
 		} catch (SQLException e) {
 			e.printStackTrace();
+		} finally{
+			logger.debug("Me desconecto de la base de datos del método getTablero");
+			c.disconnect();
 		}
-		logger.debug("Me desconecto de la base de datos del método getTablero");
-		c.disconnect();
+
 		return t;
 	}
 
@@ -224,9 +228,10 @@ public class BatallaNavalDAODB implements BatallaNavalDAO {
 			e.printStackTrace();
 		} catch (NoExisteUsuarioException e) {
 			e.printStackTrace();
+		} finally{
+			logger.debug("Me desconecto de la base de datos del método registrarDisparo");
+			c.disconnect();
 		}
-		logger.debug("Me desconecto de la base de datos del método registrarDisparo");
-		c.disconnect();
 
 	}
 
@@ -235,6 +240,7 @@ public class BatallaNavalDAODB implements BatallaNavalDAO {
 		int idDesafio=idPartida;
 		String jugador=((Usuario)(tablero.getJugador())).getUsuarioB();
 		int idTablero=0;
+		Conexion c=new Conexion();
 		try {
 			idTablero = this.getIdTablero(idDesafio, jugador);
 			boolean miTurno=tablero.isMiTurno();
@@ -263,7 +269,7 @@ public class BatallaNavalDAODB implements BatallaNavalDAO {
 			logger.debug("barcosCrucerosColocados= "+barcosCrucerosColocados);
 			logger.debug("barcosDestructoresColocados= "+barcosDestructoresColocados);
 			logger.debug("barcosAcorazadosColocados= "+barcosAcorazadosColocados);
-			Conexion c=new Conexion();
+
 			try {
 				//primero, actualizo en el Tablero
 				logger.debug("Actualizo en tablero de Batalla Naval");
@@ -307,8 +313,6 @@ public class BatallaNavalDAODB implements BatallaNavalDAO {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			logger.debug("Me desconecto de la base de datos del método registrarTablero");
-			c.disconnect();
 
 
 		} catch (NoExisteTableroException e1) {
@@ -341,7 +345,7 @@ public class BatallaNavalDAODB implements BatallaNavalDAO {
 			logger.debug("barcosCrucerosColocados= "+barcosCrucerosColocados);
 			logger.debug("barcosDestructoresColocados= "+barcosDestructoresColocados);
 			logger.debug("barcosAcorazadosColocados= "+barcosAcorazadosColocados);
-			Conexion c=new Conexion();
+
 			try {
 				//primero, agrego en el Tablero
 				logger.debug("Agrego en tablero de Batalla Naval");
@@ -382,6 +386,7 @@ public class BatallaNavalDAODB implements BatallaNavalDAO {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
+		} finally{
 			logger.debug("Me desconecto de la base de datos del método registrarTablero");
 			c.disconnect();
 		}
@@ -411,9 +416,10 @@ public class BatallaNavalDAODB implements BatallaNavalDAO {
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+		} finally{
+			logger.debug("Me desconecto de la base de datos del método actualizarTablero");
+			c.disconnect();
 		}
-		logger.debug("Me desconecto de la base de datos");
-		c.disconnect();
 	}
 
 
@@ -434,11 +440,11 @@ public class BatallaNavalDAODB implements BatallaNavalDAO {
 			}
 		} catch (SQLException ex) {
 			throw new NoExisteTableroException();
+		} finally{
+			logger.debug("idTablero= "+idTablero);
+			logger.debug("Me desconecto de la base de datos del método getIdTablero");
+			c.disconnect();
 		}
-		logger.debug("idTablero= "+idTablero);
-		logger.debug("Me desconecto de la base de datos del método actualizarTablero");
-		c.disconnect();
-		logger.debug("idTablero= "+idTablero);
 		return idTablero;
 
 	}

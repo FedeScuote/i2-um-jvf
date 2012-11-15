@@ -26,62 +26,6 @@ public class DesafioDAODBLudo implements DesafioDAOLudo {
 
 	public void aceptoDesafioLudo(int idUsuario, int idDesafio)
 			throws YaTieneOtroDesafioException, NoHaySuficienteCreditoUsuarioException {
-//		logger.debug("Entro a aceptoDesafioLudo con parámetros de entrada idDesafio= "+idDesafio+" idDesafiante= "+idDesafiante);
-//		int idD=0;
-//		Conexion c=new Conexion();
-//		DesafioDAODB dd=new DesafioDAODB();
-//		boolean desafioTerminado=false;
-//		boolean creditoSuficiente=false;
-//		UsuarioDAODB ud=new UsuarioDAODB();
-//		logger.debug("Verifico crédito suficiente");
-//		try {
-//			desafioTerminado=dd.desafioFinalizado(idDesafio);
-//			if(desafioTerminado){
-//				throw new DesafioTerminadoException();
-//			}
-//			String usuarioDesafiante;
-//			try {
-//				usuarioDesafiante = ud.getUsuario(idDesafiante);
-//				Usuario u= ud.findByName(usuarioDesafiante);
-//				int credito=u.getCreditoB();
-//				creditoSuficiente=ud.creditoSuficiente(credito, idDesafiante);
-//			} catch (NoExisteUsuarioException e1) {
-//				// TODO Auto-generated catch block
-//				e1.printStackTrace();
-//			} catch (NotDataFoundException e) {
-//				// TODO Auto-generated catch block
-//				e.printStackTrace();
-//			}
-//			if(!creditoSuficiente){
-//				throw new NoExisteCreditoSuficiente();
-//			}
-//			logger.debug("Crédito suficiente!");
-//			logger.debug("Primero actualizo en la tabla desafios");
-//			c.actualizarTuplaDeUnaColumna("desafios", "estadoD", "En curso", "idDesafio", idDesafio);
-//			ResultSet resultado = c.devolverResutado("SELECT juegos_idJuego,usuarios_idusuario FROM usuarios_has_juegos_desafios WHERE desafios_idDesafio='"+idDesafio+"'");
-//			resultado.next();
-//			int idJuego=resultado.getInt("juegos_idJuego");
-//			idD=idDesafio;
-//			int idUsuario=idDesafiante;
-//			int usuarioGanadorD=0; //El cero significa que nadie ganó aún
-//			logger.debug("Luego ingreso un nuevo registro en la relación a usuarios_has_juegos_desafios");
-//			logger.debug("idJuego= "+idJuego);
-//			logger.debug("idDesafiante= "+idUsuario);
-//			logger.debug("usuarioGanadorD= "+usuarioGanadorD);
-//			c.ingresarNuevaTuplaDeCuatroColumnasIntEnTablasRelacionadas("usuarios_has_juegos_desafios", "juegos_idJuego", "desafios_idDesafio", "usuarios_idusuario", "usuarioGanadorD", idJuego, idDesafio, idUsuario,usuarioGanadorD);
-//		} catch (SQLException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		} catch (NoExisteDesafioException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		} catch (DesafioTerminadoException e) {
-//			logger.debug("El desafío ya estaba terminado");
-//		} catch (NoExisteCreditoSuficiente e) {
-//			logger.debug("Credito insuficiente");
-//		}
-//
-
 
 	}
 
