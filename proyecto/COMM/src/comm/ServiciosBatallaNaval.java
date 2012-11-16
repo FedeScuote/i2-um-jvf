@@ -17,6 +17,8 @@ public interface ServiciosBatallaNaval extends Remote {
 
 	//Metodo recibir distribucion
 	public int[] distribucion(UsuarioVO usuario) throws RemoteException;
+	
+	public int[] distribucionPlus(UsuarioVO usuario) throws RemoteException;
 
 	//Metodo para refrescar imagen de matriz
 	public TableroVO refrescarTablero(UsuarioVO usuario) throws RemoteException;
