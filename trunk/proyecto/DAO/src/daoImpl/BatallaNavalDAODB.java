@@ -517,7 +517,10 @@ public class BatallaNavalDAODB implements BatallaNavalDAO {
 			int idDesafio=p.idPartida2(idUsuario, c);
 			int idTablero=this.getIdTablero2(idDesafio, usuario, c);
 			ResultSet r=c.devolverResutado("SELECT miTurno FROM t_batalla_naval WHERE idTBatallaNaval='"+idTablero+"'");
-
+			if(r.first()){
+				int miTurno=r.getInt("miTurno");
+				return miTurno==1;
+			}
 
 		} catch (NoExisteUsuarioException e) {
 			// TODO Auto-generated catch block
