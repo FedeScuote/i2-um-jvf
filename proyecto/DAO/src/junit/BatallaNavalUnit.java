@@ -37,6 +37,12 @@ public class BatallaNavalUnit extends TestCase {
 		//b.cargarDatos
 
 	}
+	public void testModificarCeldaTablero(){
+		Celda celda=new Celda();
+		celda.setEstado("AGUA");
+		celda.setId(33);
+		b.modificarCeldaTablero(3, celda, 0, 0);
+	}
 
 	public void testGetTablero(){
 		b.getTablero(33, 1);
