@@ -6,7 +6,9 @@ import java.awt.GridLayout;
 
 import javax.swing.*;
 
+import comm.CeldaVO;
 import comm.ServiciosBatallaNaval;
+import comm.TableroVO;
 import comm.UsuarioVO;
 import commExceptions.CoordenadasInvalidasException;
 import java.awt.event.ActionEvent;
@@ -15,8 +17,10 @@ import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 
+import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 import org.apache.log4j.Logger;
@@ -106,6 +110,7 @@ public class ColocarBarcosVentana extends JFrame {
 		this.crearCabezal(PanelTablero);
 		this.crearTablero(PanelTablero, arrayBotones);
 		this.setExtendedState(JFrame.MAXIMIZED_BOTH);
+		this.refrescarTableroJugador();
 	}
 
 	/**
@@ -543,6 +548,60 @@ public class ColocarBarcosVentana extends JFrame {
 		CantidadCruceros.setText("CRUCEROS:"+getCantidadCruceros());
 		CantidadDestructores.setText("DESTRUCTORES:"+getCantidadDestructores());
 		CantidadSubmarinos.setText("SUBMARINO:"+getCantidadSubmarinos());
+	}
+//	 METODO PARA REFRESCAR TABLERO DEL JUGADOR
+	public void refrescarTableroJugador() {
+		logger.debug("refrescarTableroJugador");
+		try { // try y catch para verificar si esta el usuario o
+			// no
+			Registry registry = LocateRegistry.getRegistry(host);
+			ServiciosBatallaNaval stub = (ServiciosBatallaNaval) registry
+					.lookup("BatallaNavalServices");
+			cambiarBotones(arrayBotones, stub.refrescarTablero(usuario));
+		} catch (Exception e) {
+			if (e instanceof RemoteException) {
+				JOptionPane
+						.showMessageDialog(new JFrame(), "ERROR DE CONEXION",
+								"ERROR", JOptionPane.ERROR_MESSAGE);
+			} else {
+				e.printStackTrace();
+				JOptionPane
+						.showMessageDialog(new JFrame(), "ERROR DESCONOCIDO",
+								"ERROR", JOptionPane.ERROR_MESSAGE);
+				this.dispose();
+			}
+		}
+	}
+//	 METODO DONDE "PINTA" LOS BOTONES PARA REFRESCAR EL TABLERO
+	public void cambiarBotones(JButton[][] botones, TableroVO tablero) {
+		CeldaVO[][] tabla = tablero.getTabla();
+		int iArrayBotones = 0;
+		int jArrayBotones = 0;
+		for (int i = 0; i < tabla.length; i++) {
+			iArrayBotones++;
+			jArrayBotones = 0;
+			for (int j = 0; j < tabla.length; j++) {
+				jArrayBotones++;
+				if (tabla[i][j].getEstado().equals("AGUA")) {
+					botones[iArrayBotones][jArrayBotones]
+							.setBackground(Color.BLUE);
+				} else if (tabla[i][j].getEstado().equals("OCUPADO")) {
+					botones[iArrayBotones][jArrayBotones]
+							.setBackground(Color.BLACK);
+				} else if (tabla[i][j].getEstado().equals("TOCADO")) {
+					botones[iArrayBotones][jArrayBotones]
+							.setBackground(Color.GREEN);
+				} else if (tabla[i][j].getEstado().equals("HUNDIDO")) {
+					botones[iArrayBotones][jArrayBotones]
+							.setBackground(Color.GREEN);
+				} else {
+					botones[iArrayBotones][jArrayBotones]
+							.setBackground(Color.RED); // esto quiere decir
+					// que si no era ninguno de los otros erre el tiro
+				}
+
+			}
+		}
 	}
 
 } // @jve:decl-index=0:visual-constraint="120,2"

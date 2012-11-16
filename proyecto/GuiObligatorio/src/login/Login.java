@@ -1,42 +1,40 @@
 package login;
 
-import javax.swing.SwingUtilities;
 import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.Insets;
+import java.rmi.registry.LocateRegistry;
+import java.rmi.registry.Registry;
+import java.util.ResourceBundle;
 
 import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.JFrame;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
-import javax.swing.RepaintManager;
+import javax.swing.SwingUtilities;
 
 import org.apache.log4j.Logger;
+
+import util.AnimatedPanel;
+import util.CustomGlassPane;
+import util.ImagePanel;
+import util.TransparentPanel;
+import ventanaJuego.BatallaNavalVentana;
+import ventanaJuego.ColocarBarcosVentana;
+import ventanaPrincipal.VentanaPrincipal;
 
 import comm.ServiciosBatallaNaval;
 import comm.ServiciosUsuario;
 import comm.UsuarioVO;
 import commExceptions.ContrasenaInvalidaException;
 import commExceptions.NoSeEncuentraUsuarioException;
-
-import util.CustomGlassPane;
-import util.ImagePanel;
-import util.AnimatedPanel;
-import util.TransparentPanel;
-import ventanaJuego.BatallaNavalVentana;
-import ventanaPrincipal.VentanaPrincipal;
-
-import java.awt.Color;
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
-import java.awt.Dimension;
-import java.awt.Insets;
-import java.rmi.registry.LocateRegistry;
-import java.rmi.registry.Registry;
-import java.util.ResourceBundle;
-
-import javax.swing.JButton;
 
 public class Login extends JFrame {
 
@@ -341,9 +339,16 @@ public class Login extends JFrame {
 		try{
 			Registry registry = LocateRegistry.getRegistry(host);
 			ServiciosBatallaNaval stub = (ServiciosBatallaNaval) registry.lookup("BatallaNavalServices");
-			if(stub.hayPartidaEnCurso(usuario)){
+			if(stub.hayPartidaEnCurso(usuario) && (stub.inicioPartida(usuario))){
 				JOptionPane.showMessageDialog(new JFrame(),labels.getString("LABEL_PARTIDA_EN_CURSO"), labels.getString("nombre_empresa"), JOptionPane.INFORMATION_MESSAGE);
 				BatallaNavalVentana l = new BatallaNavalVentana(usuario);
+				logger.debug("Partida en curso?");
+				this.setVisible(false);
+				l.setVisible(true);
+				this.dispose();
+			}else if(stub.hayPartidaEnCurso(usuario)){
+				JOptionPane.showMessageDialog(new JFrame(),labels.getString("LABEL_PARTIDA_EN_CURSO"), labels.getString("nombre_empresa"), JOptionPane.INFORMATION_MESSAGE);
+				ColocarBarcosVentana l = new ColocarBarcosVentana(usuario);
 				logger.debug("Partida en curso?");
 				this.setVisible(false);
 				l.setVisible(true);
