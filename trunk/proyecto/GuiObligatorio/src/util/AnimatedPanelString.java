@@ -20,6 +20,7 @@ public class AnimatedPanelString extends JPanel implements ActionListener {
 
 	public AnimatedPanelString(String str){
 		imprimir=str;
+		this.setOpaque(false);
 		Timer timer = new Timer(10, this);
 		// initial delay while window gets set up
 		timer.setInitialDelay(1000);
