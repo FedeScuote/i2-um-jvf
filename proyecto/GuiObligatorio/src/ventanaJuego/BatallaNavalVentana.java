@@ -121,6 +121,16 @@ public class BatallaNavalVentana extends JFrame {
 					indicadorTurno.setForeground(Color.GREEN);
 					refrescarTableroJugador();
 					refrescarTableroOponente();
+					if (termino == false && perdi()) {
+						termino=true;
+						JOptionPane.showMessageDialog(new JFrame(), "HAS PERDIDO",
+								"LO SIENTO", JOptionPane.INFORMATION_MESSAGE);
+						temporizador.stop();
+						terminoPartida(false);// solo termina mi partida cuando perdi
+						dispose();
+						VentanaPrincipal l = new VentanaPrincipal(usuario);
+						l.setVisible(true);
+					}
 				}
 			}
 		};
@@ -313,6 +323,24 @@ public class BatallaNavalVentana extends JFrame {
 							"HAS HUNDIDO UN BARCO", "ENHORABUENA",
 							JOptionPane.INFORMATION_MESSAGE);
 				}
+				if (termino == false && this.gane()) {
+					termino=true;
+					JOptionPane.showMessageDialog(new JFrame(), "HAS GANADO",
+							"ENHORABUENA", JOptionPane.INFORMATION_MESSAGE);
+					temporizador.stop();
+					try {
+						if (stub.esBot(this.usuario)) {
+							this.terminoPartida(true);
+						}
+					} catch (Exception e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+
+					this.dispose();
+					VentanaPrincipal l = new VentanaPrincipal(this.usuario);
+					l.setVisible(true);
+				}
 				temporizador.restart();
 			} catch (Exception e) {
 
@@ -326,39 +354,7 @@ public class BatallaNavalVentana extends JFrame {
 	// METODO PARA PREGUNTAR TURNO
 	public boolean preguntarTurno(UsuarioVO usuario) {
 		logger.debug("preguntarTurno");
-		if (termino == false && this.gane()) {
-			termino=true;
-			JOptionPane.showMessageDialog(new JFrame(), "HAS GANADO",
-					"ENHORABUENA", JOptionPane.INFORMATION_MESSAGE);
-			temporizador.stop();
-			Registry registry;
-			try {
-				registry = LocateRegistry.getRegistry(host);
-				ServiciosBatallaNaval stub = (ServiciosBatallaNaval) registry
-						.lookup("BatallaNavalServices");
-				if (stub.esBot(this.usuario)) {
-					this.terminoPartida(true);
-				}
-			} catch (Exception e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-
-			this.dispose();
-			VentanaPrincipal l = new VentanaPrincipal(this.usuario);
-			l.setVisible(true);
-			return true;
-		} else if (termino == false && this.perdi()) {
-			termino=true;
-			JOptionPane.showMessageDialog(new JFrame(), "HAS PERDIDO",
-					"LO SIENTO", JOptionPane.INFORMATION_MESSAGE);
-			temporizador.stop();
-			this.terminoPartida(false);// solo termina mi partida cuando perdi
-			this.dispose();
-			VentanaPrincipal l = new VentanaPrincipal(this.usuario);
-			l.setVisible(true);
-			return true;
-		} else if (termino == false) {
+		  if (termino == false) {
 			try { // try y catch para verificar si esta el usuario o
 				// no
 				Registry registry = LocateRegistry.getRegistry(host);
