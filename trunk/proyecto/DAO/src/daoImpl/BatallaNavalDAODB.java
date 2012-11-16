@@ -14,7 +14,7 @@ import busImpl.Usuario;
 import daoInterfaces.BatallaNavalDAO;
 import excepcionesB.NotDataFoundException;
 import excepcionesD.NoExisteTableroException;
-import excepcionesD.NoExisteUsuarioException;
+import excepcionesB.NoExisteUsuarioException;
 
 public class BatallaNavalDAODB implements BatallaNavalDAO {
 	private static Logger logger = Logger.getLogger(BatallaNavalDAODB.class);

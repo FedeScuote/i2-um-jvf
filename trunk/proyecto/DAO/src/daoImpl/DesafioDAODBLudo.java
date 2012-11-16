@@ -19,7 +19,7 @@ import excepcionesB.YaTieneOtroDesafioException;
 import excepcionesD.DesafioTerminadoException;
 import excepcionesD.NoExisteCreditoSuficiente;
 import excepcionesD.NoExisteDesafioException;
-import excepcionesD.NoExisteUsuarioException;
+import excepcionesB.NoExisteUsuarioException;
 
 public class DesafioDAODBLudo implements DesafioDAOLudo {
 	private static Logger logger = Logger.getLogger(DesafioDAODBLudo.class);

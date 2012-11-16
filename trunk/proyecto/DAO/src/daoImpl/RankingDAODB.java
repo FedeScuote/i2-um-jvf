@@ -13,7 +13,7 @@ import conexion.Conexion;
 import daoInterfaces.RankingDAO;
 import excepcionesB.NoHayRankingException;
 import excepcionesB.NotDataFoundException;
-import excepcionesD.NoExisteUsuarioException;
+import excepcionesB.NoExisteUsuarioException;
 
 public class RankingDAODB implements RankingDAO {
 	private static Logger logger = Logger.getLogger(RankingDAODB.class);

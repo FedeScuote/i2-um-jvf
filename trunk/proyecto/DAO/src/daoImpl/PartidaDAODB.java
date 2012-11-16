@@ -16,7 +16,7 @@ import excepcionesD.DesafioTerminadoException;
 import excepcionesD.NoExisteCreditoSuficiente;
 import excepcionesD.NoExisteDesafioException;
 import excepcionesD.NoExisteOponenteException;
-import excepcionesD.NoExisteUsuarioException;
+import excepcionesB.NoExisteUsuarioException;
 import excepcionesD.PartidaTerminadaException;
 
 public class PartidaDAODB implements PartidaDAO {

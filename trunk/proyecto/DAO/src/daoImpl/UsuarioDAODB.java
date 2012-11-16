@@ -9,7 +9,7 @@ import busImpl.Usuario;
 import daoInterfaces.UsuarioDAO;
 import excepcionesB.NotDataFoundException;
 import excepcionesB.YaExisteUsuarioException;
-import excepcionesD.NoExisteUsuarioException;
+import excepcionesB.NoExisteUsuarioException;
 import org.apache.log4j.Logger;
 
 public class UsuarioDAODB implements UsuarioDAO {
@@ -89,12 +89,97 @@ public class UsuarioDAODB implements UsuarioDAO {
 	}
 
 	public boolean agregarUsuario(String usuario, String clave,
-			int nivelPrilegio, int virtual, int credito, int partidasGanadas,
+			int nivelPrivilegio, int virtual, int credito, int partidasGanadas,
 			String nombre, String apellido, String pais)
 			throws YaExisteUsuarioException {
-		// TODO Auto-generated method stub
-		return false;
+		logger.debug("Entro a agregarUsuario con parámetros de entrada usuario= "+usuario+", clave= "+clave+", nivelPrivilegio= "+nivelPrivilegio+", virtual= "+virtual+", credito= "+credito+", partidasGanadas= "+partidasGanadas+", nombre= "+nombre+", apellido= "+apellido+", pais= "+pais);
+		Conexion c=new Conexion();
+		boolean existe=this.existeUsuario(usuario, c);
+		boolean agrego=false;
+		if(existe){
+			logger.debug("Me desconecto de la base de datos del método agregarUsuario");
+			c.disconnect();
+			logger.debug("agrego ="+agrego);
+			throw new YaExisteUsuarioException();
+		}else{
+			try {
+				c.ingresarNuevaTuplaDeNueveColumnas("usuarios", "idusuario", "usuario", "clave", "nivelPrivilegio", "virtual", "credito", "partidasGanadas", "nombre", "apellido", "pais", usuario, clave, nivelPrivilegio, virtual, credito, partidasGanadas, nombre, apellido, pais);
+				agrego=true;
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} finally{
+				logger.debug("agrego ="+agrego);
+				logger.debug("Me desconecto de la base de datos del método agregarUsuario");
+				c.disconnect();
+			}
+		}
+		return agrego;
 	}
+
+	//se pasa el parámetro de conexión para no crear una nueva conexión, además éste método no cierra la conexión
+	public boolean existeUsuario(String usuario,Conexion c){
+		logger.debug("Entro a existeUsuario con parámetro de entrada usuario= "+usuario+" y Conexion de la base de datos");
+		boolean existe=false;
+		try {
+			ResultSet r=c.devolverResutado("SELECT usuario FROM usuarios WHERE usuario='"+usuario+"'");
+			if(r.first()){
+				existe=true;
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		logger.debug("existe= "+existe);
+		logger.debug("salgo del método existeUsuario");
+		return existe;
+	}
+
+	public boolean cambiarPassword(String usuario, String nuevaPassword)throws NoExisteUsuarioException{
+		logger.debug("Entro a cambiarPassword con parámetros de entrada usuario= "+usuario+", nuevaPassword= "+nuevaPassword);
+		boolean cambio=false;
+		Conexion c=new Conexion();
+		try {
+			boolean existe=this.existeUsuario(usuario, c);
+			if(existe){
+				c.actualizarTuplaDeUnaColumna5("usuarios", "clave", nuevaPassword, "usuario", usuario);
+				cambio=true;
+			}else{
+				throw new NoExisteUsuarioException();
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally{
+			logger.debug("cambio ="+cambio);
+			logger.debug("Me desconecto de la base de datos del método cambiarPassword");
+			c.disconnect();
+		}
+		return cambio;
+	}
+	public boolean cambiarNombre(String usuario, String nuevoUsuario)throws NoExisteUsuarioException{
+		logger.debug("Entro a cambiarPassword con parámetros de entrada usuario= "+usuario+", nuevoUsuario= "+nuevoUsuario);
+		boolean cambio=false;
+		Conexion c=new Conexion();
+		try {
+			boolean existe=this.existeUsuario(usuario, c);
+			if(existe){
+				c.actualizarTuplaDeUnaColumna5("usuarios", "usuario", nuevoUsuario, "usuario", usuario);
+				cambio=true;
+			}else{
+				throw new NoExisteUsuarioException();
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally{
+			logger.debug("cambio ="+cambio);
+			logger.debug("Me desconecto de la base de datos del método cambiarNombre");
+			c.disconnect();
+		}
+		return cambio;
+	}
+
 
 	public String getUsuario(int idUsuario) throws NoExisteUsuarioException {
 		logger.debug("Entro a getUsuario con parámetro de entrada idUsuario= "+idUsuario);
@@ -177,6 +262,60 @@ public class UsuarioDAODB implements UsuarioDAO {
 		return resultado;
 	}
 
+	//retorna el valor sumado, siempre y cuando se pase un valor positivo
+	public int sumarSaldo(int credito_a_sumar, int idUsuario){
+		logger.debug("Entro a sumarSaldo con parámetros de entrada credito= "+credito_a_sumar+" idUsuario= "+idUsuario);
+		int resultado=0;
+		Conexion c=new Conexion();
+		try {
+			c.actualizarTuplaCreditoUsuario("usuarios", "credito", credito_a_sumar, "idusuario", idUsuario);
+			ResultSet r=c.devolverResutado("SELECT credito FROM usuarios WHERE idusuario='"+idUsuario+"'");
+			if(r.first()){
+				resultado=r.getInt("credito");
+			}else{
+				throw new NoExisteUsuarioException();
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (NoExisteUsuarioException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally{
+			logger.debug("resultado= "+resultado);
+			logger.debug("Me desconecto de la base de datos del método sumarSaldo");
+			c.disconnect();
+		}
+		return resultado;
+	}
+	//retorna el valor restado, siempre y cuando se pase un valor positivo
+	public int restarSaldo(int credito_a_restar, int idUsuario){
+		logger.debug("Entro a restarSaldo con parámetros de entrada credito= "+credito_a_restar+" idUsuario= "+idUsuario);
+		int resultado=0;
+		Conexion c=new Conexion();
+		try {
+			c.actualizarTuplaCreditoUsuario1("usuarios", "credito", credito_a_restar, "idusuario", idUsuario);
+			ResultSet r=c.devolverResutado("SELECT credito FROM usuarios WHERE idusuario='"+idUsuario+"'");
+			if(r.first()){
+				resultado=r.getInt("credito");
+			}else{
+				throw new NoExisteUsuarioException();
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (NoExisteUsuarioException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally{
+			logger.debug("resultado= "+resultado);
+			logger.debug("Me desconecto de la base de datos del método restarSaldo");
+			c.disconnect();
+		}
+		return resultado;
+	}
+
+
 	public boolean esUsuarioVirtual(String usuario) {
 		logger.debug("Entro a esUsuarioVirtual con parámetros de entrada usuario= "+usuario);
 		Conexion c=new Conexion();
@@ -197,7 +336,7 @@ public class UsuarioDAODB implements UsuarioDAO {
 			logger.debug("No existe usuario");
 		} finally{
 			logger.debug("virtual= "+virtual);
-			logger.debug("Me desconecto de la base de datos del método esUsuarioVirtual");
+			logger.debug("Me desconecto de la base de datos del método restarSaldo");
 			c.disconnect();
 		}
 		return virtual;
