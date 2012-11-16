@@ -2,9 +2,9 @@ package daoInterfaces;
 
 import java.util.ArrayList;
 
+import busImpl.Estados;
 import busImpl.batallaNaval.Celda;
 import busImpl.batallaNaval.Disparo;
-import busImpl.batallaNaval.Estados;
 import busImpl.batallaNaval.RegistroDisparo;
 import busImpl.batallaNaval.Tablero;
 
@@ -16,6 +16,6 @@ public interface BatallaNavalDAO {
 	public Tablero getTablero(int idPartidia,int idUsuario);
 	public void registrarTablero(Tablero tablero, int idPartida);
 	public void actualizarTablero(int idPartida, String usuario, boolean miTurno,int barcosSubmarinos, int barcosDestructores,int barcosCruceros,int barcosAcorazados,int barcosSubmarinosColocados, int barcosDestructoresColocados,int barcosCrucerosColocados,int barcosAcorazadosColocados );
-	//public void modificarCeldaTablero(int idUsuario, Celda celda);
+	public void modificarCeldaTablero(int idUsuario, Celda celda, int xC, int yC);
 
 }
