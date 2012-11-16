@@ -111,6 +111,20 @@ public class ColocarBarcosVentana extends JFrame {
 		this.crearTablero(PanelTablero, arrayBotones);
 		this.setExtendedState(JFrame.MAXIMIZED_BOTH);
 		this.refrescarTableroJugador();
+		this.pedirDistribucion();
+	}
+	public ColocarBarcosVentana(UsuarioVO usuario, int[] distribucion) {
+		super();
+		initialize();
+		logger.debug("Constructor ColocarBarcosVentana");
+		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		this.agregarBotonesAGroup();
+		this.usuario = usuario;
+		this.crearCabezal(PanelTablero);
+		this.crearTablero(PanelTablero, arrayBotones);
+		this.setExtendedState(JFrame.MAXIMIZED_BOTH);
+		this.refrescarTableroJugador();
+		this.distribucion = distribucion;
 	}
 
 	/**
@@ -119,7 +133,6 @@ public class ColocarBarcosVentana extends JFrame {
 	 * @return void
 	 */
 	private void initialize() {
-		this.pedirDistribucion();
 		this.setSize(300, 200);
 		this.setContentPane(getJContentPane());
 		this.setTitle("JFrame");
@@ -449,7 +462,7 @@ public class ColocarBarcosVentana extends JFrame {
 				JOptionPane.showMessageDialog(new JFrame(),
 						"Error en la conexion intente de nuevo", "ERROR",
 						JOptionPane.ERROR_MESSAGE);
-			} else {
+		 	} else {
 				e.printStackTrace();
 				JOptionPane
 						.showMessageDialog(new JFrame(), "ERROR DESCONOCIDO",
