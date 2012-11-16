@@ -449,4 +449,37 @@ public class BatallaNavalDAODB implements BatallaNavalDAO {
 
 	}
 
+	public void modificarCeldaTablero(int idUsuario, Celda celda, int xC, int yC) {
+		logger.debug("Entro a modificarCeldaTablero con parámetros de entrada idUsuario= "+idUsuario+" xC= "+xC+" yC="+yC);
+		logger.debug("El parámetro de entrada celda se compone de los siguientes parámetros");
+		logger.debug("estado= "+celda.getEstado());
+		logger.debug("id= "+celda.getId());
+		Conexion c=new Conexion();
+		PartidaDAODB p=new PartidaDAODB();
+		UsuarioDAODB u=new UsuarioDAODB();
+		int idDesafio=p.idPartida(idUsuario);
+		String jugador;
+		try {
+			jugador = u.getUsuario(idUsuario);
+			int idTablero=this.getIdTablero(idDesafio, jugador);
+			int id=celda.getId();
+			String estado=celda.getEstado();
+			c.actualizarTuplaDeDosColumna("celdas", "xC", "yC", "t_batalla_naval_idTBatallaNaval", xC, yC, idTablero, "id", id, "estado", estado);
+
+		} catch (NoExisteUsuarioException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (NoExisteTableroException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally{
+			logger.debug("Me desconecto de la base de datos del método modificarCeldaTablero");
+			c.disconnect();
+		}
+
+	}
+
 }
