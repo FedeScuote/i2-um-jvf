@@ -119,6 +119,8 @@ public class BatallaNavalVentana extends JFrame {
 				} else if (termino == false) {
 					indicadorTurno.setText("ES TU TURNO");
 					indicadorTurno.setForeground(Color.GREEN);
+					refrescarTableroJugador();
+					refrescarTableroOponente();
 				}
 			}
 		};
@@ -362,8 +364,6 @@ public class BatallaNavalVentana extends JFrame {
 				Registry registry = LocateRegistry.getRegistry(host);
 				ServiciosBatallaNaval stub = (ServiciosBatallaNaval) registry
 						.lookup("BatallaNavalServices");
-				refrescarTableroJugador();
-				refrescarTableroOponente();
 				if (stub.esMiTurno(usuario)) {
 					temporizador.stop();
 				}
