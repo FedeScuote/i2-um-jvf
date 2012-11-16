@@ -17,5 +17,5 @@ public interface BatallaNavalDAO {
 	public void registrarTablero(Tablero tablero, int idPartida);
 	public void actualizarTablero(int idPartida, String usuario, boolean miTurno,int barcosSubmarinos, int barcosDestructores,int barcosCruceros,int barcosAcorazados,int barcosSubmarinosColocados, int barcosDestructoresColocados,int barcosCrucerosColocados,int barcosAcorazadosColocados );
 	public void modificarCeldaTablero(int idUsuario, Celda celda, int xC, int yC);
-
+	public boolean turnoTablero(int idUsuario);
 }
