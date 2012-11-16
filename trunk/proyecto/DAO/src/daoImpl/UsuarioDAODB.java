@@ -84,10 +84,72 @@ public class UsuarioDAODB implements UsuarioDAO {
 			logger.debug("Me desconecto de la base de datos del método findByName");
 			c.disconnect();
 		}
+	}
+
+	public Usuario findByName2(String usuario,Conexion c) throws NotDataFoundException {
+		logger.debug("Entro a findByName con parametro de entrada usuario= "+usuario);
+		Usuario u = new Usuario();
+		try {
+
+			ResultSet resultado = c
+					.devolverResutado("SELECT * FROM usuarios WHERE usuario='"+usuario+"'");
+			boolean esta=false;
+			while (resultado.next()) {
+					logger.debug("El usuario tiene los siguientes datos");
+					String clave=resultado.getString("clave");
+					int idUsuario=resultado.getInt("idUsuario");
+					String usuarioString=resultado.getString("usuario");
+					String nombre=resultado.getString("nombre");
+					String apellido=resultado.getString("apellido");
+					int nivelPrivilegio=resultado.getInt("nivelPrivilegio");
+					String pais=resultado.getString("pais");
+					int credito=resultado.getInt("credito");
+					int virtual=resultado.getInt("virtual");
+					int partidasGanadas=resultado.getInt("partidasGanadas");
+
+					logger.debug("usuario= "+usuarioString);
+					logger.debug("clave= "+clave);
+					logger.debug("idUsuario= "+idUsuario);
+					logger.debug("nombre= "+nombre);
+					logger.debug("apellido= "+apellido);
+					logger.debug("nivelPrivilegio= "+nivelPrivilegio);
+					logger.debug("pais= "+pais);
+					logger.debug("credito= "+credito);
+					logger.debug("virtual= "+virtual);
+					logger.debug("partidasGanadas= "+partidasGanadas);
+
+					u.setClaveB(clave);
+					u.setIdUsuarioB(idUsuario);
+					u.setUsuarioB(usuarioString);
+					u.setNombreB(nombre);
+					u.setApellidoB(apellido);
+					u.setNivelPrivilegioB(nivelPrivilegio);
+					u.setPaisB(pais);
+					u.setCreditoB(credito);
+					u.setVirtualB(virtual);
+					u.setPartidasGanadasB(partidasGanadas);
+					esta=true;
+			}
+			if(esta){
+				return u;
+			}else{
+				logger.debug("No existe usuario");
+				throw new NotDataFoundException();
+			}
+		} catch (SQLException ex) {
+			logger.error("error de my sql");
+			throw new NotDataFoundException();
+
+		} finally{
+			logger.debug("Me salgo del método findByName");
+		}
 
 
 	}
 
+
+
+	//optimizado
 	public boolean agregarUsuario(String usuario, String clave,
 			int nivelPrivilegio, int virtual, int credito, int partidasGanadas,
 			String nombre, String apellido, String pais)
@@ -135,6 +197,7 @@ public class UsuarioDAODB implements UsuarioDAO {
 		return existe;
 	}
 
+	//optimizado
 	public boolean cambiarPassword(String usuario, String nuevaPassword)throws NoExisteUsuarioException{
 		logger.debug("Entro a cambiarPassword con parámetros de entrada usuario= "+usuario+", nuevaPassword= "+nuevaPassword);
 		boolean cambio=false;
@@ -157,6 +220,7 @@ public class UsuarioDAODB implements UsuarioDAO {
 		}
 		return cambio;
 	}
+	//optimizado
 	public boolean cambiarNombre(String usuario, String nuevoUsuario)throws NoExisteUsuarioException{
 		logger.debug("Entro a cambiarPassword con parámetros de entrada usuario= "+usuario+", nuevoUsuario= "+nuevoUsuario);
 		boolean cambio=false;
@@ -203,7 +267,28 @@ public class UsuarioDAODB implements UsuarioDAO {
 		}
 		return usuario;
 	}
+	public String getUsuario2(int idUsuario,Conexion c) throws NoExisteUsuarioException {
+		logger.debug("Entro a getUsuario con parámetro de entrada idUsuario= "+idUsuario);
+		ResultSet r = null;
+		String usuario = null;
+		try {
+			r = c.devolverResutado("SELECT usuario FROM usuarios WHERE idusuario='"+ idUsuario + "'");
+			if(r.first()){
+				usuario = r.getString("usuario");
+			}else{
+				throw new NoExisteUsuarioException();
+			}
 
+		} catch (SQLException ex) {
+
+		} finally{
+			logger.debug("usuario= "+usuario);
+			logger.debug("salgo del método getUsuario2");
+		}
+		return usuario;
+	}
+
+	//optimizado
 	public boolean creditoSuficiente(int credito, int idUsuario){
 		logger.debug("Entro a creditoSuficiente con parámetros de entrada credito= "+credito+" idUsuario= "+idUsuario);
 		boolean suficiente=false;
@@ -233,6 +318,38 @@ public class UsuarioDAODB implements UsuarioDAO {
 		return suficiente;
 	}
 
+	public boolean creditoSuficiente2(int credito, int idUsuario, Conexion c){
+		logger.debug("Entro a creditoSuficiente con parámetros de entrada credito= "+credito+" idUsuario= "+idUsuario);
+		boolean suficiente=false;
+		try {
+			ResultSet r=c.devolverResutado("SELECT credito FROM usuarios WHERE idusuario="+idUsuario);
+			if(r.first()){
+				int creditoUsuario=r.getInt("credito");
+				if(creditoUsuario>=credito){
+					suficiente=true;
+				}
+			}else{
+				throw new NoExisteUsuarioException();
+			}
+
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (NoExisteUsuarioException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally{
+			logger.debug(suficiente);
+			logger.debug("Me salgo del método creditoSuficiente");
+
+		}
+		return suficiente;
+	}
+
+
+
+
+	//optimizado
 	public int getResultadoCredito(int credito, int idUsuario){
 		logger.debug("Entro a getResultadoCredito con parámetros de entrada credito= "+credito+" idUsuario= "+idUsuario);
 		int resultado=0;
@@ -262,7 +379,7 @@ public class UsuarioDAODB implements UsuarioDAO {
 		return resultado;
 	}
 
-	//retorna el valor sumado, siempre y cuando se pase un valor positivo
+	//optimizado, retorna el valor sumado, siempre y cuando se pase un valor positivo
 	public int sumarSaldo(int credito_a_sumar, int idUsuario){
 		logger.debug("Entro a sumarSaldo con parámetros de entrada credito= "+credito_a_sumar+" idUsuario= "+idUsuario);
 		int resultado=0;
@@ -288,7 +405,7 @@ public class UsuarioDAODB implements UsuarioDAO {
 		}
 		return resultado;
 	}
-	//retorna el valor restado, siempre y cuando se pase un valor positivo
+	//optimizado, retorna el valor restado, siempre y cuando se pase un valor positivo
 	public int restarSaldo(int credito_a_restar, int idUsuario){
 		logger.debug("Entro a restarSaldo con parámetros de entrada credito= "+credito_a_restar+" idUsuario= "+idUsuario);
 		int resultado=0;
@@ -315,7 +432,7 @@ public class UsuarioDAODB implements UsuarioDAO {
 		return resultado;
 	}
 
-
+	//optimizado
 	public boolean esUsuarioVirtual(String usuario) {
 		logger.debug("Entro a esUsuarioVirtual con parámetros de entrada usuario= "+usuario);
 		Conexion c=new Conexion();
@@ -323,7 +440,7 @@ public class UsuarioDAODB implements UsuarioDAO {
 		UsuarioDAODB ud=new UsuarioDAODB();
 
 		try {
-			Usuario u=ud.findByName(usuario);
+			Usuario u=ud.findByName2(usuario,c);
 			int idUsuario=u.getIdUsuarioB();
 			ResultSet rs=c.devolverResutado("SELECT idUsuario FROM usuarios WHERE idusuario='"+idUsuario+"' AND virtual='1'");
 			if(rs.first()){
@@ -342,6 +459,7 @@ public class UsuarioDAODB implements UsuarioDAO {
 		return virtual;
 	}
 
+	//optimizado
 	public ArrayList<Usuario> getUsuariosVirtuales() {
 		logger.debug("Entro a getUsuariosVirtuales");
 		ArrayList<Usuario> a=new ArrayList<Usuario>();
@@ -353,7 +471,7 @@ public class UsuarioDAODB implements UsuarioDAO {
 			while(rs.next()){
 				String usuario=rs.getString("usuario");
 				logger.debug("Usuario virtual: "+usuario);
-				u=ud.findByName(usuario);
+				u=ud.findByName2(usuario,c);
 				a.add(u);
 			}
 

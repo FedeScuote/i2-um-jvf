@@ -153,7 +153,7 @@ public class DesafioDAODB implements DesafioDAO {
 		}
 		return a;
 	}
-
+	//optimizado
 	public ArrayList getDesafiosUsuariosDisponibleBatallaNaval()
 			throws NoHayDesafioException {
 		logger.debug("Entro a getDesafiosUsuariosDisponibleBatallaNaval");
@@ -174,7 +174,7 @@ public class DesafioDAODB implements DesafioDAO {
 				Date fecha = resultado.getDate("fechaHoraInicioD");
 				String estadoD = resultado.getString("estadoD");
 				UsuarioDAODB ud = new UsuarioDAODB();
-				String usuarioDesafio = ud.getUsuario(idUsuario);
+				String usuarioDesafio = ud.getUsuario2(idUsuario,c);
 
 				logger.debug("idDesafio= " + idDesafio);
 				logger.debug("monto= " + monto);
@@ -321,7 +321,7 @@ public class DesafioDAODB implements DesafioDAO {
 		return a;
 	}
 
-	// devuelve la idDesafio de BatallaNaval
+	//optimizado, devuelve la idDesafio de BatallaNaval
 	public int crearDesafio(String usuario, int monto) {
 		logger.debug("Entro a crearDesafios con parámetros de entrada usuario= "+usuario+" monto= "+monto);
 		UsuarioDAODB ud = new UsuarioDAODB();
@@ -333,11 +333,11 @@ public class DesafioDAODB implements DesafioDAO {
 		int usuarioGanadorD = 0; // El cero representa a ningun usuario
 
 		try {
-			u = ud.findByName(usuario);
+			u = ud.findByName2(usuario,c);
 			idUsuario = u.getIdUsuarioB();
 			boolean creditoSuficiente;
 			int credito=u.getCreditoB();
-			creditoSuficiente=ud.creditoSuficiente(credito, idUsuario);
+			creditoSuficiente=ud.creditoSuficiente2(credito, idUsuario,c);
 			if(!creditoSuficiente){
 				throw new NoExisteCreditoSuficiente();
 			}
@@ -390,7 +390,7 @@ public class DesafioDAODB implements DesafioDAO {
 		}
 		return idDesafio;
 	}
-
+	//optimizado
 	public ArrayList getDesafiosUsuariosDisponibleBatallaNaval(int idUser)
 			throws NoHayDesafioException {
 		logger.debug("Entro a getDesafiosUsuariosDisponibleBatallaNaval con parámetro de entrada idUsuario= "+idUser);
@@ -440,7 +440,7 @@ public class DesafioDAODB implements DesafioDAO {
 		}
 		return a;
 	}
-
+	//optimizado
 	public boolean aceptaronDesafio(int idUsuario) {
 		logger.debug("Entro a aceptaronDesafio con parámetro de entrada idUsuario= "+idUsuario);
 		Conexion c = new Conexion();
@@ -467,7 +467,7 @@ public class DesafioDAODB implements DesafioDAO {
 		}
 
 	}
-
+	//optimizado
 	public boolean desafioFinalizado(int idDesafio) throws NoExisteDesafioException{
 		logger.debug("Entro a desafioFinalizado con parámetro de entrada idDesafio= "+idDesafio);
 		boolean finalizado=false;
@@ -492,7 +492,7 @@ public class DesafioDAODB implements DesafioDAO {
 		}
 		return finalizado;
 	}
-
+	//optimizado
 	public int getMontoDesafio(int idDesafio) throws NoHayDesafioException{
 		logger.debug("Entro a getMontoDesafio con parámetros de entrada idDesafio= "+idDesafio);
 		int monto=0;
