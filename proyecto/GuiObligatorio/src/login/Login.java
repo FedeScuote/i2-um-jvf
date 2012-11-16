@@ -339,7 +339,7 @@ public class Login extends JFrame {
 		try{
 			Registry registry = LocateRegistry.getRegistry(host);
 			ServiciosBatallaNaval stub = (ServiciosBatallaNaval) registry.lookup("BatallaNavalServices");
-			if(stub.hayPartidaEnCurso(usuario) && (stub.inicioPartida(usuario))){
+			if(stub.hayPartidaEnCurso(usuario) && (stub.inicioPartida(usuario))){//si tengo partida en curso y inicio
 				JOptionPane.showMessageDialog(new JFrame(),labels.getString("LABEL_PARTIDA_EN_CURSO"), labels.getString("nombre_empresa"), JOptionPane.INFORMATION_MESSAGE);
 				BatallaNavalVentana l = new BatallaNavalVentana(usuario);
 				logger.debug("Partida en curso?");
@@ -348,13 +348,13 @@ public class Login extends JFrame {
 				this.dispose();
 			}else if(stub.hayPartidaEnCurso(usuario)){
 				JOptionPane.showMessageDialog(new JFrame(),labels.getString("LABEL_PARTIDA_EN_CURSO"), labels.getString("nombre_empresa"), JOptionPane.INFORMATION_MESSAGE);
-				ColocarBarcosVentana l = new ColocarBarcosVentana(usuario);
+				ColocarBarcosVentana l = new ColocarBarcosVentana(usuario, stub.distribucionPlus(usuario));
 				logger.debug("Partida en curso?");
 				this.setVisible(false);
 				l.setVisible(true);
 				this.dispose();
 			}else{
-				this.cambiarVentana(usuario);
+				this.cambiarVentana(usuario); // va a menu principal
 			}
 		}catch(Exception e){
 
