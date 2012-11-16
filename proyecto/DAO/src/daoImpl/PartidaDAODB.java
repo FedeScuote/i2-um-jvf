@@ -133,6 +133,25 @@ public class PartidaDAODB implements PartidaDAO {
 		return idPartida;
 	}
 
+	public int idPartida2(int idUsuario, Conexion c) {
+		logger.debug("Entro a idPartida con parámetro de entrada idUsuario= "+idUsuario);
+		int idPartida=0;
+		try {
+			ResultSet r=c.devolverResutado("SELECT desafios_idDesafio FROM usuarios_has_juegos_desafios WHERE usuarios_idusuario='"+idUsuario+"' AND usuarioGanadorD='0'");
+			if(r.first()){
+				idPartida=r.getInt("desafios_idDesafio");
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally{
+			logger.debug("idPartida= "+idPartida);
+			logger.debug("Me salgo del método idPartida");
+		}
+		return idPartida;
+	}
+
+
 
 	//Devuelve un objeto Usuario del oponente, al pasarle la idUsuario
 	public Usuario oponente(int idUsuario) {

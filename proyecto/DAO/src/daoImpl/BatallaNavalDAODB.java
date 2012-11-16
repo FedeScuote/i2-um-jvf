@@ -22,6 +22,7 @@ public class BatallaNavalDAODB implements BatallaNavalDAO {
 
 	//terminados
 
+	//optimizado
 	public ArrayList<RegistroDisparo> getListaDeTiros(int idPartida,int idUsuario) {
 		logger.debug("Entro a getListaDeTiros con parametros de entrada idPartida= "+idPartida+" idUsuario= "+idUsuario);
 		ArrayList<RegistroDisparo> ard=new ArrayList();
@@ -33,8 +34,8 @@ public class BatallaNavalDAODB implements BatallaNavalDAO {
 		int idTablero;
 
 		try {
-			jugador = ud.getUsuario(idUsuario);
-			idTablero=this.getIdTablero(idDesafio, jugador);
+			jugador = ud.getUsuario2(idUsuario,c);
+			idTablero=this.getIdTablero2(idDesafio, jugador,c);
 			ResultSet r=c.devolverResutado("SELECT resultadoD, xD, yD FROM disparos WHERE t_batalla_naval_idTBatallaNaval="+idTablero);
 			while(r.next()){
 				Disparo disparo=new Disparo();
@@ -81,6 +82,7 @@ public class BatallaNavalDAODB implements BatallaNavalDAO {
 		return ard;
 	}
 
+	//optimizado
 	public Tablero getTablero(int idPartida, int idUsuario) {
 		logger.debug("Entro a getTablero con parámetros de entrada idPartida= "+idPartida+" e idUsuario= "+idUsuario);
 		Usuario u=new Usuario();
@@ -88,8 +90,8 @@ public class BatallaNavalDAODB implements BatallaNavalDAO {
 		String usuario=null;
 		Conexion c=new Conexion();
 		try {
-			usuario=ud.getUsuario(idUsuario);
-			u=ud.findByName(usuario);
+			usuario=ud.getUsuario2(idUsuario,c);
+			u=ud.findByName2(usuario,c);
 		} catch (NoExisteUsuarioException e2) {
 			e2.printStackTrace();
 		} catch (NotDataFoundException e) {
@@ -98,7 +100,7 @@ public class BatallaNavalDAODB implements BatallaNavalDAO {
 		Tablero t=new Tablero(u);
 		try {
 			int idDesafio = idPartida;
-			int idTablero=this.getIdTablero(idDesafio, usuario);
+			int idTablero=this.getIdTablero2(idDesafio, usuario,c);
 			ResultSet r = null;
 			ResultSet r2= null;
 
@@ -194,6 +196,7 @@ public class BatallaNavalDAODB implements BatallaNavalDAO {
 		return t;
 	}
 
+	//optimizado
 	public void registrarDisparo(Disparo disparo, Estados estado,int idUsuario, int idPartida) {
 		logger.debug("Entro a registrarDisparo con parámetros de entrada idUsuario= "+idUsuario+" idPartida= "+idPartida);
 		int xD = disparo.getFila();
@@ -212,15 +215,13 @@ public class BatallaNavalDAODB implements BatallaNavalDAO {
 
 
 		try {
-			String jugador=ud.getUsuario(idUsuario);
-			int idTablero = b.getIdTablero(idDesafio,jugador);
+			String jugador=ud.getUsuario2(idUsuario,c);
+			int idTablero = b.getIdTablero2(idDesafio,jugador,c);
 			logger.debug("Ingreso datos en tabla disparos");
 			c.ingresarNuevaTuplaDeCincoColumnas2("disparos", "idDisparo",
 					"t_batalla_naval_idTBatallaNaval", "idUsuarioD",
 					"resultadoD", "xD", "yD", idTablero, idUsuario, resultadoD,
 					xD, yD);
-
-			//c.actualizarTuplaDeUnaColumna2("celdas", "t_batalla_naval_idTBatallaNaval", "xC", "yC", idTablero, xD, yD, "estado", resultadoD);
 
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -234,7 +235,7 @@ public class BatallaNavalDAODB implements BatallaNavalDAO {
 		}
 
 	}
-
+	//optimizado
 	public void registrarTablero(Tablero tablero, int idPartida) {
 		logger.debug("Entro a registrarTablero con parámetros de entrada idPartida= "+idPartida);
 		int idDesafio=idPartida;
@@ -242,7 +243,7 @@ public class BatallaNavalDAODB implements BatallaNavalDAO {
 		int idTablero=0;
 		Conexion c=new Conexion();
 		try {
-			idTablero = this.getIdTablero(idDesafio, jugador);
+			idTablero = this.getIdTablero2(idDesafio, jugador,c);
 			boolean miTurno=tablero.isMiTurno();
 			int miTurno2=3;
 			if(miTurno){
@@ -280,7 +281,7 @@ public class BatallaNavalDAODB implements BatallaNavalDAO {
 				int largoi=celda.length;
 				int largoj=celda[0].length;
 				try {
-					idTablero = this.getIdTablero(idDesafio,jugador);
+					idTablero = this.getIdTablero2(idDesafio,jugador,c);
 				} catch (NoExisteTableroException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
@@ -355,7 +356,7 @@ public class BatallaNavalDAODB implements BatallaNavalDAO {
 				int largoi=celda.length;
 				int largoj=celda[0].length;
 				try {
-					idTablero = this.getIdTablero(idDesafio,jugador);
+					idTablero = this.getIdTablero2(idDesafio,jugador,c);
 					logger.debug("idTablero= "+idTablero);
 				} catch (NoExisteTableroException e) {
 					// TODO Auto-generated catch block
@@ -395,14 +396,14 @@ public class BatallaNavalDAODB implements BatallaNavalDAO {
 
 	}
 
-	//actualiza tablero pero no celdas
+	//actualiza tablero pero no celdas, //optimizado
 	public void actualizarTablero(int idPartida, String usuario, boolean miTurno,int barcosSubmarinos, int barcosDestructores,int barcosCruceros,int barcosAcorazados,int barcosSubmarinosColocados, int barcosDestructoresColocados,int barcosCrucerosColocados,int barcosAcorazadosColocados ){
 		logger.debug("Entro a actualizarTablero con parámetros de entrada idPartida= "+idPartida+" usuario= "+usuario+" miTurno= "+miTurno+" barcosSubmarino= "+barcosSubmarinos+" barcosDestructores= "+barcosDestructores+" barcosCruceros= "+barcosCruceros+" barcosAcorzados= "+barcosAcorazados+" barcosSubmarinosColocados= "+barcosSubmarinosColocados+" barcosDestructoresColocados= "+barcosDestructoresColocados+" barcosCrucerosColocados= "+barcosCrucerosColocados+" barcosAcorazadosColocados= "+barcosAcorazadosColocados);
 		Conexion c=new Conexion();
 		int idDesafio=idPartida;
 		int idTablero=0;
 		try {
-			idTablero = this.getIdTablero(idDesafio, usuario);
+			idTablero = this.getIdTablero2(idDesafio, usuario,c);
 			int miTurno2=3;
 			if(miTurno){
 				miTurno2=1;
@@ -449,6 +450,30 @@ public class BatallaNavalDAODB implements BatallaNavalDAO {
 
 	}
 
+	public int getIdTablero2(int idDesafio,String jugador, Conexion c) throws NoExisteTableroException {
+		logger.debug("Entro a getIdTablero con parámetros de entrada idDesafio= "+idDesafio+" jugador= "+jugador);
+		ResultSet r = null;
+		int idTablero = 0;
+		try {
+			r = c
+					.devolverResutado("SELECT idTBatallaNaval FROM t_batalla_naval WHERE desafios_idDesafio='"
+							+ idDesafio + "' AND jugador='"+jugador+"'");
+
+			if(r.first()){
+				idTablero = r.getInt("idTBatallaNaval");
+			}else{
+				throw new NoExisteTableroException();
+			}
+		} catch (SQLException ex) {
+			throw new NoExisteTableroException();
+		} finally{
+			logger.debug("idTablero= "+idTablero);
+			logger.debug("salgo del método getIdTablero2");
+		}
+		return idTablero;
+	}
+
+	//optimizado
 	public void modificarCeldaTablero(int idUsuario, Celda celda, int xC, int yC) {
 		logger.debug("Entro a modificarCeldaTablero con parámetros de entrada idUsuario= "+idUsuario+" xC= "+xC+" yC="+yC);
 		logger.debug("El parámetro de entrada celda se compone de los siguientes parámetros");
@@ -457,11 +482,11 @@ public class BatallaNavalDAODB implements BatallaNavalDAO {
 		Conexion c=new Conexion();
 		PartidaDAODB p=new PartidaDAODB();
 		UsuarioDAODB u=new UsuarioDAODB();
-		int idDesafio=p.idPartida(idUsuario);
+		int idDesafio=p.idPartida2(idUsuario,c);
 		String jugador;
 		try {
-			jugador = u.getUsuario(idUsuario);
-			int idTablero=this.getIdTablero(idDesafio, jugador);
+			jugador = u.getUsuario2(idUsuario,c);
+			int idTablero=this.getIdTablero2(idDesafio, jugador,c);
 			int id=celda.getId();
 			String estado=celda.getEstado();
 			c.actualizarTuplaDeDosColumna("celdas", "xC", "yC", "t_batalla_naval_idTBatallaNaval", xC, yC, idTablero, "id", id, "estado", estado);
