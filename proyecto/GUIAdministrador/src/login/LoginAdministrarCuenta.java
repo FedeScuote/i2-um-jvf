@@ -47,7 +47,7 @@ public class LoginAdministrarCuenta extends JFrame {
 	 * @return void
 	 */
 	private void initialize() {
-		this.setSize(475, 316);
+		this.setSize(674, 353);
 		this.setContentPane(getJContentPane());
 		this.setTitle("JFrame");
 	}
@@ -74,24 +74,28 @@ public class LoginAdministrarCuenta extends JFrame {
 	private JPanel getPanelCentro() {
 		if (PanelCentro == null) {
 			GridBagConstraints gridBagConstraints6 = new GridBagConstraints();
-			gridBagConstraints6.gridx = 0;
+			gridBagConstraints6.gridx = 1;
 			gridBagConstraints6.fill = GridBagConstraints.NONE;
-			gridBagConstraints6.ipadx = 40;
-			gridBagConstraints6.insets = new Insets(40, 0, 0, 0);
-			gridBagConstraints6.gridy = 6;
+			gridBagConstraints6.ipadx = 50;
+			gridBagConstraints6.insets = new Insets(20, 0, 0,this.getWidth()/3);
+			gridBagConstraints6.anchor = GridBagConstraints.CENTER;
+			gridBagConstraints6.gridy = 5;
 			GridBagConstraints gridBagConstraints5 = new GridBagConstraints();
 			gridBagConstraints5.gridx = 0;
 			gridBagConstraints5.ipadx = 50;
-			gridBagConstraints5.insets = new Insets(20, 0, 0, 0);
+			gridBagConstraints5.insets = new Insets(20, this.getWidth()/3, 0, 0);
+			gridBagConstraints5.anchor = GridBagConstraints.WEST;
 			gridBagConstraints5.gridy = 5;
 			GridBagConstraints gridBagConstraints4 = new GridBagConstraints();
 			gridBagConstraints4.fill = GridBagConstraints.VERTICAL;
 			gridBagConstraints4.gridy = 4;
 			gridBagConstraints4.weightx = 1.0;
 			gridBagConstraints4.ipadx = 100;
+			gridBagConstraints4.gridwidth = 2;
 			gridBagConstraints4.gridx = 0;
 			GridBagConstraints gridBagConstraints3 = new GridBagConstraints();
 			gridBagConstraints3.gridx = 0;
+			gridBagConstraints3.gridwidth = 2;
 			gridBagConstraints3.gridy = 3;
 			PasswordLabel = new JLabel();
 			PasswordLabel.setText("Password");
@@ -100,15 +104,18 @@ public class LoginAdministrarCuenta extends JFrame {
 			gridBagConstraints2.gridy = 2;
 			gridBagConstraints2.weightx = 1.0;
 			gridBagConstraints2.ipadx = 100;
+			gridBagConstraints2.gridwidth = 2;
 			gridBagConstraints2.gridx = 0;
 			GridBagConstraints gridBagConstraints1 = new GridBagConstraints();
 			gridBagConstraints1.gridx = 0;
 			gridBagConstraints1.insets = new Insets(0, 0, 50, 0);
+			gridBagConstraints1.gridwidth = 2;
 			gridBagConstraints1.gridy = 0;
 			LabelIngreseUsuario = new JLabel();
 			LabelIngreseUsuario.setText("Ingrese el usuario a administrar");
 			GridBagConstraints gridBagConstraints = new GridBagConstraints();
 			gridBagConstraints.gridx = 0;
+			gridBagConstraints.gridwidth = 2;
 			gridBagConstraints.gridy = 1;
 			LabelUsuarioAdmin = new JLabel();
 			LabelUsuarioAdmin.setText("Usuario");
