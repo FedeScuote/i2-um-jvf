@@ -57,6 +57,7 @@ public class SegundaPantallaBatallaN extends SegundaPantalla {
 		ActionListener taskPerformer = new ActionListener() {
 			public void actionPerformed(ActionEvent evt) {
 				try { // intento recibir datos para el ranking/
+					logger.debug("pregunto si aceptaron desafio");
 					Registry registry = LocateRegistry.getRegistry(host);
 					ServiciosDesafio stub = (ServiciosDesafio) registry
 							.lookup("Desafio");
