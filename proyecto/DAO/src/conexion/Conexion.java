@@ -155,6 +155,26 @@ public class Conexion {
 	}
 
 
+	public void ingresarNuevaTuplaDeNueveColumnas(String tabla, String idTabla,
+			String columnaUno, String columnaDos,String columnaTres,
+			String columnaCuatro, String columnaCinco, String columnaSeis, String columnaSiete, String columnaOcho,
+			String columnaNueve, String valorUno,
+			String valorDos, int valorTres, int valorCuatro,
+			int valorCinco, int valorSeis,
+			String valorSiete, String valorOcho, String valorNueve) throws SQLException {
+		Statement pregunta;
+		pregunta = (conn).createStatement();
+		pregunta.executeUpdate("INSERT INTO " + tabla + "(" + idTabla + "," + columnaUno + "," + columnaDos + "," + columnaTres + ","
+				+ columnaCuatro + "," + columnaCinco + ","+columnaSeis + "," + columnaSiete + "," + columnaOcho + ","
+				+ columnaNueve +") VALUES(NULL,'"
+				+ valorUno + "','" + valorDos + "','" + valorTres + "','"
+				+ valorCuatro + "','" + valorCinco + "','"+valorSeis + "','" + valorSiete + "','" + valorOcho + "','"
+				+ valorNueve +"')");
+
+	}
+
+
+
 	public void ingresarNuevaTuplaDeOnceColumnas(String tabla, String idTabla,String columnaCero,
 			String columnaUno, String columnaDos,String columnaTres,
 			String columnaCuatro, String columnaCinco, String columnaSeis, String columnaSiete, String columnaOcho,
@@ -238,6 +258,15 @@ public class Conexion {
 				+ valorUno + "' WHERE " + atributoCondicion + "='"
 				+ valorCondicion + "'");
 	}
+	public void actualizarTuplaDeUnaColumna5(String tabla, String columnaUno,
+			String valorUno, String atributoCondicion, String valorCondicion)
+			throws SQLException {
+		Statement pregunta;
+		pregunta = (conn).createStatement();
+		pregunta.executeUpdate("UPDATE " + tabla + " SET " + columnaUno + "='"
+				+ valorUno + "' WHERE " + atributoCondicion + "='"
+				+ valorCondicion + "'");
+	}
 
 
 	public void actualizarTuplaDeUnaColumna2(String tabla, String atributoCondicionUno,String atributoCondicionDos,String atributoCondicionTres, int valorCondicionUno, int valorCondicionDos, int valorCondicionTres,
@@ -281,6 +310,15 @@ public class Conexion {
 		Statement pregunta;
 		pregunta = (conn).createStatement();
 		pregunta.executeUpdate("UPDATE " + tabla + " SET " + columnaUno + "=credito + '"
+				+ valorUno + "' WHERE " + atributoCondicion + "='"
+				+ valorCondicion + "'");
+	}
+	public void actualizarTuplaCreditoUsuario1(String tabla, String columnaUno,
+			int valorUno, String atributoCondicion, int valorCondicion)
+			throws SQLException {
+		Statement pregunta;
+		pregunta = (conn).createStatement();
+		pregunta.executeUpdate("UPDATE " + tabla + " SET " + columnaUno + "=credito - '"
 				+ valorUno + "' WHERE " + atributoCondicion + "='"
 				+ valorCondicion + "'");
 	}

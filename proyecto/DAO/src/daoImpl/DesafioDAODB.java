@@ -18,7 +18,7 @@ import excepcionesB.NoHayRankingException;
 import excepcionesB.NotDataFoundException;
 import excepcionesD.NoExisteCreditoSuficiente;
 import excepcionesD.NoExisteDesafioException;
-import excepcionesD.NoExisteUsuarioException;
+import excepcionesB.NoExisteUsuarioException;
 
 public class DesafioDAODB implements DesafioDAO {
 	private static Logger logger = Logger.getLogger(DesafioDAODB.class);
