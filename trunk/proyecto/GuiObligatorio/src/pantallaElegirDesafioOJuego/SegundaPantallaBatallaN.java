@@ -63,10 +63,10 @@ public class SegundaPantallaBatallaN extends SegundaPantalla {
 
 					if(stub.aceptaronDesafio(usuario)&& bandera==1){
 						bandera--;
-						aceptaronDesafio();
 						temporizador.stop();
+						aceptaronDesafio();
 					}else{
-						temporizador.restart();
+						temporizador.start();
 					}
 
 				}
