@@ -341,7 +341,6 @@ public class UsuarioDAODB implements UsuarioDAO {
 		} finally{
 			logger.debug(suficiente);
 			logger.debug("Me salgo del método creditoSuficiente");
-
 		}
 		return suficiente;
 	}
@@ -489,6 +488,7 @@ public class UsuarioDAODB implements UsuarioDAO {
 		}
 		return a;
 	}
+
 
 }
 

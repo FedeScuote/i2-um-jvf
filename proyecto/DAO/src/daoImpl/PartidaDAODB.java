@@ -133,6 +133,7 @@ public class PartidaDAODB implements PartidaDAO {
 		return idPartida;
 	}
 
+	//Optimizado, devuelve la idPartida En curso pasandole un idUsuario, retorna cero si no hay partida.
 	public int idPartida2(int idUsuario, Conexion c) {
 		logger.debug("Entro a idPartida con parámetro de entrada idUsuario= "+idUsuario);
 		int idPartida=0;

@@ -508,14 +508,18 @@ public class BatallaNavalDAODB implements BatallaNavalDAO {
 	}
 
 	public boolean turnoTablero(int idUsuario) {
+		logger.debug("Entro a turnoTablero con parámetro de entrada idUsuario= "+idUsuario);
 		Conexion c=new Conexion();
 		PartidaDAODB p=new PartidaDAODB();
 		UsuarioDAODB u=new UsuarioDAODB();
 
 		try {
-			String usuario=u.getUsuario(idUsuario);
+			String usuario=u.getUsuario2(idUsuario,c);
 			int idDesafio=p.idPartida2(idUsuario, c);
 			int idTablero=this.getIdTablero2(idDesafio, usuario, c);
+			logger.debug("usuario= "+usuario);
+			logger.debug("idDesafio= "+idDesafio);
+			logger.debug("idTablero= "+idTablero);
 			ResultSet r=c.devolverResutado("SELECT miTurno FROM t_batalla_naval WHERE idTBatallaNaval='"+idTablero+"'");
 			if(r.first()){
 				int miTurno=r.getInt("miTurno");
@@ -531,8 +535,10 @@ public class BatallaNavalDAODB implements BatallaNavalDAO {
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+		} finally{
+			logger.debug("Me desconecto de la base de datos del método turnoTablero");
+			c.disconnect();
 		}
-
 		return false;
 	}
 
