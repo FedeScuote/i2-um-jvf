@@ -49,6 +49,7 @@ public class BatallaNavalUnit extends TestCase {
 
 	public void testGetTablero(){
 		b.getTablero(33, 1);
+		assertEquals("Debería dar 1 barco acorazado",1,b.getTablero(39, 3).getCantBarcosAcorazado());
 	}
 
 	public void testGetTablero2(){
@@ -56,30 +57,39 @@ public class BatallaNavalUnit extends TestCase {
 	}
 
 	public void testGetListaDeTiros(){
-		b.getListaDeTiros(33, 1);
+		assertEquals("La columna debería dar 0",2,b.getListaDeTiros(39, 3).get(1).getDisparo().getColumna());
+		assertEquals("La fila debería dar 4",2,b.getListaDeTiros(39, 3).get(1).getDisparo().getFila());
+
 	}
 
 	public void testGetIdTablero(){
-
+		try {
+			assertEquals("Debería dar 15",15,b.getIdTablero(39, "fscuoteguazza"));
+		} catch (NoExisteTableroException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 	public void testTurnoTableroTrue(){
-		logger.debug(b.turnoTableroOld(3));
+
+		assertEquals("Debería dar false",true,b.turnoTableroOld(3));
 	}
 
 	public void testTurnoTableroFalse(){
-		logger.debug(b.turnoTableroOld(6));
+		assertEquals("Debería dar false",false,b.turnoTableroOld(6));
 	}
 
 	public void testTurnoTablero2True(){
-		logger.debug(b.turnoTablero(3));
+		assertEquals("Debería dar true",true,b.turnoTablero(3));
 	}
 
 	public void testTurnoTablero2False(){
-		logger.debug(b.turnoTablero(6));
+		assertEquals("Debería dar false",false,b.turnoTablero(6));
 	}
 
 	public void testActualizarTurno(){
 		b.actualizarTurno(3, true);
+		assertEquals("Debería dar true",true,b.getTablero(39, 3).isMiTurno());
 	}
 
 
