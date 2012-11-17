@@ -36,7 +36,7 @@ public class BatallaNavalUnit extends TestCase {
 		disparo.setFila(2);
 
 		BatallaNavalDAODB b=new BatallaNavalDAODB();
-		b.registrarDisparo(disparo, estado, idUsuario, idPartida);
+		b.registrarDisparo(disparo, estado, idUsuario);
 		//b.cargarDatos
 
 	}
@@ -48,17 +48,17 @@ public class BatallaNavalUnit extends TestCase {
 	}
 
 	public void testGetTablero(){
-		b.getTablero(33, 1);
-		assertEquals("Debería dar 1 barco acorazado",1,b.getTablero(39, 3).getCantBarcosAcorazado());
+		b.getTablero(1);
+		assertEquals("Debería dar 1 barco acorazado",1,b.getTablero(3).getCantBarcosAcorazado());
 	}
 
 	public void testGetTablero2(){
-		b.getTablero(21, 1);
+		b.getTablero(1);
 	}
 
 	public void testGetListaDeTiros(){
-		assertEquals("La columna debería dar 0",2,b.getListaDeTiros(39, 3).get(1).getDisparo().getColumna());
-		assertEquals("La fila debería dar 4",2,b.getListaDeTiros(39, 3).get(1).getDisparo().getFila());
+		assertEquals("La columna debería dar 0",2,b.getListaDeTiros(3).get(1).getDisparo().getColumna());
+		assertEquals("La fila debería dar 4",2,b.getListaDeTiros(3).get(1).getDisparo().getFila());
 
 	}
 
@@ -89,7 +89,7 @@ public class BatallaNavalUnit extends TestCase {
 
 	public void testActualizarTurno(){
 		b.actualizarTurno(3, true);
-		assertEquals("Debería dar true",true,b.getTablero(39, 3).isMiTurno());
+		assertEquals("Debería dar true",true,b.getTablero(3).isMiTurno());
 	}
 
 
