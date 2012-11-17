@@ -506,8 +506,27 @@ public class BatallaNavalDAODB implements BatallaNavalDAO {
 		}
 
 	}
-
+	//optimizado, sería el método más usado durante el juego
 	public boolean turnoTablero(int idUsuario) {
+		logger.debug("Entro a turnoTablero con parámetro de entrada idUsuario= "+idUsuario);
+		Conexion c=new Conexion();
+		try {
+			ResultSet r=c.devolverResutado("SELECT miTurno FROM t_batalla_naval,usuarios_has_juegos_desafios,desafios,usuarios WHERE t_batalla_naval.desafios_idDesafio=idDesafio AND usuarios_has_juegos_desafios.desafios_idDesafio=idDesafio AND usuarioGanadorD='0' AND jugador=usuario AND idusuario=usuarios_idusuario AND usuarios_idusuario='"+idUsuario+"'");
+			if(r.first()){
+				int miTurno=r.getInt("miTurno");
+				return miTurno==1;
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally{
+			logger.debug("Me desconecto de la base de datos del método turnoTablero");
+			c.disconnect();
+		}
+		return false;
+	}
+
+	public boolean turnoTableroOld(int idUsuario) {
 		logger.debug("Entro a turnoTablero con parámetro de entrada idUsuario= "+idUsuario);
 		Conexion c=new Conexion();
 		PartidaDAODB p=new PartidaDAODB();
@@ -541,5 +560,9 @@ public class BatallaNavalDAODB implements BatallaNavalDAO {
 		}
 		return false;
 	}
+
+
+
+
 
 }
