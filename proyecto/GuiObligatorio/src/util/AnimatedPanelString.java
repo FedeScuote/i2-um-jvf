@@ -55,7 +55,7 @@ public class AnimatedPanelString extends JPanel implements ActionListener {
 		Font newFont = g.getFont().deriveFont(Font.BOLD, 32f);
 		g.setFont(newFont);
 		g.setColor(currentColor);
-		g.drawString(imprimir, this.getWidth()/2, this.getHeight()/2);
+		g.drawString(imprimir, this.getWidth()/3, this.getHeight()/2);
 	}
 
 }

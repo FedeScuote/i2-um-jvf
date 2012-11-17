@@ -3,6 +3,7 @@ package ventanaJuego;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.GridLayout;
@@ -23,13 +24,16 @@ import javax.swing.SwingConstants;
 import org.apache.log4j.Logger;
 
 import util.AnimatedPanelString;
+import util.CustomGlassPane;
 import util.ImagePanel;
 import util.TransparentButton;
+import util.TransparentLabel;
 import util.TransparentPanel;
 
 import comm.ServiciosBatallaNaval;
 import comm.UsuarioVO;
 import commExceptions.CoordenadasInvalidasException;
+import java.awt.Insets;
 
 public class ColocarBarcos extends JFrame {
 
@@ -69,12 +73,21 @@ public class ColocarBarcos extends JFrame {
 	private static final String ACORAZADO = "ACORAZADO";
 
 	private static Logger logger = Logger.getLogger(ColocarBarcos.class);
-	private JButton BotonSubmarino = null;
-	private JButton BotonDestructor = null;
-	private JButton BotonCrucero = null;
-	private JButton BotonAcorazado = null;
+	private TransparentButton BotonSubmarino = null;
+	private TransparentButton BotonDestructor = null;
+	private TransparentButton BotonCrucero = null;
+	private TransparentButton BotonAcorazado = null;
 
 	private String BarcoSeleccionado = "SUBMARINO";  //  @jve:decl-index=0:
+	private CustomGlassPane PanelBarcosRestantes = null;
+	private JLabel LabelRenglon1 = null;
+	private JLabel LabelRenglon2 = null;
+	private JLabel LabelSubmarine = null;
+	private JLabel LabelDestroyer = null;
+	private JLabel LabelCruiser = null;
+	private JLabel LabelBattleship = null;
+	private JLabel LabelRenglon3 = null;
+	private JLabel LabelRenglon4 = null;
 	/**
 	 * This is the default constructor
 	 */
@@ -167,24 +180,53 @@ public class ColocarBarcos extends JFrame {
 	 */
 	private JPanel getPanelCentro() {
 		if (PanelCentro == null) {
+			GridBagConstraints gridBagConstraints5 = new GridBagConstraints();
+			gridBagConstraints5.gridx = 1;
+			gridBagConstraints5.gridy = 2;
+			LabelBattleship = new JLabel();
+			LabelBattleship.setText("JLabel");
+			GridBagConstraints gridBagConstraints4 = new GridBagConstraints();
+			gridBagConstraints4.gridx = 0;
+			gridBagConstraints4.gridy = 2;
+			LabelCruiser = new JLabel();
+			LabelCruiser.setText("JLabel");
+			GridBagConstraints gridBagConstraints31 = new GridBagConstraints();
+			gridBagConstraints31.gridx = 1;
+			gridBagConstraints31.gridy = 0;
+			LabelDestroyer = new JLabel();
+			LabelDestroyer.setText("JLabel");
+			GridBagConstraints gridBagConstraints21 = new GridBagConstraints();
+			gridBagConstraints21.gridx = 0;
+			gridBagConstraints21.gridy = 0;
+			LabelSubmarine = new JLabel();
+			LabelSubmarine.setText("JLabel");
+			GridBagConstraints gridBagConstraints11 = new GridBagConstraints();
+			gridBagConstraints11.gridx = 2;
+			gridBagConstraints11.insets = new Insets(0, 0, 0, 0);
+			gridBagConstraints11.gridy = 1;
 			GridBagConstraints gridBagConstraints3 = new GridBagConstraints();
 			gridBagConstraints3.gridx = 1;
-			gridBagConstraints3.gridy = 1;
+			gridBagConstraints3.gridy = 3;
 			GridBagConstraints gridBagConstraints2 = new GridBagConstraints();
 			gridBagConstraints2.gridx = 0;
-			gridBagConstraints2.gridy = 1;
+			gridBagConstraints2.gridy = 3;
 			GridBagConstraints gridBagConstraints1 = new GridBagConstraints();
 			gridBagConstraints1.gridx = 1;
-			gridBagConstraints1.gridy = 0;
+			gridBagConstraints1.gridy = 1;
 			GridBagConstraints gridBagConstraints = new GridBagConstraints();
 			gridBagConstraints.gridx = 0;
-			gridBagConstraints.gridy = 0;
+			gridBagConstraints.gridy = 1;
 			PanelCentro = new TransparentPanel();
 			PanelCentro.setLayout(new GridBagLayout());
 			PanelCentro.add(getBotonSubmarino(), gridBagConstraints);
 			PanelCentro.add(getBotonDestructor(), gridBagConstraints1);
 			PanelCentro.add(getBotonCrucero(), gridBagConstraints2);
 			PanelCentro.add(getBotonAcorazado(), gridBagConstraints3);
+			PanelCentro.add(getPanelBarcosRestantes(), gridBagConstraints11);
+			PanelCentro.add(LabelSubmarine, gridBagConstraints21);
+			PanelCentro.add(LabelDestroyer, gridBagConstraints31);
+			PanelCentro.add(LabelCruiser, gridBagConstraints4);
+			PanelCentro.add(LabelBattleship, gridBagConstraints5);
 		}
 		return PanelCentro;
 	}
@@ -221,11 +263,10 @@ public class ColocarBarcos extends JFrame {
 		logger.debug("Crear Fila");
 		for (int j = 0; j < TAMANO_TABLERO; j++) {
 			if (j == 0) {
-				JLabel jlabel = new JLabel();
+				TransparentLabel jlabel = new TransparentLabel();
 				panel.add(jlabel);
 				jlabel.setText(numeroFila.toString()); // alfabeto menos uno
 				// porque
-				jlabel.setOpaque(false);
 				jlabel.setHorizontalAlignment(SwingConstants.CENTER);
 				jlabel.setVerticalAlignment(SwingConstants.CENTER);
 			} else {
@@ -427,11 +468,14 @@ public class ColocarBarcos extends JFrame {
 	 */
 	private JButton getBotonSubmarino() {
 		if (BotonSubmarino == null) {
-			BotonSubmarino = new JButton();
+			BotonSubmarino = new TransparentButton(new ImageIcon("src/submarine.jpg").getImage());
+			BotonSubmarino.setSize(200, 120);
 			BotonSubmarino.setText("SUBMARINO");
 			BotonSubmarino.addActionListener(new java.awt.event.ActionListener() {
 				public void actionPerformed(java.awt.event.ActionEvent e) {
 					BarcoSeleccionado = SUBMARINO;
+					desClickBotones();
+					BotonSubmarino.setClicked(true);
 				}
 			});
 		}
@@ -445,11 +489,14 @@ public class ColocarBarcos extends JFrame {
 	 */
 	private JButton getBotonDestructor() {
 		if (BotonDestructor == null) {
-			BotonDestructor = new JButton();
+			BotonDestructor = new TransparentButton(new ImageIcon("src/destroyer.jpg").getImage());
+			BotonDestructor.setSize(200, 120);
 			BotonDestructor.setText("Destructor");
 			BotonDestructor.addActionListener(new java.awt.event.ActionListener() {
 				public void actionPerformed(java.awt.event.ActionEvent e) {
 					BarcoSeleccionado= DESTRUCTORES;
+					desClickBotones();
+					BotonDestructor.setClicked(true);
 				}
 			});
 		}
@@ -463,11 +510,14 @@ public class ColocarBarcos extends JFrame {
 	 */
 	private JButton getBotonCrucero() {
 		if (BotonCrucero == null) {
-			BotonCrucero = new JButton();
+			BotonCrucero = new TransparentButton(new ImageIcon("src/cruiser.jpg").getImage());
+			BotonCrucero.setSize(200, 120);
 			BotonCrucero.setText("CRUCERO");
 			BotonCrucero.addActionListener(new java.awt.event.ActionListener() {
 				public void actionPerformed(java.awt.event.ActionEvent e) {
 					BarcoSeleccionado= CRUCEROS;
+					desClickBotones();
+					BotonCrucero.setClicked(true);
 				}
 			});
 		}
@@ -481,15 +531,66 @@ public class ColocarBarcos extends JFrame {
 	 */
 	private JButton getBotonAcorazado() {
 		if (BotonAcorazado == null) {
-			BotonAcorazado = new JButton();
+			BotonAcorazado = new TransparentButton(new ImageIcon("src/battleship.jpg").getImage());
+			BotonAcorazado.setSize(200, 120);
 			BotonAcorazado.setText("Acorazado");
 			BotonAcorazado.addActionListener(new java.awt.event.ActionListener() {
 				public void actionPerformed(java.awt.event.ActionEvent e) {
 					BarcoSeleccionado = ACORAZADO;
+					desClickBotones();
+					BotonAcorazado.setClicked(true);
 				}
 			});
 		}
 		return BotonAcorazado;
 	}
+	private void desClickBotones(){
+		BotonSubmarino.setClicked(false);
+		BotonDestructor.setClicked(false);
+		BotonCrucero.setClicked(false);
+		BotonAcorazado.setClicked(false);
+	}
+
+	/**
+	 * This method initializes PanelBarcosRestantes
+	 *
+	 * @return javax.swing.JPanel
+	 */
+	private CustomGlassPane getPanelBarcosRestantes() {
+		if (PanelBarcosRestantes == null) {
+			GridBagConstraints gridBagConstraints7 = new GridBagConstraints();
+			gridBagConstraints7.gridx = 0;
+			gridBagConstraints7.gridy = 4;
+			LabelRenglon4 = new JLabel();
+			LabelRenglon4.setText("JLabel");
+			GridBagConstraints gridBagConstraints6 = new GridBagConstraints();
+			gridBagConstraints6.gridx = 0;
+			gridBagConstraints6.gridy = 3;
+			LabelRenglon3 = new JLabel();
+			LabelRenglon3.setText("JLabel");
+			LabelRenglon2 = new JLabel();
+			LabelRenglon2.setText("JLabel");
+			LabelRenglon1 = new JLabel();
+			LabelRenglon1.setFont(new Font("Arial", Font.BOLD, 24));
+			LabelRenglon1.setText("INSTRUCCIONES");
+			PanelBarcosRestantes = new CustomGlassPane();
+			PanelBarcosRestantes.setLayout(new GridBagLayout());
+			GridBagConstraints gridBagConstraints = new GridBagConstraints();
+			gridBagConstraints.gridx = 0;
+			gridBagConstraints.gridy = 1;
+			GridBagConstraints gridBagConstraints1 = new GridBagConstraints();
+			gridBagConstraints1.gridx = 0;
+			gridBagConstraints1.insets = new Insets(20, 0, 0, 0);
+			gridBagConstraints1.gridy = 2;
+			gridBagConstraints.gridx = 0;
+			gridBagConstraints.gridy = 0;
+			PanelBarcosRestantes.add(LabelRenglon1, gridBagConstraints);
+			PanelBarcosRestantes.add(LabelRenglon2, gridBagConstraints1);
+			PanelBarcosRestantes.add(LabelRenglon3, gridBagConstraints6);
+			PanelBarcosRestantes.add(LabelRenglon4, gridBagConstraints7);
+		}
+		return PanelBarcosRestantes;
+	}
+
 
 }  //  @jve:decl-index=0:visual-constraint="10,10"
