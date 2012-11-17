@@ -10,7 +10,7 @@ import busImpl.batallaNaval.Tablero;
 
 public interface BatallaNavalDAO {
 
-	//terminados
+	//terminados y optimizados
 	public ArrayList<RegistroDisparo> getListaDeTiros(int idPartida,int idUsuario);
 	public void registrarDisparo(Disparo disparo, Estados estado, int idUsuario, int idPartida);
 	public Tablero getTablero(int idPartidia,int idUsuario);
