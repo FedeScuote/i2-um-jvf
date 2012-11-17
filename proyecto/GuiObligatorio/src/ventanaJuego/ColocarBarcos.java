@@ -31,7 +31,9 @@ import util.TranslucentPanel;
 import util.TransparentButton;
 import util.TransparentPanel;
 
+import comm.CeldaVO;
 import comm.ServiciosBatallaNaval;
+import comm.TableroVO;
 import comm.UsuarioVO;
 import commExceptions.CoordenadasInvalidasException;
 
@@ -93,6 +95,7 @@ public class ColocarBarcos extends JFrame {
 	 */
 	public ColocarBarcos(UsuarioVO usu) {
 		super();
+		this.pedirDistribucion();
 		initialize();
 		usuario=usu;
 		logger.debug("Constructor ColocarBarcos" +
@@ -101,7 +104,23 @@ public class ColocarBarcos extends JFrame {
 		this.setExtendedState(JFrame.MAXIMIZED_BOTH);
 		this.crearCabezal(PanelTablero);
 		this.crearTablero(PanelTablero, arrayBotones);
-		this.pedirDistribucion();
+		this.refrescarTableroJugador();
+
+	}
+	//constructor para la desconexion
+	public ColocarBarcos(UsuarioVO usu, int[] distribucion) {
+		super();
+		this.distribucion = distribucion;
+		initialize();
+		usuario=usu;
+		logger.debug("Constructor ColocarBarcos" +
+				"");
+		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		this.setExtendedState(JFrame.MAXIMIZED_BOTH);
+		this.crearCabezal(PanelTablero);
+		this.crearTablero(PanelTablero, arrayBotones);
+		this.refrescarTableroJugador();
+
 	}
 
 	/**
@@ -114,6 +133,7 @@ public class ColocarBarcos extends JFrame {
 		this.setContentPane(getJContentPane());
 		this.setTitle("JFrame");
 		this.setExtendedState(JFrame.MAXIMIZED_BOTH);
+
 	}
 
 	/**
@@ -591,6 +611,60 @@ public class ColocarBarcos extends JFrame {
 			PanelBarcosRestantes.add(LabelRenglon4, gridBagConstraints7);
 		}
 		return PanelBarcosRestantes;
+	}
+//	 METODO PARA REFRESCAR TABLERO DEL JUGADOR
+	public void refrescarTableroJugador() {
+		logger.debug("refrescarTableroJugador");
+		try { // try y catch para verificar si esta el usuario o
+			// no
+			Registry registry = LocateRegistry.getRegistry(host);
+			ServiciosBatallaNaval stub = (ServiciosBatallaNaval) registry
+					.lookup("BatallaNavalServices");
+			cambiarBotones(arrayBotones, stub.refrescarTablero(usuario));
+		} catch (Exception e) {
+			if (e instanceof RemoteException) {
+				JOptionPane
+						.showMessageDialog(new JFrame(), "ERROR DE CONEXION",
+								"ERROR", JOptionPane.ERROR_MESSAGE);
+			} else {
+				e.printStackTrace();
+				JOptionPane
+						.showMessageDialog(new JFrame(), "ERROR DESCONOCIDO",
+								"ERROR", JOptionPane.ERROR_MESSAGE);
+				this.dispose();
+			}
+		}
+	}
+//	 METODO DONDE "PINTA" LOS BOTONES PARA REFRESCAR EL TABLERO
+	public void cambiarBotones(JButton[][] botones, TableroVO tablero) {
+		CeldaVO[][] tabla = tablero.getTabla();
+		int iArrayBotones = 0;
+		int jArrayBotones = 0;
+		for (int i = 0; i < tabla.length; i++) {
+			iArrayBotones++;
+			jArrayBotones = 0;
+			for (int j = 0; j < tabla.length; j++) {
+				jArrayBotones++;
+				if (tabla[i][j].getEstado().equals("AGUA")) {
+					botones[iArrayBotones][jArrayBotones]
+							.setBackground(Color.BLUE);
+				} else if (tabla[i][j].getEstado().equals("OCUPADO")) {
+					botones[iArrayBotones][jArrayBotones]
+							.setBackground(Color.BLACK);
+				} else if (tabla[i][j].getEstado().equals("TOCADO")) {
+					botones[iArrayBotones][jArrayBotones]
+							.setBackground(Color.GREEN);
+				} else if (tabla[i][j].getEstado().equals("HUNDIDO")) {
+					botones[iArrayBotones][jArrayBotones]
+							.setBackground(Color.GREEN);
+				} else {
+					botones[iArrayBotones][jArrayBotones]
+							.setBackground(Color.RED); // esto quiere decir
+					// que si no era ninguno de los otros erre el tiro
+				}
+
+			}
+		}
 	}
 
 

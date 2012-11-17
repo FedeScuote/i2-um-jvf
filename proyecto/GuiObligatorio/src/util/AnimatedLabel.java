@@ -1,33 +1,35 @@
 package util;
 
+import java.awt.AlphaComposite;
 import java.awt.Color;
 import java.awt.Font;
-import java.awt.FontMetrics;
 import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.RenderingHints;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.image.BufferedImage;
 
-import javax.swing.JPanel;
+import javax.swing.JLabel;
 import javax.swing.Timer;
 
-public class AnimatedPanelString extends JPanel implements ActionListener {
+public class AnimatedLabel extends JLabel implements ActionListener {
 
-	Color startColor = Color.RED; // where we start
-	Color endColor = Color.GREEN; // where we end
+
+	Color startColor = Color.BLUE; // where we start
+	Color endColor = Color.RED; // where we end
 	Color currentColor = startColor;
-	int animationDuration = 1000; // each animation will take 2 seconds
+	int animationDuration = 300;
 	long animStartTime;
-	String imprimir;
 
-	public AnimatedPanelString(String str){
-		imprimir=str;
-		this.setOpaque(false);
+	public AnimatedLabel() {
 		Timer timer = new Timer(10, this);
 		// initial delay while window gets set up
 		timer.setInitialDelay(1000);
 		animStartTime = 1000 + System.nanoTime() / 1000000;
 		timer.start();
 	}
+
 	public void actionPerformed(ActionEvent ae) {
 		// calculate elapsed fraction of animation
 		long currentTime = System.nanoTime() / 1000000;
@@ -49,13 +51,12 @@ public class AnimatedPanelString extends JPanel implements ActionListener {
 		// force a repaint to display our oval with its new color
 		repaint();
 	}
-
 	@Override
 	protected void paintComponent(Graphics g) {
-		// Draws the image onto the screen
 		Font newFont = g.getFont().deriveFont(Font.BOLD, 32f);
 		g.setFont(newFont);
 		g.setColor(currentColor);
-		g.drawString(imprimir, this.getWidth()/3, this.getHeight()/2);
+		g.drawString(this.getText(), this.getWidth()/3, this.getHeight()/2);
 	}
+
 }

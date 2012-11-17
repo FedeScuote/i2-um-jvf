@@ -26,8 +26,8 @@ import util.AnimatedPanel;
 import util.CustomGlassPane;
 import util.ImagePanel;
 import util.TransparentPanel;
-import ventanaJuego.BatallaNavalVentana;
-import ventanaJuego.ColocarBarcosVentana;
+import ventanaJuego.BatallaNaval;
+import ventanaJuego.ColocarBarcos;
 import ventanaPrincipal.VentanaPrincipal;
 
 import comm.ServiciosBatallaNaval;
@@ -341,14 +341,14 @@ public class Login extends JFrame {
 			ServiciosBatallaNaval stub = (ServiciosBatallaNaval) registry.lookup("BatallaNavalServices");
 			if(stub.hayPartidaEnCurso(usuario) && (stub.inicioPartida(usuario))){//si tengo partida en curso y inicio
 				JOptionPane.showMessageDialog(new JFrame(),labels.getString("LABEL_PARTIDA_EN_CURSO"), labels.getString("nombre_empresa"), JOptionPane.INFORMATION_MESSAGE);
-				BatallaNavalVentana l = new BatallaNavalVentana(usuario);
+				BatallaNaval l = new BatallaNaval(usuario);
 				logger.debug("Partida en curso?");
 				this.setVisible(false);
 				l.setVisible(true);
 				this.dispose();
 			}else if(stub.hayPartidaEnCurso(usuario)){
 				JOptionPane.showMessageDialog(new JFrame(),labels.getString("LABEL_PARTIDA_EN_CURSO"), labels.getString("nombre_empresa"), JOptionPane.INFORMATION_MESSAGE);
-				ColocarBarcosVentana l = new ColocarBarcosVentana(usuario, stub.distribucionPlus(usuario));
+				ColocarBarcos l = new ColocarBarcos(usuario, stub.distribucionPlus(usuario));
 				logger.debug("Partida en curso?");
 				this.setVisible(false);
 				l.setVisible(true);
