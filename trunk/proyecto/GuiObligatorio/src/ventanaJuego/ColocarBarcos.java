@@ -7,6 +7,7 @@ import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.GridLayout;
+import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.rmi.RemoteException;
@@ -26,21 +27,20 @@ import org.apache.log4j.Logger;
 import util.AnimatedPanelString;
 import util.CustomGlassPane;
 import util.ImagePanel;
+import util.TranslucentPanel;
 import util.TransparentButton;
-import util.TransparentLabel;
 import util.TransparentPanel;
 
 import comm.ServiciosBatallaNaval;
 import comm.UsuarioVO;
 import commExceptions.CoordenadasInvalidasException;
-import java.awt.Insets;
 
 public class ColocarBarcos extends JFrame {
 
 	private static final long serialVersionUID = 1L;
 	private JPanel jContentPane = null;
 	private ImagePanel PanelColocarBarcos = null;
-	private JPanel PanelTablero = null;
+	private TranslucentPanel PanelTablero = null;
 	private AnimatedPanelString PanelIngresarBarco = null;
 	private UsuarioVO usuario;
 	private TransparentPanel PanelCentro = null;
@@ -153,7 +153,7 @@ public class ColocarBarcos extends JFrame {
 	 */
 	private JPanel getPanelTablero() {
 		if (PanelTablero == null) {
-			PanelTablero = new JPanel();
+			PanelTablero = new TranslucentPanel();
 			PanelTablero.setLayout(new GridBagLayout());
 		}
 		return PanelTablero;
@@ -238,7 +238,7 @@ public class ColocarBarcos extends JFrame {
 		for (int i = 0; i < TAMANO_TABLERO; i++) {
 			JLabel jlabel = new JLabel();
 			panel.add(jlabel);
-			jlabel.setOpaque(false);
+			jlabel.setForeground(Color.white);
 			jlabel.setText(ALFABETO[i]); // alfabeto menos uno porque
 			jlabel.setHorizontalAlignment(SwingConstants.CENTER);
 			jlabel.setVerticalAlignment(SwingConstants.CENTER);
@@ -263,10 +263,11 @@ public class ColocarBarcos extends JFrame {
 		logger.debug("Crear Fila");
 		for (int j = 0; j < TAMANO_TABLERO; j++) {
 			if (j == 0) {
-				TransparentLabel jlabel = new TransparentLabel();
+				JLabel jlabel = new JLabel();
 				panel.add(jlabel);
 				jlabel.setText(numeroFila.toString()); // alfabeto menos uno
 				// porque
+				jlabel.setForeground(Color.white);
 				jlabel.setHorizontalAlignment(SwingConstants.CENTER);
 				jlabel.setVerticalAlignment(SwingConstants.CENTER);
 			} else {
