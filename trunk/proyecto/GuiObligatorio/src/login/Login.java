@@ -53,7 +53,13 @@ public class Login extends JFrame {
 	private JTextField usuario = null;
 	private JPasswordField password = null;
 	private static Logger logger = Logger.getLogger(LoginVentana.class);
-	private ResourceBundle labels = ResourceBundle.getBundle("Gui");  //  @jve:decl-index=0:
+	private static ResourceBundle labels = ResourceBundle.getBundle("Gui");  //  @jve:decl-index=0:
+	private static final String URL_IMAGEN_FONDO_LOGIN = labels.getString("URL_FOTOLOGIN");
+	private static final String LABEL_PASSWORD_KEY = labels.getString("LABEL_PASSWORD");
+	private static final String LABEL_USERNAME_KEY = labels.getString("LABEL_USERNAME");
+	private static final String NOMBRE_VENTANA = labels.getString("nombre_empresa");
+	private static final String LABEL_BOTON_LOGIN = labels.getString("LABEL_BOTON_LOGIN");
+
 	/**
 	 * This method initializes PanelLogin
 	 *
@@ -61,7 +67,7 @@ public class Login extends JFrame {
 	 */
 	private JPanel getPanelLogin() {
 		if (PanelLogin == null) {
-			PanelLogin = new ImagePanel(new ImageIcon("src/fichas_de_un_casino-1920x1200.jpg").getImage());
+			PanelLogin = new ImagePanel(new ImageIcon(URL_IMAGEN_FONDO_LOGIN).getImage());
 			PanelLogin.setLayout(new BorderLayout());
 			PanelLogin.add(getPanelNorte(), BorderLayout.NORTH);
 			PanelLogin.add(getPanelSur(), BorderLayout.SOUTH);
@@ -181,15 +187,13 @@ public class Login extends JFrame {
 			gridBagConstraints1.insets = new Insets(0, 0, 0, 0);
 			gridBagConstraints1.gridy = 3;
 			labelPassword = new JLabel();
-			labelPassword.setText(labels.getString("LABEL_PASSWORD"));//busco en mis properties
+			labelPassword.setText(LABEL_PASSWORD_KEY);//busco en mis properties
 			labelUsuario = new JLabel();
-			labelUsuario.setText(labels.getString("LABEL_USERNAME"));//busco en mis properties el texto
+			labelUsuario.setText(LABEL_USERNAME_KEY);//busco en mis properties el texto
 			labelPassword = new JLabel();
 			labelPassword.setForeground(Color.white);
-			labelPassword.setText(labels.getString("LABEL_PASSWORD"));//busco en mis properties
 			labelUsuario = new JLabel();
 			labelUsuario.setForeground(Color.white);
-			labelUsuario.setText(labels.getString("LABEL_USERNAME"));//busco en mis properties el texto
 			PanelCentro.add(labelPassword, gridBagConstraints1);
 			PanelCentro.add(getLogin(this), gridBagConstraints11);
 			PanelCentro.add(getUsuario(), gridBagConstraints21);
@@ -232,7 +236,7 @@ public class Login extends JFrame {
 	private void initialize() {
 		this.setSize(1033, 534);
 		this.setContentPane(getJContentPane());
-		this.setTitle("JFrame");
+		this.setTitle(NOMBRE_VENTANA);
 	}
 
 	/**
@@ -253,7 +257,7 @@ public class Login extends JFrame {
 	private JButton getLogin(final Login pantalla) {
 		if (botonLogin == null) {
 			botonLogin = new JButton();
-			botonLogin.setText(labels.getString("LABEL_BOTON_LOGIN"));
+			botonLogin.setText(LABEL_BOTON_LOGIN);
 			botonLogin.addActionListener(new java.awt.event.ActionListener() {
 				public void actionPerformed(java.awt.event.ActionEvent e) {
 					// RECIBO LOS DATOS Y LOS MANDO AL BUS

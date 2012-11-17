@@ -33,6 +33,7 @@ import java.awt.event.ActionListener;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 import java.util.ArrayList;
+import java.util.ResourceBundle;
 
 public class SegundaPantalla extends JFrame {
 
@@ -61,6 +62,8 @@ public class SegundaPantalla extends JFrame {
 	protected JTable TorneosDisponiblesTabla = null;
 
 	protected UsuarioVO usuario=null;
+
+	private ResourceBundle labels = ResourceBundle.getBundle("Gui");
 
 	/**
 	 * This is the default constructor
@@ -141,7 +144,7 @@ public class SegundaPantalla extends JFrame {
 			gridBagConstraints7.anchor = GridBagConstraints.CENTER;
 			gridBagConstraints7.gridy = 1;
 			torneosDisponiblesLabel = new JLabel();
-			torneosDisponiblesLabel.setText("Torneos Disponibles");
+			torneosDisponiblesLabel.setText(labels.getString("LABEL-TORNEOS-DISPONIBLES"));
 			torneosDisponiblesLabel.setForeground(Color.white);
 			GridBagConstraints gridBagConstraints5 = new GridBagConstraints();
 			gridBagConstraints5.gridx = 1;
@@ -151,7 +154,7 @@ public class SegundaPantalla extends JFrame {
 			gridBagConstraints5.insets = new Insets(0, 0, 0, 0);
 			gridBagConstraints5.gridy = 1;
 			desafiosDisponiblesLabel = new JLabel();
-			desafiosDisponiblesLabel.setText("Desafios Disponibles");
+			desafiosDisponiblesLabel.setText(labels.getString("LABEL-DESAFIOS-DISPONIBLES"));
 			desafiosDisponiblesLabel.setForeground(Color.white);
 			GridBagConstraints gridBagConstraints = new GridBagConstraints();
 			gridBagConstraints.gridx = 1;
@@ -159,7 +162,7 @@ public class SegundaPantalla extends JFrame {
 			gridBagConstraints.gridwidth = 0;
 			gridBagConstraints.gridheight = 0;
 			gridBagConstraints.gridy = 5;
-			panelSegundaPantalla = new ImagePanel(new ImageIcon("src/Battleship-069.jpg").getImage());
+			panelSegundaPantalla = new ImagePanel(new ImageIcon(labels.getString("LABEL-IMAGEN-FONDO-SP")).getImage());
 			panelSegundaPantalla.setLayout(new GridBagLayout());
 			panelSegundaPantalla.setBackground(Color.black);
 			panelSegundaPantalla.add(desafiosDisponiblesLabel, gridBagConstraints5);
@@ -180,7 +183,7 @@ public class SegundaPantalla extends JFrame {
 	private JButton getCrearDesafioBoton() {
 		if (crearDesafioBoton == null) {
 			crearDesafioBoton = new JButton();
-			crearDesafioBoton.setText("Crear Desafio");
+			crearDesafioBoton.setText(labels.getString("LABEL-CREAR-DESAFIO-BOTON "));
 		}
 		return crearDesafioBoton;
 	}
@@ -193,7 +196,7 @@ public class SegundaPantalla extends JFrame {
 	private JButton getBotonRetorno() {
 		if (BotonRetorno == null) {
 			BotonRetorno = new JButton();
-			BotonRetorno.setText("RETORNO");
+			BotonRetorno.setText(labels.getString("LABEL-RETORNO-BOTON"));
 			BotonRetorno.addActionListener(new ListenerBoton());
 		}
 		return BotonRetorno;
@@ -208,6 +211,7 @@ public class SegundaPantalla extends JFrame {
 		if (desafiosDisponiblesPane == null) {
 			desafiosDisponiblesPane = new JScrollPane();
 			desafiosDisponiblesPane.setViewportView(getDesafiosDisponiblesTabla());
+			desafiosDisponiblesPane.setSize(desafiosDisponiblesTabla.getWidth(),desafiosDisponiblesTabla.getHeight());
 		}
 		return desafiosDisponiblesPane;
 	}
@@ -220,6 +224,7 @@ public class SegundaPantalla extends JFrame {
 	private JTable getDesafiosDisponiblesTabla() {
 		if (desafiosDisponiblesTabla == null) {
 			desafiosDisponiblesTabla = new JTable();
+
 		}
 		return desafiosDisponiblesTabla;
 	}
@@ -233,6 +238,7 @@ public class SegundaPantalla extends JFrame {
 		if (TorneosDisponiblesPane == null) {
 			TorneosDisponiblesPane = new JScrollPane();
 			TorneosDisponiblesPane.setViewportView(getTorneosDisponiblesTabla());
+			TorneosDisponiblesPane.setSize(TorneosDisponiblesTabla.getWidth(),TorneosDisponiblesTabla.getHeight());
 		}
 		return TorneosDisponiblesPane;
 	}
