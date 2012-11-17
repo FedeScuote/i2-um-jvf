@@ -1,6 +1,7 @@
 package busImpl.batallaNaval;
 
 import java.util.ArrayList;
+import java.util.ResourceBundle;
 
 import daoInterfaces.BatallaNavalDAO;
 import daoInterfaces.PartidaDAO;
@@ -169,7 +170,7 @@ public class Tablero {
 				}
 			}
 			quitarBarcoStockJugador1(tipoBarco);
-			daoBatallaNaval.actualizarTablero(idPartida, jugador.getUsuarioB(), miTurno, cantBarcosSubmarino, cantBarcosDestructores, cantBarcosCruceros, cantBarcosAcorazado, cantBarcosSubmarinoColocados, cantBarcosDestructoresColocados, cantBarcosCrucerosColocados, cantBarcosAcorazadoColocados);
+			daoBatallaNaval.actualizarTablero(jugador.getIdUsuarioB(), miTurno, cantBarcosSubmarino, cantBarcosDestructores, cantBarcosCruceros, cantBarcosAcorazado, cantBarcosSubmarinoColocados, cantBarcosDestructoresColocados, cantBarcosCrucerosColocados, cantBarcosAcorazadoColocados);
 		} else {
 			throw new CoordenadasCeldasInvalidasException();
 
@@ -370,7 +371,7 @@ public class Tablero {
 
 			}
 			quitarBarcoStockJugador1(tipoBarco);
-			daoBatallaNaval.actualizarTablero(idPartida, jugador.getUsuarioB(), miTurno, cantBarcosSubmarino, cantBarcosDestructores, cantBarcosCruceros, cantBarcosAcorazado, cantBarcosSubmarinoColocados, cantBarcosDestructoresColocados, cantBarcosCrucerosColocados, cantBarcosAcorazadoColocados);
+			daoBatallaNaval.actualizarTablero(jugador.getIdUsuarioB(), miTurno, cantBarcosSubmarino, cantBarcosDestructores, cantBarcosCruceros, cantBarcosAcorazado, cantBarcosSubmarinoColocados, cantBarcosDestructoresColocados, cantBarcosCrucerosColocados, cantBarcosAcorazadoColocados);
 		} else {
 
 			throw new CoordenadasCeldasInvalidasException();

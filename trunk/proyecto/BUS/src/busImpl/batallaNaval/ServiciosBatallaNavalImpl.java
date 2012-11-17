@@ -2,6 +2,8 @@ package busImpl.batallaNaval;
 
 import java.rmi.RemoteException;
 import java.util.ArrayList;
+import java.util.ResourceBundle;
+
 import busImpl.Estados;
 import busImpl.Usuario;
 import comm.DesafioBatallaNavalVO;
@@ -27,12 +29,10 @@ public class ServiciosBatallaNavalImpl implements ServiciosBatallaNaval{
 	//A partir del tablero y la lista de disparos realizados sobre el
 	public void agregarBarco(UsuarioVO usuario, int coordenadaInicialX, int coordenadaInicialY, int coordenadaFinalX, int coordenadaFinalY, String tipoBarco) throws RemoteException, CoordenadasInvalidasException {
 		BatallaNavalDAO daoBatallaNaval = getBatallaNavalDAO();
-		PartidaDAO daoPartida = getPartidaDAO();
-		int idPartida=daoPartida.idPartida(usuario.getIdUsuario());
 		juego=JuegoBatallaNaval.crearJuegoBN(usuario);
 		juego.agregarBarco(usuario, coordenadaInicialX, coordenadaInicialY, coordenadaFinalX, coordenadaFinalY, tipoBarco);
 		if(juego.inicioPar()&&!esBot(juego.getTableroJugador2().getJugador().getUsuarioB())){
-			daoBatallaNaval.actualizarTablero(idPartida, juego.getTableroJugador2().getJugador().getUsuarioB(),true, juego.getTableroJugador2().getCantBarcosSubmarino(), juego.getTableroJugador2().getCantBarcosDestructores(), juego.getTableroJugador2().getCantBarcosCruceros(), juego.getTableroJugador2().getCantBarcosAcorazado(), juego.getTableroJugador2().getCantBarcosSubmarinoColocados(), juego.getTableroJugador2().getCantBarcosDestructoresColocados(), juego.getTableroJugador2().getCantBarcosCrucerosColocados(), juego.getTableroJugador2().getCantBarcosAcorazadoColocados());
+			daoBatallaNaval.actualizarTablero(juego.getTableroJugador2().getJugador().getIdUsuarioB(),true, juego.getTableroJugador2().getCantBarcosSubmarino(), juego.getTableroJugador2().getCantBarcosDestructores(), juego.getTableroJugador2().getCantBarcosCruceros(), juego.getTableroJugador2().getCantBarcosAcorazado(), juego.getTableroJugador2().getCantBarcosSubmarinoColocados(), juego.getTableroJugador2().getCantBarcosDestructoresColocados(), juego.getTableroJugador2().getCantBarcosCrucerosColocados(), juego.getTableroJugador2().getCantBarcosAcorazadoColocados());
 		}
 	}
 
@@ -44,15 +44,12 @@ public class ServiciosBatallaNavalImpl implements ServiciosBatallaNaval{
 
 	//metodo para preguntar el turno de un usuario
 	public boolean esMiTurno(UsuarioVO usuario) throws RemoteException {
-//		juego=JuegoBatallaNaval.crearJuegoBN(usuario);
-//		return juego.esMiTurno(usuario);
 		BatallaNavalDAO daoBatallaNaval = getBatallaNavalDAO();
 		PartidaDAO daoPartida = getPartidaDAO();
-		int idPartida=daoPartida.idPartida(usuario.getIdUsuario());
 		int idJugador1=usuario.getIdUsuario();
 		int idJugador2=daoPartida.oponente(usuario.getIdUsuario()).getIdUsuarioB();
-		ArrayList<RegistroDisparo> listaJugador1 =daoBatallaNaval.getListaDeTiros(idPartida, idJugador1);
-		ArrayList<RegistroDisparo> listaJugador2 =daoBatallaNaval.getListaDeTiros(idPartida, idJugador2);
+		ArrayList<RegistroDisparo> listaJugador1 =daoBatallaNaval.getListaDeTiros(idJugador1);
+		ArrayList<RegistroDisparo> listaJugador2 =daoBatallaNaval.getListaDeTiros(idJugador2);
 		boolean turno1=daoBatallaNaval.turnoTablero(idJugador1);
 		if(listaJugador1.size()!=listaJugador2.size()){
 			if((listaJugador1.size()>listaJugador2.size())){
@@ -179,11 +176,9 @@ public class ServiciosBatallaNavalImpl implements ServiciosBatallaNaval{
 	//metodo que dado un usuario indica si gano
 	public boolean gane(UsuarioVO usuario) throws RemoteException {
 		int cantHundidosJ1=0;
-		PartidaDAO daoPartida = getPartidaDAO();
-		int idPartida=daoPartida.idPartida(usuario.getIdUsuario());
 		int idJugador1=usuario.getIdUsuario();
 		BatallaNavalDAO daoBatallaNaval = getBatallaNavalDAO();
-		ArrayList<RegistroDisparo> listaJugador1 =daoBatallaNaval.getListaDeTiros(idPartida, idJugador1);
+		ArrayList<RegistroDisparo> listaJugador1 =daoBatallaNaval.getListaDeTiros(idJugador1);
 		for(int i=0;i<listaJugador1.size();i++){
 			if(listaJugador1.get(i).getResultado()==Estados.HUNDIDO){
 				cantHundidosJ1++;
