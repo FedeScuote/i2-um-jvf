@@ -8,6 +8,7 @@ import javax.swing.JLabel;
 import java.awt.GridBagLayout;
 import java.awt.GridBagConstraints;
 import javax.swing.ImageIcon;
+import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextArea;
@@ -89,7 +90,7 @@ public class VentanaPrincipal extends JFrame {
 	private void initialize() {
 		logger.debug("Inicializar Ventana Principal");
 		this.setContentPane(getJContentPane());
-		this.setTitle("Ventana Principal");
+		this.setTitle(labels.getString("LABEL_TITULO_VENTANA_PRINCIPAL"));
 		this.setBounds(new Rectangle(0, 0, 834, 632));
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		preguntarRanking();
@@ -157,7 +158,7 @@ public class VentanaPrincipal extends JFrame {
 			gridBagConstraints.ipadx = 322;
 			gridBagConstraints.ipady = 215;
 			gridBagConstraints.gridx = 0;
-			panelVentanaPrincipal = new ImagePanel(new ImageIcon("src/palazzo_resort_hotel_casino-1920x1080.jpg").getImage());
+			panelVentanaPrincipal = new ImagePanel(new ImageIcon(labels.getString("LABEL_IMAGEN_FONDO_VP")).getImage());
 			panelVentanaPrincipal.setLayout(new GridBagLayout());
 			panelVentanaPrincipal.add(getPanelRanking(), gridBagConstraints);
 			panelVentanaPrincipal.add(getJugarLudo(), gridBagConstraints1);
@@ -203,7 +204,7 @@ public class VentanaPrincipal extends JFrame {
 	private JButton getJugarLudo() {
 		if (jugarLudo == null) {
 			jugarLudo = new JButton();
-			jugarLudo.setText("Jugar Ludo");
+			jugarLudo.setText(labels.getString("LABEL_BOTON_JUGAR_LUDO_VP"));
 		}
 		return jugarLudo;
 	}
@@ -216,7 +217,7 @@ public class VentanaPrincipal extends JFrame {
 	private JButton getJugarBatalla(final VentanaPrincipal pantalla) {
 		if (jugarBatalla == null) {
 			jugarBatalla = new JButton();
-			jugarBatalla.setText("Jugar Batalla Naval");
+			jugarBatalla.setText(labels.getString("LABEL_BOTON_JUGAR_BN_VP"));
 			jugarBatalla.addActionListener(new java.awt.event.ActionListener() {
 				public void actionPerformed(java.awt.event.ActionEvent e) {
 					pantalla.dispose();
@@ -236,7 +237,7 @@ public class VentanaPrincipal extends JFrame {
 	private JButton getJugarBackgammon() {
 		if (jugarBackgammon == null) {
 			jugarBackgammon = new JButton();
-			jugarBackgammon.setText("Jugar BackGammon");
+			jugarBackgammon.setText(labels.getString("LABEL_BOTON_JUGAR_BG_VP"));
 		}
 		return jugarBackgammon;
 	}
@@ -252,7 +253,7 @@ public class VentanaPrincipal extends JFrame {
 			}
 		};
 		tabla.setModel(model);
-		model.setColumnIdentifiers(new String[] {"nro partidas ganadas", "Nick"});
+		model.setColumnIdentifiers(new String[] {labels.getString("LABEL_TABLA_COLUMNA1"), labels.getString("LABEL_TABLA_COLUMNA2")});
 		Iterator i = lista.iterator();
 		// relleno la tabla con data del arraylist
 		while (i.hasNext())
@@ -272,7 +273,8 @@ public class VentanaPrincipal extends JFrame {
 		} catch (Exception remoteExceptionrmi) {
 			if (remoteExceptionrmi instanceof NoSeEncuentraUsuarioException) {
 
-				System.out.println("no existe usuario");
+				JOptionPane.showMessageDialog(new JFrame(), labels.getString("LABEL-ERROR-NO-USU-VP"),
+						labels.getString("LABEL_ERROR"), JOptionPane.ERROR_MESSAGE);
 			} else {
 				System.err.println("Client exception: "
 						+ remoteExceptionrmi.toString());
@@ -288,7 +290,7 @@ public class VentanaPrincipal extends JFrame {
 	private JButton getDesconexionBoton() {
 		if (DesconexionBoton == null) {
 			DesconexionBoton = new JButton();
-			DesconexionBoton.setText("Desconectar");
+			DesconexionBoton.setText(labels.getString("LABEL-BOTON-DESCONECTAR-VP"));
 			DesconexionBoton.addActionListener(new java.awt.event.ActionListener() {
 				public void actionPerformed(java.awt.event.ActionEvent e) {
 					dispose();
