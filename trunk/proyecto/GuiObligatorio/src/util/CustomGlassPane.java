@@ -8,7 +8,6 @@ import java.awt.Rectangle;
 
 import javax.swing.JPanel;
 
-//First technique: JComponent
 public class CustomGlassPane extends JPanel {
 	@Override
 	protected void paintComponent(Graphics g) {
