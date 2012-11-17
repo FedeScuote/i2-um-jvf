@@ -229,6 +229,7 @@ public class BatallaNaval extends JFrame {
 			gridBagConstraints8.gridy = 0;
 			indicadorTurno = new JLabel();
 			indicadorTurno.setText("NO ES TU TURNO");
+			indicadorTurno.setOpaque(false);
 			PanelCentro = new TranslucentPanel(Color.white);
 			PanelCentro.setLayout(new GridBagLayout());
 			PanelCentro.add(indicadorTurno, gridBagConstraints8);
