@@ -20,5 +20,5 @@ public interface BatallaNavalDAO {
 	public boolean turnoTablero(int idUsuario);
 
 	//acutaliza el turno siempre y cuando exista un desafío en curso
-	public boolean actualizarTurno(int idUsuario, boolean turno);
+	public void actualizarTurno(int idUsuario, boolean turno);
 }
