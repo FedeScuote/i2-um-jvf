@@ -17,12 +17,14 @@ public class AnimatedLabel extends JLabel implements ActionListener {
 
 
 	Color startColor = Color.BLUE; // where we start
-	Color endColor = Color.RED; // where we end
+	Color endColor = Color.green; // where we end
 	Color currentColor = startColor;
 	int animationDuration = 300;
 	long animStartTime;
 
 	public AnimatedLabel() {
+		super();
+		setBackground(startColor);
 		Timer timer = new Timer(10, this);
 		// initial delay while window gets set up
 		timer.setInitialDelay(1000);
@@ -48,15 +50,8 @@ public class AnimatedLabel extends JLabel implements ActionListener {
 				* startColor.getBlue());
 		// set our new color appropriately
 		currentColor = new Color(red, green, blue);
-		// force a repaint to display our oval with its new color
+		this.setBackground(currentColor);
 		repaint();
-	}
-	@Override
-	protected void paintComponent(Graphics g) {
-		Font newFont = g.getFont().deriveFont(Font.BOLD, 32f);
-		g.setFont(newFont);
-		g.setColor(currentColor);
-		g.drawString(this.getText(), this.getWidth()/3, this.getHeight()/2);
 	}
 
 }

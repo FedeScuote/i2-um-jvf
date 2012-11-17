@@ -23,9 +23,9 @@ import javax.swing.Timer;
 
 import org.apache.log4j.Logger;
 
-import util.AnimatedLabel;
 import util.AnimatedPanelString;
 import util.ImagePanel;
+import util.TranslucentPanel;
 import util.TransparentPanel;
 import ventanaPrincipal.VentanaPrincipal;
 
@@ -69,9 +69,7 @@ public class BatallaNaval extends JFrame {
 														// porque no va nada
 														// en// esa linea
 
-	private AnimatedLabel indicadorTurno = null;
 
-	private JLabel indicadorBarcosHundidos = null;
 
 	private Integer cantidadBarcosHundidos = 0;
 
@@ -81,15 +79,17 @@ public class BatallaNaval extends JFrame {
 
 	private ImagePanel PanelBatallaNaval = null;
 
-	private TransparentPanel PanelCentro = null;
+	private TranslucentPanel PanelCentro = null;
 
 	private AnimatedPanelString PanelSuperior = null;
 
 	private TransparentPanel PanelInferior = null;
 
-	private TransparentPanel PanelEste = null;
+	private TranslucentPanel PanelEste = null;
 
-	private TransparentPanel PanelOeste = null;
+	private TranslucentPanel PanelOeste = null;
+
+	private JLabel indicadorTurno = null;
 
 	/**
 	 * This is the default constructor
@@ -99,13 +99,12 @@ public class BatallaNaval extends JFrame {
 		initialize();
 		logger.debug("***creo BatallaNavalVentana***");
 		this.usuario = usuario;
-		indicadorTurno= new AnimatedLabel();
 		this.crearCabezal(PanelEste);
-		this.crearTablero(PanelEste, botonesJugador); // creo mi tablero
+		this.crearTablero(PanelEste, botonesContrincante); // creo mi tablero
 		// en mi panel
 		// jugador
 		this.crearCabezal(PanelOeste);
-		this.crearTablero(PanelOeste, botonesContrincante);// creo mi
+		this.crearTablero(PanelOeste, botonesJugador);// creo mi
 		// tablero
 		// en mi
 		// panel
@@ -121,9 +120,11 @@ public class BatallaNaval extends JFrame {
 				esMiTurno = preguntarTurno(usuario);
 				if (!esMiTurno && termino == false) {
 					indicadorTurno.setText("NO ES TU TURNO");
+					PanelCentro.repaint();
 					temporizador.restart();
 				} else if (termino == false) {
 					indicadorTurno.setText("ES TU TURNO");
+					PanelCentro.repaint();
 					refrescarTableroJugador();
 					refrescarTableroOponente();
 					if (termino == false && perdi()) {
@@ -223,12 +224,15 @@ public class BatallaNaval extends JFrame {
 	 */
 	private JPanel getPanelCentro() {
 		if (PanelCentro == null) {
-			PanelCentro = new TransparentPanel();
+			GridBagConstraints gridBagConstraints8 = new GridBagConstraints();
+			gridBagConstraints8.gridx = 0;
+			gridBagConstraints8.gridy = 0;
+			indicadorTurno = new JLabel();
+			indicadorTurno.setText("NO ES TU TURNO");
+			PanelCentro = new TranslucentPanel(Color.white);
 			PanelCentro.setLayout(new GridBagLayout());
-			GridBagConstraints gridBagConstraints = new GridBagConstraints();
-			gridBagConstraints.gridx = 0;
-			gridBagConstraints.gridy = 1;
-			PanelCentro.add(indicadorTurno, gridBagConstraints);
+			PanelCentro.add(indicadorTurno, gridBagConstraints8);
+
 
 		}
 		return PanelCentro;
@@ -268,7 +272,7 @@ public class BatallaNaval extends JFrame {
 	 */
 	private JPanel getPanelEste() {
 		if (PanelEste == null) {
-			PanelEste = new TransparentPanel();
+			PanelEste = new TranslucentPanel();
 			PanelEste.setLayout(new GridBagLayout());
 		}
 		return PanelEste;
@@ -281,7 +285,7 @@ public class BatallaNaval extends JFrame {
 	 */
 	private JPanel getPanelOeste() {
 		if (PanelOeste == null) {
-			PanelOeste = new TransparentPanel();
+			PanelOeste = new TranslucentPanel();
 			PanelOeste.setLayout(new GridBagLayout());
 		}
 		return PanelOeste;
@@ -308,6 +312,7 @@ public class BatallaNaval extends JFrame {
 			JLabel jlabel = new JLabel();
 			panel.add(jlabel);
 			jlabel.setText(ALFABETO[i]); // alfabeto menos uno porque
+			jlabel.setForeground(Color.white);
 			jlabel.setHorizontalAlignment(SwingConstants.CENTER);
 			jlabel.setVerticalAlignment(SwingConstants.CENTER);
 		}
@@ -322,11 +327,12 @@ public class BatallaNaval extends JFrame {
 				panel.add(jlabel);
 				jlabel.setText(numeroFila.toString()); // alfabeto menos uno
 				// porque
+				jlabel.setForeground(Color.white);
 				jlabel.setHorizontalAlignment(SwingConstants.CENTER);
 				jlabel.setVerticalAlignment(SwingConstants.CENTER);
 			} else {
 				JButton jButton = new JButton();
-				if (panel.equals(PanelOeste)) {// solo añado mis
+				if (panel.equals(PanelEste)) {// solo añado mis
 					// listeners si es panel
 					// contr
 					jButton.addActionListener(new ListenerBoton(numeroFila, j));
@@ -376,6 +382,7 @@ public class BatallaNaval extends JFrame {
 							"HAS HUNDIDO UN BARCO", "ENHORABUENA",
 							JOptionPane.INFORMATION_MESSAGE);
 				}
+				//termino es para que salten eventos extras del timer
 				if (termino == false && this.gane()) {
 					termino=true;
 					JOptionPane.showMessageDialog(new JFrame(), "HAS GANADO",
