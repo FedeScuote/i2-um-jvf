@@ -22,8 +22,16 @@ public class DAOPruebas {
 
 
 	public static void main(String[] args) {
-		UsuarioDAODB ud=new UsuarioDAODB();
+		//UsuarioDAODB ud=new UsuarioDAODB();
+		PartidaDAODB p=new PartidaDAODB();
+		Conexion c=new Conexion();
+		BatallaNavalDAODB b=new BatallaNavalDAODB();
+		Usuario u=new Usuario();
 
+		b.modificarCeldaTablero(3, null, 2, 2);
+		//System.out.println(p.idPartida2(u.getIdUsuarioB(), c));
+
+		c.disconnect();
 
 
 		//BatallaNavalDAODB td=new BatallaNavalDAODB();

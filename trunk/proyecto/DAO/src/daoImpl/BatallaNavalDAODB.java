@@ -23,13 +23,17 @@ public class BatallaNavalDAODB implements BatallaNavalDAO {
 	//terminados
 
 	//optimizado
-	public ArrayList<RegistroDisparo> getListaDeTiros(int idPartida,int idUsuario) {
-		logger.debug("Entro a getListaDeTiros con parametros de entrada idPartida= "+idPartida+" idUsuario= "+idUsuario);
+	public ArrayList<RegistroDisparo> getListaDeTiros(int idUsuario) {
+		logger.debug("Entro a getListaDeTiros con parametros de entrada idUsuario= "+idUsuario);
 		ArrayList<RegistroDisparo> ard=new ArrayList();
 		UsuarioDAODB ud=new UsuarioDAODB();
 		Conexion c=new Conexion();
-		Estados estado=null;
+		PartidaDAODB p=new PartidaDAODB();
+
+		int idPartida=p.idPartida2(idUsuario, c);
 		int idDesafio=idPartida;
+
+		Estados estado=null;
 		String jugador;
 		int idTablero;
 
@@ -83,12 +87,15 @@ public class BatallaNavalDAODB implements BatallaNavalDAO {
 	}
 
 	//optimizado
-	public Tablero getTablero(int idPartida, int idUsuario) {
-		logger.debug("Entro a getTablero con parámetros de entrada idPartida= "+idPartida+" e idUsuario= "+idUsuario);
+	public Tablero getTablero(int idUsuario) {
+		logger.debug("Entro a getTablero con parámetros de entrada idUsuario= "+idUsuario);
 		Usuario u=new Usuario();
 		UsuarioDAODB ud=new UsuarioDAODB();
 		String usuario=null;
 		Conexion c=new Conexion();
+		PartidaDAODB p=new PartidaDAODB();
+
+		int idPartida=p.idPartida2(idUsuario, c);
 		try {
 			usuario=ud.getUsuario2(idUsuario,c);
 			u=ud.findByName2(usuario,c);
@@ -197,23 +204,23 @@ public class BatallaNavalDAODB implements BatallaNavalDAO {
 	}
 
 	//optimizado
-	public void registrarDisparo(Disparo disparo, Estados estado,int idUsuario, int idPartida) {
-		logger.debug("Entro a registrarDisparo con parámetros de entrada idUsuario= "+idUsuario+" idPartida= "+idPartida);
-		int xD = disparo.getFila();
-		int yD = disparo.getColumna();
-		String resultadoD = estado.toString();
-		int idDesafio = idPartida;
-		logger.debug("El parámetro de entrada disparo se compone de los siguientes parámetros");
-		logger.debug("xD= "+xD);
-		logger.debug("yD= "+yD);
-		logger.debug("resultadoD= "+resultadoD);
-
-
+	public void registrarDisparo(Disparo disparo, Estados estado,int idUsuario) {
+		logger.debug("Entro a registrarDisparo con parámetros de entrada idUsuario= "+idUsuario);
+		PartidaDAODB p=new PartidaDAODB();
 		Conexion c = new Conexion();
 		BatallaNavalDAODB b = new BatallaNavalDAODB();
 		UsuarioDAODB ud=new UsuarioDAODB();
 
+		int xD = disparo.getFila();
+		int yD = disparo.getColumna();
+		String resultadoD = estado.toString();
+		int idPartida=p.idPartida2(idUsuario, c);
+		int idDesafio=idPartida;
 
+		logger.debug("El parámetro de entrada disparo se compone de los siguientes parámetros");
+		logger.debug("xD= "+xD);
+		logger.debug("yD= "+yD);
+		logger.debug("resultadoD= "+resultadoD);
 		try {
 			String jugador=ud.getUsuario2(idUsuario,c);
 			int idTablero = b.getIdTablero2(idDesafio,jugador,c);
@@ -397,12 +404,18 @@ public class BatallaNavalDAODB implements BatallaNavalDAO {
 	}
 
 	//actualiza tablero pero no celdas, //optimizado
-	public void actualizarTablero(int idPartida, String usuario, boolean miTurno,int barcosSubmarinos, int barcosDestructores,int barcosCruceros,int barcosAcorazados,int barcosSubmarinosColocados, int barcosDestructoresColocados,int barcosCrucerosColocados,int barcosAcorazadosColocados ){
-		logger.debug("Entro a actualizarTablero con parámetros de entrada idPartida= "+idPartida+" usuario= "+usuario+" miTurno= "+miTurno+" barcosSubmarino= "+barcosSubmarinos+" barcosDestructores= "+barcosDestructores+" barcosCruceros= "+barcosCruceros+" barcosAcorzados= "+barcosAcorazados+" barcosSubmarinosColocados= "+barcosSubmarinosColocados+" barcosDestructoresColocados= "+barcosDestructoresColocados+" barcosCrucerosColocados= "+barcosCrucerosColocados+" barcosAcorazadosColocados= "+barcosAcorazadosColocados);
+	public void actualizarTablero(int idUsuario, boolean miTurno,int barcosSubmarinos, int barcosDestructores,int barcosCruceros,int barcosAcorazados,int barcosSubmarinosColocados, int barcosDestructoresColocados,int barcosCrucerosColocados,int barcosAcorazadosColocados ){
+		logger.debug("Entro a actualizarTablero con parámetros de entrada idusuario= "+idUsuario+" miTurno= "+miTurno+" barcosSubmarino= "+barcosSubmarinos+" barcosDestructores= "+barcosDestructores+" barcosCruceros= "+barcosCruceros+" barcosAcorzados= "+barcosAcorazados+" barcosSubmarinosColocados= "+barcosSubmarinosColocados+" barcosDestructoresColocados= "+barcosDestructoresColocados+" barcosCrucerosColocados= "+barcosCrucerosColocados+" barcosAcorazadosColocados= "+barcosAcorazadosColocados);
 		Conexion c=new Conexion();
+		PartidaDAODB p=new PartidaDAODB();
+		UsuarioDAODB u=new UsuarioDAODB();
+
+		int idPartida=p.idPartida2(idUsuario, c);
 		int idDesafio=idPartida;
 		int idTablero=0;
+
 		try {
+			String usuario=u.getUsuario2(idUsuario, c);
 			idTablero = this.getIdTablero2(idDesafio, usuario,c);
 			int miTurno2=3;
 			if(miTurno){
@@ -415,6 +428,9 @@ public class BatallaNavalDAODB implements BatallaNavalDAO {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (NoExisteUsuarioException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} finally{
