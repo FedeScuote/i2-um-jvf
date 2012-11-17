@@ -25,12 +25,6 @@ public class BusMain {
 		bsDesafio = new Desafio();
 		bsBN= new ServiciosBatallaNavalImpl();
 		try {
-
-			// Estableciendo un security manager
-			// if (System.getSecurityManager() == null) {
-			// System.setSecurityManager(new RMISecurityManager());
-			// }
-			// Exportando el objeto
 			ServiciosUsuario stub = (ServiciosUsuario) UnicastRemoteObject.exportObject(bs, 0);
 			ServiciosRanking stubRanking = (ServiciosRanking) UnicastRemoteObject.exportObject(bsRanking, 0);
 			ServiciosDesafio stubDesafio = (ServiciosDesafio) UnicastRemoteObject.exportObject(bsDesafio, 0);
