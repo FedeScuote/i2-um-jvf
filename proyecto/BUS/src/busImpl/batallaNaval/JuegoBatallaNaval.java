@@ -281,10 +281,7 @@ public class JuegoBatallaNaval{
 
 	public boolean puedoIrHaciaLaDerecha(RegistroDisparo registro) {
 		boolean retorno = false;
-		if (registro.getDisparo().getColumna() + 1 < tableroJugador2.tabla.length
-				&& (tableroJugador2.tabla[registro.getDisparo().getFila()][registro
-						.getDisparo().getColumna() + 1].estaVacio()|| tableroJugador2.tabla[registro.getDisparo().getFila()][registro
-						                                                                             						.getDisparo().getColumna() + 1].estaOcupada())) {
+		if (registro.getDisparo().getColumna() + 1 < tableroJugador1.tabla.length&& (tableroJugador1.tabla[registro.getDisparo().getFila()][registro.getDisparo().getColumna() + 1].estaVacio()|| tableroJugador1.tabla[registro.getDisparo().getFila()][registro.getDisparo().getColumna() + 1].estaOcupada())) {
 			retorno = true;
 		}
 		return retorno;
@@ -364,92 +361,128 @@ public class JuegoBatallaNaval{
 	}
 
 	public Disparo proximoDisparo(String idPartida) throws RemoteException {
+		log.debug("Usuario Robot");
 		Disparo nuevo = new Disparo();
 		nuevo.setColumna(-1);
 		nuevo.setFila(-1);
 		if (!tengoLugarADisparar()) {
+				log.debug("No tengo lugar a disparar, disparo al azar con coordenadas:");
 				nuevo = proximoDisparoOptimo();
 		} else {
 			if (primerTocadoLuegoDeHundir() == listaDisparosAOponente2.size() - 1) {
+				log.debug("Tengo lugar a disparar y ultimo disparo toco por primera vez luego hundir");
 				if (puedoIrHaciaLaDerecha(top())) {
+					log.debug("Puedo ir a la derecha");
 					nuevo = siguienteDerecho(top());
 				} else if (puedoIrHaciaLaIzquierda(top())) {
+					log.debug("No puedo ir a la derecha, si a la izq");
 					nuevo = siguienteIzquierdo(top());
 				} else if (puedoIrHaciaAbajo(top())) {
+					log.debug("No puedo ir a la der, ni izq si abajo");
 					nuevo = siguienteAbajo(top());
 				} else if (puedoIrHaciaArriba(top())) {
+					log.debug("No puedo ir a la der, ni izq, ni abajo si arriba");
 					nuevo = siguienteArriba(top());
+				}else{
+					log.error("Algo no anda bien!!!!");
 				}
 			} else {
 				if (top().getResultado() == Estados.TOCADO) {
-					if (obtenerPrimerTocadoLH().getFila() == top().getDisparo()
-							.getFila()) {
-						if (obtenerPrimerTocadoLH().getColumna() < top()
-								.getDisparo().getColumna()) {
+					log.debug("Toque en el ultimo tiro");
+					if (obtenerPrimerTocadoLH().getFila() == top().getDisparo().getFila()) {
+						log.debug("Posible barco en sentido horizontal");
+						if (obtenerPrimerTocadoLH().getColumna() < top().getDisparo().getColumna()) {
+							log.debug("Intento ir hacia la der");
 							if (puedoIrHaciaLaDerecha(top())) {
+								log.debug("Efectivamente puedo ir hacia la der");
 								nuevo = siguienteDerecho(top());
 							} else if (puedoIrHaciaLaIzquierda(obtenerPrimerTocadoLHR())) {
+								log.debug("No puedo ir hacia la derecha si a la izq");
 								nuevo = siguienteIzquierdo(obtenerPrimerTocadoLHR());
 							} else if (puedoIrHaciaAbajo(obtenerPrimerTocadoLHR())) {
+								log.debug("No puedo ir hacia la derecha ni a la izq entonces voy abajo");
 								nuevo = siguienteAbajo(obtenerPrimerTocadoLHR());
 							} else if (puedoIrHaciaArriba(obtenerPrimerTocadoLHR())) {
+								log.debug("No puedo ir hacia la derecha ni a la izq ni voy abajo, voy arriba");
 								nuevo = siguienteArriba(obtenerPrimerTocadoLHR());
 							}
-						}
-						if (obtenerPrimerTocadoLH().getColumna() > top()
-								.getDisparo().getColumna()) {
-							if (puedoIrHaciaLaIzquierda(top())) {
-								nuevo = siguienteIzquierdo(top());
-							} else if (puedoIrHaciaAbajo(obtenerPrimerTocadoLHR())) {
-								nuevo = siguienteAbajo(obtenerPrimerTocadoLHR());
-							} else if (puedoIrHaciaArriba(obtenerPrimerTocadoLHR())) {
-								nuevo = siguienteArriba(obtenerPrimerTocadoLHR());
+						}else{
+							if (obtenerPrimerTocadoLH().getColumna() > top().getDisparo().getColumna()) {
+								log.debug("Por construccion no tengo mas a disparar hacia derecha");
+								if (puedoIrHaciaLaIzquierda(top())) {
+									log.debug("Puedo ir a la izq entonces voy");
+									nuevo = siguienteIzquierdo(top());
+								} else if (puedoIrHaciaAbajo(obtenerPrimerTocadoLHR())) {
+									log.debug("No puedo ir a la izq entonces voy a abajo");
+									nuevo = siguienteAbajo(obtenerPrimerTocadoLHR());
+								} else if (puedoIrHaciaArriba(obtenerPrimerTocadoLHR())) {
+									log.debug("No puedo ir a la izq ni abajo entonces voy arriba");
+									nuevo = siguienteArriba(obtenerPrimerTocadoLHR());
+								}
+							}else{
+								log.debug("Algo anda mal!!!");
 							}
 						}
 
+
 					} else {
-						if (obtenerPrimerTocadoLH().getFila() < top()
-								.getDisparo().getFila()) {
+						log.debug("Cominzo a ir en sentido vertical");
+						if (obtenerPrimerTocadoLH().getFila() < top().getDisparo().getFila()) {
 							if (puedoIrHaciaAbajo(top())) {
+								log.debug("voy abajo");
 								nuevo = siguienteAbajo(top());
 							} else if (puedoIrHaciaArriba(obtenerPrimerTocadoLHR())) {
+								log.debug("voy arriba");
 								nuevo = siguienteArriba(obtenerPrimerTocadoLHR());
 							}
 						}
-						if (obtenerPrimerTocadoLH().getFila() > top()
-								.getDisparo().getFila()) {
+						if (obtenerPrimerTocadoLH().getFila() > top().getDisparo().getFila()) {
 							if (puedoIrHaciaArriba(top())) {
+								log.debug("sigo yendo hacia arriba");
 								nuevo = siguienteArriba(top());
+							}else{
+								log.error("algo anda mal!!");
 							}
 						}
 
 					}
 
 				} else {
-					if (obtenerPrimerTocadoLH().getFila() == top().getDisparo()
-							.getFila()) {
-						if (obtenerPrimerTocadoLH().getColumna() < top()
-								.getDisparo().getColumna()) {
+					if (obtenerPrimerTocadoLH().getFila() == top().getDisparo().getFila()) {
+						if (obtenerPrimerTocadoLH().getColumna() < top().getDisparo().getColumna()) {
+							log.debug("No hay mas nada a la derecha");
 							if (puedoIrHaciaLaIzquierda(obtenerPrimerTocadoLHR())) {
+								log.debug("Voy a la izq");
 								nuevo = siguienteIzquierdo(obtenerPrimerTocadoLHR());
 							} else if (puedoIrHaciaAbajo(obtenerPrimerTocadoLHR())) {
+								log.debug("Voy abajo");
 								nuevo = siguienteAbajo(obtenerPrimerTocadoLHR());
 							} else if (puedoIrHaciaArriba(obtenerPrimerTocadoLHR())) {
+								log.debug("Voy arriba");
 								nuevo = siguienteArriba(obtenerPrimerTocadoLHR());
+							}else{
+								log.debug("algo anda mal!!!");
 							}
 						} else {
+							log.debug("No hay mas nada en sentido horizontal");
 							if (puedoIrHaciaAbajo(obtenerPrimerTocadoLHR())) {
+								log.debug("Voy hacia abajo");
 								nuevo = siguienteAbajo(obtenerPrimerTocadoLHR());
 							} else if (puedoIrHaciaArriba(obtenerPrimerTocadoLHR())) {
+								log.debug("Voy hacia arriba");
 								nuevo = siguienteArriba(obtenerPrimerTocadoLHR());
+							}else{
+								log.debug("algo anda mal!!!");
 							}
 						}
 					} else {
-						if (obtenerPrimerTocadoLH().getFila() < top()
-								.getDisparo().getFila()) {
+						if (obtenerPrimerTocadoLH().getFila() < top().getDisparo().getFila()) {
+							log.debug("no hay mas nada hacia abajo");
 							if (puedoIrHaciaArriba(obtenerPrimerTocadoLHR())) {
 								nuevo = siguienteArriba(obtenerPrimerTocadoLHR());
 							}
+						}else{
+							log.debug("algo anda mal!!!");
 						}
 
 					}
@@ -459,6 +492,9 @@ public class JuegoBatallaNaval{
 			}
 
 		}
+		log.debug("Disparo generado");
+		log.debug("X="+nuevo.getFila());
+		log.debug("Y="+nuevo.getColumna());
 		if(nuevo.getColumna()==-1){
 			nuevo =proximoDisparoOptimo();
 		}
@@ -466,7 +502,6 @@ public class JuegoBatallaNaval{
 		return nuevo;
 
 	}
-
 	private int ultimoDisparoQueHundio() {
 		int i = listaDisparosAOponente2.size() - 1;
 		while (i >= 0
