@@ -1,9 +1,13 @@
 package daoImpl;
 
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 import org.apache.log4j.Logger;
+
+import conexion.Conexion;
 
 import excepcionesD.NoExisteUsuarioException;
 
@@ -14,8 +18,12 @@ public class DAOPruebas {
 	/**
 	 * @param args
 	 */
+
+
+
 	public static void main(String[] args) {
 		UsuarioDAODB ud=new UsuarioDAODB();
+
 
 
 		//BatallaNavalDAODB td=new BatallaNavalDAODB();

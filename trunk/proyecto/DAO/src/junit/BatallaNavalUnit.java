@@ -3,6 +3,8 @@ package junit;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import org.apache.log4j.Logger;
+
 import busImpl.batallaNaval.*;
 
 import busImpl.Estados;
@@ -17,6 +19,7 @@ import excepcionesD.NoExisteUsuarioException;
 import junit.framework.TestCase;
 
 public class BatallaNavalUnit extends TestCase {
+	private static Logger logger = Logger.getLogger(BatallaNavalUnit.class);
 	private BatallaNavalDAODB b;
 
 
@@ -27,8 +30,8 @@ public class BatallaNavalUnit extends TestCase {
 		estado=Estados.TOCADO;
 
 		Disparo disparo=new Disparo();
-		int idUsuario=1;
-		int idPartida=33;
+		int idUsuario=3;
+		int idPartida=39;
 		disparo.setColumna(2);
 		disparo.setFila(2);
 
@@ -59,6 +62,14 @@ public class BatallaNavalUnit extends TestCase {
 	public void testGetIdTablero(){
 
 	}
+	public void testTurnoTableroTrue(){
+		logger.debug(b.turnoTablero(3));
+	}
+
+	public void testTurnoTableroFalse(){
+		logger.debug(b.turnoTablero(6));
+	}
+
 
 
 	public void tearDown(){
