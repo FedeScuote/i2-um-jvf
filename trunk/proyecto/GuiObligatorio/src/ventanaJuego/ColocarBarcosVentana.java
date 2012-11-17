@@ -102,6 +102,7 @@ public class ColocarBarcosVentana extends JFrame {
 	 */
 	public ColocarBarcosVentana(UsuarioVO usuario) {
 		super();
+		this.pedirDistribucion();
 		initialize();
 		logger.debug("Constructor ColocarBarcosVentana");
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -111,10 +112,11 @@ public class ColocarBarcosVentana extends JFrame {
 		this.crearTablero(PanelTablero, arrayBotones);
 		this.setExtendedState(JFrame.MAXIMIZED_BOTH);
 		this.refrescarTableroJugador();
-		this.pedirDistribucion();
+
 	}
 	public ColocarBarcosVentana(UsuarioVO usuario, int[] distribucion) {
 		super();
+		this.distribucion = distribucion;
 		initialize();
 		logger.debug("Constructor ColocarBarcosVentana");
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -124,7 +126,7 @@ public class ColocarBarcosVentana extends JFrame {
 		this.crearTablero(PanelTablero, arrayBotones);
 		this.setExtendedState(JFrame.MAXIMIZED_BOTH);
 		this.refrescarTableroJugador();
-		this.distribucion = distribucion;
+
 	}
 
 	/**
