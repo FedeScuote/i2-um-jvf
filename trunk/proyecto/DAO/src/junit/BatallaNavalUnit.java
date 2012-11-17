@@ -63,11 +63,23 @@ public class BatallaNavalUnit extends TestCase {
 
 	}
 	public void testTurnoTableroTrue(){
-		logger.debug(b.turnoTablero(3));
+		logger.debug(b.turnoTableroOld(3));
 	}
 
 	public void testTurnoTableroFalse(){
+		logger.debug(b.turnoTableroOld(6));
+	}
+
+	public void testTurnoTablero2True(){
+		logger.debug(b.turnoTablero(3));
+	}
+
+	public void testTurnoTablero2False(){
 		logger.debug(b.turnoTablero(6));
+	}
+
+	public void testActualizarTurno(){
+		b.actualizarTurno(3, true);
 	}
 
 
