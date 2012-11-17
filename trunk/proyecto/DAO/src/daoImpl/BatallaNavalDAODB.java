@@ -561,12 +561,13 @@ public class BatallaNavalDAODB implements BatallaNavalDAO {
 		return false;
 	}
 	//acutaliza el turno siempre y cuando exista un desafío en curso
-	public boolean actualizarTurno(int idUsuario, boolean turno) {
+	public void actualizarTurno(int idUsuario, boolean turno) {
 		logger.debug("Entro a actualizarTurno con parámetro de entrada idUsuario= "+idUsuario+" turno= "+turno);
 		Conexion c=new Conexion();
 		try {
 			if(turno){
 				c.actualizarValores("UPDATE t_batalla_naval,usuarios,usuarios_has_juegos_desafios,desafios SET miTurno=1 WHERE t_batalla_naval.desafios_idDesafio=idDesafio AND usuarios_has_juegos_desafios.desafios_idDesafio=idDesafio AND usuarioGanadorD='0' AND jugador=usuario AND idusuario=usuarios_idusuario AND usuarios_idusuario='"+idUsuario+"'");
+
 			}else{
 				c.actualizarValores("UPDATE t_batalla_naval,usuarios,usuarios_has_juegos_desafios,desafios SET miTurno=0 WHERE t_batalla_naval.desafios_idDesafio=idDesafio AND usuarios_has_juegos_desafios.desafios_idDesafio=idDesafio AND usuarioGanadorD='0' AND jugador=usuario AND idusuario=usuarios_idusuario AND usuarios_idusuario='"+idUsuario+"'");
 			}
@@ -577,7 +578,6 @@ public class BatallaNavalDAODB implements BatallaNavalDAO {
 			logger.debug("Me desconecto de la base de datos del método actualizarTurno");
 			c.disconnect();
 		}
-		return false;
 	}
 
 
