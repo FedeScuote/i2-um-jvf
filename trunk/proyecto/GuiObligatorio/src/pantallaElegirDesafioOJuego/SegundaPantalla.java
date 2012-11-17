@@ -183,7 +183,7 @@ public class SegundaPantalla extends JFrame {
 	private JButton getCrearDesafioBoton() {
 		if (crearDesafioBoton == null) {
 			crearDesafioBoton = new JButton();
-			crearDesafioBoton.setText(labels.getString("LABEL-CREAR-DESAFIO-BOTON "));
+			crearDesafioBoton.setText(labels.getString("LABEL-CREAR-DESAFIO-BOTON"));
 		}
 		return crearDesafioBoton;
 	}
