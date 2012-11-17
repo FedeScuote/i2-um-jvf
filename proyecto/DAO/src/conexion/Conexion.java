@@ -61,6 +61,12 @@ public class Conexion {
 		return pregunta.executeQuery(consulta);
 	}
 
+	public void actualizarValores(String consulta) throws SQLException{
+		Statement pregunta;
+		pregunta = (conn).createStatement();
+		pregunta.executeUpdate(consulta);
+	}
+
 	public void ingresarNuevaTuplaDeUnaColumna(String tabla, String idTabla,
 			String columnaUno, String valorUno) throws SQLException {
 		// System.out.println("INSERT INTO "+tabla+"
