@@ -190,9 +190,7 @@ public class Login extends JFrame {
 			labelPassword.setText(LABEL_PASSWORD_KEY);//busco en mis properties
 			labelUsuario = new JLabel();
 			labelUsuario.setText(LABEL_USERNAME_KEY);//busco en mis properties el texto
-			labelPassword = new JLabel();
 			labelPassword.setForeground(Color.white);
-			labelUsuario = new JLabel();
 			labelUsuario.setForeground(Color.white);
 			PanelCentro.add(labelPassword, gridBagConstraints1);
 			PanelCentro.add(getLogin(this), gridBagConstraints11);
