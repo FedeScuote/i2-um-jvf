@@ -356,7 +356,7 @@ public class ColocarBarcos extends JFrame {
 						this.pintarCasillerosOcupadosY(coordenadaInicialX, coordenadaInicialY, coordenadaFinalY);
 					}
 				if (!quedanBarcos()) {
-					BatallaNavalVentana l = new BatallaNavalVentana(
+					BatallaNaval l = new BatallaNaval(
 							this.usuario);
 					l.setVisible(true);
 					this.dispose();
