@@ -18,4 +18,7 @@ public interface BatallaNavalDAO {
 	public void actualizarTablero(int idPartida, String usuario, boolean miTurno,int barcosSubmarinos, int barcosDestructores,int barcosCruceros,int barcosAcorazados,int barcosSubmarinosColocados, int barcosDestructoresColocados,int barcosCrucerosColocados,int barcosAcorazadosColocados );
 	public void modificarCeldaTablero(int idUsuario, Celda celda, int xC, int yC);
 	public boolean turnoTablero(int idUsuario);
+
+	//acutaliza el turno siempre y cuando exista un desafío en curso
+	public boolean actualizarTurno(int idUsuario, boolean turno);
 }
