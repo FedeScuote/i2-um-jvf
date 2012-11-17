@@ -17,12 +17,6 @@ import excepcionesB.NoHayDesafioException;
 
 public class Desafio implements ServiciosDesafio {
 
-
-	private static final String USUARIO_BOT_1 = "jhirata";
-	private static final String USUARIO_BOT_2 = "vtuyare";
-	private static final String USUARIO_BOT_3 = "fkono";
-	private static final String USUARIO_BOT_4 = "jdiaz";
-
 	private String usuarioDesafio;
 	private int idUsuario;
 	private int idDesafio;
@@ -54,41 +48,8 @@ public class Desafio implements ServiciosDesafio {
 		this.estado = estado;
 	}
 
-
-	private static DesafioDAO getDAO() {
-		try {
-			return (DesafioDAO) Class.forName("daoImpl.DesafioDAODB")
-					.newInstance();
-		} catch (InstantiationException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IllegalAccessException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (ClassNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		return null;
-	}
-	private static UsuarioDAO getUsuarioDAO() {
-		try {
-			return (UsuarioDAO) Class.forName("daoImpl.UsuarioDAODB")
-					.newInstance();
-		} catch (InstantiationException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IllegalAccessException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (ClassNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		return null;
-	}
 	public ArrayList<DesafioBatallaNavalVO> getDesafios() throws RemoteException, NoHayDesafiosDisponiblesException{
-		DesafioDAO dao = getDAO();
+		DesafioDAO dao = getDesafioDAO();
 		UsuarioDAO dao1 = getUsuarioDAO();
 		ArrayList<DesafioBatallaNavalVO> aux = new ArrayList<DesafioBatallaNavalVO>();
 		try{
@@ -107,40 +68,12 @@ public class Desafio implements ServiciosDesafio {
 			return aux;
 		}catch(NoHayDesafioException e){
 			return generarDesafios(dao1.getUsuariosVirtuales());
-//			DesafioBatallaNavalVO nuevo1 = new DesafioBatallaNavalVO();
-//			DesafioBatallaNavalVO nuevo2 = new DesafioBatallaNavalVO();
-//			DesafioBatallaNavalVO nuevo3 = new DesafioBatallaNavalVO();
-//			DesafioBatallaNavalVO nuevo4 = new DesafioBatallaNavalVO();
-//			UsuarioVO usuarioVOBot1 = new UsuarioVO(USUARIO_BOT_1);
-//			UsuarioVO usuarioVOBot2 = new UsuarioVO(USUARIO_BOT_2);
-//			UsuarioVO usuarioVOBot3 = new UsuarioVO(USUARIO_BOT_3);
-//			UsuarioVO usuarioVOBot4 = new UsuarioVO(USUARIO_BOT_4);
-//			nuevo1.setUsuario(usuarioVOBot1);
-//			nuevo2.setUsuario(usuarioVOBot2);
-//			nuevo3.setUsuario(usuarioVOBot3);
-//			nuevo4.setUsuario(usuarioVOBot4);
-//			int apuesta=0;
-//			apuesta=((int)Math.random()*100)+50;
-//			nuevo1.setApuesta(apuesta);
-//			apuesta=((int)Math.random()*100)+30;
-//			nuevo2.setApuesta(apuesta);
-//			apuesta=((int)Math.random()*100)+40;
-//			nuevo3.setApuesta(apuesta);
-//			apuesta=((int)Math.random()*100)+25;
-//			nuevo4.setApuesta(apuesta);
-//			aux.add(nuevo1);
-//			aux.add(nuevo2);
-//			aux.add(nuevo3);
-//			aux.add(nuevo4);
-//			int index=(int)(Math.random()*3);
-//			aux.remove(index);
-//			return aux;
 		}
-
 	}
+
 	private ArrayList<DesafioBatallaNavalVO> generarDesafios(ArrayList<Usuario> usuariosVirtuales) {
 		ArrayList<DesafioBatallaNavalVO> desafios=new ArrayList<DesafioBatallaNavalVO>();
-		int cantDesafios=1+((int)Math.random()*usuariosVirtuales.size());
+		int cantDesafios=1+(int)(Math.random()*usuariosVirtuales.size());
 		if(cantDesafios>usuariosVirtuales.size()){
 			cantDesafios=usuariosVirtuales.size();
 		}
@@ -149,39 +82,70 @@ public class Desafio implements ServiciosDesafio {
 			UsuarioVO usuarioVOBot = new UsuarioVO(usuariosVirtuales.get(i).getUsuarioB());
 			usuarioVOBot.setIdUsuario(usuariosVirtuales.get(i).getIdUsuarioB());
 			int apuesta=0;
-			apuesta=((int)Math.random()*100)+50;
+			apuesta=(int)(Math.random()*100)+50;
 			nuevo.setApuesta(apuesta);
 			nuevo.setUsuario(usuarioVOBot);
 			desafios.add(nuevo);
 		}
 		return desafios;
 	}
+
 	public String getUsuarioDesafio() {
 		return usuarioDesafio;
 	}
+
 	public void setUsuarioDesafio(String usuarioDesafio) {
 		this.usuarioDesafio = usuarioDesafio;
 	}
+
 	public int getIdUsuario() {
 		return idUsuario;
 	}
+
 	public void setIdUsuario(int idUsuario) {
 		this.idUsuario = idUsuario;
 	}
+
 	public boolean aceptaronDesafio(UsuarioVO usuario) throws RemoteException {
-		DesafioDAO dao = getDAO();
+		DesafioDAO dao = getDesafioDAO();
 		return dao.aceptaronDesafio(usuario.getIdUsuario());
 	}
+
 	public void crearDesafio(UsuarioVO usuario, int monto) throws RemoteException {
-		DesafioDAO dao = getDAO();
+		DesafioDAO dao = getDesafioDAO();
 		dao.crearDesafio(usuario.getUsuarioB(), monto);
 	}
+
 	public ArrayList<DesafioVO> getDesafiosLudo() throws RemoteException {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
-
+	private static DesafioDAO getDesafioDAO() {
+		try {
+			return (DesafioDAO) Class.forName("daoImpl.DesafioDAODB")
+					.newInstance();
+		} catch (InstantiationException e) {
+			e.printStackTrace();
+		} catch (IllegalAccessException e) {
+			e.printStackTrace();
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+	private static UsuarioDAO getUsuarioDAO() {
+		try {
+			return (UsuarioDAO) Class.forName("daoImpl.UsuarioDAODB")
+					.newInstance();
+		} catch (InstantiationException e) {
+			e.printStackTrace();
+		} catch (IllegalAccessException e) {
+			e.printStackTrace();
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
 
 
 

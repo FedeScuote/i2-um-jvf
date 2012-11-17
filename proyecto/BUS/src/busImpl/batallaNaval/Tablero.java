@@ -2,6 +2,9 @@ package busImpl.batallaNaval;
 
 import java.util.ArrayList;
 
+import daoInterfaces.BatallaNavalDAO;
+import daoInterfaces.PartidaDAO;
+
 import busImpl.Estados;
 import busImpl.Usuario;
 
@@ -16,8 +19,8 @@ public class Tablero {
 	private static final String ACORAZADO = "ACORAZADO";
 	private static final int CANTIDAD_INICIAL_SUBMARINO = 0;
 	private static final int CANTIDAD_INICIAL_DESTRUCTORES = 0;
-	private static final int CANTIDAD_INICIAL_CRUCEROS = 0;
-	private static final int CANTIDAD_INICIAL_ACORAZADO = 1;
+	private static final int CANTIDAD_INICIAL_CRUCEROS = 2;
+	private static final int CANTIDAD_INICIAL_ACORAZADO = 2;
 	private static final int LARGO_SUBMARINO = 1;
 	private static final int LARGO_DESTRUCTORES = 2;
 	private static final int LARGO_CRUCEROS = 3;
@@ -125,6 +128,9 @@ public class Tablero {
 
 	public void agregarCeldasDirY(int coordenadaX, int coordenadaInicialY,
 			int coordenadaFinalY, String tipoBarco) throws CoordenadasCeldasInvalidasException {
+		BatallaNavalDAO daoBatallaNaval = getBattallaNavalDAO();
+		PartidaDAO daoPartida = getPartidaDAO();
+		int idPartida=daoPartida.idPartida(jugador.getIdUsuarioB());
 		int idBarco=0;
 		if(tipoBarco.equals(SUBMARINO)){
 			if(coordenadaFinalY-coordenadaInicialY+1!=LARGO_SUBMARINO){
@@ -159,14 +165,43 @@ public class Tablero {
 				}else{
 					tabla[coordenadaX][i].setOcupada();
 					tabla[coordenadaX][i].setId(idBarco);
+					daoBatallaNaval.modificarCeldaTablero(jugador.getIdUsuarioB(), tabla[coordenadaX][i], coordenadaX, i);
 				}
 			}
+			quitarBarcoStockJugador1(tipoBarco);
+			daoBatallaNaval.actualizarTablero(idPartida, jugador.getUsuarioB(), miTurno, cantBarcosSubmarino, cantBarcosDestructores, cantBarcosCruceros, cantBarcosAcorazado, cantBarcosSubmarinoColocados, cantBarcosDestructoresColocados, cantBarcosCrucerosColocados, cantBarcosAcorazadoColocados);
 		} else {
 			throw new CoordenadasCeldasInvalidasException();
 
 		}
 	}
 
+	private static BatallaNavalDAO getBattallaNavalDAO() {
+		try {
+			return (BatallaNavalDAO) Class.forName("daoImpl.BatallaNavalDAODB")
+					.newInstance();
+		} catch (InstantiationException e) {
+			e.printStackTrace();
+		} catch (IllegalAccessException e) {
+			e.printStackTrace();
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+	private static PartidaDAO getPartidaDAO() {
+		try {
+			return (PartidaDAO) Class.forName("daoImpl.PartidaDAODB")
+					.newInstance();
+		} catch (InstantiationException e) {
+			e.printStackTrace();
+		} catch (IllegalAccessException e) {
+			e.printStackTrace();
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
 	//METODO QUE DADO UNA DISTRIBUCION AGREGA BARCOS AL AZAR
 	public void agregarCeldas(int[] distribucion )  {
 		for(int i=0;i<4;i++){
@@ -292,6 +327,9 @@ public class Tablero {
 
 	public void agregarCeldasDirX(int coordenadaY, int coordenadaInicialX,
 			int coordenadaFinalX, String tipoBarco) throws CoordenadasCeldasInvalidasException {
+		BatallaNavalDAO daoBatallaNaval = getBattallaNavalDAO();
+		PartidaDAO daoPartida = getPartidaDAO();
+		int idPartida=daoPartida.idPartida(jugador.getIdUsuarioB());
 		int idBarco=0;
 		if(tipoBarco.equals(SUBMARINO)){
 			if(coordenadaFinalX-coordenadaInicialX+1!=LARGO_SUBMARINO){
@@ -325,19 +363,31 @@ public class Tablero {
 					//Hay que ver si agrega hasta la ocupada!!!
 					throw new CoordenadasCeldasInvalidasException();
 				}else{
-
 					tabla[i][coordenadaY].setOcupada();
 					tabla[i][coordenadaY].setId(idBarco);
+					daoBatallaNaval.modificarCeldaTablero(jugador.getIdUsuarioB(), tabla[i][coordenadaY], i, coordenadaY);
 				}
 
 			}
+			quitarBarcoStockJugador1(tipoBarco);
+			daoBatallaNaval.actualizarTablero(idPartida, jugador.getUsuarioB(), miTurno, cantBarcosSubmarino, cantBarcosDestructores, cantBarcosCruceros, cantBarcosAcorazado, cantBarcosSubmarinoColocados, cantBarcosDestructoresColocados, cantBarcosCrucerosColocados, cantBarcosAcorazadoColocados);
 		} else {
 
 			throw new CoordenadasCeldasInvalidasException();
 
 		}
 	}
-
+	private void quitarBarcoStockJugador1(String tipoBarco) {
+		if(tipoBarco.equals(SUBMARINO)){
+			decrementarBarcosSubmarinoColocados();
+		}else if(tipoBarco.equals(DESTRUCTORES)){
+			decrementarBarcosDestructoresColocados();
+		}else if(tipoBarco.equals(CRUCEROS)){
+			decrementarBarcosCrucerosColocados();
+		}else if(tipoBarco.equals(ACORAZADO)){
+			decrementarBarcosAcorazadoColocados();
+		}
+	}
 
 	public Estados dispararACelda(int coordenadaX,int coordenadaY) throws CoordenadasCeldasInvalidasException{
 		Estados retorno=null;

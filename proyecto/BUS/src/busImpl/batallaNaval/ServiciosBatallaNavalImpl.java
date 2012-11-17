@@ -34,12 +34,6 @@ public class ServiciosBatallaNavalImpl implements ServiciosBatallaNaval{
 		if(juego.inicioPar()&&!esBot(juego.getTableroJugador2().getJugador().getUsuarioB())){
 			daoBatallaNaval.actualizarTablero(idPartida, juego.getTableroJugador2().getJugador().getUsuarioB(),true, juego.getTableroJugador2().getCantBarcosSubmarino(), juego.getTableroJugador2().getCantBarcosDestructores(), juego.getTableroJugador2().getCantBarcosCruceros(), juego.getTableroJugador2().getCantBarcosAcorazado(), juego.getTableroJugador2().getCantBarcosSubmarinoColocados(), juego.getTableroJugador2().getCantBarcosDestructoresColocados(), juego.getTableroJugador2().getCantBarcosCrucerosColocados(), juego.getTableroJugador2().getCantBarcosAcorazadoColocados());
 		}
-	//	int idPartida=daoPartida.idPartida(usuario.getIdUsuario());
-	//	if(usuario.getIdUsuario()==juego.getTableroJugador1().getJugador().getIdUsuarioB()){
-	//		daoBatallaNaval.registrarTablero(juego.getTableroJugador1(), idPartida);
-	//	}else{
-	//		daoBatallaNaval.registrarTablero(juego.getTableroJugador2(), idPartida);
-	//	}
 	}
 
 	//metodo para dispararle dado un usuario a su oponente
@@ -50,8 +44,24 @@ public class ServiciosBatallaNavalImpl implements ServiciosBatallaNaval{
 
 	//metodo para preguntar el turno de un usuario
 	public boolean esMiTurno(UsuarioVO usuario) throws RemoteException {
-		juego=JuegoBatallaNaval.crearJuegoBN(usuario);
-		return juego.esMiTurno(usuario);
+//		juego=JuegoBatallaNaval.crearJuegoBN(usuario);
+//		return juego.esMiTurno(usuario);
+		BatallaNavalDAO daoBatallaNaval = getBatallaNavalDAO();
+		PartidaDAO daoPartida = getPartidaDAO();
+		int idPartida=daoPartida.idPartida(usuario.getIdUsuario());
+		int idJugador1=usuario.getIdUsuario();
+		int idJugador2=daoPartida.oponente(usuario.getIdUsuario()).getIdUsuarioB();
+		ArrayList<RegistroDisparo> listaJugador1 =daoBatallaNaval.getListaDeTiros(idPartida, idJugador1);
+		ArrayList<RegistroDisparo> listaJugador2 =daoBatallaNaval.getListaDeTiros(idPartida, idJugador2);
+		boolean turno1=daoBatallaNaval.turnoTablero(idJugador1);
+		if(listaJugador1.size()!=listaJugador2.size()){
+			if((listaJugador1.size()>listaJugador2.size())){
+				turno1=false;
+			}else{
+				turno1=true;
+			}
+		}
+		return turno1;
 	}
 
 	//refresca el estado actual del tablero del usuario, los barcos y disparos
