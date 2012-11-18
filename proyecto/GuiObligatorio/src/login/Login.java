@@ -39,7 +39,6 @@ import commExceptions.NoSeEncuentraUsuarioException;
 public class Login extends JFrame {
 
 	private static final long serialVersionUID = 1L;
-	private static final String host = null;
 	private JPanel jContentPane = null;
 	private ImagePanel PanelLogin = null;
 	private TransparentPanel PanelNorte = null;
@@ -54,6 +53,7 @@ public class Login extends JFrame {
 	private JPasswordField password = null;
 	private static Logger logger = Logger.getLogger(LoginVentana.class);
 	private static ResourceBundle labels = ResourceBundle.getBundle("Gui");  //  @jve:decl-index=0:
+	private static final String host = labels.getString("host");
 	private static final String URL_IMAGEN_FONDO_LOGIN = labels.getString("URL_FOTOLOGIN");
 	private static final String LABEL_PASSWORD_KEY = labels.getString("LABEL_PASSWORD");
 	private static final String LABEL_USERNAME_KEY = labels.getString("LABEL_USERNAME");
