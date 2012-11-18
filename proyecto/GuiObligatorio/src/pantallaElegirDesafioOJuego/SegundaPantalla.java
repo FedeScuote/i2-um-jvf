@@ -63,7 +63,13 @@ public class SegundaPantalla extends JFrame {
 
 	protected UsuarioVO usuario=null;
 
-	private ResourceBundle labels = ResourceBundle.getBundle("Gui");
+	private static ResourceBundle labels = ResourceBundle.getBundle("Gui");
+
+	private static final String LABEL_TORNEOS_DISPONIBLES =labels.getString("LABEL-TORNEOS-DISPONIBLES");
+	private static final String LABEL_DESAFIOS_DISPONIBLES =labels.getString("LABEL-DESAFIOS-DISPONIBLES");
+	private static final String LABEL_IMAGEN_FONDO_SP =labels.getString("LABEL-IMAGEN-FONDO-SP");
+	private static final String LABEL_CREAR_DESAFIO_BOTON =labels.getString("LABEL-CREAR-DESAFIO-BOTON");
+	private static final String LABEL_RETORNO_BOTON =labels.getString("LABEL-RETORNO-BOTON");
 
 	/**
 	 * This is the default constructor
@@ -154,7 +160,7 @@ public class SegundaPantalla extends JFrame {
 			gridBagConstraints5.insets = new Insets(0, 0, 0, 0);
 			gridBagConstraints5.gridy = 1;
 			desafiosDisponiblesLabel = new JLabel();
-			desafiosDisponiblesLabel.setText(labels.getString("LABEL-DESAFIOS-DISPONIBLES"));
+			desafiosDisponiblesLabel.setText(LABEL_DESAFIOS_DISPONIBLES);
 			desafiosDisponiblesLabel.setForeground(Color.white);
 			GridBagConstraints gridBagConstraints = new GridBagConstraints();
 			gridBagConstraints.gridx = 1;
@@ -162,7 +168,7 @@ public class SegundaPantalla extends JFrame {
 			gridBagConstraints.gridwidth = 0;
 			gridBagConstraints.gridheight = 0;
 			gridBagConstraints.gridy = 5;
-			panelSegundaPantalla = new ImagePanel(new ImageIcon(labels.getString("LABEL-IMAGEN-FONDO-SP")).getImage());
+			panelSegundaPantalla = new ImagePanel(new ImageIcon(LABEL_IMAGEN_FONDO_SP).getImage());
 			panelSegundaPantalla.setLayout(new GridBagLayout());
 			panelSegundaPantalla.setBackground(Color.black);
 			panelSegundaPantalla.add(desafiosDisponiblesLabel, gridBagConstraints5);
@@ -183,7 +189,7 @@ public class SegundaPantalla extends JFrame {
 	private JButton getCrearDesafioBoton() {
 		if (crearDesafioBoton == null) {
 			crearDesafioBoton = new JButton();
-			crearDesafioBoton.setText(labels.getString("LABEL-CREAR-DESAFIO-BOTON"));
+			crearDesafioBoton.setText(LABEL_CREAR_DESAFIO_BOTON);
 		}
 		return crearDesafioBoton;
 	}
@@ -196,7 +202,7 @@ public class SegundaPantalla extends JFrame {
 	private JButton getBotonRetorno() {
 		if (BotonRetorno == null) {
 			BotonRetorno = new JButton();
-			BotonRetorno.setText(labels.getString("LABEL-RETORNO-BOTON"));
+			BotonRetorno.setText(LABEL_RETORNO_BOTON);
 			BotonRetorno.addActionListener(new ListenerBoton());
 		}
 		return BotonRetorno;
