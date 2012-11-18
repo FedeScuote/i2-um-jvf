@@ -275,6 +275,7 @@ public class BatallaNaval extends JFrame {
 		if (PanelEste == null) {
 			PanelEste = new TranslucentPanel();
 			PanelEste.setLayout(new GridBagLayout());
+			PanelEste.setPreferredSize(new Dimension(this.getWidth(),0));
 		}
 		return PanelEste;
 	}
@@ -288,6 +289,7 @@ public class BatallaNaval extends JFrame {
 		if (PanelOeste == null) {
 			PanelOeste = new TranslucentPanel();
 			PanelOeste.setLayout(new GridBagLayout());
+			PanelOeste.setPreferredSize(new Dimension(this.getWidth(),0));
 		}
 		return PanelOeste;
 	}
