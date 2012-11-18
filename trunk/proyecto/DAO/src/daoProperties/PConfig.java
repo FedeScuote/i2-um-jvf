@@ -1,4 +1,4 @@
-package propertiesDAO;
+package daoProperties;
 
 public class PConfig {
 

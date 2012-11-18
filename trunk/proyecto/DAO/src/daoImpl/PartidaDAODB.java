@@ -7,16 +7,16 @@ import org.apache.log4j.Logger;
 
 import busImpl.usuario.Usuario;
 import conexion.Conexion;
+import daoExcepciones.DesafioTerminadoException;
+import daoExcepciones.NoExisteCreditoSuficiente;
+import daoExcepciones.NoExisteDesafioException;
+import daoExcepciones.NoExisteOponenteException;
+import daoExcepciones.PartidaTerminadaException;
 import daoInterfaces.PartidaDAO;
 import excepcionesB.NoExisteUsuarioException;
 import excepcionesB.NoHayDesafioException;
 import excepcionesB.NoHayRankingException;
 import excepcionesB.NotDataFoundException;
-import excepcionesD.DesafioTerminadoException;
-import excepcionesD.NoExisteCreditoSuficiente;
-import excepcionesD.NoExisteDesafioException;
-import excepcionesD.NoExisteOponenteException;
-import excepcionesD.PartidaTerminadaException;
 
 public class PartidaDAODB implements PartidaDAO {
 	private static Logger logger = Logger.getLogger(PartidaDAODB.class);
