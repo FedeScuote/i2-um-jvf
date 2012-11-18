@@ -2,6 +2,7 @@ package busImpl;
 
 import java.rmi.RemoteException;
 import java.util.ArrayList;
+import java.util.ResourceBundle;
 
 import comm.RankingVO;
 import comm.ServiciosRanking;
@@ -14,6 +15,7 @@ import excepcionesB.NotDataFoundException;
 
 public class Ranking implements ServiciosRanking {
 
+	private static ResourceBundle constante = ResourceBundle.getBundle("bus");
 	private String usuario;
 	private int ganadas=0;
 
@@ -38,16 +40,13 @@ public class Ranking implements ServiciosRanking {
 
 
 		try {
-			return (RankingDAO) Class.forName("daoImpl.RankingDAODB")
+			return (RankingDAO) Class.forName(constante.getString("CLASS_FOR_NAME_RANKING"))
 					.newInstance();
 		} catch (InstantiationException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (IllegalAccessException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (ClassNotFoundException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return null;
@@ -68,7 +67,6 @@ public class Ranking implements ServiciosRanking {
 			}
 
 		} catch (NoHayRankingException e) {
-			System.out.println("error");
 		}
 		return aux;
 	}

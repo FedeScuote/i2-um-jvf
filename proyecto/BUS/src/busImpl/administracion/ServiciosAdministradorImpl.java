@@ -2,8 +2,9 @@ package busImpl.administracion;
 
 import java.rmi.RemoteException;
 
-import busImpl.usuario.Usuario;
+import org.apache.log4j.Logger;
 
+import busImpl.usuario.Usuario;
 import comm.ServiciosAdministrador;
 import comm.UsuarioVO;
 import commExceptions.ContrasenaInvalidaException;
@@ -17,11 +18,15 @@ import excepcionesB.YaExisteUsuarioException;
 
 public class ServiciosAdministradorImpl implements ServiciosAdministrador{
 
+	private static Logger log = Logger.getLogger(ServiciosAdministradorImpl.class);
+
+	//metodo que le eprmite acreditar saldo a un uusario
 	public void acreditarSaldo(String usuario, int credito) throws RemoteException, NoSeEncuentraUsuarioException {
+		log.debug("acredita salgo");
 		UsuarioDAO daoUsuario = getUsuarioDAO();
 		try {
 			Usuario user=daoUsuario.findByName(usuario);
-			if(user.getNivelPrivilegioB()==2){
+			if(user.getNivelPrivilegioB()==1){
 				daoUsuario.sumarSaldo(credito, user.getIdUsuarioB());
 			}else{
 				throw new NoSeEncuentraUsuarioException();
@@ -33,23 +38,28 @@ public class ServiciosAdministradorImpl implements ServiciosAdministrador{
 
 	}
 
+	//metodo para crear un usuario
 	public void agregarUsuario(String usuario, String clave, int nivelPrilegio, String nombre, String apellido, String pais) throws RemoteException, UsuarioDuplicadoException {
+
 		UsuarioDAO daoUsuario = getUsuarioDAO();
 		try {
 			daoUsuario.agregarUsuario(usuario, clave, nivelPrilegio, 0, 100, 0, nombre, apellido, pais);
+			log.debug("agrego usuario nuevo");
 		} catch (YaExisteUsuarioException e) {
 			throw new UsuarioDuplicadoException();
 		}
 
 	}
-
+	//	metodo para crear un usuario
 	public void cambiarNombre(String usuario, String password, String nuevoUsuario) throws RemoteException, NoSeEncuentraUsuarioException, ContrasenaInvalidaException {
+
 		UsuarioDAO daoUsuario = getUsuarioDAO();
 		try {
 			Usuario user=daoUsuario.findByName(usuario);
 			if(user.getClaveB().equals(password)){
 				try {
 					daoUsuario.cambiarNombre(usuario, nuevoUsuario);
+					log.debug("cambio nombre de: "+usuario+" a: "+nuevoUsuario);
 				} catch (NoExisteUsuarioException e) {
 				}
 			}else{
@@ -60,7 +70,7 @@ public class ServiciosAdministradorImpl implements ServiciosAdministrador{
 		}
 
 	}
-
+	//metodo para cambiarle la contraseña a un usuario
 	public void cambiarPassword(String usuario, String oldPassword, String newPassword) throws RemoteException, NoSeEncuentraUsuarioException, ContrasenaInvalidaException {
 		UsuarioDAO daoUsuario = getUsuarioDAO();
 		try {
@@ -68,6 +78,7 @@ public class ServiciosAdministradorImpl implements ServiciosAdministrador{
 			if(user.getClaveB().equals(oldPassword)){
 				try {
 					daoUsuario.cambiarPassword(usuario, newPassword);
+					log.debug("cambio pass de: "+usuario);
 				} catch (NoExisteUsuarioException e) {
 				}
 			}else{
@@ -78,13 +89,15 @@ public class ServiciosAdministradorImpl implements ServiciosAdministrador{
 		}
 	}
 
+	//metodo para cobrar saldo
 	public void cobrarSaldo(String usuario, String password, int credito) throws RemoteException, MontoInsuficienteException, NoSeEncuentraUsuarioException, ContrasenaInvalidaException {
 		UsuarioDAO daoUsuario = getUsuarioDAO();
 		try {
 			Usuario user=daoUsuario.findByName(usuario);
-			if(user.getNivelPrivilegioB()==2){
+			if(user.getNivelPrivilegioB()==1){
 				if(user.getClaveB().equals(password)){
 					if(daoUsuario.creditoSuficiente(credito, user.getIdUsuarioB())){
+						log.debug("cobra saldo: "+usuario);
 						daoUsuario.restarSaldo(credito, user.getIdUsuarioB());
 					}else{
 						throw new MontoInsuficienteException();

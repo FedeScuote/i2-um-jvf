@@ -1,13 +1,16 @@
 package busImpl.usuario;
 
+import java.util.ResourceBundle;
+
 import commExceptions.NoSeEncuentraUsuarioException;
 import daoInterfaces.UsuarioDAO;
 import excepcionesB.NotDataFoundException;
 
 public class Usuario {
+	private static ResourceBundle constante = ResourceBundle.getBundle("bus");
 	private static UsuarioDAO getDAO() {
 		try {
-			return (UsuarioDAO) Class.forName("daoImpl.UsuarioDAODB")
+			return (UsuarioDAO) Class.forName(constante.getString("CLASS_FOR_NAME_USUARIO"))
 					.newInstance();
 		} catch (InstantiationException e) {
 			// TODO Auto-generated catch block

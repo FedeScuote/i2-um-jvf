@@ -127,6 +127,7 @@ public class Tablero {
 		this.jugador = jugador;
 	}
 
+	//metodo que a nivel del tablero agrega los barcos, no idica mayor complejidad
 	public void agregarCeldasDirY(int coordenadaX, int coordenadaInicialY,
 			int coordenadaFinalY, String tipoBarco) throws CoordenadasCeldasInvalidasException {
 		BatallaNavalDAO daoBatallaNaval = getBattallaNavalDAO();
@@ -221,19 +222,7 @@ public class Tablero {
 		}
 		return null;
 	}
-	private static PartidaDAO getPartidaDAO() {
-		try {
-			return (PartidaDAO) Class.forName("daoImpl.PartidaDAODB")
-					.newInstance();
-		} catch (InstantiationException e) {
-			e.printStackTrace();
-		} catch (IllegalAccessException e) {
-			e.printStackTrace();
-		} catch (ClassNotFoundException e) {
-			e.printStackTrace();
-		}
-		return null;
-	}
+
 	//METODO QUE DADO UNA DISTRIBUCION AGREGA BARCOS AL AZAR
 	public void agregarCeldas(int[] distribucion )  {
 		for(int i=0;i<4;i++){
@@ -606,6 +595,7 @@ public class Tablero {
 	}
 
 
+	//metodo que apartir de una lista de disparos genera el estado del mismo
 	public void generarTablero(ArrayList<RegistroDisparo> listaDeDisparos){
 		int i=0;
 		while(i<listaDeDisparos.size()){
