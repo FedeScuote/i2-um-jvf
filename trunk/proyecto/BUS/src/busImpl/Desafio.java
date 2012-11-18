@@ -8,6 +8,7 @@ import comm.DesafioVO;
 import comm.RankingVO;
 import comm.ServiciosDesafio;
 import comm.UsuarioVO;
+import commExceptions.MontoInsuficienteException;
 import commExceptions.NoHayDesafiosDisponiblesException;
 import commExceptions.NoSeEncuentraUsuarioException;
 import daoInterfaces.DesafioDAO;
@@ -111,7 +112,7 @@ public class Desafio implements ServiciosDesafio {
 		return dao.aceptaronDesafio(usuario.getIdUsuario());
 	}
 
-	public void crearDesafio(UsuarioVO usuario, int monto) throws RemoteException {
+	public void crearDesafio(UsuarioVO usuario, int monto) throws RemoteException, MontoInsuficienteException {
 		DesafioDAO dao = getDesafioDAO();
 		dao.crearDesafio(usuario.getUsuarioB(), monto);
 	}
@@ -145,6 +146,10 @@ public class Desafio implements ServiciosDesafio {
 			e.printStackTrace();
 		}
 		return null;
+	}
+	public void cancelarDesafio(UsuarioVO usuario) throws RemoteException {
+		// TODO Auto-generated method stub
+
 	}
 
 
