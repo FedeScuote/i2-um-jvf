@@ -627,7 +627,7 @@ public class ColocarBarcos extends JFrame {
 			LabelRenglon2.setText(LABEL_RENGLON1_INSTRUCCIONES);
 			LabelRenglon1 = new JLabel();
 			LabelRenglon1.setFont(new Font("Arial", Font.BOLD, 24));
-			LabelRenglon1.setText("INSTRUCCIONES");
+			LabelRenglon1.setText(LABEL_INSTRUCCIONES);
 			PanelBarcosRestantes = new CustomGlassPane();
 			PanelBarcosRestantes.setLayout(new GridBagLayout());
 			GridBagConstraints gridBagConstraints = new GridBagConstraints();
