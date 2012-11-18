@@ -273,7 +273,14 @@ public class PartidaDAODB implements PartidaDAO {
 				int nuevoCreditoTotalUsuario2=ud.getResultadoCredito(-credito, idOponente);
 				logger.debug("Nuevo crédito del usuario oponente perdedor= "+nuevoCreditoTotalUsuario2);
 
-				int idBanca=12; //es el usuario jvf que tiene idUsuario=12
+				//busco la id del dueño de la empresa "jvf"
+				int idBanca=0;
+				try {
+					idBanca = ud.getIdUsuario2("jvf",c);
+				} catch (NoExisteUsuarioException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
 				int nuevoCreditoTotalUsuario3=ud.getResultadoCredito(credito05, idBanca);
 				logger.debug("Nuevo crédito de la banca= "+nuevoCreditoTotalUsuario3);
 
