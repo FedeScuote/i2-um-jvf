@@ -59,7 +59,7 @@ public class Login extends JFrame {
 	private static final String LABEL_USERNAME_KEY = labels.getString("LABEL_USERNAME");
 	private static final String NOMBRE_VENTANA = labels.getString("nombre_empresa");
 	private static final String LABEL_BOTON_LOGIN = labels.getString("LABEL_BOTON_LOGIN");
-	private static final String LABEL_BIENVENIDO = labels.getString("LABEL_BIENVENID");
+	private static final String LABEL_BIENVENIDO = labels.getString("LABEL_BIENVENIDO");
 	private static final String	LABEL_USUARIO_INVALIDO = labels.getString("LABEL_USUARIO_INVALIDO");
 	private static final String	LABEL_ERROR = labels.getString("LABEL_ERROR");
 	private static final String LABEL_PASSWORD_INVALIDO = labels.getString("LABEL_PASSWORD_INVALIDO");

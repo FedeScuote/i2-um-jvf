@@ -47,7 +47,7 @@ public class VentanaPrincipal extends JFrame {
 
 	private static final String host = null;
 
-	private ResourceBundle labels = ResourceBundle.getBundle("Gui");
+	private static ResourceBundle labels = ResourceBundle.getBundle("Gui");
 
 	private UsuarioVO usuario;
 
@@ -68,6 +68,16 @@ public class VentanaPrincipal extends JFrame {
 	private static Logger logger = Logger.getLogger(LoginVentana.class);
 
 	private JButton DesconexionBoton = null;
+	private static final String LABEL_TITULO_VENTANA_PRINCIPAL = labels.getString("LABEL_TITULO_VENTANA_PRINCIPAL");
+	private static final String LABEL_IMAGEN_FONDO_VP = labels.getString("LABEL_IMAGEN_FONDO_VP");
+	private static final String LABEL_BOTON_JUGAR_LUDO_VP = labels.getString("LABEL_BOTON_JUGAR_LUDO_VP");
+	private static final String LABEL_BOTON_JUGAR_BN_VP = labels.getString("LABEL_BOTON_JUGAR_BN_VP");
+	private static final String LABEL_BOTON_JUGAR_BG_VP = labels.getString("LABEL_BOTON_JUGAR_BG_VP");
+	private static final String LABEL_TABLA_COLUMNA1 = labels.getString("LABEL_TABLA_COLUMNA1");
+	private static final String LABEL_TABLA_COLUMNA2 = labels.getString("LABEL_TABLA_COLUMNA2");
+	private static final String LABEL_ERROR_NO_USU_VP = labels.getString("LABEL-ERROR-NO-USU-VP");
+	private static final String LABEL_ERROR = labels.getString("LABEL_ERROR");
+	private static final String LABEL_BOTON_DESCONECTAR_VP = labels.getString("LABEL-BOTON-DESCONECTAR-VP");
 
 	/**
 	 * This is the default constructor
@@ -90,7 +100,7 @@ public class VentanaPrincipal extends JFrame {
 	private void initialize() {
 		logger.debug("Inicializar Ventana Principal");
 		this.setContentPane(getJContentPane());
-		this.setTitle(labels.getString("LABEL_TITULO_VENTANA_PRINCIPAL"));
+		this.setTitle(LABEL_TITULO_VENTANA_PRINCIPAL);
 		this.setBounds(new Rectangle(0, 0, 834, 632));
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		preguntarRanking();
@@ -158,7 +168,7 @@ public class VentanaPrincipal extends JFrame {
 			gridBagConstraints.ipadx = 322;
 			gridBagConstraints.ipady = 215;
 			gridBagConstraints.gridx = 0;
-			panelVentanaPrincipal = new ImagePanel(new ImageIcon(labels.getString("LABEL_IMAGEN_FONDO_VP")).getImage());
+			panelVentanaPrincipal = new ImagePanel(new ImageIcon(LABEL_IMAGEN_FONDO_VP).getImage());
 			panelVentanaPrincipal.setLayout(new GridBagLayout());
 			panelVentanaPrincipal.add(getPanelRanking(), gridBagConstraints);
 			panelVentanaPrincipal.add(getJugarLudo(), gridBagConstraints1);
@@ -204,7 +214,7 @@ public class VentanaPrincipal extends JFrame {
 	private JButton getJugarLudo() {
 		if (jugarLudo == null) {
 			jugarLudo = new JButton();
-			jugarLudo.setText(labels.getString("LABEL_BOTON_JUGAR_LUDO_VP"));
+			jugarLudo.setText(LABEL_BOTON_JUGAR_LUDO_VP);
 		}
 		return jugarLudo;
 	}
@@ -217,7 +227,7 @@ public class VentanaPrincipal extends JFrame {
 	private JButton getJugarBatalla(final VentanaPrincipal pantalla) {
 		if (jugarBatalla == null) {
 			jugarBatalla = new JButton();
-			jugarBatalla.setText(labels.getString("LABEL_BOTON_JUGAR_BN_VP"));
+			jugarBatalla.setText(LABEL_BOTON_JUGAR_BN_VP);
 			jugarBatalla.addActionListener(new java.awt.event.ActionListener() {
 				public void actionPerformed(java.awt.event.ActionEvent e) {
 					pantalla.dispose();
@@ -237,7 +247,7 @@ public class VentanaPrincipal extends JFrame {
 	private JButton getJugarBackgammon() {
 		if (jugarBackgammon == null) {
 			jugarBackgammon = new JButton();
-			jugarBackgammon.setText(labels.getString("LABEL_BOTON_JUGAR_BG_VP"));
+			jugarBackgammon.setText(LABEL_BOTON_JUGAR_BG_VP);
 		}
 		return jugarBackgammon;
 	}
@@ -253,7 +263,7 @@ public class VentanaPrincipal extends JFrame {
 			}
 		};
 		tabla.setModel(model);
-		model.setColumnIdentifiers(new String[] {labels.getString("LABEL_TABLA_COLUMNA1"), labels.getString("LABEL_TABLA_COLUMNA2")});
+		model.setColumnIdentifiers(new String[] {LABEL_TABLA_COLUMNA1, LABEL_TABLA_COLUMNA2});
 		Iterator i = lista.iterator();
 		// relleno la tabla con data del arraylist
 		while (i.hasNext())
@@ -273,8 +283,8 @@ public class VentanaPrincipal extends JFrame {
 		} catch (Exception remoteExceptionrmi) {
 			if (remoteExceptionrmi instanceof NoSeEncuentraUsuarioException) {
 
-				JOptionPane.showMessageDialog(new JFrame(), labels.getString("LABEL-ERROR-NO-USU-VP"),
-						labels.getString("LABEL_ERROR"), JOptionPane.ERROR_MESSAGE);
+				JOptionPane.showMessageDialog(new JFrame(), LABEL_ERROR_NO_USU_VP,
+						LABEL_ERROR, JOptionPane.ERROR_MESSAGE);
 			} else {
 				System.err.println("Client exception: "
 						+ remoteExceptionrmi.toString());
@@ -290,7 +300,7 @@ public class VentanaPrincipal extends JFrame {
 	private JButton getDesconexionBoton() {
 		if (DesconexionBoton == null) {
 			DesconexionBoton = new JButton();
-			DesconexionBoton.setText(labels.getString("LABEL-BOTON-DESCONECTAR-VP"));
+			DesconexionBoton.setText(LABEL_BOTON_DESCONECTAR_VP);
 			DesconexionBoton.addActionListener(new java.awt.event.ActionListener() {
 				public void actionPerformed(java.awt.event.ActionEvent e) {
 					dispose();
