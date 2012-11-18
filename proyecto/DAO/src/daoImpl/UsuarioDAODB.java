@@ -198,50 +198,47 @@ public class UsuarioDAODB implements UsuarioDAO {
 	}
 
 	//optimizado
-	public boolean cambiarPassword(String usuario, String nuevaPassword)throws NoExisteUsuarioException{
+	public void cambiarPassword(String usuario, String nuevaPassword)throws NoExisteUsuarioException{
 		logger.debug("Entro a cambiarPassword con parámetros de entrada usuario= "+usuario+", nuevaPassword= "+nuevaPassword);
-		boolean cambio=false;
+		
 		Conexion c=new Conexion();
 		try {
 			boolean existe=this.existeUsuario(usuario, c);
 			if(existe){
-				c.actualizarTuplaDeUnaColumna5("usuarios", "clave", nuevaPassword, "usuario", usuario);
-				cambio=true;
+				c.actualizarTuplaDeUnaColumna5("usuarios", "clave", nuevaPassword, "usuario", usuario);				
 			}else{
 				throw new NoExisteUsuarioException();
 			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		} finally{
-			logger.debug("cambio ="+cambio);
+		} finally{			
 			logger.debug("Me desconecto de la base de datos del método cambiarPassword");
 			c.disconnect();
 		}
-		return cambio;
+		
 	}
 	//optimizado
-	public boolean cambiarNombre(String usuario, String nuevoUsuario)throws NoExisteUsuarioException{
+	public void cambiarNombre(String usuario, String nuevoUsuario)throws NoExisteUsuarioException{
 		logger.debug("Entro a cambiarPassword con parámetros de entrada usuario= "+usuario+", nuevoUsuario= "+nuevoUsuario);
-		boolean cambio=false;
+	
 		Conexion c=new Conexion();
 		try {
 			boolean existe=this.existeUsuario(usuario, c);
 			if(existe){
 				c.actualizarTuplaDeUnaColumna5("usuarios", "usuario", nuevoUsuario, "usuario", usuario);
-				cambio=true;
+				
 			}else{
 				throw new NoExisteUsuarioException();
 			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		} finally{
-			logger.debug("cambio ="+cambio);
+		} finally{			
 			logger.debug("Me desconecto de la base de datos del método cambiarNombre");
 			c.disconnect();
 		}
-		return cambio;
+		
 	}
 
 
