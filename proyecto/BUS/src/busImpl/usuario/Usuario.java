@@ -1,4 +1,4 @@
-package busImpl;
+package busImpl.usuario;
 
 import commExceptions.NoSeEncuentraUsuarioException;
 import daoInterfaces.UsuarioDAO;

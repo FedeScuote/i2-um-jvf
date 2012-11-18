@@ -1,11 +1,15 @@
 package busImpl.batallaNaval;
 
+import java.util.ResourceBundle;
+
 public class Celda {
-	private static final String AGUA = "AGUA";
-	private static final String OCUPADO = "OCUPADO";
-	private static final String TOCADO = "TOCADO";
-	private static final String TIROERRADO = "TIROERRADO";
-	private static final String HUNDIDO = "HUNDIDO";
+	private static ResourceBundle constante = ResourceBundle.getBundle("bus");
+	private static final String AGUA = constante.getString("AGUA");
+	private static final String OCUPADO = constante.getString("OCUPADO");
+	private static final String TOCADO = constante.getString("TOCADO");
+	private static final String TIROERRADO = constante.getString("TIROERRADO");
+	private static final String HUNDIDO = constante.getString("HUNDIDO");
+	
 	String estado; // atributo que dice si hay agua, barco, etc.
 	int id;
 

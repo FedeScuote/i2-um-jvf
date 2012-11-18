@@ -1,6 +1,6 @@
 package daoInterfaces;
 
-import busImpl.Usuario;
+import busImpl.usuario.Usuario;
 
 public interface PartidaDAO {
 	//terminado, devuelve idPartida

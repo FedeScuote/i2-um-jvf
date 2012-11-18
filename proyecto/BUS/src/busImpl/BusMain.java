@@ -4,9 +4,11 @@ import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 import java.rmi.server.UnicastRemoteObject;
+import java.util.ResourceBundle;
 
 import busImpl.administracion.ServiciosAdministradorImpl;
 import busImpl.batallaNaval.ServiciosBatallaNavalImpl;
+import busImpl.usuario.BusServer;
 
 import comm.ServiciosAdministrador;
 import comm.ServiciosBatallaNaval;
@@ -21,7 +23,7 @@ public class BusMain {
 	private static Desafio bsDesafio;
 	private static ServiciosBatallaNavalImpl bsBN;
 	private static ServiciosAdministrador bsAdmin;
-
+	private static ResourceBundle lookup = ResourceBundle.getBundle("bus");
 	public static void main(String[] args) {
 		bs = new BusServer();
 		bsRanking = new Ranking();
@@ -36,21 +38,20 @@ public class BusMain {
 			ServiciosAdministrador stubAdmin = (ServiciosAdministrador) UnicastRemoteObject.exportObject(bsAdmin, 0);
 			try {
 
-				Registry registry = LocateRegistry.createRegistry(1099);
-				registry.rebind("Ranking", stubRanking);
-				registry.rebind("Hello", stub);
-				registry.rebind("Desafio", stubDesafio);
-				registry.rebind("BatallaNavalServices", stubBN);
-				registry.rebind("AdministrationServices", stubAdmin);
-				System.out.println("Servidor remoto registrado OK");
+				Registry registry = LocateRegistry.createRegistry(Integer.parseInt(lookup.getString("PUERTO_RMI")));
+				registry.rebind(lookup.getString("RANKING_LOOKUP"), stubRanking);
+				registry.rebind(lookup.getString("USUARIO_LOOKUP"), stub);
+				registry.rebind(lookup.getString("DESAFIO_LOOKUP"), stubDesafio);
+				registry.rebind(lookup.getString("BN_LOOKUP"), stubBN);
+				registry.rebind(lookup.getString("ADMIN_LOOKUP"), stubAdmin);
+				System.out.println(lookup.getString("MENSAJE_LOOKUP"));
 
 			} catch (Exception e) {
-				System.err.println("Exception: " + e.getMessage());
+				System.err.println(e.getMessage());
 				e.printStackTrace();
 			}
 
 		} catch (RemoteException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 

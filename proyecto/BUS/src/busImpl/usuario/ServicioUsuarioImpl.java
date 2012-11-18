@@ -1,6 +1,7 @@
-package busImpl;
+package busImpl.usuario;
 
 import java.rmi.RemoteException;
+
 
 import comm.ServiciosUsuario;
 import comm.UsuarioVO;

@@ -2,7 +2,7 @@ package busImpl.administracion;
 
 import java.rmi.RemoteException;
 
-import busImpl.Usuario;
+import busImpl.usuario.Usuario;
 
 import comm.ServiciosAdministrador;
 import comm.UsuarioVO;
@@ -21,7 +21,12 @@ public class ServiciosAdministradorImpl implements ServiciosAdministrador{
 		UsuarioDAO daoUsuario = getUsuarioDAO();
 		try {
 			Usuario user=daoUsuario.findByName(usuario);
-			daoUsuario.sumarSaldo(credito, user.getIdUsuarioB());
+			if(user.getNivelPrivilegioB()==2){
+				daoUsuario.sumarSaldo(credito, user.getIdUsuarioB());
+			}else{
+				throw new NoSeEncuentraUsuarioException();
+			}
+
 		} catch (NotDataFoundException e) {
 			throw new NoSeEncuentraUsuarioException();
 		}
@@ -71,23 +76,26 @@ public class ServiciosAdministradorImpl implements ServiciosAdministrador{
 		} catch (NotDataFoundException e) {
 			throw new NoSeEncuentraUsuarioException();
 		}
-
-
 	}
 
 	public void cobrarSaldo(String usuario, String password, int credito) throws RemoteException, MontoInsuficienteException, NoSeEncuentraUsuarioException, ContrasenaInvalidaException {
 		UsuarioDAO daoUsuario = getUsuarioDAO();
 		try {
 			Usuario user=daoUsuario.findByName(usuario);
-			if(user.getClaveB().equals(password)){
-				if(daoUsuario.creditoSuficiente(credito, user.getIdUsuarioB())){
-					daoUsuario.restarSaldo(credito, user.getIdUsuarioB());
+			if(user.getNivelPrivilegioB()==2){
+				if(user.getClaveB().equals(password)){
+					if(daoUsuario.creditoSuficiente(credito, user.getIdUsuarioB())){
+						daoUsuario.restarSaldo(credito, user.getIdUsuarioB());
+					}else{
+						throw new MontoInsuficienteException();
+					}
 				}else{
-					throw new MontoInsuficienteException();
+					throw new ContrasenaInvalidaException();
 				}
 			}else{
-				throw new ContrasenaInvalidaException();
+				throw new NoSeEncuentraUsuarioException();
 			}
+
 
 		} catch (NotDataFoundException e) {
 			throw new NoSeEncuentraUsuarioException();
@@ -101,11 +109,12 @@ public class ServiciosAdministradorImpl implements ServiciosAdministrador{
 		try {
 			Usuario user=daoUsuario.findByName(usuario);
 			if(user.getClaveB().equals(clave)){
-				if(user.getNivelPrivilegioB()==1){
+				if(user.getNivelPrivilegioB()!=1){
 					UsuarioVO nuevo=new UsuarioVO(user.getUsuarioB());
 					nuevo.setIdUsuario(user.getIdUsuarioB());
 					nuevo.setNombreB(user.getNombreB());
 					nuevo.setApellidoB(user.getApellidoB());
+					nuevo.setNivelPrivilegio(user.getNivelPrivilegioB());
 					return nuevo;
 				}else{
 					throw new NoSeEncuentraUsuarioException();
