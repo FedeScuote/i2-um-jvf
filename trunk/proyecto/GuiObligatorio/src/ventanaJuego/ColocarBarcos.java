@@ -13,6 +13,7 @@ import java.awt.event.ActionListener;
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
+import java.util.ResourceBundle;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -66,14 +67,6 @@ public class ColocarBarcos extends JFrame {
 
 	private int[] distribucion;
 
-	private static final String SUBMARINO = "SUBMARINO";
-
-	private static final String DESTRUCTORES = "DESTRUCTORES";  //  @jve:decl-index=0:
-
-	private static final String CRUCEROS = "CRUCEROS";
-
-	private static final String ACORAZADO = "ACORAZADO";
-
 	private static Logger logger = Logger.getLogger(ColocarBarcos.class);
 	private TransparentButton BotonSubmarino = null;
 	private TransparentButton BotonDestructor = null;
@@ -90,6 +83,42 @@ public class ColocarBarcos extends JFrame {
 	private JLabel LabelBattleship = null;
 	private JLabel LabelRenglon3 = null;
 	private JLabel LabelRenglon4 = null;
+	private static ResourceBundle labels = ResourceBundle.getBundle("Gui");
+	private static final String LABEL_ERROR_NO_USU_VP = labels.getString("LABEL-ERROR-NO-USU-VP");
+	private static ResourceBundle constantes = ResourceBundle.getBundle("bus");
+	private static final String SUBMARINO = constantes.getString("SUBMARINO");
+	private static final String DESTRUCTORES = constantes.getString("DESTRUCTORES");
+	private static final String CRUCEROS = constantes.getString("CRUCEROS");
+	private static final String ACORAZADO = constantes.getString("ACORAZADO");
+	private static final String LABEL_NOMBRE_EMPRESA = labels.getString("nombre_empresa");
+	private static final String URL_FONDO = labels.getString("LABEL_URLFONDO_COLOCARBARCOS");
+	private static final String LABEL_INGRESE_SUS_BARCOS = labels.getString("LABEL_INGRESE_SUS_BARCOS");
+	private static final String LABEL_BATTLESHIP = labels.getString("LABEL_BATTLESHIP");
+	private static final String LABEL_SUBMARINE = labels.getString("LABEL_SUBMARINE");
+	private static final String LABEL_DESTROYER = labels.getString("LABEL_DESTROYER");
+	private static final String LABEL_CRUISER = labels.getString("LABEL_CRUISER");
+	private static final String ERROR_CONEXION = labels.getString("ERROR_CONEXION");
+	private static final String LABEL_ERROR = labels.getString("LABEL_ERROR");
+	private static final String COORDENADAS_INVALIDAS = labels.getString("COORDENADAS_INVALIDAS");
+	private static final String LABEL_ERROR_DESCONOCIDO = labels.getString("LABEL_ERROR_DESCONOCIDO");
+	private static final String LIMITE_BARCOS = labels.getString("LIMITE_BARCOS");
+	private static final String URL_BOTON_SUBMARINO = labels.getString("URL_BOTON_SUBMARINO");
+	private static final String URL_BOTON_ACORAZADO= labels.getString("URL_BOTON_ACORAZADO");
+	private static final String URL_BOTON_CRUCERO = labels.getString("URL_BOTON_CRUCERO");
+	private static final String URL_BOTON_DESTRUCTOR = labels.getString("URL_BOTON_DESTRUCTOR");
+	private static final String LABEL_INSTRUCCIONES = labels.getString("LABEL_INSTRUCCIONES");
+	private static final String LABEL_RENGLON1_INSTRUCCIONES = labels.getString("LABEL_RENGLON1_INSTRUCCIONES");
+	private static final String LABEL_RENGLON2_INSTRUCCIONES = labels.getString("LABEL_RENGLON2_INSTRUCCIONES");
+	private static final String LABEL_RENGLON3_INSTRUCCIONES = labels.getString("LABEL_RENGLON3_INSTRUCCIONES");
+	private static final String LABEL_RENGLON4_INSTRUCCIONES = labels.getString("LABEL_RENGLON4_INSTRUCCIONES");
+	private static final String AGUA = constantes.getString("AGUA");
+	private static final String TOCADO = constantes.getString("TOCADO");
+	private static final String HUNDIDO = constantes.getString("HUNDIDO");
+	private static final String OCUPADO = constantes.getString("OCUPADO");
+	private JLabel LabelRenglon5 = null;
+
+
+
 	/**
 	 * This is the default constructor
 	 */
@@ -131,7 +160,7 @@ public class ColocarBarcos extends JFrame {
 	private void initialize() {
 		this.setSize(761, 505);
 		this.setContentPane(getJContentPane());
-		this.setTitle("JFrame");
+		this.setTitle(LABEL_NOMBRE_EMPRESA);
 		this.setExtendedState(JFrame.MAXIMIZED_BOTH);
 
 	}
@@ -157,7 +186,7 @@ public class ColocarBarcos extends JFrame {
 	 */
 	private JPanel getPanelColocarBarcos() {
 		if (PanelColocarBarcos == null) {
-			PanelColocarBarcos = new ImagePanel(new ImageIcon("src/BattleShip-069.jpg").getImage());
+			PanelColocarBarcos = new ImagePanel(new ImageIcon(URL_FONDO).getImage());
 			PanelColocarBarcos.setLayout(new BorderLayout());
 			PanelColocarBarcos.add(getPanelTablero(), BorderLayout.WEST);
 			PanelColocarBarcos.add(getPanelIngresarBarco(), BorderLayout.NORTH);
@@ -186,7 +215,7 @@ public class ColocarBarcos extends JFrame {
 	 */
 	private JPanel getPanelIngresarBarco() {
 		if (PanelIngresarBarco == null) {
-			PanelIngresarBarco = new AnimatedPanelString("INGRESE SUS BARCOS");
+			PanelIngresarBarco = new AnimatedPanelString(LABEL_INGRESE_SUS_BARCOS);
 			PanelIngresarBarco.setPreferredSize(new Dimension(0, this.getHeight()/3));
 			PanelIngresarBarco.setLayout(new GridBagLayout());
 		}
@@ -204,22 +233,22 @@ public class ColocarBarcos extends JFrame {
 			gridBagConstraints5.gridx = 1;
 			gridBagConstraints5.gridy = 2;
 			LabelBattleship = new JLabel();
-			LabelBattleship.setText("JLabel");
+			LabelBattleship.setText(LABEL_BATTLESHIP);
 			GridBagConstraints gridBagConstraints4 = new GridBagConstraints();
 			gridBagConstraints4.gridx = 0;
 			gridBagConstraints4.gridy = 2;
 			LabelCruiser = new JLabel();
-			LabelCruiser.setText("JLabel");
+			LabelCruiser.setText(LABEL_CRUISER);
 			GridBagConstraints gridBagConstraints31 = new GridBagConstraints();
 			gridBagConstraints31.gridx = 1;
 			gridBagConstraints31.gridy = 0;
 			LabelDestroyer = new JLabel();
-			LabelDestroyer.setText("JLabel");
+			LabelDestroyer.setText(LABEL_DESTROYER);
 			GridBagConstraints gridBagConstraints21 = new GridBagConstraints();
 			gridBagConstraints21.gridx = 0;
 			gridBagConstraints21.gridy = 0;
 			LabelSubmarine = new JLabel();
-			LabelSubmarine.setText("JLabel");
+			LabelSubmarine.setText(LABEL_SUBMARINE);
 			GridBagConstraints gridBagConstraints11 = new GridBagConstraints();
 			gridBagConstraints11.gridx = 2;
 			gridBagConstraints11.insets = new Insets(0, 0, 0, 0);
@@ -364,24 +393,24 @@ public class ColocarBarcos extends JFrame {
 			} catch (Exception e) {
 				if (e instanceof RemoteException) {
 					JOptionPane.showMessageDialog(new JFrame(),
-							"Error en la conexion intente de nuevo", "ERROR",
+							ERROR_CONEXION, LABEL_ERROR,
 							JOptionPane.ERROR_MESSAGE);
 				}
 				if (e instanceof CoordenadasInvalidasException) {
 					JOptionPane.showMessageDialog(new JFrame(),
-							"Coordenadas invalidas intente de nuevo", "ERROR",
+							COORDENADAS_INVALIDAS, LABEL_ERROR,
 							JOptionPane.ERROR_MESSAGE);
 				} else {
 					e.printStackTrace();
 					JOptionPane.showMessageDialog(new JFrame(),
-							"ERROR DESCONOCIDO", "ERROR",
+							LABEL_ERROR_DESCONOCIDO, LABEL_ERROR,
 							JOptionPane.ERROR_MESSAGE);
 					this.dispose();
 				}
 			}
 		}else{
 			JOptionPane.showMessageDialog(new JFrame(),
-					"Ya no se pueden agregar mas barcos de ese tipo", "ERROR",
+					LIMITE_BARCOS, LABEL_ERROR,
 					JOptionPane.ERROR_MESSAGE);
 		}
 	}
@@ -391,7 +420,7 @@ public class ColocarBarcos extends JFrame {
 			array[index] -= 1;
 		} else {
 			JOptionPane.showMessageDialog(new JFrame(),
-					"Ya no se pueden agregar mas barcos de ese tipo", "ERROR",
+					LIMITE_BARCOS, LABEL_ERROR,
 					JOptionPane.ERROR_MESSAGE);
 		}
 	}
@@ -430,13 +459,13 @@ public class ColocarBarcos extends JFrame {
 		} catch (Exception e) {
 			if (e instanceof RemoteException) {
 				JOptionPane.showMessageDialog(new JFrame(),
-						"Error en la conexion intente de nuevo", "ERROR",
+						ERROR_CONEXION, LABEL_ERROR,
 						JOptionPane.ERROR_MESSAGE);
 			} else {
 				e.printStackTrace();
 				JOptionPane
-						.showMessageDialog(new JFrame(), "ERROR DESCONOCIDO",
-								"ERROR", JOptionPane.ERROR_MESSAGE);
+						.showMessageDialog(new JFrame(), LABEL_ERROR_DESCONOCIDO,
+								LABEL_ERROR, JOptionPane.ERROR_MESSAGE);
 				this.dispose();
 			}
 		}
@@ -489,7 +518,7 @@ public class ColocarBarcos extends JFrame {
 	 */
 	private JButton getBotonSubmarino() {
 		if (BotonSubmarino == null) {
-			BotonSubmarino = new TransparentButton(new ImageIcon("src/submarine.jpg").getImage());
+			BotonSubmarino = new TransparentButton(new ImageIcon(URL_BOTON_SUBMARINO).getImage());
 			BotonSubmarino.setSize(200, 120);
 			BotonSubmarino.setText("SUBMARINO");
 			BotonSubmarino.addActionListener(new java.awt.event.ActionListener() {
@@ -510,7 +539,7 @@ public class ColocarBarcos extends JFrame {
 	 */
 	private JButton getBotonDestructor() {
 		if (BotonDestructor == null) {
-			BotonDestructor = new TransparentButton(new ImageIcon("src/destroyer.jpg").getImage());
+			BotonDestructor = new TransparentButton(new ImageIcon(URL_BOTON_DESTRUCTOR).getImage());
 			BotonDestructor.setSize(200, 120);
 			BotonDestructor.setText("Destructor");
 			BotonDestructor.addActionListener(new java.awt.event.ActionListener() {
@@ -531,7 +560,7 @@ public class ColocarBarcos extends JFrame {
 	 */
 	private JButton getBotonCrucero() {
 		if (BotonCrucero == null) {
-			BotonCrucero = new TransparentButton(new ImageIcon("src/cruiser.jpg").getImage());
+			BotonCrucero = new TransparentButton(new ImageIcon(URL_BOTON_CRUCERO).getImage());
 			BotonCrucero.setSize(200, 120);
 			BotonCrucero.setText("CRUCERO");
 			BotonCrucero.addActionListener(new java.awt.event.ActionListener() {
@@ -552,7 +581,7 @@ public class ColocarBarcos extends JFrame {
 	 */
 	private JButton getBotonAcorazado() {
 		if (BotonAcorazado == null) {
-			BotonAcorazado = new TransparentButton(new ImageIcon("src/battleship.jpg").getImage());
+			BotonAcorazado = new TransparentButton(new ImageIcon(URL_BOTON_ACORAZADO).getImage());
 			BotonAcorazado.setSize(200, 120);
 			BotonAcorazado.setText("Acorazado");
 			BotonAcorazado.addActionListener(new java.awt.event.ActionListener() {
@@ -579,18 +608,23 @@ public class ColocarBarcos extends JFrame {
 	 */
 	private CustomGlassPane getPanelBarcosRestantes() {
 		if (PanelBarcosRestantes == null) {
+			GridBagConstraints gridBagConstraints12 = new GridBagConstraints();
+			gridBagConstraints12.gridx = 0;
+			gridBagConstraints12.gridy = 5;
+			LabelRenglon5 = new JLabel();
+			LabelRenglon5.setText(LABEL_RENGLON4_INSTRUCCIONES);
 			GridBagConstraints gridBagConstraints7 = new GridBagConstraints();
 			gridBagConstraints7.gridx = 0;
 			gridBagConstraints7.gridy = 4;
 			LabelRenglon4 = new JLabel();
-			LabelRenglon4.setText("JLabel");
+			LabelRenglon4.setText(LABEL_RENGLON3_INSTRUCCIONES);
 			GridBagConstraints gridBagConstraints6 = new GridBagConstraints();
 			gridBagConstraints6.gridx = 0;
 			gridBagConstraints6.gridy = 3;
 			LabelRenglon3 = new JLabel();
-			LabelRenglon3.setText("JLabel");
+			LabelRenglon3.setText(LABEL_RENGLON2_INSTRUCCIONES);
 			LabelRenglon2 = new JLabel();
-			LabelRenglon2.setText("JLabel");
+			LabelRenglon2.setText(LABEL_RENGLON1_INSTRUCCIONES);
 			LabelRenglon1 = new JLabel();
 			LabelRenglon1.setFont(new Font("Arial", Font.BOLD, 24));
 			LabelRenglon1.setText("INSTRUCCIONES");
@@ -609,6 +643,7 @@ public class ColocarBarcos extends JFrame {
 			PanelBarcosRestantes.add(LabelRenglon2, gridBagConstraints1);
 			PanelBarcosRestantes.add(LabelRenglon3, gridBagConstraints6);
 			PanelBarcosRestantes.add(LabelRenglon4, gridBagConstraints7);
+			PanelBarcosRestantes.add(LabelRenglon5, gridBagConstraints12);
 		}
 		return PanelBarcosRestantes;
 	}
@@ -624,13 +659,13 @@ public class ColocarBarcos extends JFrame {
 		} catch (Exception e) {
 			if (e instanceof RemoteException) {
 				JOptionPane
-						.showMessageDialog(new JFrame(), "ERROR DE CONEXION",
-								"ERROR", JOptionPane.ERROR_MESSAGE);
+						.showMessageDialog(new JFrame(), ERROR_CONEXION,
+								LABEL_ERROR, JOptionPane.ERROR_MESSAGE);
 			} else {
 				e.printStackTrace();
 				JOptionPane
-						.showMessageDialog(new JFrame(), "ERROR DESCONOCIDO",
-								"ERROR", JOptionPane.ERROR_MESSAGE);
+						.showMessageDialog(new JFrame(), LABEL_ERROR_DESCONOCIDO,
+								LABEL_ERROR, JOptionPane.ERROR_MESSAGE);
 				this.dispose();
 			}
 		}
@@ -645,16 +680,16 @@ public class ColocarBarcos extends JFrame {
 			jArrayBotones = 0;
 			for (int j = 0; j < tabla.length; j++) {
 				jArrayBotones++;
-				if (tabla[i][j].getEstado().equals("AGUA")) {
+				if (tabla[i][j].getEstado().equals(AGUA)) {
 					botones[iArrayBotones][jArrayBotones]
 							.setBackground(Color.BLUE);
-				} else if (tabla[i][j].getEstado().equals("OCUPADO")) {
+				} else if (tabla[i][j].getEstado().equals(OCUPADO)) {
 					botones[iArrayBotones][jArrayBotones]
 							.setBackground(Color.BLACK);
-				} else if (tabla[i][j].getEstado().equals("TOCADO")) {
+				} else if (tabla[i][j].getEstado().equals(TOCADO)) {
 					botones[iArrayBotones][jArrayBotones]
 							.setBackground(Color.GREEN);
-				} else if (tabla[i][j].getEstado().equals("HUNDIDO")) {
+				} else if (tabla[i][j].getEstado().equals(HUNDIDO)) {
 					botones[iArrayBotones][jArrayBotones]
 							.setBackground(Color.GREEN);
 				} else {

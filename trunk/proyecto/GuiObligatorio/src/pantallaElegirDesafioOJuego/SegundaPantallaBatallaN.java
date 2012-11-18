@@ -33,6 +33,7 @@ import comm.ServiciosBatallaNaval;
 import comm.ServiciosDesafio;
 import comm.ServiciosRanking;
 import comm.UsuarioVO;
+import commExceptions.MontoInsuficienteException;
 import commExceptions.NoHayDesafiosDisponiblesException;
 import commExceptions.NoSeEncuentraUsuarioException;
 
@@ -62,6 +63,7 @@ public class SegundaPantallaBatallaN extends SegundaPantalla {
 	private static final String LABEL_CREAR_DESAFIO_BOTON = labels.getString("LABEL-CREAR-DESAFIO-BOTON");
 	private static final String ERROR_CREAR_DESAFIO = labels.getString("ERROR_CREAR_DESAFIO");
 	private static final String LABEL_INGRESE_MONTO_CORRECTO = labels.getString("LABEL_INGRESE_MONTO_CORRECTO");
+	private static final String LABEL_MONTO_INSUFICIENTE = labels.getString("LABEL_MONTO_INSUFICIENTE");
 
 
 	private final static int pause = (int)Integer.parseInt(labels.getString("LABEL_PAUSE_DESAFIO"));
@@ -131,7 +133,7 @@ public class SegundaPantallaBatallaN extends SegundaPantalla {
 		this.crearDesafio(this.usuario);
 	}
 
-
+	//METODO PARA RECIBIR Y LLAMO AL LLENARTABLA
 	private void llenarListaDesafio() {
 		logger.debug("llenarListaDesafio");
 		try { // intento recibir datos para el ranking/
@@ -216,7 +218,7 @@ public class SegundaPantallaBatallaN extends SegundaPantalla {
 			}
 		}
 	}
-
+	//METODO PARA CREAR UN DESAFIO
 	private void crearDesafio(UsuarioVO desafiante) {
 		logger.debug("crearDesafio");
 		try { // intento recibir datos para el ranking/
@@ -239,7 +241,13 @@ public class SegundaPantallaBatallaN extends SegundaPantalla {
 				JOptionPane.showMessageDialog(new JFrame(),
 						LABEL_ERROR_NO_USU_VP, LABEL_ERROR,
 						JOptionPane.ERROR_MESSAGE);
-			} else {
+
+			}else if (remoteExceptionrmi instanceof MontoInsuficienteException) {
+				JOptionPane.showMessageDialog(new JFrame(),
+						LABEL_MONTO_INSUFICIENTE, LABEL_ERROR,
+						JOptionPane.ERROR_MESSAGE);
+			}
+			else {
 				System.err.println("Client exception: "
 						+ remoteExceptionrmi.toString());
 				remoteExceptionrmi.printStackTrace();
@@ -248,6 +256,7 @@ public class SegundaPantallaBatallaN extends SegundaPantalla {
 		}
 
 	}
+	//METODO PASAR STRING A INT
 	private int pasarStringAInt(String montoString){
 		logger.debug("pasarStringAInt");
 		int montoInt =0;
