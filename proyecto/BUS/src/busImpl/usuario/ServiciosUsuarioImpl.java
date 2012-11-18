@@ -1,6 +1,7 @@
 package busImpl.usuario;
 
 import java.rmi.RemoteException;
+import java.util.ResourceBundle;
 
 
 import comm.ServiciosUsuario;
@@ -9,7 +10,9 @@ import commExceptions.ContrasenaInvalidaException;
 import commExceptions.NoSeEncuentraUsuarioException;
 
 public class ServiciosUsuarioImpl implements ServiciosUsuario {
+
 	// implemento mi logear
+
 	public UsuarioVO login(String usuario, String contraseña) throws RemoteException,NoSeEncuentraUsuarioException,ContrasenaInvalidaException {
 
 		try {
