@@ -27,6 +27,8 @@ import commExceptions.NoSeEncuentraUsuarioException;
 import ventanaPrincipal.VentanaPrincipal;
 import java.awt.Insets;
 import java.awt.Dimension;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 
 public class CambiosSaldo extends JFrame {
 
@@ -66,6 +68,8 @@ public class CambiosSaldo extends JFrame {
 
 	private static final String CANCELAR = labels
 			.getString("LABEL_VOLVER_BOTON");
+
+	private static final int LIMITE = 10;
 
 	private static final String SUMAR = labels.getString("LABEL_BOTONSUMAR");
 
@@ -213,6 +217,19 @@ public class CambiosSaldo extends JFrame {
 	private JPasswordField getJPasswordField() {
 		if (jPasswordField == null) {
 			jPasswordField = new JPasswordField();
+			jPasswordField.addKeyListener(new KeyListener() {
+				public void keyTyped(KeyEvent e) {
+					if (jTextFieldNick.getText().length() == LIMITE) {
+						e.consume();
+					}
+				}
+				public void keyPressed(KeyEvent e) {
+					// TODO Auto-generated method stub
+				}
+				public void keyReleased(KeyEvent e) {
+					// TODO Auto-generated method stub
+				}
+			});
 		}
 		return jPasswordField;
 	}
@@ -225,6 +242,19 @@ public class CambiosSaldo extends JFrame {
 	private JTextField getJTextFieldMonto() {
 		if (jTextFieldMonto == null) {
 			jTextFieldMonto = new JTextField();
+			jTextFieldMonto.addKeyListener(new KeyListener() {
+				public void keyTyped(KeyEvent e) {
+					if (jTextFieldNick.getText().length() == LIMITE) {
+						e.consume();
+					}
+				}
+				public void keyPressed(KeyEvent e) {
+					// TODO Auto-generated method stub
+				}
+				public void keyReleased(KeyEvent e) {
+					// TODO Auto-generated method stub
+				}
+			});
 		}
 		return jTextFieldMonto;
 	}
