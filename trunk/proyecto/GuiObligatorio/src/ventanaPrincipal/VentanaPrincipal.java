@@ -1,45 +1,37 @@
 package ventanaPrincipal;
 
 import java.awt.BorderLayout;
-import javax.swing.JPanel;
-import javax.swing.JFrame;
-import java.awt.Rectangle;
-import javax.swing.JLabel;
-import java.awt.GridBagLayout;
 import java.awt.GridBagConstraints;
-import javax.swing.ImageIcon;
-import javax.swing.JOptionPane;
-import javax.swing.JScrollPane;
-import javax.swing.JTable;
-import javax.swing.JTextArea;
-
+import java.awt.GridBagLayout;
 import java.awt.Insets;
-import javax.swing.JButton;
-import javax.swing.table.DefaultTableModel;
-
-import org.apache.log4j.Logger;
-
-import pantallaElegirDesafioOJuego.SegundaPantallaBatallaN;
-import util.ImagePanel;
-import ventanaJuego.BatallaNavalVentana;
-
-import comm.RankingVO;
-import comm.ServicioDesconexion;
-import comm.ServicioPartidaBatallaNaval;
-import comm.ServiciosBatallaNaval;
-import comm.ServiciosRanking;
-import comm.UsuarioVO;
-import commExceptions.NoSeEncuentraUsuarioException;
-
-import java.awt.Color;
+import java.awt.Rectangle;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.ResourceBundle;
 
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
+import javax.swing.table.DefaultTableModel;
+
 import login.Login;
 import login.LoginVentana;
+
+import org.apache.log4j.Logger;
+
+import pantallaElegirDesafioOJuego.SegundaPantallaBatallaN;
+import util.ImagePanel;
+
+import comm.RankingVO;
+import comm.ServiciosRanking;
+import comm.UsuarioVO;
+import commExceptions.NoSeEncuentraUsuarioException;
 
 public class VentanaPrincipal extends JFrame {
 

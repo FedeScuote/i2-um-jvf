@@ -233,22 +233,22 @@ public class ColocarBarcos extends JFrame {
 			gridBagConstraints5.gridx = 1;
 			gridBagConstraints5.gridy = 2;
 			LabelBattleship = new JLabel();
-			LabelBattleship.setText(LABEL_BATTLESHIP);
+			LabelBattleship.setText(LABEL_BATTLESHIP+(Integer)distribucion[3]);
 			GridBagConstraints gridBagConstraints4 = new GridBagConstraints();
 			gridBagConstraints4.gridx = 0;
 			gridBagConstraints4.gridy = 2;
 			LabelCruiser = new JLabel();
-			LabelCruiser.setText(LABEL_CRUISER);
+			LabelCruiser.setText(LABEL_CRUISER+(Integer)distribucion[2]);
 			GridBagConstraints gridBagConstraints31 = new GridBagConstraints();
 			gridBagConstraints31.gridx = 1;
 			gridBagConstraints31.gridy = 0;
 			LabelDestroyer = new JLabel();
-			LabelDestroyer.setText(LABEL_DESTROYER);
+			LabelDestroyer.setText(LABEL_DESTROYER+(Integer)distribucion[1]);
 			GridBagConstraints gridBagConstraints21 = new GridBagConstraints();
 			gridBagConstraints21.gridx = 0;
 			gridBagConstraints21.gridy = 0;
 			LabelSubmarine = new JLabel();
-			LabelSubmarine.setText(LABEL_SUBMARINE);
+			LabelSubmarine.setText(LABEL_SUBMARINE+(Integer)distribucion[0]);
 			GridBagConstraints gridBagConstraints11 = new GridBagConstraints();
 			gridBagConstraints11.gridx = 2;
 			gridBagConstraints11.insets = new Insets(0, 0, 0, 0);
@@ -378,6 +378,7 @@ public class ColocarBarcos extends JFrame {
 						.mandarCasilleroABus(coordenadaFinalX), this
 						.mandarCasilleroABus(coordenadaFinalY), tipoBarco);
 				this.actualizarDistribucion();
+				this.refrescarLabels();
 				if(this.agregoEnSentidoX(coordenadaInicialX, coordenadaInicialY, coordenadaFinalX, coordenadaFinalY)){
 					this.pintarCasillerosOcupadosX(coordenadaInicialX, yPrimerClick,
 					 coordenadaFinalX);
@@ -485,10 +486,16 @@ public class ColocarBarcos extends JFrame {
 		for (int i = XInicial; i <= XFinal; i++) {
 				arrayBotones[i+1][YInicial+1].setBackground(Color.black);
 		}
+		for (int i = XFinal; i <= XInicial; i++) {
+			arrayBotones[i+1][YInicial+1].setBackground(Color.black);
+	}
 	}
 	private void pintarCasillerosOcupadosY(int XInicial, int YInicial, int YFinal){
 		logger.debug("pintarCasillerosOcupadosY");
 		for (int i = YInicial; i <= YFinal; i++) {
+			arrayBotones[XInicial+1][i+1].setBackground(Color.black);
+		}
+		for (int i = YFinal; i <= YInicial; i++) {
 			arrayBotones[XInicial+1][i+1].setBackground(Color.black);
 		}
 	}
@@ -701,6 +708,11 @@ public class ColocarBarcos extends JFrame {
 			}
 		}
 	}
-
+	private void refrescarLabels(){
+		LabelBattleship.setText(LABEL_BATTLESHIP+(Integer)distribucion[3]);
+		LabelCruiser.setText(LABEL_CRUISER+(Integer)distribucion[2]);
+		LabelDestroyer.setText(LABEL_DESTROYER+(Integer)distribucion[1]);
+		LabelSubmarine.setText(LABEL_SUBMARINE+(Integer)distribucion[0]);
+	}
 
 }  //  @jve:decl-index=0:visual-constraint="10,10"
