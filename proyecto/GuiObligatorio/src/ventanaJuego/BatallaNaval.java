@@ -55,14 +55,9 @@ public class BatallaNaval extends JFrame {
 
 	private Timer temporizadorInicioPartida;
 
-	private JButton[][] botonesJugador = new JButton[TAMANO_TABLERO][TAMANO_TABLERO];
 
-	// botones que voy a
-	// utilizar para mi
-	// tablero
-	private JButton[][] botonesContrincante = new JButton[TAMANO_TABLERO][TAMANO_TABLERO];
 
-	private final static int TAMANO_TABLERO = 10 + 1;// (casillas)+(labels)
+
 
 	private final static String[] ALFABETO = { " ", "a", "b", "c", "d", "e",
 			"f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r",
@@ -94,6 +89,8 @@ public class BatallaNaval extends JFrame {
 
 	private JLabel jLabelBarcosHundidos = null;
 
+	private UsuarioVO contrincante = null;
+
 	private static ResourceBundle labels = ResourceBundle.getBundle("Gui");
 	private static ResourceBundle constantes = ResourceBundle.getBundle("bus");
 	private final static String ESTUTURNO = labels.getString("LABEL_ESTURNO");
@@ -118,6 +115,13 @@ public class BatallaNaval extends JFrame {
 	private final static String HUNDIDO = constantes.getString("HUNDIDO");
 	private final static String OCUPADO = constantes.getString("OCUPADO");
 	private final static String TIROERRADO = constantes.getString("TIROERRADO");
+	private final static int TAMANO_TABLERO = Integer.parseInt(labels.getString("TAMANO_TABLERO"));
+	private JButton[][] botonesJugador = new JButton[TAMANO_TABLERO][TAMANO_TABLERO];
+
+	// botones que voy a
+	// utilizar para mi
+	// tablero
+	private JButton[][] botonesContrincante = new JButton[TAMANO_TABLERO][TAMANO_TABLERO];
 
 
 	/**
@@ -148,11 +152,11 @@ public class BatallaNaval extends JFrame {
 			public void actionPerformed(ActionEvent evt) {
 				esMiTurno = preguntarTurno(usuario);
 				if (!esMiTurno && termino == false) {
-					indicadorTurno.setText(ESTUTURNO);
+					indicadorTurno.setText(NOESTUTURNO);
 					PanelCentro.repaint();
 					temporizador.restart();
 				} else if (termino == false) {
-					indicadorTurno.setText(NOESTUTURNO);
+					indicadorTurno.setText(ESTUTURNO);
 					PanelCentro.repaint();
 					refrescarTableroJugador();
 					refrescarTableroOponente();
@@ -257,7 +261,7 @@ public class BatallaNaval extends JFrame {
 			gridBagConstraints.gridx = 0;
 			gridBagConstraints.gridy = 1;
 			jLabelBarcosHundidos = new JLabel();
-			jLabelBarcosHundidos.setText(HASHUNDIDO+cantidadBarcosHundidos+BARCOS);
+			jLabelBarcosHundidos.setText(HASHUNDIDO+" "+cantidadBarcosHundidos+" "+BARCOS);
 			jLabelBarcosHundidos.setOpaque(false);
 			GridBagConstraints gridBagConstraints8 = new GridBagConstraints();
 			gridBagConstraints8.gridx = 0;
@@ -415,6 +419,7 @@ public class BatallaNaval extends JFrame {
 				indicadorTurno.setText(NOESTUTURNO);
 				if (stub.hundi(this.usuario)) {
 					cantidadBarcosHundidos++;
+					jLabelBarcosHundidos.setText(HASHUNDIDO+" "+cantidadBarcosHundidos+" "+BARCOS);
 					JOptionPane.showMessageDialog(new JFrame(),
 							HASHUNDIDOUNBARCO, ENHORABUENA,
 							JOptionPane.INFORMATION_MESSAGE);
@@ -603,6 +608,23 @@ public class BatallaNaval extends JFrame {
 
 			stub.terminarPartida(usuario, gane);
 		} catch (Exception e) {
+			if (e instanceof RemoteException) {
+				JOptionPane
+						.showMessageDialog(new JFrame(), ERRORDECONEXION,
+								LABEL_ERROR, JOptionPane.ERROR_MESSAGE);
+			}
+
+			e.printStackTrace();
+
+		}
+	}
+	private void preguntarContrincante(){
+		try{
+			Registry registry = LocateRegistry.getRegistry(host);
+			ServiciosBatallaNaval stub = (ServiciosBatallaNaval) registry
+					.lookup("BatallaNavalServices");
+			contrincante = stub.contrincante(usuario);
+		}catch (Exception e) {
 			if (e instanceof RemoteException) {
 				JOptionPane
 						.showMessageDialog(new JFrame(), ERRORDECONEXION,
