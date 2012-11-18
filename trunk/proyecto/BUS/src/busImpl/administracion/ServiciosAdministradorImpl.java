@@ -109,7 +109,7 @@ public class ServiciosAdministradorImpl implements ServiciosAdministrador{
 		try {
 			Usuario user=daoUsuario.findByName(usuario);
 			if(user.getClaveB().equals(clave)){
-				if(user.getNivelPrivilegioB()!=1){
+				if(user.getNivelPrivilegioB()!=1&&user.getVirtualB()==0){
 					UsuarioVO nuevo=new UsuarioVO(user.getUsuarioB());
 					nuevo.setIdUsuario(user.getIdUsuarioB());
 					nuevo.setNombreB(user.getNombreB());

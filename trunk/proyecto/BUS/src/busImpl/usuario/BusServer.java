@@ -14,7 +14,7 @@ public class BusServer implements ServiciosUsuario {
 
 		try {
 			Usuario nuevo = Usuario.findByName(usuario);
-			if(nuevo.getNivelPrivilegioB()==2&&nuevo.getVirtualB()==0){
+			if(nuevo.getNivelPrivilegioB()==1&&nuevo.getVirtualB()==0){
 				if(nuevo.getClaveB().equals(contraseña)){
 					UsuarioVO retorno =new UsuarioVO(nuevo.getNombreB(), nuevo.getApellidoB());
 					retorno.setIdUsuario(nuevo.getIdUsuarioB());
