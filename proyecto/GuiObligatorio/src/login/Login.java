@@ -51,7 +51,7 @@ public class Login extends JFrame {
 	private JButton botonLogin = null;
 	private JTextField usuario = null;
 	private JPasswordField password = null;
-	private static Logger logger = Logger.getLogger(LoginVentana.class);
+	private static Logger logger = Logger.getLogger(Login.class);
 	private static ResourceBundle labels = ResourceBundle.getBundle("Gui");  //  @jve:decl-index=0:
 	private static final String host = labels.getString("host");
 	private static final String URL_IMAGEN_FONDO_LOGIN = labels.getString("URL_FOTOLOGIN");
