@@ -1,6 +1,7 @@
 package busImpl.administracion;
 
 import java.rmi.RemoteException;
+import java.util.ResourceBundle;
 
 import org.apache.log4j.Logger;
 
@@ -20,7 +21,7 @@ import excepcionesB.NotDataFoundException;
 import excepcionesB.YaExisteUsuarioException;
 
 public class ServiciosAdministradorImpl implements ServiciosAdministrador{
-
+	private static ResourceBundle constante = ResourceBundle.getBundle("bus");
 	private static Logger log = Logger.getLogger(ServiciosAdministradorImpl.class);
 
 	//metodo que le eprmite acreditar saldo a un uusario
@@ -147,7 +148,7 @@ public class ServiciosAdministradorImpl implements ServiciosAdministrador{
 
 	private static UsuarioDAO getUsuarioDAO() {
 		try {
-			return (UsuarioDAO) Class.forName("daoImpl.UsuarioDAODB")
+			return (UsuarioDAO) Class.forName(constante.getString("CLASS_FOR_NAME_USUARIO"))
 					.newInstance();
 		} catch (InstantiationException e) {
 			e.printStackTrace();
@@ -160,7 +161,7 @@ public class ServiciosAdministradorImpl implements ServiciosAdministrador{
 	}
 	private static ReporteDAO getReporteDAO() {
 		try {
-			return (ReporteDAO) Class.forName("daoImpl.ReporteDAODB")
+			return (ReporteDAO) Class.forName(constante.getString("CLASS_FOR_NAME_REPORTE"))
 					.newInstance();
 		} catch (InstantiationException e) {
 			e.printStackTrace();
