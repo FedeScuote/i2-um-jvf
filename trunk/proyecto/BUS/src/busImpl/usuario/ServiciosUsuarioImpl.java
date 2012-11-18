@@ -8,7 +8,7 @@ import comm.UsuarioVO;
 import commExceptions.ContrasenaInvalidaException;
 import commExceptions.NoSeEncuentraUsuarioException;
 
-public class BusServer implements ServiciosUsuario {
+public class ServiciosUsuarioImpl implements ServiciosUsuario {
 	// implemento mi logear
 	public UsuarioVO login(String usuario, String contraseña) throws RemoteException,NoSeEncuentraUsuarioException,ContrasenaInvalidaException {
 
@@ -19,6 +19,7 @@ public class BusServer implements ServiciosUsuario {
 					UsuarioVO retorno =new UsuarioVO(nuevo.getNombreB(), nuevo.getApellidoB());
 					retorno.setIdUsuario(nuevo.getIdUsuarioB());
 					retorno.setUsuarioB(nuevo.getUsuarioB());
+					retorno.setSaldo(nuevo.getCreditoB());
 					return retorno;
 				}else{
 					throw new ContrasenaInvalidaException();
@@ -31,5 +32,8 @@ public class BusServer implements ServiciosUsuario {
 			throw new NoSeEncuentraUsuarioException();
 		}
 	}
+
+
+
 
 }
