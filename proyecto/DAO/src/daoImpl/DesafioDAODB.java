@@ -565,7 +565,8 @@ public class DesafioDAODB implements DesafioDAO {
 		return idPartida;
 	}
 
-	public boolean noDesafioEnCursoVirtual(int idUsuario) throws NoEsUsuarioVirtualException{
+
+	public boolean desafioDisponibleTodosLosUsuarios(int idUsuario){
 		logger.debug("Entro a desafioDisponible con parámetro de entrada idUsuario= "+idUsuario);
 		boolean noEnCurso=false;
 		boolean esVirtual=false;
@@ -576,11 +577,12 @@ public class DesafioDAODB implements DesafioDAO {
 			usuario = ud.getUsuario2(idUsuario, c);
 			esVirtual=ud.esUsuarioVirtual(usuario);
 		} catch (NoExisteUsuarioException e1) {
-			throw new NoEsUsuarioVirtualException();
+			logger.debug("No existe usuario");
 		}
 
 		if(esVirtual){
-		ResultSet r;
+			logger.debug("No es usuario virtual");
+			ResultSet r;
 			try {
 				r = c.devolverResutado("SELECT desafios_idDesafio FROM usuarios_has_juegos_desafios, desafios WHERE usuarios_idusuario='"+idUsuario+"' AND desafios_idDesafio=idDesafio AND estadoD='En curso'");
 				if(r.first()){
@@ -596,7 +598,7 @@ public class DesafioDAODB implements DesafioDAO {
 			}
 		}else{
 			logger.debug("No es usuario virtual");
-			throw new NoEsUsuarioVirtualException();
+			noEnCurso=this.desafioDisponible(idUsuario);
 		}
 		return noEnCurso;
 	}
