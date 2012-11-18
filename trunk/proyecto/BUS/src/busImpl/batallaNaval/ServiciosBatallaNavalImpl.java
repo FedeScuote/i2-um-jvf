@@ -36,6 +36,9 @@ public class ServiciosBatallaNavalImpl implements ServiciosBatallaNaval{
 		juego=JuegoBatallaNaval.crearJuegoBN(usuario);
 		juego.agregarBarco(usuario, coordenadaInicialX, coordenadaInicialY, coordenadaFinalX, coordenadaFinalY, tipoBarco);
 		if(juego.inicioPar()&&!esBot(juego.getTableroJugador2().getJugador().getUsuarioB())){
+			log.debug("el jugador: "+juego.getTableroJugador1().getJugador().getUsuarioB());
+			log.debug("agrego su ultimo barco y el jugador: "+juego.getTableroJugador2().getJugador());
+			log.debug("ya agrego todos sus barcos entonces le doy el turno a el");
 			daoBatallaNaval.actualizarTablero(juego.getTableroJugador2().getJugador().getIdUsuarioB(),true, juego.getTableroJugador2().getCantBarcosSubmarino(), juego.getTableroJugador2().getCantBarcosDestructores(), juego.getTableroJugador2().getCantBarcosCruceros(), juego.getTableroJugador2().getCantBarcosAcorazado(), juego.getTableroJugador2().getCantBarcosSubmarinoColocados(), juego.getTableroJugador2().getCantBarcosDestructoresColocados(), juego.getTableroJugador2().getCantBarcosCrucerosColocados(), juego.getTableroJugador2().getCantBarcosAcorazadoColocados());
 		}
 	}
@@ -48,6 +51,7 @@ public class ServiciosBatallaNavalImpl implements ServiciosBatallaNaval{
 
 	//metodo para preguntar el turno de un usuario
 	public boolean esMiTurno(UsuarioVO usuario) throws RemoteException {
+		//a partir de la lista de disparos y quien arranco tengo los turnos de los jugadores
 		BatallaNavalDAO daoBatallaNaval = getBatallaNavalDAO();
 		PartidaDAO daoPartida = getPartidaDAO();
 		int idJugador1=usuario.getIdUsuario();
@@ -141,6 +145,12 @@ public class ServiciosBatallaNavalImpl implements ServiciosBatallaNaval{
 	}
 
 
+	public UsuarioVO contrincante(UsuarioVO usuario) throws RemoteException{
+		PartidaDAO daoPartida = getPartidaDAO();
+		Usuario oponente=daoPartida.oponente(usuario.getIdUsuario());
+		UsuarioVO nuevo= new UsuarioVO(oponente.getUsuarioB());
+		return nuevo;
+	}
 	//metodo que devuelve la distribucion de barcos para mostrarle al usuario
 	//la cantidad de barcos a agregar
 	public int[] distribucion(UsuarioVO usuario) throws RemoteException {
@@ -209,7 +219,7 @@ public class ServiciosBatallaNavalImpl implements ServiciosBatallaNaval{
 
 	private static BatallaNavalDAO getBatallaNavalDAO() {
 		try {
-		return (BatallaNavalDAO) Class.forName("daoImpl.BatallaNavalDAODB").newInstance();
+		return (BatallaNavalDAO) Class.forName(constante.getString("CLASS_FOR_NAME_BN")).newInstance();
 		} catch (InstantiationException e) {
 			e.printStackTrace();
 		} catch (IllegalAccessException e) {
@@ -222,7 +232,7 @@ public class ServiciosBatallaNavalImpl implements ServiciosBatallaNaval{
 
 	private static PartidaDAO getPartidaDAO() {
 		try {
-			return (PartidaDAO) Class.forName("daoImpl.PartidaDAODB").newInstance();
+			return (PartidaDAO) Class.forName(constante.getString("CLASS_FOR_NAME_PARTIDA")).newInstance();
 		} catch (InstantiationException e) {
 			e.printStackTrace();
 		} catch (IllegalAccessException e) {
@@ -235,7 +245,7 @@ public class ServiciosBatallaNavalImpl implements ServiciosBatallaNaval{
 
 	private static UsuarioDAO getUsuarioDAO() {
 		try {
-			return (UsuarioDAO) Class.forName("daoImpl.UsuarioDAODB").newInstance();
+			return (UsuarioDAO) Class.forName(constante.getString("CLASS_FOR_NAME_USUARIO")).newInstance();
 		} catch (InstantiationException e) {
 			e.printStackTrace();
 		} catch (IllegalAccessException e) {
@@ -249,7 +259,7 @@ public class ServiciosBatallaNavalImpl implements ServiciosBatallaNaval{
 
 	private static DesafioDAO getDesafioDAO() {
 		try {
-			return (DesafioDAO) Class.forName("daoImpl.DesafioDAODB").newInstance();
+			return (DesafioDAO) Class.forName(constante.getString("CLASS_FOR_NAME_DESAFIO")).newInstance();
 		} catch (InstantiationException e) {
 			e.printStackTrace();
 		} catch (IllegalAccessException e) {
