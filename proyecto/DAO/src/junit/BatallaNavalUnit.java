@@ -38,12 +38,12 @@ public class BatallaNavalUnit extends TestCase {
 		Celda celda=new Celda();
 		celda.setEstado("TOCADO");
 		celda.setId(33);
-		b.modificarCeldaTablero(3, celda, 2, 2);
-		System.out.println((b.getTablero(15).getTabla())[2][2].getEstado());
+		b.modificarCeldaTablero(3, celda, 0, 0);
+		System.out.println((b.getTablero(3).getTabla())[0][0].getEstado());
 
-		assertEquals("Debería dar TOCADO","TOCADO",(b.getTablero(15).getTabla())[2][2].getEstado());
+		assertEquals("Debería dar TOCADO","TOCADO",(b.getTablero(3).getTabla())[0][0].getEstado());
 
-	
+
 	}
 
 	public void testGetTablero(){
