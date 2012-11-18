@@ -26,7 +26,7 @@ public class DesafioUnit extends TestCase {
 		assertEquals("Debería haber desafio disponible",true,dd.desafioDisponible(11));
 	}
 
-	public void testNoDesafioEnCursoVirtual(){
+	public void testDesafioDisponibleTodosLosUsuarios(){
 		int idUsuario=3;
 		assertEquals("Debería haber desafio disponible",false,dd.desafioDisponibleTodosLosUsuarios(idUsuario));
 
