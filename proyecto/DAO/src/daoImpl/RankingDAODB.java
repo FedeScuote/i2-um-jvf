@@ -179,7 +179,7 @@ public class RankingDAODB implements RankingDAO {
 
 		try {
 
-			ResultSet resultado = c.devolverResutado("SELECT usuarios_idusuario, sum(ganadas) FROM `ranking` WHERE juegos_idJuego='1' OR juegos_idJuego='2' OR juegos_idJuego='3' GROUP BY usuarios_idusuario ORDER BY ganadas DESC");
+			ResultSet resultado = c.devolverResutado("SELECT usuarios_idusuario, sum(ganadas) FROM `ranking` WHERE (juegos_idJuego='1' OR juegos_idJuego='2' OR juegos_idJuego='3') GROUP BY usuarios_idusuario ORDER BY sum(ganadas) DESC");
 			while (resultado.next()) {
 
 					UsuarioDAODB u=new UsuarioDAODB();
@@ -189,6 +189,8 @@ public class RankingDAODB implements RankingDAO {
 
 					r.setUsuario(usuario);
 					r.setGanadas(resultado.getInt("sum(ganadas)"));
+					logger.debug("Usuario= "+r.getUsuario());
+					logger.debug("Ganadas= "+r.getGanadas());
 					a.add(r);
 
 			}
