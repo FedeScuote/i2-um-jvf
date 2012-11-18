@@ -37,6 +37,8 @@ public class CambiarPassword extends JFrame {
 
 	private JButton jButtonCancelar = null;
 
+
+
 	/**
 	 * This is the default constructor
 	 */
@@ -47,7 +49,7 @@ public class CambiarPassword extends JFrame {
 
 	/**
 	 * This method initializes this
-	 * 
+	 *
 	 * @return void
 	 */
 	private void initialize() {
@@ -58,7 +60,7 @@ public class CambiarPassword extends JFrame {
 
 	/**
 	 * This method initializes jContentPane
-	 * 
+	 *
 	 * @return javax.swing.JPanel
 	 */
 	private JPanel getJContentPane() {
@@ -71,9 +73,9 @@ public class CambiarPassword extends JFrame {
 	}
 
 	/**
-	 * This method initializes jPanelCambiarPassword	
-	 * 	
-	 * @return javax.swing.JPanel	
+	 * This method initializes jPanelCambiarPassword
+	 *
+	 * @return javax.swing.JPanel
 	 */
 	private JPanel getJPanelCambiarPassword() {
 		if (jPanelCambiarPassword == null) {
@@ -140,9 +142,9 @@ public class CambiarPassword extends JFrame {
 	}
 
 	/**
-	 * This method initializes jTextFieldNick	
-	 * 	
-	 * @return javax.swing.JTextField	
+	 * This method initializes jTextFieldNick
+	 *
+	 * @return javax.swing.JTextField
 	 */
 	private JTextField getJTextFieldNick() {
 		if (jTextFieldNick == null) {
@@ -152,9 +154,9 @@ public class CambiarPassword extends JFrame {
 	}
 
 	/**
-	 * This method initializes jTextFieldPasswordViejo	
-	 * 	
-	 * @return javax.swing.JTextField	
+	 * This method initializes jTextFieldPasswordViejo
+	 *
+	 * @return javax.swing.JTextField
 	 */
 	private JTextField getJTextFieldPasswordViejo() {
 		if (jTextFieldPasswordViejo == null) {
@@ -164,9 +166,9 @@ public class CambiarPassword extends JFrame {
 	}
 
 	/**
-	 * This method initializes jTextFieldNuevoPassword	
-	 * 	
-	 * @return javax.swing.JTextField	
+	 * This method initializes jTextFieldNuevoPassword
+	 *
+	 * @return javax.swing.JTextField
 	 */
 	private JTextField getJTextFieldNuevoPassword() {
 		if (jTextFieldNuevoPassword == null) {
@@ -176,9 +178,9 @@ public class CambiarPassword extends JFrame {
 	}
 
 	/**
-	 * This method initializes jTextFieldConfirmar	
-	 * 	
-	 * @return javax.swing.JTextField	
+	 * This method initializes jTextFieldConfirmar
+	 *
+	 * @return javax.swing.JTextField
 	 */
 	private JTextField getJTextFieldConfirmar() {
 		if (jTextFieldConfirmar == null) {
@@ -188,9 +190,9 @@ public class CambiarPassword extends JFrame {
 	}
 
 	/**
-	 * This method initializes jButtonOK	
-	 * 	
-	 * @return javax.swing.JButton	
+	 * This method initializes jButtonOK
+	 *
+	 * @return javax.swing.JButton
 	 */
 	private JButton getJButtonOK() {
 		if (jButtonOK == null) {
@@ -200,9 +202,9 @@ public class CambiarPassword extends JFrame {
 	}
 
 	/**
-	 * This method initializes jButtonCancelar	
-	 * 	
-	 * @return javax.swing.JButton	
+	 * This method initializes jButtonCancelar
+	 *
+	 * @return javax.swing.JButton
 	 */
 	private JButton getJButtonCancelar() {
 		if (jButtonCancelar == null) {
