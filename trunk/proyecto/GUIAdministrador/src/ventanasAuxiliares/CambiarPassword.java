@@ -1,13 +1,21 @@
 package ventanasAuxiliares;
 
 import java.awt.BorderLayout;
-import javax.swing.JPanel;
-import javax.swing.JFrame;
-import java.awt.GridBagLayout;
-import javax.swing.JLabel;
 import java.awt.GridBagConstraints;
-import javax.swing.JTextField;
+import java.awt.GridBagLayout;
+import java.util.ResourceBundle;
+
 import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JTextField;
+
+import org.apache.log4j.Logger;
+
+import ventanaPrincipal.VentanaPrincipal;
+
+import comm.UsuarioVO;
 
 public class CambiarPassword extends JFrame {
 
@@ -37,13 +45,24 @@ public class CambiarPassword extends JFrame {
 
 	private JButton jButtonCancelar = null;
 
+	private UsuarioVO usuario = null;
 
+	private static Logger logger = Logger.getLogger(VentanaPrincipal.class);
 
-	/**
+	private static ResourceBundle labels = ResourceBundle.getBundle("Gui");
+
+	private static final String NICK = labels.getString("LABEL_NICK_A");  //  @jve:decl-index=0:
+	private static final String PASSWORD = labels.getString("LABELS_PASSWORD_A");  //  @jve:decl-index=0:
+	private static final String CONFIRMAR = labels.getString("LABELS_CONFIRMAR_A");
+	private static final String PWDNUEVO = labels.getString("LABEL_PWDNUEVO_A");
+	private static final String BOTONCREAR = labels.getString("LABEL_ADMIN_CUENTA_A");
+	private static final String CANCELAR = labels.getString("LABEL_VOLVER_BOTON");
+				/**
 	 * This is the default constructor
 	 */
-	public CambiarPassword() {
+	public CambiarPassword(UsuarioVO usu) {
 		super();
+		usuario = usu;
 		initialize();
 	}
 
@@ -81,50 +100,58 @@ public class CambiarPassword extends JFrame {
 		if (jPanelCambiarPassword == null) {
 			GridBagConstraints gridBagConstraints9 = new GridBagConstraints();
 			gridBagConstraints9.gridx = 0;
+			gridBagConstraints9.ipadx = 50;
+			gridBagConstraints9.ipady = 20;
 			gridBagConstraints9.gridy = 9;
 			GridBagConstraints gridBagConstraints8 = new GridBagConstraints();
 			gridBagConstraints8.gridx = 0;
+			gridBagConstraints8.ipadx = 50;
+			gridBagConstraints8.ipady = 20;
 			gridBagConstraints8.gridy = 8;
 			GridBagConstraints gridBagConstraints7 = new GridBagConstraints();
 			gridBagConstraints7.fill = GridBagConstraints.VERTICAL;
 			gridBagConstraints7.gridy = 7;
 			gridBagConstraints7.weightx = 1.0;
+			gridBagConstraints7.ipadx = 100;
 			gridBagConstraints7.gridx = 0;
 			GridBagConstraints gridBagConstraints6 = new GridBagConstraints();
 			gridBagConstraints6.gridx = 0;
 			gridBagConstraints6.gridy = 6;
 			jLabelConfirmar = new JLabel();
-			jLabelConfirmar.setText("JLabel");
+			jLabelConfirmar.setText(CONFIRMAR);
 			GridBagConstraints gridBagConstraints5 = new GridBagConstraints();
 			gridBagConstraints5.fill = GridBagConstraints.VERTICAL;
 			gridBagConstraints5.gridy = 5;
 			gridBagConstraints5.weightx = 1.0;
+			gridBagConstraints5.ipadx = 100;
 			gridBagConstraints5.gridx = 0;
 			GridBagConstraints gridBagConstraints4 = new GridBagConstraints();
 			gridBagConstraints4.gridx = 0;
 			gridBagConstraints4.gridy = 4;
 			jLabelNuevoPassword = new JLabel();
-			jLabelNuevoPassword.setText("JLabel");
+			jLabelNuevoPassword.setText(PWDNUEVO);
 			GridBagConstraints gridBagConstraints3 = new GridBagConstraints();
 			gridBagConstraints3.fill = GridBagConstraints.VERTICAL;
 			gridBagConstraints3.gridy = 3;
 			gridBagConstraints3.weightx = 1.0;
+			gridBagConstraints3.ipadx = 100;
 			gridBagConstraints3.gridx = 0;
 			GridBagConstraints gridBagConstraints2 = new GridBagConstraints();
 			gridBagConstraints2.gridx = 0;
 			gridBagConstraints2.gridy = 2;
 			jLabelPasswordViejo = new JLabel();
-			jLabelPasswordViejo.setText("JLabel");
+			jLabelPasswordViejo.setText(PASSWORD);
 			GridBagConstraints gridBagConstraints1 = new GridBagConstraints();
 			gridBagConstraints1.fill = GridBagConstraints.VERTICAL;
 			gridBagConstraints1.gridy = 1;
 			gridBagConstraints1.weightx = 1.0;
+			gridBagConstraints1.ipadx = 100;
 			gridBagConstraints1.gridx = 0;
 			GridBagConstraints gridBagConstraints = new GridBagConstraints();
 			gridBagConstraints.gridx = 0;
 			gridBagConstraints.gridy = 0;
 			jLabelNick = new JLabel();
-			jLabelNick.setText("JLabel");
+			jLabelNick.setText(NICK);
 			jPanelCambiarPassword = new JPanel();
 			jPanelCambiarPassword.setLayout(new GridBagLayout());
 			jPanelCambiarPassword.add(jLabelNick, gridBagConstraints);
@@ -197,6 +224,7 @@ public class CambiarPassword extends JFrame {
 	private JButton getJButtonOK() {
 		if (jButtonOK == null) {
 			jButtonOK = new JButton();
+			jButtonOK.setText(BOTONCREAR);
 		}
 		return jButtonOK;
 	}
@@ -209,6 +237,7 @@ public class CambiarPassword extends JFrame {
 	private JButton getJButtonCancelar() {
 		if (jButtonCancelar == null) {
 			jButtonCancelar = new JButton();
+			jButtonCancelar.setText(CANCELAR);
 		}
 		return jButtonCancelar;
 	}

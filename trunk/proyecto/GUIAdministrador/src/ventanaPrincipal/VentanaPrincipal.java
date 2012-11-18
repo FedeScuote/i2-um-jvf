@@ -14,6 +14,8 @@ import login.Login;
 
 import org.apache.log4j.Logger;
 
+import ventanasAuxiliares.CambiosSaldo;
+
 import comm.UsuarioVO;
 
 public class VentanaPrincipal extends JFrame {
@@ -27,8 +29,6 @@ public class VentanaPrincipal extends JFrame {
 	private JButton BotonCrearCuenta = null;
 
 	private JButton BotonAdministrarCuenta = null;
-
-	private JButton BotonCobrar = null;
 
 	private JButton botonAumentarSaldo = null;
 
@@ -104,11 +104,6 @@ public class VentanaPrincipal extends JFrame {
 			gridBagConstraints21.fill = GridBagConstraints.HORIZONTAL;
 			gridBagConstraints21.insets = new Insets(30, 0, 0, 0);
 			gridBagConstraints21.gridy = 3;
-			GridBagConstraints gridBagConstraints2 = new GridBagConstraints();
-			gridBagConstraints2.gridx = 0;
-			gridBagConstraints2.fill = GridBagConstraints.BOTH;
-			gridBagConstraints2.insets = new Insets(30, 0, 0, 0);
-			gridBagConstraints2.gridy = 2;
 			GridBagConstraints gridBagConstraints1 = new GridBagConstraints();
 			gridBagConstraints1.gridx = 0;
 			gridBagConstraints1.fill = GridBagConstraints.BOTH;
@@ -123,7 +118,6 @@ public class VentanaPrincipal extends JFrame {
 			PanelVentanaPrincipal.setLayout(new GridBagLayout());
 			PanelVentanaPrincipal.add(getBotonCrearCuenta(), gridBagConstraints);
 			PanelVentanaPrincipal.add(getBotonAdministrarCuenta(), gridBagConstraints1);
-			PanelVentanaPrincipal.add(getBotonCobrar(), gridBagConstraints2);
 			PanelVentanaPrincipal.add(getBotonAumentarSaldo(), gridBagConstraints21);
 			PanelVentanaPrincipal.add(getBotonEstadisticas(), gridBagConstraints3);
 			PanelVentanaPrincipal.add(getJButtonDesconectar(), gridBagConstraints11);
@@ -169,19 +163,6 @@ public class VentanaPrincipal extends JFrame {
 	}
 
 	/**
-	 * This method initializes BotonCobrar
-	 *
-	 * @return javax.swing.JButton
-	 */
-	private JButton getBotonCobrar() {
-		if (BotonCobrar == null) {
-			BotonCobrar = new JButton();
-			BotonCobrar.setText(LABEL_COBRAR);
-		}
-		return BotonCobrar;
-	}
-
-	/**
 	 * This method initializes botonAumentarSaldo
 	 *
 	 * @return javax.swing.JButton
@@ -190,6 +171,13 @@ public class VentanaPrincipal extends JFrame {
 		if (botonAumentarSaldo == null) {
 			botonAumentarSaldo = new JButton();
 			botonAumentarSaldo.setText(LABEL_ANIADIR_SALDO);
+			botonAumentarSaldo.addActionListener(new java.awt.event.ActionListener() {
+				public void actionPerformed(java.awt.event.ActionEvent e) {
+					dispose();
+					CambiosSaldo l = new CambiosSaldo(usuario);
+					l.setVisible(true);
+				}
+			});
 		}
 		return botonAumentarSaldo;
 	}
