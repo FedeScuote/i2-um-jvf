@@ -26,4 +26,8 @@ public interface DesafioDAO {
 
 	public ArrayList getDesafiosBatallaNaval() throws NoHayDesafioException;
 
+
+	//
+	public boolean desafioDisponible(int idUsuario);
+
 }
