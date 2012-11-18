@@ -14,6 +14,16 @@ public class UsuarioVO implements Serializable {
 
 	private int nivelPrivilegio;
 
+	private int saldo;
+
+	public int getSaldo() {
+		return saldo;
+	}
+
+	public void setSaldo(int saldo) {
+		this.saldo = saldo;
+	}
+
 	public int getNivelPrivilegio() {
 		return nivelPrivilegio;
 	}
