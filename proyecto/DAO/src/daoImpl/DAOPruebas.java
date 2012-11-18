@@ -1,17 +1,7 @@
 package daoImpl;
 
 
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.ArrayList;
-
 import org.apache.log4j.Logger;
-
-import conexion.Conexion;
-
-import excepcionesD.NoExisteUsuarioException;
-
-import busImpl.Usuario;
 
 public class DAOPruebas {
 	private static Logger logger = Logger.getLogger(DAOPruebas.class);
@@ -22,16 +12,38 @@ public class DAOPruebas {
 
 
 	public static void main(String[] args) {
-		//UsuarioDAODB ud=new UsuarioDAODB();
-		PartidaDAODB p=new PartidaDAODB();
-		Conexion c=new Conexion();
-		BatallaNavalDAODB b=new BatallaNavalDAODB();
-		Usuario u=new Usuario();
+		int credito=19;
 
-		b.modificarCeldaTablero(3, null, 2, 2);
+		int credito05=(int)Math.floor(Math.rint(credito*0.05));
+		int credito95=credito-credito05;
+		System.out.println(credito95);
+		System.out.println(credito05);
+//		RankingDAODB r=new RankingDAODB();
+//		try {
+//			System.out.println("Ranking ganadas jhirata= "+((Ranking)r.getRankingGeneral().get(1)).getUsuario());
+//		} catch (NoHayRankingException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
+
+//		UsuarioDAODB ud=new UsuarioDAODB();
+//		try {
+//			ud.agregarUsuario("dperez2", "dp", 2, 1, 2000, 1, "Diego", "Perez", "Uruguay");
+//		} catch (YaExisteUsuarioException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
+
+
+//		PartidaDAODB p=new PartidaDAODB();
+//		Conexion c=new Conexion();
+//		BatallaNavalDAODB b=new BatallaNavalDAODB();
+//		Usuario u=new Usuario();
+//
+//		b.modificarCeldaTablero(3, null, 2, 2);
 		//System.out.println(p.idPartida2(u.getIdUsuarioB(), c));
 
-		c.disconnect();
+
 
 
 		//BatallaNavalDAODB td=new BatallaNavalDAODB();

@@ -2,11 +2,11 @@ package junit;
 
 import java.util.ArrayList;
 
-import busImpl.Usuario;
-import daoImpl.UsuarioDAODB;
-import excepcionesB.YaExisteUsuarioException;
-import excepcionesB.NoExisteUsuarioException;
 import junit.framework.TestCase;
+import busImpl.usuario.Usuario;
+import daoImpl.UsuarioDAODB;
+import excepcionesB.NoExisteUsuarioException;
+import excepcionesB.YaExisteUsuarioException;
 
 public class UsuarioUnit extends TestCase {
 	private UsuarioDAODB ud;

@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Servidor: localhost
--- Tiempo de generación: 18-11-2012 a las 18:18:20
+-- Tiempo de generación: 18-11-2012 a las 18:29:14
 -- Versión del servidor: 5.5.16
 -- Versión de PHP: 5.3.8
 
@@ -212,19 +212,19 @@ CREATE TABLE IF NOT EXISTS `usuarios` (
 INSERT INTO `usuarios` (`idusuario`, `usuario`, `clave`, `nivelPrivilegio`, `virtual`, `credito`, `partidasGanadas`, `nombre`, `apellido`, `pais`) VALUES
 (1, 'jvf', 'jvf', 3, 0, 10000000, 8, 'Alanis', 'Smith', 'Inglaterra'),
 (2, 'admin', 'admin', 1, 0, 30000, 0, 'Usuario', 'Administrador', 'Inglaterra'),
-(3, 'fscuoteguazza', 'fs', 2, 1, 29850, 4, 'Federico', 'Scuoteguazza', 'Inglaterra'),
-(4, 'pvaztourem', 'pv', 2, 1, 40050, 45, 'Patricia', 'Vaztourem', 'Uruguay'),
-(5, 'ahirata', 'ah', 2, 1, 30000, 69, 'Andrés', 'Hirata', 'Inglaterra'),
+(3, 'fscuoteguazza', 'fs', 2, 0, 29850, 4, 'Federico', 'Scuoteguazza', 'Inglaterra'),
+(4, 'vtuyare', 'vt', 2, 0, 30000, 9, 'Vicente', 'Tuyare', 'Uruguay'),
+(5, 'jhirata', 'jh', 2, 0, 30200, 5, 'John', 'Hirata', 'Inglaterra'),
 (6, 'dgonzalez', 'dg', 2, 1, 9100, 78, 'Diego', 'Gonzalez', 'Inglaterra'),
 (7, 'fkono', 'fk', 2, 1, 30000, 87, 'Fumie', 'Kono', 'Inglaterra'),
 (8, 'thirata', 'th', 2, 1, 5000, 98, 'Tomiyoshi', 'Hirata', 'Inglaterra'),
 (9, 'jdiaz', 'jd', 2, 1, 5000, 78, 'Javier', 'Diaz', 'Uruguay'),
 (10, 'jrodriguez', 'jr', 2, 1, 30000, 33, 'Javier', 'Rodriguez', 'Uruguay'),
 (11, 'lhirata', 'lh', 2, 1, 3000, 0, 'Lisa', 'Hirata', 'Uruguay'),
-(12, 'vtuyare', 'vt', 2, 1, 30000, 9, 'Vicente', 'Tuyare', 'Uruguay'),
 (13, 'dperez', 'md5(dp)', 2, 1, 2000, 1, 'Diego', 'Perez', 'Uruguay'),
 (14, 'dperez1', '95687afb5d9a2a9f', 2, 1, 2000, 3, 'Diego', 'Perez', 'Uruguay'),
-(15, 'jhirata', 'jh', 2, 1, 30200, 5, 'John', 'Hirata', 'Inglaterra');
+(40, 'pvaztourem', 'pv', 2, 1, 40050, 45, 'Patricia', 'Vaztourem', 'Uruguay'),
+(50, 'ahirata', 'ah', 2, 1, 30000, 69, 'Andrés', 'Hirata', 'Inglaterra');
 
 -- --------------------------------------------------------
 

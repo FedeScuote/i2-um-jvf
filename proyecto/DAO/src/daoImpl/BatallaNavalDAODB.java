@@ -6,15 +6,17 @@ import java.util.ArrayList;
 
 import org.apache.log4j.Logger;
 
+import busImpl.batallaNaval.Celda;
+import busImpl.batallaNaval.Disparo;
+import busImpl.batallaNaval.Estados;
+import busImpl.batallaNaval.RegistroDisparo;
+import busImpl.batallaNaval.Tablero;
+import busImpl.usuario.Usuario;
 import conexion.Conexion;
-
-import busImpl.batallaNaval.*;
-import busImpl.Estados;
-import busImpl.Usuario;
 import daoInterfaces.BatallaNavalDAO;
+import excepcionesB.NoExisteUsuarioException;
 import excepcionesB.NotDataFoundException;
 import excepcionesD.NoExisteTableroException;
-import excepcionesB.NoExisteUsuarioException;
 
 public class BatallaNavalDAODB implements BatallaNavalDAO {
 	private static Logger logger = Logger.getLogger(BatallaNavalDAODB.class);

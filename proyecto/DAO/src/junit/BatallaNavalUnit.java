@@ -1,22 +1,14 @@
 package junit;
 
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import junit.framework.TestCase;
 
 import org.apache.log4j.Logger;
 
-import busImpl.batallaNaval.*;
-
-import busImpl.Estados;
-
-import busImpl.Usuario;
-import conexion.Conexion;
+import busImpl.batallaNaval.Celda;
+import busImpl.batallaNaval.Disparo;
+import busImpl.batallaNaval.Estados;
 import daoImpl.BatallaNavalDAODB;
-import daoImpl.UsuarioDAODB;
-import excepcionesB.NotDataFoundException;
 import excepcionesD.NoExisteTableroException;
-import excepcionesD.NoExisteUsuarioException;
-import junit.framework.TestCase;
 
 public class BatallaNavalUnit extends TestCase {
 	private static Logger logger = Logger.getLogger(BatallaNavalUnit.class);
