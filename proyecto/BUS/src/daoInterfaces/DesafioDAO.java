@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 
 import excepcionesB.NoHayDesafioException;
+import excepcionesB.NoHaySuficienteCreditoUsuarioException;
 
 public interface DesafioDAO {
 
@@ -16,7 +17,7 @@ public interface DesafioDAO {
 	//terminado, idem anterior pero solo para Backgammon
 	public ArrayList getDesafiosUsuariosDisponibleBackgammon() throws NoHayDesafioException;
 	//terminado, devuelve idDesafio, si existe desafio retorna cero
-	public int crearDesafio(String usuario,int monto);
+	public int crearDesafio(String usuario,int monto)throws NoHaySuficienteCreditoUsuarioException;
 	//terminado, metodo para saber si luego de creado un desafio alguien lo acepto lo que transformo el desafio en una partida
 	public boolean aceptaronDesafio(int idUsuario);
 
