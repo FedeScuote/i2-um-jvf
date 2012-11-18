@@ -4,13 +4,16 @@ import java.rmi.RemoteException;
 
 import org.apache.log4j.Logger;
 
+import busImpl.Reporte;
 import busImpl.usuario.Usuario;
+import comm.ReporteVO;
 import comm.ServiciosAdministrador;
 import comm.UsuarioVO;
 import commExceptions.ContrasenaInvalidaException;
 import commExceptions.MontoInsuficienteException;
 import commExceptions.NoSeEncuentraUsuarioException;
 import commExceptions.UsuarioDuplicadoException;
+import daoInterfaces.ReporteDAO;
 import daoInterfaces.UsuarioDAO;
 import excepcionesB.NoExisteUsuarioException;
 import excepcionesB.NotDataFoundException;
@@ -154,6 +157,28 @@ public class ServiciosAdministradorImpl implements ServiciosAdministrador{
 			e.printStackTrace();
 		}
 		return null;
+	}
+	private static ReporteDAO getReporteDAO() {
+		try {
+			return (ReporteDAO) Class.forName("daoImpl.ReporteDAODB")
+					.newInstance();
+		} catch (InstantiationException e) {
+			e.printStackTrace();
+		} catch (IllegalAccessException e) {
+			e.printStackTrace();
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+	public ReporteVO getReporte() throws RemoteException {
+		ReporteDAO daoReporte = getReporteDAO();
+		Reporte repor=daoReporte.getReporte();
+		ReporteVO nuevo = new ReporteVO();
+		nuevo.setMontoTotalComisionesJVF(repor.getMontoTotalComisionesJVF());
+		nuevo.setMontoTotalNoVirtuales(repor.getMontoTotalNoVirtuales());
+		nuevo.setMontoTotalVirtuales(repor.getMontoTotalVirtuales());
+		return nuevo;
 	}
 
 }
