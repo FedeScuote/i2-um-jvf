@@ -81,6 +81,8 @@ public class VentanaPrincipal extends JFrame {
 		initialize();
 		this.setExtendedState(this.getExtendedState()|JFrame.MAXIMIZED_BOTH);//mi frame arranca maximizada
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		this.jugarLudo.setEnabled(false);
+		this.jugarBackgammon.setEnabled(false);
 
 	}
 
