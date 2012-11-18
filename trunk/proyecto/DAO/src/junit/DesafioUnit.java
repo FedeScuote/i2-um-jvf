@@ -13,12 +13,16 @@ public class DesafioUnit extends TestCase {
 
 	public void testCrearDesafio(){
 		try {
-			dd.crearDesafio("jhirata", 200);
+			dd.crearDesafio("lhirata", 200);
 		} catch (NoHaySuficienteCreditoUsuarioException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
+	}
+	public void testDesafioDisponible(){
+
+		assertEquals("Debería haber desafio disponible",true,dd.desafioDisponible(11));
 	}
 
 
