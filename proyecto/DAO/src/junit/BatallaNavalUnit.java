@@ -7,8 +7,8 @@ import org.apache.log4j.Logger;
 import busImpl.batallaNaval.Celda;
 import busImpl.batallaNaval.Disparo;
 import busImpl.batallaNaval.Estados;
+import daoExcepciones.NoExisteTableroException;
 import daoImpl.BatallaNavalDAODB;
-import excepcionesD.NoExisteTableroException;
 
 public class BatallaNavalUnit extends TestCase {
 	private static Logger logger = Logger.getLogger(BatallaNavalUnit.class);

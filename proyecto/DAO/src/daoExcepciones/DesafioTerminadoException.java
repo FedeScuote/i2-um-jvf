@@ -1,4 +1,4 @@
-package excepcionesD;
+package daoExcepciones;
 
 public class DesafioTerminadoException extends Exception {
 

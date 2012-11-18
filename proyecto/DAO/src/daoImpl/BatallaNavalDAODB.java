@@ -13,10 +13,10 @@ import busImpl.batallaNaval.RegistroDisparo;
 import busImpl.batallaNaval.Tablero;
 import busImpl.usuario.Usuario;
 import conexion.Conexion;
+import daoExcepciones.NoExisteTableroException;
 import daoInterfaces.BatallaNavalDAO;
 import excepcionesB.NoExisteUsuarioException;
 import excepcionesB.NotDataFoundException;
-import excepcionesD.NoExisteTableroException;
 
 public class BatallaNavalDAODB implements BatallaNavalDAO {
 	private static Logger logger = Logger.getLogger(BatallaNavalDAODB.class);

@@ -10,12 +10,12 @@ import org.apache.log4j.Logger;
 import busImpl.Desafio;
 import busImpl.usuario.Usuario;
 import conexion.Conexion;
+import daoExcepciones.NoExisteDesafioException;
 import daoInterfaces.DesafioDAO;
 import excepcionesB.NoExisteUsuarioException;
 import excepcionesB.NoHayDesafioException;
 import excepcionesB.NoHaySuficienteCreditoUsuarioException;
 import excepcionesB.NotDataFoundException;
-import excepcionesD.NoExisteDesafioException;
 
 public class DesafioDAODB implements DesafioDAO {
     private static Logger logger = Logger.getLogger(DesafioDAODB.class);
