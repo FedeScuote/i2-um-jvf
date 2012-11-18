@@ -31,7 +31,7 @@ public class BatallaNavalUnit extends TestCase {
 
 		BatallaNavalDAODB b=new BatallaNavalDAODB();
 		b.registrarDisparo(disparo, estado, idUsuario);
-		//b.cargarDatos
+
 
 	}
 	public void testModificarCeldaTablero(){
