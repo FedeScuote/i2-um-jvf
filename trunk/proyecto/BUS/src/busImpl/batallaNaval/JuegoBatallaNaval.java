@@ -500,7 +500,7 @@ public class JuegoBatallaNaval{
 
 	private static BatallaNavalDAO getBattallaNavalDAO() {
 		try {
-			return (BatallaNavalDAO) Class.forName("daoImpl.BatallaNavalDAODB").newInstance();
+			return (BatallaNavalDAO) Class.forName(constante.getString("CLASS_FOR_NAME_BN")).newInstance();
 		} catch (InstantiationException e) {
 			e.printStackTrace();
 		} catch (IllegalAccessException e) {
@@ -512,7 +512,7 @@ public class JuegoBatallaNaval{
 	}
 	private static UsuarioDAO getUsuarioDAO() {
 		try {
-			return (UsuarioDAO) Class.forName("daoImpl.UsuarioDAODB").newInstance();
+			return (UsuarioDAO) Class.forName(constante.getString("CLASS_FOR_NAME_USUARIO")).newInstance();
 		} catch (InstantiationException e) {
 			e.printStackTrace();
 		} catch (IllegalAccessException e) {
@@ -524,7 +524,7 @@ public class JuegoBatallaNaval{
 	}
 	private static PartidaDAO getPartidaDAO() {
 		try {
-			return (PartidaDAO) Class.forName("daoImpl.PartidaDAODB").newInstance();
+			return (PartidaDAO) Class.forName(constante.getString("CLASS_FOR_NAME_PARTIDA")).newInstance();
 		} catch (InstantiationException e) {
 			e.printStackTrace();
 		} catch (IllegalAccessException e) {
@@ -569,12 +569,7 @@ public class JuegoBatallaNaval{
 	}
 
 
-	public static void main(String[] args) {
-		UsuarioVO nuevo= new UsuarioVO("fscouteguazza");
-		nuevo.setIdUsuario(3);
-		JuegoBatallaNaval juego = crearJuegoBN(nuevo);
 
-	}
 
 
 }
