@@ -184,7 +184,7 @@ public class Desafio implements ServiciosDesafio {
 	}
 	public boolean desafioDisponible(DesafioVO desafio) throws RemoteException {
 		DesafioDAO dao = getDesafioDAO();
-		return dao.desafioDisponible(desafio.getUsuario().getIdUsuario());
+		return dao.desafioDisponibleTodosLosUsuarios(desafio.getUsuario().getIdUsuario());
 	}
 
 
