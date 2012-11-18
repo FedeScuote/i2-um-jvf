@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Servidor: localhost
--- Tiempo de generación: 18-11-2012 a las 18:29:14
+-- Tiempo de generación: 18-11-2012 a las 20:05:57
 -- Versión del servidor: 5.5.16
 -- Versión de PHP: 5.3.8
 
@@ -194,7 +194,7 @@ CREATE TABLE IF NOT EXISTS `t_batalla_naval` (
 CREATE TABLE IF NOT EXISTS `usuarios` (
   `idusuario` int(11) NOT NULL AUTO_INCREMENT,
   `usuario` varchar(16) DEFAULT NULL,
-  `clave` varchar(16) DEFAULT NULL,
+  `clave` varchar(50) DEFAULT NULL,
   `nivelPrivilegio` int(11) DEFAULT NULL,
   `virtual` int(11) DEFAULT NULL,
   `credito` int(11) DEFAULT NULL,
@@ -203,28 +203,30 @@ CREATE TABLE IF NOT EXISTS `usuarios` (
   `apellido` varchar(16) DEFAULT NULL,
   `pais` varchar(16) DEFAULT NULL,
   PRIMARY KEY (`idusuario`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=16 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=53 ;
 
 --
 -- Volcado de datos para la tabla `usuarios`
 --
 
 INSERT INTO `usuarios` (`idusuario`, `usuario`, `clave`, `nivelPrivilegio`, `virtual`, `credito`, `partidasGanadas`, `nombre`, `apellido`, `pais`) VALUES
-(1, 'jvf', 'jvf', 3, 0, 10000000, 8, 'Alanis', 'Smith', 'Inglaterra'),
-(2, 'admin', 'admin', 1, 0, 30000, 0, 'Usuario', 'Administrador', 'Inglaterra'),
-(3, 'fscuoteguazza', 'fs', 2, 0, 29850, 4, 'Federico', 'Scuoteguazza', 'Inglaterra'),
-(4, 'vtuyare', 'vt', 2, 0, 30000, 9, 'Vicente', 'Tuyare', 'Uruguay'),
-(5, 'jhirata', 'jh', 2, 0, 30200, 5, 'John', 'Hirata', 'Inglaterra'),
-(6, 'dgonzalez', 'dg', 2, 1, 9100, 78, 'Diego', 'Gonzalez', 'Inglaterra'),
-(7, 'fkono', 'fk', 2, 1, 30000, 87, 'Fumie', 'Kono', 'Inglaterra'),
-(8, 'thirata', 'th', 2, 1, 5000, 98, 'Tomiyoshi', 'Hirata', 'Inglaterra'),
-(9, 'jdiaz', 'jd', 2, 1, 5000, 78, 'Javier', 'Diaz', 'Uruguay'),
-(10, 'jrodriguez', 'jr', 2, 1, 30000, 33, 'Javier', 'Rodriguez', 'Uruguay'),
-(11, 'lhirata', 'lh', 2, 1, 3000, 0, 'Lisa', 'Hirata', 'Uruguay'),
-(13, 'dperez', 'md5(dp)', 2, 1, 2000, 1, 'Diego', 'Perez', 'Uruguay'),
-(14, 'dperez1', '95687afb5d9a2a9f', 2, 1, 2000, 3, 'Diego', 'Perez', 'Uruguay'),
-(40, 'pvaztourem', 'pv', 2, 1, 40050, 45, 'Patricia', 'Vaztourem', 'Uruguay'),
-(50, 'ahirata', 'ah', 2, 1, 30000, 69, 'Andrés', 'Hirata', 'Inglaterra');
+(1, 'jvf', 'jvf', 3, 0, 10000000, 0, 'Alanis', 'Smith', 'Inglaterra'),
+(2, 'admin', 'admin', 2, 0, 30000, 0, 'Usuario', 'Administrador', 'Inglaterra'),
+(3, 'fscuoteguazza', 'fs', 1, 0, 29850, 4, 'Federico', 'Scuoteguazza', 'Inglaterra'),
+(4, 'vtuyare', 'vt', 1, 0, 30000, 9, 'Vicente', 'Tuyare', 'Uruguay'),
+(5, 'jhirata', 'jh', 1, 0, 30200, 5, 'John', 'Hirata', 'Inglaterra'),
+(6, 'dgonzalez', 'dg', 1, 1, 9100, 78, 'Diego', 'Gonzalez', 'Inglaterra'),
+(7, 'fkono', 'fk', 1, 1, 30000, 87, 'Fumie', 'Kono', 'Inglaterra'),
+(8, 'thirata', 'th', 1, 1, 5000, 98, 'Tomiyoshi', 'Hirata', 'Inglaterra'),
+(9, 'jdiaz', 'jd', 1, 1, 5000, 78, 'Javier', 'Diaz', 'Uruguay'),
+(10, 'jrodriguez', 'jr', 1, 1, 30000, 33, 'Javier', 'Rodriguez', 'Uruguay'),
+(11, 'lhirata', 'lh', 1, 1, 3000, 0, 'Lisa', 'Hirata', 'Uruguay'),
+(12, 'jmartinez', 'jm', 1, 1, 2000, 1, 'Jose', 'Martinez', 'Uruguay'),
+(14, 'gpereira', 'gp', 1, 1, 2000, 3, 'Gabriel', 'Pereira', 'Uruguay'),
+(15, 'pvaztourem', 'pv', 1, 1, 40050, 4, 'Patricia', 'Vaztourem', 'Uruguay'),
+(16, 'ahirata', 'ah', 1, 1, 30000, 2, 'Andrés', 'Hirata', 'Inglaterra'),
+(17, 'dperez', 'dp', 1, 1, 2000, 1, 'Diego', 'Perez', 'Uruguay'),
+(18, 'jgomez', 'dg', 1, 1, 2000, 1, 'Javier', 'Gomez', 'Uruguay');
 
 -- --------------------------------------------------------
 
