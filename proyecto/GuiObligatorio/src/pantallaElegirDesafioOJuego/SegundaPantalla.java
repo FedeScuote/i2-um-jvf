@@ -51,15 +51,15 @@ public class SegundaPantalla extends JFrame {
 
 	protected JButton crearDesafioBoton = null;
 
-	private JButton BotonRetorno = null;
+	private JButton botonRetorno = null;
 
 	private JScrollPane desafiosDisponiblesPane = null;
 
 	protected JTable desafiosDisponiblesTabla = null;
 
-	private JScrollPane TorneosDisponiblesPane = null;
+	private JScrollPane torneosDisponiblesPane = null;
 
-	protected JTable TorneosDisponiblesTabla = null;
+	protected JTable torneosDisponiblesTabla = null;
 
 	protected UsuarioVO usuario=null;
 
@@ -200,12 +200,12 @@ public class SegundaPantalla extends JFrame {
 	 * @return javax.swing.JButton
 	 */
 	private JButton getBotonRetorno() {
-		if (BotonRetorno == null) {
-			BotonRetorno = new JButton();
-			BotonRetorno.setText(LABEL_RETORNO_BOTON);
-			BotonRetorno.addActionListener(new ListenerBoton());
+		if (botonRetorno == null) {
+			botonRetorno = new JButton();
+			botonRetorno.setText(LABEL_RETORNO_BOTON);
+			botonRetorno.addActionListener(new ListenerBoton());
 		}
-		return BotonRetorno;
+		return botonRetorno;
 	}
 
 	/**
@@ -241,12 +241,12 @@ public class SegundaPantalla extends JFrame {
 	 * @return javax.swing.JScrollPane
 	 */
 	private JScrollPane getTorneosDisponiblesPane() {
-		if (TorneosDisponiblesPane == null) {
-			TorneosDisponiblesPane = new JScrollPane();
-			TorneosDisponiblesPane.setViewportView(getTorneosDisponiblesTabla());
-			TorneosDisponiblesPane.setSize(TorneosDisponiblesTabla.getWidth(),TorneosDisponiblesTabla.getHeight());
+		if (torneosDisponiblesPane == null) {
+			torneosDisponiblesPane = new JScrollPane();
+			torneosDisponiblesPane.setViewportView(getTorneosDisponiblesTabla());
+			torneosDisponiblesPane.setSize(torneosDisponiblesTabla.getWidth(),torneosDisponiblesTabla.getHeight());
 		}
-		return TorneosDisponiblesPane;
+		return torneosDisponiblesPane;
 	}
 
 	/**
@@ -255,10 +255,10 @@ public class SegundaPantalla extends JFrame {
 	 * @return javax.swing.JTable
 	 */
 	private JTable getTorneosDisponiblesTabla() {
-		if (TorneosDisponiblesTabla == null) {
-			TorneosDisponiblesTabla = new JTable();
+		if (torneosDisponiblesTabla == null) {
+			torneosDisponiblesTabla = new JTable();
 		}
-		return TorneosDisponiblesTabla;
+		return torneosDisponiblesTabla;
 	}
 	private class ListenerBoton implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
