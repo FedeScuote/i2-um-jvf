@@ -8,7 +8,7 @@ import java.util.ResourceBundle;
 
 import busImpl.administracion.ServiciosAdministradorImpl;
 import busImpl.batallaNaval.ServiciosBatallaNavalImpl;
-import busImpl.usuario.BusServer;
+import busImpl.usuario.ServiciosUsuarioImpl;
 
 import comm.ServiciosAdministrador;
 import comm.ServiciosBatallaNaval;
@@ -18,14 +18,14 @@ import comm.ServiciosUsuario;
 
 
 public class BusMain {
-	private static BusServer bs;
+	private static ServiciosUsuarioImpl bs;
 	private static Ranking bsRanking;
 	private static Desafio bsDesafio;
 	private static ServiciosBatallaNavalImpl bsBN;
 	private static ServiciosAdministrador bsAdmin;
 	private static ResourceBundle lookup = ResourceBundle.getBundle("bus");
 	public static void main(String[] args) {
-		bs = new BusServer();
+		bs = new ServiciosUsuarioImpl();
 		bsRanking = new Ranking();
 		bsDesafio = new Desafio();
 		bsBN= new ServiciosBatallaNavalImpl();

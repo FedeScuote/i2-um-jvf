@@ -134,4 +134,6 @@ public class Usuario {
 	public void setPartidasGanadasB(int partidasGanadasB) {
 		this.partidasGanadasB = partidasGanadasB;
 	}
+
+
 }
