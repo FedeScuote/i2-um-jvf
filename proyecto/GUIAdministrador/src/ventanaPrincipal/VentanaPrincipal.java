@@ -14,6 +14,7 @@ import login.Login;
 
 import org.apache.log4j.Logger;
 
+import ventanasAuxiliares.CambiarPassword;
 import ventanasAuxiliares.CambiosSaldo;
 
 import comm.UsuarioVO;
@@ -158,6 +159,13 @@ public class VentanaPrincipal extends JFrame {
 		if (BotonAdministrarCuenta == null) {
 			BotonAdministrarCuenta = new JButton();
 			BotonAdministrarCuenta.setText(LABEL_ADMIN_CUENTA_A);
+			BotonAdministrarCuenta.addActionListener(new java.awt.event.ActionListener() {
+				public void actionPerformed(java.awt.event.ActionEvent e) {
+					dispose();
+					CambiarPassword l = new CambiarPassword(usuario);
+					l.setVisible(true);
+				}
+			});
 		}
 		return BotonAdministrarCuenta;
 	}

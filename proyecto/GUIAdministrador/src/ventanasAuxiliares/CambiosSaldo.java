@@ -21,6 +21,7 @@ import org.apache.log4j.Logger;
 
 import comm.ServiciosAdministrador;
 import comm.UsuarioVO;
+import commExceptions.MontoInsuficienteException;
 import commExceptions.NoSeEncuentraUsuarioException;
 
 import ventanaPrincipal.VentanaPrincipal;
@@ -72,8 +73,17 @@ public class CambiosSaldo extends JFrame {
 
 	private static final String host = labels.getString("host"); // @jve:decl-index=0:
 
-	private static final String REMOTE = labels.getString("ERROR_CONEXION");
+	private static final String REMOTE = labels.getString("ERROR_CONEXION");  //  @jve:decl-index=0:
 
+	private static final String REALIZADO = labels.getString("REALIZADOCONEXITO");  //  @jve:decl-index=0:
+
+	private static final String NOUSUEXC = labels.getString("LABEL_USUARIO_INVALIDO");
+
+	private static final String NUMCORRE = labels.getString("LABEL_INGRESE_MONTO_CORRECTO");
+
+	private static final String INSUFICIENTE = labels.getString("LABEL_MONTO_INSUFICIENTE");
+
+	private static final String ERRORDESCONOCIDO = labels.getString("LABEL_ERROR_DESCONOCIDO");
 	private UsuarioVO usuario=null;
 	/**
 	 * This is the default constructor
@@ -246,19 +256,18 @@ public class CambiosSaldo extends JFrame {
 					.lookup("AdministrationServices");
 			int monto = Integer.parseInt(jTextFieldMonto.getText());
 			stub1.acreditarSaldo(jTextFieldNick.getText(), monto);
+			JOptionPane.showMessageDialog(new JFrame(), REALIZADO);
 		} catch (RemoteException e) {
 			JOptionPane.showMessageDialog(new JFrame(), REMOTE);
-			e.printStackTrace();
 		} catch (NotBoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (NoSeEncuentraUsuarioException e) {
-			JOptionPane.showMessageDialog(new JFrame(), "NO SE ENCUENTRA USUARIO EXCEPTION");
-			e.printStackTrace();
+			JOptionPane.showMessageDialog(new JFrame(), NOUSUEXC);
 		} catch (NumberFormatException e) {
-
+			JOptionPane.showMessageDialog(new JFrame(), NUMCORRE);
 		}catch (Exception e){
-
+			JOptionPane.showMessageDialog(new JFrame(), ERRORDESCONOCIDO);
 		}
 	}
 
@@ -287,19 +296,18 @@ public class CambiosSaldo extends JFrame {
 			int monto = Integer.parseInt(jTextFieldMonto.getText());
 			String password = deCharArrayAString(jPasswordField.getPassword());
 			stub1.cobrarSaldo(jTextFieldNick.getText(),password, monto);
+			JOptionPane.showMessageDialog(new JFrame(), REALIZADO);
 		} catch (RemoteException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (NotBoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (NoSeEncuentraUsuarioException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			JOptionPane.showMessageDialog(new JFrame(), REMOTE);
+		}
+		 catch (NoSeEncuentraUsuarioException e) {
+			JOptionPane.showMessageDialog(new JFrame(), NOUSUEXC);
 		} catch (NumberFormatException e) {
-
-		}catch (Exception e){
-
+			JOptionPane.showMessageDialog(new JFrame(), NUMCORRE);
+		}catch (MontoInsuficienteException e){
+			JOptionPane.showMessageDialog(new JFrame(), INSUFICIENTE);
+		}catch(Exception e ){
+			JOptionPane.showMessageDialog(new JFrame(), ERRORDESCONOCIDO);
 		}
 	}
 
