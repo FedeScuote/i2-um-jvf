@@ -20,6 +20,7 @@ import daoInterfaces.DesafioDAO;
 import daoInterfaces.RankingDAO;
 import daoInterfaces.UsuarioDAO;
 import excepcionesB.NoHayDesafioException;
+import excepcionesB.NoHaySuficienteCreditoUsuarioException;
 
 public class Desafio implements ServiciosDesafio {
 	private static Logger log = Logger.getLogger(Desafio.class);
@@ -137,7 +138,11 @@ public class Desafio implements ServiciosDesafio {
 
 	public void crearDesafio(UsuarioVO usuario, int monto) throws RemoteException, MontoInsuficienteException {
 		DesafioDAO dao = getDesafioDAO();
-		dao.crearDesafio(usuario.getUsuarioB(), monto);
+		try {
+			dao.crearDesafio(usuario.getUsuarioB(), monto);
+		} catch (NoHaySuficienteCreditoUsuarioException e) {
+			throw new MontoInsuficienteException();
+		}
 	}
 
 	public ArrayList<DesafioVO> getDesafiosLudo() throws RemoteException {

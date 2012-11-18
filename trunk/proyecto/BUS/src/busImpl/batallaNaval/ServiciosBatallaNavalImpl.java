@@ -4,6 +4,8 @@ import java.rmi.RemoteException;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 
+import org.apache.log4j.Logger;
+
 import busImpl.usuario.Usuario;
 import comm.DesafioBatallaNavalVO;
 import comm.ServiciosBatallaNaval;
@@ -15,9 +17,11 @@ import daoInterfaces.BatallaNavalDAO;
 import daoInterfaces.DesafioDAO;
 import daoInterfaces.PartidaDAO;
 import daoInterfaces.UsuarioDAO;
+import excepcionesB.NoHaySuficienteCreditoUsuarioException;
 
 public class ServiciosBatallaNavalImpl implements ServiciosBatallaNaval{
 
+	private static Logger log = Logger.getLogger(ServiciosBatallaNavalImpl.class);
 	private JuegoBatallaNaval juego;
 	private static ResourceBundle constante = ResourceBundle.getBundle("bus");
 	private static final int CANTIDAD_INICIAL_SUBMARINO = Integer.parseInt(constante.getString("CANTIDAD_INICIAL_SUBMARINO"));
@@ -91,7 +95,11 @@ public class ServiciosBatallaNavalImpl implements ServiciosBatallaNaval{
 		int idDesafio=desafio.getIdDesafio();
 		//si es robot como me aceptaron el desafio recien ahi lo registro en la base de datos
 		if(modoRobot){
-			idDesafio=daoDesafio.crearDesafio(desafio.getUsuario().getUsuarioB(), desafio.getApuesta());
+			try {
+				idDesafio=daoDesafio.crearDesafio(desafio.getUsuario().getUsuarioB(), desafio.getApuesta());
+			} catch (NoHaySuficienteCreditoUsuarioException e) {
+				log.error("No deberia quedarse sin plata un robot!!!!!");
+			}
 		}
 		//creo la partida apartir del desafio y el desafiante
 		int idPartida=daoPartida.concretarDesafio(idDesafio, desafiante.getIdUsuario());
