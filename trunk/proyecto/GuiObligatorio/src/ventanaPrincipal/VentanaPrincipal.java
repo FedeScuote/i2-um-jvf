@@ -1,6 +1,8 @@
 package ventanaPrincipal;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
@@ -14,6 +16,7 @@ import java.util.ResourceBundle;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -27,6 +30,7 @@ import org.apache.log4j.Logger;
 
 import pantallaElegirDesafioOJuego.SegundaPantallaBatallaN;
 import util.ImagePanel;
+import util.TranslucentPanel;
 
 import comm.RankingVO;
 import comm.ServiciosRanking;
@@ -70,6 +74,11 @@ public class VentanaPrincipal extends JFrame {
 	private static final String LABEL_ERROR_NO_USU_VP = labels.getString("LABEL-ERROR-NO-USU-VP");
 	private static final String LABEL_ERROR = labels.getString("LABEL_ERROR");
 	private static final String LABEL_BOTON_DESCONECTAR_VP = labels.getString("LABEL-BOTON-DESCONECTAR-VP");
+	private static final String SALDO = labels.getString("LABEL_SALDO");
+
+	private JPanel jPanelTransparente = null;
+
+	private JLabel jLabelSaldo = null;
 
 	/**
 	 * This is the default constructor
@@ -121,6 +130,9 @@ public class VentanaPrincipal extends JFrame {
 	 */
 	private JPanel getPanelVentanaPrincipal() {
 		if (panelVentanaPrincipal == null) {
+			GridBagConstraints gridBagConstraints7 = new GridBagConstraints();
+			gridBagConstraints7.gridx = 0;
+			gridBagConstraints7.gridy = 5;
 			GridBagConstraints gridBagConstraints11 = new GridBagConstraints() ;
 			gridBagConstraints11.gridx = 0;
 			gridBagConstraints11.ipadx = 90;
@@ -152,7 +164,7 @@ public class VentanaPrincipal extends JFrame {
 			gridBagConstraints1.gridy = 3;
 			GridBagConstraints gridBagConstraints = new GridBagConstraints();
 			gridBagConstraints.fill = GridBagConstraints.NONE;
-			gridBagConstraints.gridy = 5;
+			gridBagConstraints.gridy = 6;
 			gridBagConstraints.weightx = 1.0;
 			gridBagConstraints.weighty = 1.0;
 			gridBagConstraints.anchor = GridBagConstraints.CENTER;
@@ -171,6 +183,7 @@ public class VentanaPrincipal extends JFrame {
 					.add(getJugarBackgammon(), gridBagConstraints3);
 		//	panelVentanaPrincipal.add(imagenFondo, gridBagConstraints8);
 			panelVentanaPrincipal.add(getDesconexionBoton(), gridBagConstraints11);
+			panelVentanaPrincipal.add(getJPanelTransparente(), gridBagConstraints7);
 		}
 		return panelVentanaPrincipal;
 	}
@@ -304,6 +317,23 @@ public class VentanaPrincipal extends JFrame {
 			});
 		}
 		return DesconexionBoton;
+	}
+
+	/**
+	 * This method initializes jPanelTransparente
+	 *
+	 * @return javax.swing.JPanel
+	 */
+	private JPanel getJPanelTransparente() {
+		if (jPanelTransparente == null) {
+			jLabelSaldo = new JLabel();
+			jLabelSaldo.setFont(new Font("Saldo", Font.BOLD,24));
+			jLabelSaldo.setText(SALDO+usuario.getSaldo());
+			jPanelTransparente = new TranslucentPanel(Color.white);
+			jPanelTransparente.setLayout(new GridBagLayout());
+			jPanelTransparente.add(jLabelSaldo, new GridBagConstraints());
+		}
+		return jPanelTransparente;
 	}
 
 	public static void main(String[] args) {
