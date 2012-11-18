@@ -15,6 +15,7 @@ import conexion.Conexion;
 import daoInterfaces.DesafioDAO;
 import excepcionesB.NoHayDesafioException;
 import excepcionesB.NoHayRankingException;
+import excepcionesB.NoHaySuficienteCreditoUsuarioException;
 import excepcionesB.NotDataFoundException;
 import excepcionesD.NoExisteCreditoSuficiente;
 import excepcionesD.NoExisteDesafioException;
@@ -322,7 +323,7 @@ public class DesafioDAODB implements DesafioDAO {
     }
 
     //optimizado, devuelve la idDesafio de BatallaNaval
-    public int crearDesafio(String usuario, int monto) {
+    public int crearDesafio(String usuario, int monto) throws NoHaySuficienteCreditoUsuarioException {
         logger.debug("Entro a crearDesafios con parámetros de entrada usuario= "+usuario+" monto= "+monto);
         UsuarioDAODB ud = new UsuarioDAODB();
         Usuario u;
@@ -339,7 +340,7 @@ public class DesafioDAODB implements DesafioDAO {
             int credito=u.getCreditoB();
             creditoSuficiente=ud.creditoSuficiente2(credito, idUsuario,c);
             if(!creditoSuficiente){
-                throw new NoExisteCreditoSuficiente();
+                throw new NoHaySuficienteCreditoUsuarioException();
             }
             logger.debug("Crédito suficiente!");
             this.getDesafiosUsuariosDisponibleBatallaNaval(idUsuario);
@@ -381,8 +382,6 @@ public class DesafioDAODB implements DesafioDAO {
                 // TODO Auto-generated catch block
                 e1.printStackTrace();
             }
-        } catch (NoExisteCreditoSuficiente e) {
-            logger.debug("Crédito insuficiente para crear un Desafio");
         } finally{
             logger.debug("idDesafio= "+idDesafio);
             logger.debug("Me desconecto de la base de datos del método crearDesafio");
