@@ -8,18 +8,15 @@ import java.util.Date;
 import org.apache.log4j.Logger;
 
 import busImpl.Desafio;
-import busImpl.Usuario;
+import busImpl.usuario.Usuario;
 import conexion.Conexion;
 import daoInterfaces.DesafioDAOLudo;
+import excepcionesB.NoExisteUsuarioException;
 import excepcionesB.NoHayDesafioException;
 import excepcionesB.NoHaySuficienteCreditoUsuarioException;
 import excepcionesB.NoTieneDesafioException;
 import excepcionesB.NotDataFoundException;
 import excepcionesB.YaTieneOtroDesafioException;
-import excepcionesD.DesafioTerminadoException;
-import excepcionesD.NoExisteCreditoSuficiente;
-import excepcionesD.NoExisteDesafioException;
-import excepcionesB.NoExisteUsuarioException;
 
 public class DesafioDAODBLudo implements DesafioDAOLudo {
 	private static Logger logger = Logger.getLogger(DesafioDAODBLudo.class);

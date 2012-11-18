@@ -4,13 +4,14 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
+import org.apache.log4j.Logger;
+
+import busImpl.usuario.Usuario;
 import conexion.Conexion;
-import busImpl.Usuario;
 import daoInterfaces.UsuarioDAO;
+import excepcionesB.NoExisteUsuarioException;
 import excepcionesB.NotDataFoundException;
 import excepcionesB.YaExisteUsuarioException;
-import excepcionesB.NoExisteUsuarioException;
-import org.apache.log4j.Logger;
 
 public class UsuarioDAODB implements UsuarioDAO {
 
@@ -200,45 +201,45 @@ public class UsuarioDAODB implements UsuarioDAO {
 	//optimizado
 	public void cambiarPassword(String usuario, String nuevaPassword)throws NoExisteUsuarioException{
 		logger.debug("Entro a cambiarPassword con parámetros de entrada usuario= "+usuario+", nuevaPassword= "+nuevaPassword);
-		
+
 		Conexion c=new Conexion();
 		try {
 			boolean existe=this.existeUsuario(usuario, c);
 			if(existe){
-				c.actualizarTuplaDeUnaColumna5("usuarios", "clave", nuevaPassword, "usuario", usuario);				
+				c.actualizarTuplaDeUnaColumna5("usuarios", "clave", nuevaPassword, "usuario", usuario);
 			}else{
 				throw new NoExisteUsuarioException();
 			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		} finally{			
+		} finally{
 			logger.debug("Me desconecto de la base de datos del método cambiarPassword");
 			c.disconnect();
 		}
-		
+
 	}
 	//optimizado
 	public void cambiarNombre(String usuario, String nuevoUsuario)throws NoExisteUsuarioException{
 		logger.debug("Entro a cambiarPassword con parámetros de entrada usuario= "+usuario+", nuevoUsuario= "+nuevoUsuario);
-	
+
 		Conexion c=new Conexion();
 		try {
 			boolean existe=this.existeUsuario(usuario, c);
 			if(existe){
 				c.actualizarTuplaDeUnaColumna5("usuarios", "usuario", nuevoUsuario, "usuario", usuario);
-				
+
 			}else{
 				throw new NoExisteUsuarioException();
 			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		} finally{			
+		} finally{
 			logger.debug("Me desconecto de la base de datos del método cambiarNombre");
 			c.disconnect();
 		}
-		
+
 	}
 
 
@@ -284,6 +285,28 @@ public class UsuarioDAODB implements UsuarioDAO {
 		}
 		return usuario;
 	}
+
+
+	public int getIdUsuario2(String usuario,Conexion c) throws NoExisteUsuarioException {
+		logger.debug("Entro a getIdUsuario con parámetro de entrada usuario= "+usuario);
+		ResultSet r = null;
+		int idusuario=0;
+		try {
+			r = c.devolverResutado("SELECT idusuario FROM usuarios WHERE usuario='"+ usuario + "'");
+			if(r.first()){
+				idusuario = r.getInt("idusuario");
+			}else{
+				throw new NoExisteUsuarioException();
+			}
+		} catch (SQLException ex) {
+
+		} finally{
+			logger.debug("idusuario= "+idusuario);
+			logger.debug("salgo del método getIdUsuario");
+		}
+		return idusuario;
+	}
+
 
 	//optimizado
 	public boolean creditoSuficiente(int credito, int idUsuario){

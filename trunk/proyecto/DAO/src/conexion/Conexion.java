@@ -179,6 +179,24 @@ public class Conexion {
 
 	}
 
+	public void ingresarNuevaTuplaDeNueveColumnasMD5(String tabla, String idTabla,
+			String columnaUno, String columnaDos,String columnaTres,
+			String columnaCuatro, String columnaCinco, String columnaSeis, String columnaSiete, String columnaOcho,
+			String columnaNueve, String valorUno,
+			String valorDos, int valorTres, int valorCuatro,
+			int valorCinco, int valorSeis,
+			String valorSiete, String valorOcho, String valorNueve) throws SQLException {
+		Statement pregunta;
+		pregunta = (conn).createStatement();
+		pregunta.executeUpdate("INSERT INTO " + tabla + "(" + idTabla + "," + columnaUno + "," + columnaDos + "," + columnaTres + ","
+				+ columnaCuatro + "," + columnaCinco + ","+columnaSeis + "," + columnaSiete + "," + columnaOcho + ","
+				+ columnaNueve +") VALUES(NULL,'"
+				+ valorUno + "',md5('" + valorDos + "'),'" + valorTres + "','"
+				+ valorCuatro + "','" + valorCinco + "','"+valorSeis + "','" + valorSiete + "','" + valorOcho + "','"
+				+ valorNueve +"')");
+
+	}
+
 
 
 	public void ingresarNuevaTuplaDeOnceColumnas(String tabla, String idTabla,String columnaCero,

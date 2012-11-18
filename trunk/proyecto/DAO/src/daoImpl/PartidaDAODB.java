@@ -5,10 +5,10 @@ import java.sql.SQLException;
 
 import org.apache.log4j.Logger;
 
-import busImpl.Usuario;
-
+import busImpl.usuario.Usuario;
 import conexion.Conexion;
 import daoInterfaces.PartidaDAO;
+import excepcionesB.NoExisteUsuarioException;
 import excepcionesB.NoHayDesafioException;
 import excepcionesB.NoHayRankingException;
 import excepcionesB.NotDataFoundException;
@@ -16,7 +16,6 @@ import excepcionesD.DesafioTerminadoException;
 import excepcionesD.NoExisteCreditoSuficiente;
 import excepcionesD.NoExisteDesafioException;
 import excepcionesD.NoExisteOponenteException;
-import excepcionesB.NoExisteUsuarioException;
 import excepcionesD.PartidaTerminadaException;
 
 public class PartidaDAODB implements PartidaDAO {

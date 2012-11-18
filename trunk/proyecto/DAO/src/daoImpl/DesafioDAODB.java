@@ -1,25 +1,21 @@
 package daoImpl;
 
-import java.util.Date;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Date;
 
 import org.apache.log4j.Logger;
 
 import busImpl.Desafio;
-import busImpl.Ranking;
-import busImpl.Usuario;
+import busImpl.usuario.Usuario;
 import conexion.Conexion;
-
 import daoInterfaces.DesafioDAO;
+import excepcionesB.NoExisteUsuarioException;
 import excepcionesB.NoHayDesafioException;
-import excepcionesB.NoHayRankingException;
 import excepcionesB.NoHaySuficienteCreditoUsuarioException;
 import excepcionesB.NotDataFoundException;
-import excepcionesD.NoExisteCreditoSuficiente;
 import excepcionesD.NoExisteDesafioException;
-import excepcionesB.NoExisteUsuarioException;
 
 public class DesafioDAODB implements DesafioDAO {
     private static Logger logger = Logger.getLogger(DesafioDAODB.class);

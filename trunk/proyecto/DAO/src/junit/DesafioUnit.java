@@ -1,6 +1,7 @@
 package junit;
 
 import daoImpl.DesafioDAODB;
+import excepcionesB.NoHaySuficienteCreditoUsuarioException;
 import junit.framework.TestCase;
 
 public class DesafioUnit extends TestCase {
@@ -11,7 +12,12 @@ public class DesafioUnit extends TestCase {
 	}
 
 	public void testCrearDesafio(){
-		dd.crearDesafio("jhirata", 200);
+		try {
+			dd.crearDesafio("jhirata", 200);
+		} catch (NoHaySuficienteCreditoUsuarioException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 
 	}
 
