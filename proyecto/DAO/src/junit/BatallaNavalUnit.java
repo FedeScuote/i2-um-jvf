@@ -4,6 +4,8 @@ import junit.framework.TestCase;
 
 import org.apache.log4j.Logger;
 
+import conexion.Conexion;
+
 import busImpl.batallaNaval.Celda;
 import busImpl.batallaNaval.Disparo;
 import busImpl.batallaNaval.Estados;
@@ -13,17 +15,17 @@ import daoImpl.BatallaNavalDAODB;
 public class BatallaNavalUnit extends TestCase {
 	private static Logger logger = Logger.getLogger(BatallaNavalUnit.class);
 	private BatallaNavalDAODB b;
-
+	private Conexion c;
 
 	public void setUp(){
 		//se cargan los datos
 		b=new BatallaNavalDAODB();
+		c=new Conexion();
 		Estados estado;
 		estado=Estados.TOCADO;
 
 		Disparo disparo=new Disparo();
 		int idUsuario=3;
-		int idPartida=39;
 		disparo.setColumna(2);
 		disparo.setFila(2);
 
@@ -34,9 +36,14 @@ public class BatallaNavalUnit extends TestCase {
 	}
 	public void testModificarCeldaTablero(){
 		Celda celda=new Celda();
-		celda.setEstado("AGUA");
+		celda.setEstado("TOCADO");
 		celda.setId(33);
-		b.modificarCeldaTablero(3, celda, 0, 0);
+		b.modificarCeldaTablero(3, celda, 2, 2);
+		System.out.println((b.getTablero(15).getTabla())[2][2].getEstado());
+
+		assertEquals("Debería dar TOCADO","TOCADO",(b.getTablero(15).getTabla())[2][2].getEstado());
+
+	
 	}
 
 	public void testGetTablero(){
@@ -82,14 +89,6 @@ public class BatallaNavalUnit extends TestCase {
 	public void testActualizarTurno(){
 		b.actualizarTurno(3, true);
 		assertEquals("Debería dar true",true,b.getTablero(3).isMiTurno());
-	}
-
-
-
-	public void tearDown(){
-		//Se descargan los datos
-		//b.limpiarDatos
-
 	}
 
 
