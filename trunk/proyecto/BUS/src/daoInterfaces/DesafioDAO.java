@@ -28,10 +28,7 @@ public interface DesafioDAO {
 	public ArrayList getDesafiosBatallaNaval() throws NoHayDesafioException;
 
 
-	//devuelve true si existe desafio "En hora"
-	public boolean desafioDisponible(int idUsuario);
-
-	//devuelve true si el usuario virutal no tiene desafio en curso
-	public boolean noDesafioEnCursoVirtual(int idUsuario) throws NoEsUsuarioVirtualException;
+	//devuelve true si el usuario virutal no tiene desafio en curso, devuelve true si el usuario no virtual tiene un desafio "En hora"
+	public boolean desafioDisponibleTodosLosUsuarios(int idUsuario);
 
 }
