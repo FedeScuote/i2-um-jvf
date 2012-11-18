@@ -24,6 +24,8 @@ import comm.UsuarioVO;
 import commExceptions.ContrasenaInvalidaException;
 import commExceptions.NoSeEncuentraUsuarioException;
 import java.awt.Dimension;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 
 public class CambiarPassword extends JFrame {
 
@@ -51,24 +53,41 @@ public class CambiarPassword extends JFrame {
 
 	private UsuarioVO usuario = null;
 
+	private static final int LIMITE = 11;
+
 	private static Logger logger = Logger.getLogger(VentanaPrincipal.class);
 
 	private static ResourceBundle labels = ResourceBundle.getBundle("Gui");
 
-	private static final String NICK = labels.getString("LABEL_NICK_A");  //  @jve:decl-index=0:
-	private static final String PASSWORD = labels.getString("LABEL_PASSWORD_A");  //  @jve:decl-index=0:
-	private static final String CONFIRMAR = labels.getString("LABEL_CONFIRMACION_A");
+	private static final String NICK = labels.getString("LABEL_NICK_A"); // @jve:decl-index=0:
+
+	private static final String PASSWORD = labels.getString("LABEL_PASSWORD_A"); // @jve:decl-index=0:
+
+	private static final String CONFIRMAR = labels
+			.getString("LABEL_CONFIRMACION_A");
+
 	private static final String PWDNUEVO = labels.getString("LABEL_PWDNUEVO_A");
-	private static final String BOTONCREAR = labels.getString("LABEL_ADMIN_CUENTA_A");
-	private static final String CANCELAR = labels.getString("LABEL_VOLVER_BOTON");
+
+	private static final String BOTONCREAR = labels
+			.getString("LABEL_ADMIN_CUENTA_A");
+
+	private static final String CANCELAR = labels
+			.getString("LABEL_VOLVER_BOTON");
+
 	private static final String host = labels.getString("host");
-	private static final String REALIZADO = labels.getString("REALIZADOCONEXITO");
+
+	private static final String REALIZADO = labels
+			.getString("REALIZADOCONEXITO");
+
 	private static final String REMOTE = labels.getString("ERROR_CONEXION");
-	private static final String NOUSUEXC = labels.getString("LABEL_USUARIO_INVALIDO");  //  @jve:decl-index=0:
-	private static final String PWDINVALIDO = labels.getString("LABEL_PASSWORD_INVALIDO");
 
+	private static final String NOUSUEXC = labels
+			.getString("LABEL_USUARIO_INVALIDO"); // @jve:decl-index=0:
 
-				/**
+	private static final String PWDINVALIDO = labels
+			.getString("LABEL_PASSWORD_INVALIDO");
+
+	/**
 	 * This is the default constructor
 	 */
 	public CambiarPassword(UsuarioVO usu) {
@@ -157,11 +176,14 @@ public class CambiarPassword extends JFrame {
 			jPanelCambiarPassword.add(jLabelNick, gridBagConstraints);
 			jPanelCambiarPassword.add(getJTextFieldNick(), gridBagConstraints1);
 			jPanelCambiarPassword.add(jLabelPasswordViejo, gridBagConstraints2);
-			jPanelCambiarPassword.add(getJTextFieldPasswordViejo(), gridBagConstraints3);
+			jPanelCambiarPassword.add(getJTextFieldPasswordViejo(),
+					gridBagConstraints3);
 			jPanelCambiarPassword.add(jLabelNuevoPassword, gridBagConstraints4);
-			jPanelCambiarPassword.add(getJTextFieldNuevoPassword(), gridBagConstraints5);
+			jPanelCambiarPassword.add(getJTextFieldNuevoPassword(),
+					gridBagConstraints5);
 			jPanelCambiarPassword.add(getJButtonOK(), gridBagConstraints8);
-			jPanelCambiarPassword.add(getJButtonCancelar(), gridBagConstraints9);
+			jPanelCambiarPassword
+					.add(getJButtonCancelar(), gridBagConstraints9);
 		}
 		return jPanelCambiarPassword;
 	}
@@ -174,6 +196,19 @@ public class CambiarPassword extends JFrame {
 	private JTextField getJTextFieldNick() {
 		if (jTextFieldNick == null) {
 			jTextFieldNick = new JTextField();
+			jTextFieldNick.addKeyListener(new KeyListener() {
+				public void keyTyped(KeyEvent e) {
+					if (jTextFieldNick.getText().length() == LIMITE) {
+						e.consume();
+					}
+				}
+				public void keyPressed(KeyEvent e) {
+					// TODO Auto-generated method stub
+				}
+				public void keyReleased(KeyEvent e) {
+					// TODO Auto-generated method stub
+				}
+			});
 		}
 		return jTextFieldNick;
 	}
@@ -186,6 +221,19 @@ public class CambiarPassword extends JFrame {
 	private JTextField getJTextFieldPasswordViejo() {
 		if (jTextFieldPasswordViejo == null) {
 			jTextFieldPasswordViejo = new JTextField();
+			jTextFieldPasswordViejo.addKeyListener(new KeyListener() {
+				public void keyTyped(KeyEvent e) {
+					if (jTextFieldNick.getText().length() == LIMITE) {
+						e.consume();
+					}
+				}
+				public void keyPressed(KeyEvent e) {
+					// TODO Auto-generated method stub
+				}
+				public void keyReleased(KeyEvent e) {
+					// TODO Auto-generated method stub
+				}
+			});
 		}
 		return jTextFieldPasswordViejo;
 	}
@@ -198,6 +246,19 @@ public class CambiarPassword extends JFrame {
 	private JTextField getJTextFieldNuevoPassword() {
 		if (jTextFieldNuevoPassword == null) {
 			jTextFieldNuevoPassword = new JTextField();
+			jTextFieldNuevoPassword.addKeyListener(new KeyListener() {
+				public void keyTyped(KeyEvent e) {
+					if (jTextFieldNick.getText().length() == LIMITE) {
+						e.consume();
+					}
+				}
+				public void keyPressed(KeyEvent e) {
+					// TODO Auto-generated method stub
+				}
+				public void keyReleased(KeyEvent e) {
+					// TODO Auto-generated method stub
+				}
+			});
 		}
 		return jTextFieldNuevoPassword;
 	}
@@ -219,24 +280,24 @@ public class CambiarPassword extends JFrame {
 		}
 		return jButtonOK;
 	}
-	private void cambiarPass(){
+
+	private void cambiarPass() {
 		try {
 			Registry registry = LocateRegistry.getRegistry(host);
 			ServiciosAdministrador stub1 = (ServiciosAdministrador) registry
 					.lookup("AdministrationServices");
-
-			stub1.cambiarPassword(jTextFieldNick.getText(), jTextFieldPasswordViejo.getText(), jTextFieldNuevoPassword.getText());
+			stub1.cambiarPassword(jTextFieldNick.getText(),
+					jTextFieldPasswordViejo.getText(), jTextFieldNuevoPassword
+							.getText());
 			JOptionPane.showMessageDialog(new JFrame(), REALIZADO);
 		} catch (RemoteException e) {
 			JOptionPane.showMessageDialog(new JFrame(), REMOTE);
-		}
-		 catch (NoSeEncuentraUsuarioException e) {
+		} catch (NoSeEncuentraUsuarioException e) {
 			JOptionPane.showMessageDialog(new JFrame(), NOUSUEXC);
-		}catch(ContrasenaInvalidaException e){
+		} catch (ContrasenaInvalidaException e) {
 			JOptionPane.showMessageDialog(new JFrame(), PWDINVALIDO);
-		}
-		 catch(Exception e ){
-			 JOptionPane.showMessageDialog(new JFrame(), PWDINVALIDO);
+		} catch (Exception e) {
+			JOptionPane.showMessageDialog(new JFrame(), PWDINVALIDO);
 		}
 	}
 
@@ -253,4 +314,4 @@ public class CambiarPassword extends JFrame {
 		return jButtonCancelar;
 	}
 
-}  //  @jve:decl-index=0:visual-constraint="10,10"
+} // @jve:decl-index=0:visual-constraint="10,10"
