@@ -12,6 +12,16 @@ public class UsuarioVO implements Serializable {
 
 	private String apellidoB;
 
+	private int nivelPrivilegio;
+
+	public int getNivelPrivilegio() {
+		return nivelPrivilegio;
+	}
+
+	public void setNivelPrivilegio(int nivelPrivilegio) {
+		this.nivelPrivilegio = nivelPrivilegio;
+	}
+
 	public UsuarioVO(String usuarioB) {
 		super();
 		this.usuarioB = usuarioB;
