@@ -21,5 +21,5 @@ public interface ServiciosAdministrador extends Remote{
 	public void cambiarPassword(String usuario,String oldPassword, String newPassword) throws RemoteException,NoSeEncuentraUsuarioException, ContrasenaInvalidaException;
 	public void cobrarSaldo(String usuario, String password,int credito) throws RemoteException, MontoInsuficienteException,NoSeEncuentraUsuarioException, ContrasenaInvalidaException;
 	public void acreditarSaldo(String usuario, int credito) throws RemoteException,NoSeEncuentraUsuarioException;
-
+	public ReporteVO getReporte() throws RemoteException;
 }
