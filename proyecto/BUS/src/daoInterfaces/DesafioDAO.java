@@ -3,6 +3,7 @@ package daoInterfaces;
 import java.util.ArrayList;
 
 
+import excepcionesB.NoEsUsuarioVirtualException;
 import excepcionesB.NoHayDesafioException;
 import excepcionesB.NoHaySuficienteCreditoUsuarioException;
 
@@ -27,7 +28,10 @@ public interface DesafioDAO {
 	public ArrayList getDesafiosBatallaNaval() throws NoHayDesafioException;
 
 
-	//
+	//devuelve true si existe desafio "En hora"
 	public boolean desafioDisponible(int idUsuario);
+
+	//devuelve true si el usuario virutal no tiene desafio en curso
+	public boolean noDesafioEnCursoVirtual(int idUsuario) throws NoEsUsuarioVirtualException;
 
 }
