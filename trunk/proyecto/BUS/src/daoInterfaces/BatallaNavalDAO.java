@@ -2,9 +2,9 @@ package daoInterfaces;
 
 import java.util.ArrayList;
 
-import busImpl.Estados;
 import busImpl.batallaNaval.Celda;
 import busImpl.batallaNaval.Disparo;
+import busImpl.batallaNaval.Estados;
 import busImpl.batallaNaval.RegistroDisparo;
 import busImpl.batallaNaval.Tablero;
 

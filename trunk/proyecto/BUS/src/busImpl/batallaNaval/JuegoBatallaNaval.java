@@ -2,10 +2,11 @@ package busImpl.batallaNaval;
 
 import java.rmi.RemoteException;
 import java.util.ArrayList;
+import java.util.ResourceBundle;
+
 import org.apache.log4j.Logger;
 
-import busImpl.Estados;
-import busImpl.Usuario;
+import busImpl.usuario.Usuario;
 import comm.CeldaVO;
 import comm.TableroVO;
 import comm.UsuarioVO;
@@ -17,10 +18,11 @@ import excepcionesB.CoordenadasCeldasInvalidasException;
 
 public class JuegoBatallaNaval{
 
-	private static final int CANTIDAD_INICIAL_SUBMARINO = 0;
-	private static final int CANTIDAD_INICIAL_DESTRUCTORES = 0;
-	private static final int CANTIDAD_INICIAL_CRUCEROS = 2;
-	private static final int CANTIDAD_INICIAL_ACORAZADO = 2;
+	private static ResourceBundle constante = ResourceBundle.getBundle("bus");
+	private static final int CANTIDAD_INICIAL_SUBMARINO = Integer.parseInt(constante.getString("CANTIDAD_INICIAL_SUBMARINO"));
+	private static final int CANTIDAD_INICIAL_DESTRUCTORES = Integer.parseInt(constante.getString("CANTIDAD_INICIAL_DESTRUCTORES"));
+	private static final int CANTIDAD_INICIAL_CRUCEROS = Integer.parseInt(constante.getString("CANTIDAD_INICIAL_CRUCEROS"));
+	private static final int CANTIDAD_INICIAL_ACORAZADO = Integer.parseInt(constante.getString("CANTIDAD_INICIAL_ACORAZADO"));
 
 	private boolean modoRobot;
 	private Tablero tableroJugador1;

@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import excepcionesB.NoExisteUsuarioException;
 import excepcionesB.NotDataFoundException;
 import excepcionesB.YaExisteUsuarioException;
-import busImpl.Usuario;
+import busImpl.usuario.Usuario;
 
 
 public interface UsuarioDAO {

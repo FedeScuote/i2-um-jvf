@@ -6,26 +6,26 @@ import java.util.ResourceBundle;
 import daoInterfaces.BatallaNavalDAO;
 import daoInterfaces.PartidaDAO;
 
-import busImpl.Estados;
-import busImpl.Usuario;
+import busImpl.usuario.Usuario;
 
 import excepcionesB.CoordenadasCeldasInvalidasException;
 
 public class Tablero {
 	//**********************Declaracion de Const******************************//
-	private static final int LARGO_TABLERO = 10;
-	private static final String SUBMARINO = "SUBMARINO";
-	private static final String DESTRUCTORES = "DESTRUCTORES";
-	private static final String CRUCEROS = "CRUCEROS";
-	private static final String ACORAZADO = "ACORAZADO";
-	private static final int CANTIDAD_INICIAL_SUBMARINO = 0;
-	private static final int CANTIDAD_INICIAL_DESTRUCTORES = 0;
-	private static final int CANTIDAD_INICIAL_CRUCEROS = 2;
-	private static final int CANTIDAD_INICIAL_ACORAZADO = 2;
-	private static final int LARGO_SUBMARINO = 1;
-	private static final int LARGO_DESTRUCTORES = 2;
-	private static final int LARGO_CRUCEROS = 3;
-	private static final int LARGO_ACORAZADO = 4;
+	private static ResourceBundle constante = ResourceBundle.getBundle("bus");
+	private static final int LARGO_TABLERO = Integer.parseInt(constante.getString("LARGO_TABLERO"));
+	private static final String SUBMARINO = constante.getString("SUBMARINO");
+	private static final String DESTRUCTORES = constante.getString("DESTRUCTORES");
+	private static final String CRUCEROS = constante.getString("CRUCEROS");
+	private static final String ACORAZADO = constante.getString("ACORAZADO");
+	private static final int CANTIDAD_INICIAL_SUBMARINO = Integer.parseInt(constante.getString("CANTIDAD_INICIAL_SUBMARINO"));
+	private static final int CANTIDAD_INICIAL_DESTRUCTORES = Integer.parseInt(constante.getString("CANTIDAD_INICIAL_DESTRUCTORES"));
+	private static final int CANTIDAD_INICIAL_CRUCEROS = Integer.parseInt(constante.getString("CANTIDAD_INICIAL_CRUCEROS"));
+	private static final int CANTIDAD_INICIAL_ACORAZADO = Integer.parseInt(constante.getString("CANTIDAD_INICIAL_ACORAZADO"));
+	private static final int LARGO_SUBMARINO = Integer.parseInt(constante.getString("LARGO_SUBMARINO"));
+	private static final int LARGO_DESTRUCTORES = Integer.parseInt(constante.getString("LARGO_DESTRUCTORES"));
+	private static final int LARGO_CRUCEROS = Integer.parseInt(constante.getString("LARGO_CRUCEROS"));
+	private static final int LARGO_ACORAZADO = Integer.parseInt(constante.getString("LARGO_ACORAZADO"));
 	//***********************************************************************//
 
 	Celda[][] tabla ;
@@ -130,26 +130,24 @@ public class Tablero {
 	public void agregarCeldasDirY(int coordenadaX, int coordenadaInicialY,
 			int coordenadaFinalY, String tipoBarco) throws CoordenadasCeldasInvalidasException {
 		BatallaNavalDAO daoBatallaNaval = getBattallaNavalDAO();
-		PartidaDAO daoPartida = getPartidaDAO();
-		int idPartida=daoPartida.idPartida(jugador.getIdUsuarioB());
 		int idBarco=0;
 		if(tipoBarco.equals(SUBMARINO)){
-			if(coordenadaFinalY-coordenadaInicialY+1!=LARGO_SUBMARINO){
+			if(Math.abs(coordenadaFinalY-coordenadaInicialY)+1!=LARGO_SUBMARINO){
 				throw new CoordenadasCeldasInvalidasException();
 			}
 			idBarco=Integer.parseInt(LARGO_SUBMARINO+""+cantBarcosSubmarinoColocados);
 		}else if(tipoBarco.equals(DESTRUCTORES)){
-			if(coordenadaFinalY-coordenadaInicialY+1!=LARGO_DESTRUCTORES){
+			if(Math.abs(coordenadaFinalY-coordenadaInicialY)+1!=LARGO_DESTRUCTORES){
 				throw new CoordenadasCeldasInvalidasException();
 			}
 			idBarco=Integer.parseInt(LARGO_DESTRUCTORES+""+cantBarcosDestructoresColocados);
 		}else if(tipoBarco.equals(CRUCEROS)){
-			if(coordenadaFinalY-coordenadaInicialY+1!=LARGO_CRUCEROS){
+			if(Math.abs(coordenadaFinalY-coordenadaInicialY)+1!=LARGO_CRUCEROS){
 				throw new CoordenadasCeldasInvalidasException();
 			}
 			idBarco=Integer.parseInt(LARGO_CRUCEROS+""+cantBarcosCrucerosColocados);
 		}else if(tipoBarco.equals(ACORAZADO)){
-			if(coordenadaFinalY-coordenadaInicialY+1!=LARGO_ACORAZADO){
+			if(Math.abs(coordenadaFinalY-coordenadaInicialY)+1!=LARGO_ACORAZADO){
 				throw new CoordenadasCeldasInvalidasException();
 			}
 			idBarco=Integer.parseInt(LARGO_ACORAZADO+""+cantBarcosAcorazadoColocados);
@@ -159,22 +157,55 @@ public class Tablero {
 			coordenadaInicialY=coordenadaFinalY;
 			coordenadaFinalY=aux;
 		}
+
+		if(puedoAgregarBarcoY(coordenadaX,coordenadaInicialY,coordenadaFinalY)){
+			if (!(coordenadaInicialY > coordenadaFinalY)&& !(coordenadaFinalY >= tabla.length)&&!(coordenadaInicialY<0) ) {
+				for (int i = coordenadaInicialY; i <= coordenadaFinalY; i++) {
+					if (tabla[coordenadaX][i].estaOcupada()) {
+						throw new CoordenadasCeldasInvalidasException();
+					}else{
+						tabla[coordenadaX][i].setOcupada();
+						tabla[coordenadaX][i].setId(idBarco);
+						daoBatallaNaval.modificarCeldaTablero(jugador.getIdUsuarioB(), tabla[coordenadaX][i], coordenadaX, i);
+					}
+				}
+				quitarBarcoStockJugador1(tipoBarco);
+				daoBatallaNaval.actualizarTablero(jugador.getIdUsuarioB(), miTurno, cantBarcosSubmarino, cantBarcosDestructores, cantBarcosCruceros, cantBarcosAcorazado, cantBarcosSubmarinoColocados, cantBarcosDestructoresColocados, cantBarcosCrucerosColocados, cantBarcosAcorazadoColocados);
+			} else {
+				throw new CoordenadasCeldasInvalidasException();
+
+			}
+		}else{
+			throw new CoordenadasCeldasInvalidasException();
+		}
+
+	}
+
+
+	private boolean puedoAgregarBarcoY(int coordenadaX, int coordenadaInicialY, int coordenadaFinalY) {
+		boolean retorno=true;
 		if (!(coordenadaInicialY > coordenadaFinalY)&& !(coordenadaFinalY >= tabla.length)&&!(coordenadaInicialY<0) ) {
 			for (int i = coordenadaInicialY; i <= coordenadaFinalY; i++) {
 				if (tabla[coordenadaX][i].estaOcupada()) {
-					throw new CoordenadasCeldasInvalidasException();
-				}else{
-					tabla[coordenadaX][i].setOcupada();
-					tabla[coordenadaX][i].setId(idBarco);
-					daoBatallaNaval.modificarCeldaTablero(jugador.getIdUsuarioB(), tabla[coordenadaX][i], coordenadaX, i);
+					retorno=false;
 				}
 			}
-			quitarBarcoStockJugador1(tipoBarco);
-			daoBatallaNaval.actualizarTablero(jugador.getIdUsuarioB(), miTurno, cantBarcosSubmarino, cantBarcosDestructores, cantBarcosCruceros, cantBarcosAcorazado, cantBarcosSubmarinoColocados, cantBarcosDestructoresColocados, cantBarcosCrucerosColocados, cantBarcosAcorazadoColocados);
-		} else {
-			throw new CoordenadasCeldasInvalidasException();
-
 		}
+		return retorno;
+
+	}
+
+	private boolean puedoAgregarBarcoX(int coordenadaY, int coordenadaInicialX, int coordenadaFinalX) {
+		boolean retorno=true;
+		if (!(coordenadaInicialX > coordenadaFinalX)&& !(coordenadaFinalX >= tabla.length)&&!(coordenadaInicialX<0) ) {
+			for (int i = coordenadaInicialX; i <= coordenadaFinalX; i++) {
+				if (tabla[i][coordenadaY].estaOcupada()) {
+					retorno=false;
+				}
+			}
+		}
+		return retorno;
+
 	}
 
 	private static BatallaNavalDAO getBattallaNavalDAO() {
@@ -329,26 +360,24 @@ public class Tablero {
 	public void agregarCeldasDirX(int coordenadaY, int coordenadaInicialX,
 			int coordenadaFinalX, String tipoBarco) throws CoordenadasCeldasInvalidasException {
 		BatallaNavalDAO daoBatallaNaval = getBattallaNavalDAO();
-		PartidaDAO daoPartida = getPartidaDAO();
-		int idPartida=daoPartida.idPartida(jugador.getIdUsuarioB());
 		int idBarco=0;
 		if(tipoBarco.equals(SUBMARINO)){
-			if(coordenadaFinalX-coordenadaInicialX+1!=LARGO_SUBMARINO){
+			if(Math.abs(coordenadaFinalX-coordenadaInicialX)+1!=LARGO_SUBMARINO){
 				throw new CoordenadasCeldasInvalidasException();
 			}
 			idBarco=Integer.parseInt(LARGO_SUBMARINO+""+cantBarcosSubmarinoColocados);
 		}else if(tipoBarco.equals(DESTRUCTORES)){
-			if(coordenadaFinalX-coordenadaInicialX+1!=LARGO_DESTRUCTORES){
+			if(Math.abs(coordenadaFinalX-coordenadaInicialX)+1!=LARGO_DESTRUCTORES){
 				throw new CoordenadasCeldasInvalidasException();
 			}
 			idBarco=Integer.parseInt(LARGO_DESTRUCTORES+""+cantBarcosDestructoresColocados);
 		}else if(tipoBarco.equals(CRUCEROS)){
-			if(coordenadaFinalX-coordenadaInicialX+1!=LARGO_CRUCEROS){
+			if(Math.abs(coordenadaFinalX-coordenadaInicialX)+1!=LARGO_CRUCEROS){
 				throw new CoordenadasCeldasInvalidasException();
 			}
 			idBarco=Integer.parseInt(LARGO_CRUCEROS+""+cantBarcosCrucerosColocados);
 		}else if(tipoBarco.equals(ACORAZADO)){
-			if(coordenadaFinalX-coordenadaInicialX+1!=LARGO_ACORAZADO){
+			if(Math.abs(coordenadaFinalX-coordenadaInicialX)+1!=LARGO_ACORAZADO){
 				throw new CoordenadasCeldasInvalidasException();
 			}
 			idBarco=Integer.parseInt(LARGO_ACORAZADO+""+cantBarcosAcorazadoColocados);
@@ -358,25 +387,30 @@ public class Tablero {
 			coordenadaInicialX=coordenadaFinalX;
 			coordenadaFinalX=aux;
 		}
-		if (!(coordenadaInicialX > coordenadaFinalX)&&!(coordenadaFinalX >= tabla.length)&&!(coordenadaInicialX<0)) {
-			for (int i = coordenadaInicialX; i <= coordenadaFinalX; i++) {
-				if (tabla[i][coordenadaY].estaOcupada()) {
-					//Hay que ver si agrega hasta la ocupada!!!
-					throw new CoordenadasCeldasInvalidasException();
-				}else{
-					tabla[i][coordenadaY].setOcupada();
-					tabla[i][coordenadaY].setId(idBarco);
-					daoBatallaNaval.modificarCeldaTablero(jugador.getIdUsuarioB(), tabla[i][coordenadaY], i, coordenadaY);
+		if(puedoAgregarBarcoX(coordenadaY, coordenadaInicialX, coordenadaFinalX)){
+			if (!(coordenadaInicialX > coordenadaFinalX)&&!(coordenadaFinalX >= tabla.length)&&!(coordenadaInicialX<0)) {
+				for (int i = coordenadaInicialX; i <= coordenadaFinalX; i++) {
+					if (tabla[i][coordenadaY].estaOcupada()) {
+						//Hay que ver si agrega hasta la ocupada!!!
+						throw new CoordenadasCeldasInvalidasException();
+					}else{
+						tabla[i][coordenadaY].setOcupada();
+						tabla[i][coordenadaY].setId(idBarco);
+						daoBatallaNaval.modificarCeldaTablero(jugador.getIdUsuarioB(), tabla[i][coordenadaY], i, coordenadaY);
+					}
+
 				}
+				quitarBarcoStockJugador1(tipoBarco);
+				daoBatallaNaval.actualizarTablero(jugador.getIdUsuarioB(), miTurno, cantBarcosSubmarino, cantBarcosDestructores, cantBarcosCruceros, cantBarcosAcorazado, cantBarcosSubmarinoColocados, cantBarcosDestructoresColocados, cantBarcosCrucerosColocados, cantBarcosAcorazadoColocados);
+			} else {
+
+				throw new CoordenadasCeldasInvalidasException();
 
 			}
-			quitarBarcoStockJugador1(tipoBarco);
-			daoBatallaNaval.actualizarTablero(jugador.getIdUsuarioB(), miTurno, cantBarcosSubmarino, cantBarcosDestructores, cantBarcosCruceros, cantBarcosAcorazado, cantBarcosSubmarinoColocados, cantBarcosDestructoresColocados, cantBarcosCrucerosColocados, cantBarcosAcorazadoColocados);
-		} else {
-
+		}else{
 			throw new CoordenadasCeldasInvalidasException();
-
 		}
+
 	}
 	private void quitarBarcoStockJugador1(String tipoBarco) {
 		if(tipoBarco.equals(SUBMARINO)){

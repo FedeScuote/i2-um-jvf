@@ -7,6 +7,7 @@ import java.util.Date;
 import org.apache.log4j.Logger;
 
 import busImpl.batallaNaval.JuegoBatallaNaval;
+import busImpl.usuario.Usuario;
 import comm.DesafioBatallaNavalVO;
 import comm.DesafioVO;
 import comm.RankingVO;
