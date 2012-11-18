@@ -12,6 +12,7 @@ import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 import java.util.ResourceBundle;
 
+import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.JPasswordField;
 import javax.swing.JButton;
@@ -60,7 +61,7 @@ public class CambiosSaldo extends JFrame {
 
 	private static final String PASSWORD = labels.getString("LABEL_PASSWORD_A");
 
-	private static final String MONTO = labels.getString("LABEL_MONTO");
+	private static final String MONTO = labels.getString("LABEL-MONTO");
 
 	private static final String CANCELAR = labels
 			.getString("LABEL_VOLVER_BOTON");
@@ -70,6 +71,8 @@ public class CambiosSaldo extends JFrame {
 	private static final String RESTAR = labels.getString("LABEL_BOTONRESTAR");
 
 	private static final String host = labels.getString("host"); // @jve:decl-index=0:
+
+	private static final String REMOTE = labels.getString("ERROR_CONEXION");
 
 	private UsuarioVO usuario=null;
 	/**
@@ -228,7 +231,7 @@ public class CambiosSaldo extends JFrame {
 			jButtonAniadir
 					.addActionListener(new java.awt.event.ActionListener() {
 						public void actionPerformed(java.awt.event.ActionEvent e) {
-
+							aniadir();
 						}
 					});
 		}
@@ -237,19 +240,20 @@ public class CambiosSaldo extends JFrame {
 
 	private void aniadir() {
 		try {
+			logger.debug("aniadoSaldo");
 			Registry registry = LocateRegistry.getRegistry(host);
 			ServiciosAdministrador stub1 = (ServiciosAdministrador) registry
 					.lookup("AdministrationServices");
 			int monto = Integer.parseInt(jTextFieldMonto.getText());
 			stub1.acreditarSaldo(jTextFieldNick.getText(), monto);
 		} catch (RemoteException e) {
-			// TODO Auto-generated catch block
+			JOptionPane.showMessageDialog(new JFrame(), REMOTE);
 			e.printStackTrace();
 		} catch (NotBoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (NoSeEncuentraUsuarioException e) {
-			// TODO Auto-generated catch block
+			JOptionPane.showMessageDialog(new JFrame(), "NO SE ENCUENTRA USUARIO EXCEPTION");
 			e.printStackTrace();
 		} catch (NumberFormatException e) {
 
