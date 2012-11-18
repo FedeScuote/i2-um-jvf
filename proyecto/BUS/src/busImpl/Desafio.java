@@ -3,6 +3,7 @@ package busImpl;
 import java.rmi.RemoteException;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.ResourceBundle;
 
 import org.apache.log4j.Logger;
 
@@ -23,6 +24,7 @@ import excepcionesB.NoHayDesafioException;
 import excepcionesB.NoHaySuficienteCreditoUsuarioException;
 
 public class Desafio implements ServiciosDesafio {
+	private static ResourceBundle constante = ResourceBundle.getBundle("bus");
 	private static Logger log = Logger.getLogger(Desafio.class);
 	private String usuarioDesafio;
 	private int idUsuario;
@@ -55,6 +57,7 @@ public class Desafio implements ServiciosDesafio {
 		this.estado = estado;
 	}
 
+	//metodo que retorno una lista de desafios, de usarios virtuales y/o reales
 	public ArrayList<DesafioBatallaNavalVO> getDesafios() throws RemoteException, NoHayDesafiosDisponiblesException{
 		log.debug("obtengo los desafios propuestos");
 		DesafioDAO dao = getDesafioDAO();
@@ -86,7 +89,7 @@ public class Desafio implements ServiciosDesafio {
 			return generarDesafios(dao1.getUsuariosVirtuales());
 		}
 	}
-
+	//metodo auxuliar que genera desafios por parte de usuarios virtuales
 	private ArrayList<DesafioBatallaNavalVO> generarDesafios(ArrayList<Usuario> usuariosVirtuales) {
 		log.debug("cantidad de usuarios reales desafiantes menor que 5");
 		log.debug("genero desafios por parte de usuarios virtuales");
@@ -151,7 +154,7 @@ public class Desafio implements ServiciosDesafio {
 
 	private static DesafioDAO getDesafioDAO() {
 		try {
-			return (DesafioDAO) Class.forName("daoImpl.DesafioDAODB")
+			return (DesafioDAO) Class.forName(constante.getString("CLASS_FOR_NAME_DESAFIO"))
 					.newInstance();
 		} catch (InstantiationException e) {
 			e.printStackTrace();
@@ -164,7 +167,7 @@ public class Desafio implements ServiciosDesafio {
 	}
 	private static UsuarioDAO getUsuarioDAO() {
 		try {
-			return (UsuarioDAO) Class.forName("daoImpl.UsuarioDAODB")
+			return (UsuarioDAO) Class.forName(constante.getString("CLASS_FOR_NAME_USUARIO"))
 					.newInstance();
 		} catch (InstantiationException e) {
 			e.printStackTrace();
@@ -178,6 +181,10 @@ public class Desafio implements ServiciosDesafio {
 	public void cancelarDesafio(UsuarioVO usuario) throws RemoteException {
 		DesafioDAO dao = getDesafioDAO();
 		dao.cancelarDesafio(usuario.getIdUsuario());
+	}
+	public boolean desafioDisponible(DesafioVO desafio) throws RemoteException {
+		DesafioDAO dao = getDesafioDAO();
+		return dao.desafioDisponible(desafio.getUsuario().getIdUsuario());
 	}
 
 
