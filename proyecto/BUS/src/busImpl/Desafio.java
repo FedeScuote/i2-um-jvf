@@ -176,8 +176,8 @@ public class Desafio implements ServiciosDesafio {
 		return null;
 	}
 	public void cancelarDesafio(UsuarioVO usuario) throws RemoteException {
-		// TODO Auto-generated method stub
-
+		DesafioDAO dao = getDesafioDAO();
+		dao.cancelarDesafio(usuario.getIdUsuario());
 	}
 
 
