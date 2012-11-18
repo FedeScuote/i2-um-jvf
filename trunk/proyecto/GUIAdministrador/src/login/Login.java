@@ -1,16 +1,31 @@
 package login;
 
-import javax.swing.SwingUtilities;
 import java.awt.BorderLayout;
-import javax.swing.JPanel;
-import javax.swing.JFrame;
-import java.awt.GridBagLayout;
-import javax.swing.JLabel;
 import java.awt.GridBagConstraints;
-import javax.swing.JTextField;
-import javax.swing.JPasswordField;
-import javax.swing.JButton;
+import java.awt.GridBagLayout;
 import java.awt.Insets;
+import java.rmi.registry.LocateRegistry;
+import java.rmi.registry.Registry;
+import java.util.ResourceBundle;
+
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JPasswordField;
+import javax.swing.JTextField;
+import javax.swing.SwingUtilities;
+
+import org.apache.log4j.Logger;
+
+import ventanaPrincipal.VentanaPrincipal;
+
+import comm.ServiciosAdministrador;
+import comm.ServiciosUsuario;
+import comm.UsuarioVO;
+import commExceptions.ContrasenaInvalidaException;
+import commExceptions.NoSeEncuentraUsuarioException;
 
 public class Login extends JFrame {
 
@@ -30,6 +45,16 @@ public class Login extends JFrame {
 
 	private JButton BotonLogin = null;
 
+	private static Logger logger = Logger.getLogger(Login.class);  //  @jve:decl-index=0:
+	private static ResourceBundle labels = ResourceBundle.getBundle("Gui");
+	private static final String host = labels.getString("host");
+	private static final String LABEL_USUARIO = labels.getString("LABEL_USUARIO_A");
+	private static final String LABEL_PASSWORD = labels.getString("LABEL_PWD_A");
+	private static final String LABEL_LOGIN = labels.getString("LABEL_LOGIN_BOTON_A");
+	private static final String	LABEL_USUARIO_INVALIDO = labels.getString("LABEL_USUARIO_INVALIDO");
+	private static final String	LABEL_ERROR = labels.getString("LABEL_ERROR");
+	private static final String LABEL_PASSWORD_INVALIDO = labels.getString("LABEL_PASSWORD_INVALIDO");
+	private static final String LABEL_ERROR_DESCONOCIDO = labels.getString("LABEL_ERROR_DESCONOCIDO");
 	/**
 	 * This method initializes PanelLogin
 	 *
@@ -37,6 +62,7 @@ public class Login extends JFrame {
 	 */
 	private JPanel getPanelLogin() {
 		if (PanelLogin == null) {
+			logger.debug("PanelLogin");
 			GridBagConstraints gridBagConstraints4 = new GridBagConstraints();
 			gridBagConstraints4.gridx = 0;
 			gridBagConstraints4.ipadx = 25;
@@ -53,7 +79,7 @@ public class Login extends JFrame {
 			gridBagConstraints2.gridx = 0;
 			gridBagConstraints2.gridy = 2;
 			PasswordLabel = new JLabel();
-			PasswordLabel.setText("Password");
+			PasswordLabel.setText(LABEL_PASSWORD);
 			GridBagConstraints gridBagConstraints1 = new GridBagConstraints();
 			gridBagConstraints1.fill = GridBagConstraints.VERTICAL;
 			gridBagConstraints1.gridy = 1;
@@ -65,7 +91,7 @@ public class Login extends JFrame {
 			gridBagConstraints.gridx = 0;
 			gridBagConstraints.gridy = 0;
 			Usuario = new JLabel();
-			Usuario.setText("Usuario");
+			Usuario.setText(LABEL_USUARIO);
 			PanelLogin = new JPanel();
 			PanelLogin.setLayout(new GridBagLayout());
 			PanelLogin.add(Usuario, gridBagConstraints);
@@ -109,9 +135,62 @@ public class Login extends JFrame {
 	private JButton getBotonLogin() {
 		if (BotonLogin == null) {
 			BotonLogin = new JButton();
-			BotonLogin.setText("LOGIN");
+			BotonLogin.setText(LABEL_LOGIN);
+			//ANIADO MI ACTIONLISTENER
+			BotonLogin.addActionListener(new java.awt.event.ActionListener() {
+				public void actionPerformed(java.awt.event.ActionEvent e) {
+					logearse();
+				}
+			});
 		}
 		return BotonLogin;
+	}
+	//METODO DONDE INTENTO LOGEAR
+	private void logearse(){
+		String datosUsuario = UsuarioTextField.getText();
+		char[] charPassword = PasswordFieldText.getPassword();
+		String datosPassword = Login
+				.deCharArrayAString(charPassword);
+		// son mis parametros ingreados que voy a autentificar
+		try { // try y catch para verificar si esta el usuario o
+			// no
+			Registry registry = LocateRegistry.getRegistry(host);
+			ServiciosAdministrador stub1 = (ServiciosAdministrador) registry
+					.lookup("AdministrationServices");
+			UsuarioVO response = stub1.login(datosUsuario,
+					datosPassword);
+			logger.debug("Se logeo");
+			this.dispose();
+			VentanaPrincipal l = new VentanaPrincipal();
+			l.setVisible(true);
+		} catch (Exception error) {
+			// si no se encuentra el usuario la excepcion es
+			// NoSeEncuentraUsuarioExcption
+			if (error instanceof NoSeEncuentraUsuarioException) {
+				JOptionPane.showMessageDialog(new JFrame(),LABEL_USUARIO_INVALIDO, LABEL_ERROR, JOptionPane.ERROR_MESSAGE);
+
+			} else {
+				if (error instanceof ContrasenaInvalidaException) {
+					JOptionPane.showMessageDialog(new JFrame(),
+							LABEL_PASSWORD_INVALIDO,LABEL_ERROR, JOptionPane.ERROR_MESSAGE);
+				} else {
+					logger.error("error de conexion");
+					error.printStackTrace();
+					JOptionPane.showMessageDialog(new JFrame(),
+							LABEL_ERROR_DESCONOCIDO, LABEL_ERROR, JOptionPane.ERROR_MESSAGE);
+					this.dispose();
+				}
+
+			}
+		}
+	}
+//	METODO QUE RECIBE UN ARRAY DE CHAR Y DEVUELVE UN STRING
+	public static String deCharArrayAString(char[] array) {
+		String aux = "";
+		for (int i = 0; i < array.length; i++) {
+			aux = aux + array[i];
+		}
+		return aux;
 	}
 
 	/**
