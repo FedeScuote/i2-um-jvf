@@ -21,8 +21,8 @@ public interface UsuarioDAO {
 	public boolean esUsuarioVirtual(String usuario);
 
 	//terminados y probados, el crédito a restar o sumar debe ser un valor positivo, esto devuelve el resultado
-	public void restarSaldo(int credito_a_restar, int idUsuario);
-	public void sumarSaldo(int credito_a_sumar, int idUsuario);
+	public int restarSaldo(int credito_a_restar, int idUsuario);
+	public int sumarSaldo(int credito_a_sumar, int idUsuario);
 
 	//terminado y probado, devuelve true si el usuario dispone del credito que se solicita
 	public boolean creditoSuficiente(int credito, int idUsuario);
