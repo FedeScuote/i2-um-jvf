@@ -20,6 +20,8 @@ public interface DesafioDAO {
 	//terminado, metodo para saber si luego de creado un desafio alguien lo acepto lo que transformo el desafio en una partida
 	public boolean aceptaronDesafio(int idUsuario);
 
+	//metodo que cancela un desafio propuesto por ese usuario
+	public void cancelarDesafio(int idUsuario);
 
 	public ArrayList getDesafiosBatallaNaval() throws NoHayDesafioException;
 
