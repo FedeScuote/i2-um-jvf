@@ -262,10 +262,20 @@ public class PartidaDAODB implements PartidaDAO {
 				int idOponente=u.getIdUsuarioB();
 
 				int credito =d.getMontoDesafio(idPartida);
-				int nuevoCreditoTotalUsuario=ud.getResultadoCredito(credito, idUsuario);
+
+				//se redondea para arriba
+				int credito05=(int)Math.floor(Math.rint(credito*0.05));
+				int credito95=credito-credito05;
+
+
+				int nuevoCreditoTotalUsuario=ud.getResultadoCredito(credito95, idUsuario);
 				logger.debug("Nuevo crédito del usuario ganador= "+nuevoCreditoTotalUsuario);
 				int nuevoCreditoTotalUsuario2=ud.getResultadoCredito(-credito, idOponente);
 				logger.debug("Nuevo crédito del usuario oponente perdedor= "+nuevoCreditoTotalUsuario2);
+
+				int idBanca=12; //es el usuario jvf que tiene idUsuario=12
+				int nuevoCreditoTotalUsuario3=ud.getResultadoCredito(credito05, idBanca);
+				logger.debug("Nuevo crédito de la banca= "+nuevoCreditoTotalUsuario3);
 
 				c.actualizarTuplaDeUnaColumna3("usuarios_has_juegos_desafios", "juegos_idJuego", "desafios_idDesafio", "usuarios_idusuario", 1, idPartida, idUsuario, "usuarioGanadorD", idUsuario);
 				c.actualizarTuplaDeUnaColumna3("usuarios_has_juegos_desafios", "juegos_idJuego", "desafios_idDesafio", "usuarios_idusuario", 1, idPartida, idOponente, "usuarioGanadorD", idUsuario);
