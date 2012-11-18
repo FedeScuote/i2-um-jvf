@@ -42,7 +42,7 @@ public class SegundaPantallaBatallaN extends SegundaPantalla {
 
 	private final static String host = null;
 
-	private final static int pause = 1000;
+
 
 	private ArrayList<DesafioBatallaNavalVO> arrayDesafio = null;
 
@@ -50,7 +50,21 @@ public class SegundaPantallaBatallaN extends SegundaPantalla {
 
 	private static Logger logger = Logger.getLogger(SegundaPantallaBatallaN.class);
 
-	private ResourceBundle labels = ResourceBundle.getBundle("Gui");
+	private static ResourceBundle labels = ResourceBundle.getBundle("Gui");
+	private static final String LABEL_ERROR_NO_USU_VP = labels.getString("LABEL-ERROR-NO-USU-VP");
+	private static final String LABEL_ERROR = labels.getString("LABEL_ERROR");
+	private static final String LABEL_ERROR_NO_DESAF_VP = labels.getString("LABEL-ERROR-NO-DESAF-VP");
+	private static final String LABEL_MONTO = labels.getString("LABEL-MONTO");
+	private static final String LABEL_TABLA_COLUMNA2 = labels.getString("LABEL_TABLA_COLUMNA2");
+	private static final String ERROR_CONEXION = labels.getString("ERROR_CONEXION");
+	private static final String LABEL_ERROR_DESCONOCIDO = labels.getString("LABEL_ERROR_DESCONOCIDO");
+	private static final String LABEL_INGRESE_MONTO = labels.getString("LABEL-INGRESE-MONTO");
+	private static final String LABEL_CREAR_DESAFIO_BOTON = labels.getString("LABEL-CREAR-DESAFIO-BOTON");
+	private static final String ERROR_CREAR_DESAFIO = labels.getString("ERROR_CREAR_DESAFIO");
+	private static final String LABEL_INGRESE_MONTO_CORRECTO = labels.getString("LABEL_INGRESE_MONTO_CORRECTO");
+
+
+	private final static int pause = (int)Integer.parseInt(labels.getString("LABEL_PAUSE_DESAFIO"));
 
 	public SegundaPantallaBatallaN(final UsuarioVO usuario) {
 		super();
@@ -77,8 +91,8 @@ public class SegundaPantallaBatallaN extends SegundaPantalla {
 				}
 				catch (Exception remoteExceptionrmi) {
 					if (remoteExceptionrmi instanceof NoSeEncuentraUsuarioException) {
-						JOptionPane.showMessageDialog(new JFrame(), labels.getString("LABEL-ERROR-NO-USU-VP"),
-								labels.getString("LABEL_ERROR"), JOptionPane.ERROR_MESSAGE);
+						JOptionPane.showMessageDialog(new JFrame(), LABEL_ERROR_NO_USU_VP,
+								LABEL_ERROR, JOptionPane.ERROR_MESSAGE);
 					} else {
 						System.err.println("Client exception: "
 								+ remoteExceptionrmi.toString());
@@ -130,8 +144,8 @@ public class SegundaPantallaBatallaN extends SegundaPantalla {
 			if (!(e instanceof NoHayDesafiosDisponiblesException)) {
 				e.printStackTrace();
 			} else {
-				JOptionPane.showMessageDialog(new JFrame(), labels.getString("LABEL-ERROR-NO-DESAF-VP"),
-						labels.getString("LABEL_ERROR"), JOptionPane.ERROR_MESSAGE);
+				JOptionPane.showMessageDialog(new JFrame(), LABEL_ERROR_NO_DESAF_VP,
+						LABEL_ERROR, JOptionPane.ERROR_MESSAGE);
 			}
 		}
 	}
@@ -150,7 +164,7 @@ public class SegundaPantallaBatallaN extends SegundaPantalla {
 			}
 		};
 		tabla.setModel(model);
-		model.setColumnIdentifiers(new String[] { labels.getString("LABEL-MONTO"), labels.getString("LABEL_TABLA_COLUMNA2") });
+		model.setColumnIdentifiers(new String[] { LABEL_MONTO, LABEL_TABLA_COLUMNA2 });
 		Iterator i = lista.iterator();
 		// relleno la tabla con data del arraylist
 		while (i.hasNext()) {
@@ -191,13 +205,13 @@ public class SegundaPantallaBatallaN extends SegundaPantalla {
 		} catch (Exception e) {
 			if (e instanceof RemoteException) {
 				JOptionPane.showMessageDialog(new JFrame(),
-						"Error en la conexion intente de nuevo", "ERROR",
+						ERROR_CONEXION, LABEL_ERROR,
 						JOptionPane.ERROR_MESSAGE);
 			} else {
 				e.printStackTrace();
 				JOptionPane
-						.showMessageDialog(new JFrame(), labels.getString("LABEL_ERROR_DESCONOCIDO"),
-								labels.getString("LABEL_ERROR"), JOptionPane.ERROR_MESSAGE);
+						.showMessageDialog(new JFrame(), LABEL_ERROR_DESCONOCIDO,
+								LABEL_ERROR, JOptionPane.ERROR_MESSAGE);
 				this.dispose();
 			}
 		}
@@ -209,12 +223,12 @@ public class SegundaPantallaBatallaN extends SegundaPantalla {
 			Registry registry = LocateRegistry.getRegistry(host);
 			ServiciosDesafio stub = (ServiciosDesafio) registry
 					.lookup("Desafio");
-			String monto = JOptionPane.showInputDialog(new JFrame(), labels.getString("LABEL-INGRESE-MONTO"), labels.getString("LABEL-CREAR-DESAFIO-BOTON"), JOptionPane.QUESTION_MESSAGE);
-			if(pasarStringAInt(monto) > 0){
+			String monto = JOptionPane.showInputDialog(new JFrame(), LABEL_INGRESE_MONTO, LABEL_CREAR_DESAFIO_BOTON, JOptionPane.QUESTION_MESSAGE);
+			if(pasarStringAInt(monto) > 0 ){
 				stub.crearDesafio(this.usuario,this.pasarStringAInt(monto));
 			}else{
 				JOptionPane.showMessageDialog(new JFrame(),
-						"NO SE PUDO CREAR EL DESAFIO", labels.getString("LABEL_ERROR"),
+						ERROR_CREAR_DESAFIO, LABEL_ERROR,
 						JOptionPane.ERROR_MESSAGE);
 			}
 
@@ -222,7 +236,9 @@ public class SegundaPantallaBatallaN extends SegundaPantalla {
 		}
 		catch (Exception remoteExceptionrmi) {
 			if (remoteExceptionrmi instanceof NoSeEncuentraUsuarioException) {
-				System.out.println("no existe usuario");
+				JOptionPane.showMessageDialog(new JFrame(),
+						LABEL_ERROR_NO_USU_VP, LABEL_ERROR,
+						JOptionPane.ERROR_MESSAGE);
 			} else {
 				System.err.println("Client exception: "
 						+ remoteExceptionrmi.toString());
@@ -240,7 +256,7 @@ public class SegundaPantallaBatallaN extends SegundaPantalla {
 			return montoInt;
 		}catch(NumberFormatException e){
 			JOptionPane.showMessageDialog(new JFrame(),
-					"Ingrese un numero correcto", "ERROR",
+					LABEL_INGRESE_MONTO_CORRECTO, LABEL_ERROR,
 					JOptionPane.ERROR_MESSAGE);
 			return -1;
 		}
