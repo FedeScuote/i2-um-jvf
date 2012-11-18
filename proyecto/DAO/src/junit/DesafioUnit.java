@@ -28,12 +28,8 @@ public class DesafioUnit extends TestCase {
 
 	public void testNoDesafioEnCursoVirtual(){
 		int idUsuario=3;
-		try {
-			assertEquals("Debería haber desafio disponible",false,dd.noDesafioEnCursoVirtual(idUsuario));
-		} catch (NoEsUsuarioVirtualException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		assertEquals("Debería haber desafio disponible",false,dd.desafioDisponibleTodosLosUsuarios(idUsuario));
+
 	}
 
 
