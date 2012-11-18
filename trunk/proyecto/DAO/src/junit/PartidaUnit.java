@@ -22,7 +22,6 @@ public class PartidaUnit extends TestCase {
 
 	public void testIdPartida(){
 		Conexion c=new Conexion();
-		c.disconnect();
 		System.out.println(p.idPartida2(3, c));
 		c.disconnect();
 	}
