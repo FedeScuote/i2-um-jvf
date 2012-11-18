@@ -1,10 +1,9 @@
 package pantallaElegirDesafioOJuego;
 
-import java.awt.Color;
-import java.awt.Rectangle;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
+import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
@@ -13,7 +12,6 @@ import java.util.Iterator;
 import java.util.ResourceBundle;
 
 import javax.swing.JFrame;
-import javax.swing.JList;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.Timer;
@@ -21,17 +19,11 @@ import javax.swing.table.DefaultTableModel;
 
 import org.apache.log4j.Logger;
 
-import util.EstadoElegirDesafio;
-import ventanaJuego.BatallaNavalVentana;
 import ventanaJuego.ColocarBarcos;
-import ventanaPrincipal.VentanaPrincipal;
 
 import comm.DesafioBatallaNavalVO;
-import comm.DesafioVO;
-import comm.RankingVO;
 import comm.ServiciosBatallaNaval;
 import comm.ServiciosDesafio;
-import comm.ServiciosRanking;
 import comm.UsuarioVO;
 import commExceptions.MontoInsuficienteException;
 import commExceptions.NoHayDesafiosDisponiblesException;
@@ -64,7 +56,7 @@ public class SegundaPantallaBatallaN extends SegundaPantalla {
 	private static final String ERROR_CREAR_DESAFIO = labels.getString("ERROR_CREAR_DESAFIO");
 	private static final String LABEL_INGRESE_MONTO_CORRECTO = labels.getString("LABEL_INGRESE_MONTO_CORRECTO");
 	private static final String LABEL_MONTO_INSUFICIENTE = labels.getString("LABEL_MONTO_INSUFICIENTE");
-
+	private static final String DESAFIOCANCELADO = labels.getString("DESAFIO_OCUPADO");
 
 	private final static int pause = (int)Integer.parseInt(labels.getString("LABEL_PAUSE_DESAFIO"));
 
@@ -183,12 +175,17 @@ public class SegundaPantallaBatallaN extends SegundaPantalla {
 						if (e.getClickCount() == 2) {
 							JTable target = (JTable) e.getSource();
 							int row = target.getSelectedRow();
+							if(desafioDisponible(pantalla.arrayDesafio
+									.get(row))){
 							pantalla.iniciarPartida(pantalla.arrayDesafio
 									.get(row), pantalla.usuario);
 							pantalla.dispose();
 							ColocarBarcos l = new ColocarBarcos(
 									pantalla.usuario);
 							l.setVisible(true);
+							}else{
+								JOptionPane.showMessageDialog(new JFrame(),DESAFIOCANCELADO);
+							}
 						}
 					}
 				});
@@ -269,6 +266,27 @@ public class SegundaPantallaBatallaN extends SegundaPantalla {
 					JOptionPane.ERROR_MESSAGE);
 			return -1;
 		}
+	}
+	private boolean desafioDisponible(DesafioBatallaNavalVO desafio){
+		Registry registry;
+		try {
+			registry = LocateRegistry.getRegistry(host);
+			ServiciosDesafio stub = (ServiciosDesafio) registry
+			.lookup("Desafio");
+			return stub.desafioDisponible(desafio);
+		} catch (RemoteException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return false;
+		} catch (NotBoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return false;
+		} catch(Exception e){
+			e.printStackTrace();
+			return false;
+		}
+
 	}
 
 }
