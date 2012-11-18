@@ -18,4 +18,5 @@ public interface ServiciosDesafio extends Remote{
 	//metodo para cancelar desafio
 	public void cancelarDesafio(UsuarioVO usuario) throws RemoteException;
 
+	public boolean desafioDisponible(DesafioVO desafio) throws RemoteException;
 }
