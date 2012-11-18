@@ -3,11 +3,15 @@ package ventanasAuxiliares;
 import java.awt.BorderLayout;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
+import java.rmi.RemoteException;
+import java.rmi.registry.LocateRegistry;
+import java.rmi.registry.Registry;
 import java.util.ResourceBundle;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
@@ -15,7 +19,11 @@ import org.apache.log4j.Logger;
 
 import ventanaPrincipal.VentanaPrincipal;
 
+import comm.ServiciosAdministrador;
 import comm.UsuarioVO;
+import commExceptions.ContrasenaInvalidaException;
+import commExceptions.NoSeEncuentraUsuarioException;
+import java.awt.Dimension;
 
 public class CambiarPassword extends JFrame {
 
@@ -37,10 +45,6 @@ public class CambiarPassword extends JFrame {
 
 	private JTextField jTextFieldNuevoPassword = null;
 
-	private JLabel jLabelConfirmar = null;
-
-	private JTextField jTextFieldConfirmar = null;
-
 	private JButton jButtonOK = null;
 
 	private JButton jButtonCancelar = null;
@@ -52,11 +56,18 @@ public class CambiarPassword extends JFrame {
 	private static ResourceBundle labels = ResourceBundle.getBundle("Gui");
 
 	private static final String NICK = labels.getString("LABEL_NICK_A");  //  @jve:decl-index=0:
-	private static final String PASSWORD = labels.getString("LABELS_PASSWORD_A");  //  @jve:decl-index=0:
-	private static final String CONFIRMAR = labels.getString("LABELS_CONFIRMAR_A");
+	private static final String PASSWORD = labels.getString("LABEL_PASSWORD_A");  //  @jve:decl-index=0:
+	private static final String CONFIRMAR = labels.getString("LABEL_CONFIRMACION_A");
 	private static final String PWDNUEVO = labels.getString("LABEL_PWDNUEVO_A");
 	private static final String BOTONCREAR = labels.getString("LABEL_ADMIN_CUENTA_A");
 	private static final String CANCELAR = labels.getString("LABEL_VOLVER_BOTON");
+	private static final String host = labels.getString("host");
+	private static final String REALIZADO = labels.getString("REALIZADOCONEXITO");
+	private static final String REMOTE = labels.getString("ERROR_CONEXION");
+	private static final String NOUSUEXC = labels.getString("LABEL_USUARIO_INVALIDO");  //  @jve:decl-index=0:
+	private static final String PWDINVALIDO = labels.getString("LABEL_PASSWORD_INVALIDO");
+
+
 				/**
 	 * This is the default constructor
 	 */
@@ -72,7 +83,7 @@ public class CambiarPassword extends JFrame {
 	 * @return void
 	 */
 	private void initialize() {
-		this.setSize(300, 200);
+		this.setSize(497, 316);
 		this.setContentPane(getJContentPane());
 		this.setTitle("JFrame");
 	}
@@ -108,17 +119,6 @@ public class CambiarPassword extends JFrame {
 			gridBagConstraints8.ipadx = 50;
 			gridBagConstraints8.ipady = 20;
 			gridBagConstraints8.gridy = 8;
-			GridBagConstraints gridBagConstraints7 = new GridBagConstraints();
-			gridBagConstraints7.fill = GridBagConstraints.VERTICAL;
-			gridBagConstraints7.gridy = 7;
-			gridBagConstraints7.weightx = 1.0;
-			gridBagConstraints7.ipadx = 100;
-			gridBagConstraints7.gridx = 0;
-			GridBagConstraints gridBagConstraints6 = new GridBagConstraints();
-			gridBagConstraints6.gridx = 0;
-			gridBagConstraints6.gridy = 6;
-			jLabelConfirmar = new JLabel();
-			jLabelConfirmar.setText(CONFIRMAR);
 			GridBagConstraints gridBagConstraints5 = new GridBagConstraints();
 			gridBagConstraints5.fill = GridBagConstraints.VERTICAL;
 			gridBagConstraints5.gridy = 5;
@@ -160,8 +160,6 @@ public class CambiarPassword extends JFrame {
 			jPanelCambiarPassword.add(getJTextFieldPasswordViejo(), gridBagConstraints3);
 			jPanelCambiarPassword.add(jLabelNuevoPassword, gridBagConstraints4);
 			jPanelCambiarPassword.add(getJTextFieldNuevoPassword(), gridBagConstraints5);
-			jPanelCambiarPassword.add(jLabelConfirmar, gridBagConstraints6);
-			jPanelCambiarPassword.add(getJTextFieldConfirmar(), gridBagConstraints7);
 			jPanelCambiarPassword.add(getJButtonOK(), gridBagConstraints8);
 			jPanelCambiarPassword.add(getJButtonCancelar(), gridBagConstraints9);
 		}
@@ -205,18 +203,6 @@ public class CambiarPassword extends JFrame {
 	}
 
 	/**
-	 * This method initializes jTextFieldConfirmar
-	 *
-	 * @return javax.swing.JTextField
-	 */
-	private JTextField getJTextFieldConfirmar() {
-		if (jTextFieldConfirmar == null) {
-			jTextFieldConfirmar = new JTextField();
-		}
-		return jTextFieldConfirmar;
-	}
-
-	/**
 	 * This method initializes jButtonOK
 	 *
 	 * @return javax.swing.JButton
@@ -225,8 +211,33 @@ public class CambiarPassword extends JFrame {
 		if (jButtonOK == null) {
 			jButtonOK = new JButton();
 			jButtonOK.setText(BOTONCREAR);
+			jButtonOK.addActionListener(new java.awt.event.ActionListener() {
+				public void actionPerformed(java.awt.event.ActionEvent e) {
+					cambiarPass();
+				}
+			});
 		}
 		return jButtonOK;
+	}
+	private void cambiarPass(){
+		try {
+			Registry registry = LocateRegistry.getRegistry(host);
+			ServiciosAdministrador stub1 = (ServiciosAdministrador) registry
+					.lookup("AdministrationServices");
+
+			stub1.cambiarPassword(jTextFieldNick.getText(), jTextFieldPasswordViejo.getText(), jTextFieldNuevoPassword.getText());
+			JOptionPane.showMessageDialog(new JFrame(), REALIZADO);
+		} catch (RemoteException e) {
+			JOptionPane.showMessageDialog(new JFrame(), REMOTE);
+		}
+		 catch (NoSeEncuentraUsuarioException e) {
+			JOptionPane.showMessageDialog(new JFrame(), NOUSUEXC);
+		}catch(ContrasenaInvalidaException e){
+			JOptionPane.showMessageDialog(new JFrame(), PWDINVALIDO);
+		}
+		 catch(Exception e ){
+			 JOptionPane.showMessageDialog(new JFrame(), PWDINVALIDO);
+		}
 	}
 
 	/**
@@ -242,4 +253,4 @@ public class CambiarPassword extends JFrame {
 		return jButtonCancelar;
 	}
 
-}
+}  //  @jve:decl-index=0:visual-constraint="10,10"
