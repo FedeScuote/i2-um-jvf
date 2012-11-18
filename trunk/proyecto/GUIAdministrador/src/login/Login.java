@@ -160,8 +160,8 @@ public class Login extends JFrame {
 			UsuarioVO response = stub1.login(datosUsuario,
 					datosPassword);
 			logger.debug("Se logeo");
+			VentanaPrincipal l = new VentanaPrincipal(response);
 			this.dispose();
-			VentanaPrincipal l = new VentanaPrincipal();
 			l.setVisible(true);
 		} catch (Exception error) {
 			// si no se encuentra el usuario la excepcion es
@@ -193,18 +193,6 @@ public class Login extends JFrame {
 		return aux;
 	}
 
-	/**
-	 * @param args
-	 */
-	public static void main(String[] args) {
-		SwingUtilities.invokeLater(new Runnable() {
-			public void run() {
-				Login thisClass = new Login();
-				thisClass.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-				thisClass.setVisible(true);
-			}
-		});
-	}
 
 	/**
 	 * This is the default constructor
@@ -212,6 +200,8 @@ public class Login extends JFrame {
 	public Login() {
 		super();
 		initialize();
+		this.setExtendedState(JFrame.MAXIMIZED_BOTH);
+		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	}
 
 	/**

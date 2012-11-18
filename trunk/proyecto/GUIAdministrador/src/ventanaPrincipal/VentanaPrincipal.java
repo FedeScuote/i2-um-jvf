@@ -4,17 +4,17 @@ import java.awt.BorderLayout;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
+import java.util.ResourceBundle;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
+import login.Login;
+
 import org.apache.log4j.Logger;
 
-import java.awt.Dimension;
-import java.util.ResourceBundle;
-
-import login.Login;
+import comm.UsuarioVO;
 
 public class VentanaPrincipal extends JFrame {
 
@@ -41,13 +41,18 @@ public class VentanaPrincipal extends JFrame {
 	private static final String LABEL_COBRAR = labels.getString("LABEL_COBRAR");
 	private static final String LABEL_ANIADIR_SALDO = labels.getString("LABEL_ANIADIR_SALDO");
 	private static final String LABEL_ESTADISTICAS = labels.getString("LABEL_ESTADISTICAS");
+	private static final String DESCONECTAR = labels.getString("LABEL_DESCONECTAR");
+
+	private JButton jButtonDesconectar = null;
+	private UsuarioVO usuario = null;
 	/**
 	 * This is the default constructor
 	 */
-	public VentanaPrincipal() {
+	public VentanaPrincipal(UsuarioVO usu) {
 		super();
 		logger.trace("Constructor Ventana Principal");
 		initialize();
+		usuario= usu;
 	}
 
 	/**
@@ -56,7 +61,7 @@ public class VentanaPrincipal extends JFrame {
 	 * @return void
 	 */
 	private void initialize() {
-		this.setSize(526, 312);
+		this.setSize(579, 374);
 		this.setContentPane(getJContentPane());
 		this.setTitle("JFrame");
 	}
@@ -84,6 +89,11 @@ public class VentanaPrincipal extends JFrame {
 	private JPanel getPanelVentanaPrincipal() {
 		if (PanelVentanaPrincipal == null) {
 			logger.debug("PanelVentanaPrincipal");
+			GridBagConstraints gridBagConstraints11 = new GridBagConstraints();
+			gridBagConstraints11.gridx = 0;
+			gridBagConstraints11.insets = new Insets(30, 0, 0, 0);
+			gridBagConstraints11.fill = GridBagConstraints.HORIZONTAL;
+			gridBagConstraints11.gridy = 5;
 			GridBagConstraints gridBagConstraints3 = new GridBagConstraints();
 			gridBagConstraints3.gridx = 0;
 			gridBagConstraints3.fill = GridBagConstraints.HORIZONTAL;
@@ -116,6 +126,7 @@ public class VentanaPrincipal extends JFrame {
 			PanelVentanaPrincipal.add(getBotonCobrar(), gridBagConstraints2);
 			PanelVentanaPrincipal.add(getBotonAumentarSaldo(), gridBagConstraints21);
 			PanelVentanaPrincipal.add(getBotonEstadisticas(), gridBagConstraints3);
+			PanelVentanaPrincipal.add(getJButtonDesconectar(), gridBagConstraints11);
 		}
 		return PanelVentanaPrincipal;
 	}
@@ -129,8 +140,19 @@ public class VentanaPrincipal extends JFrame {
 		if (BotonCrearCuenta == null) {
 			BotonCrearCuenta = new JButton();
 			BotonCrearCuenta.setText(CREAR_CUENTA);
+			BotonCrearCuenta.addActionListener(new java.awt.event.ActionListener() {
+				public void actionPerformed(java.awt.event.ActionEvent e) {
+					cambiarACrearCuenta();
+				}
+			});
 		}
 		return BotonCrearCuenta;
+	}
+	//METODO QUE CAMBIA A VENTANA CREAR CUENTA
+	private void cambiarACrearCuenta(){
+		CrearCuenta l = new CrearCuenta(usuario);
+		l.setVisible(true);
+		this.dispose();
 	}
 
 	/**
@@ -183,6 +205,29 @@ public class VentanaPrincipal extends JFrame {
 			botonEstadisticas.setText(LABEL_ESTADISTICAS);
 		}
 		return botonEstadisticas;
+	}
+
+	/**
+	 * This method initializes jButtonDesconectar
+	 *
+	 * @return javax.swing.JButton
+	 */
+	private JButton getJButtonDesconectar() {
+		if (jButtonDesconectar == null) {
+			jButtonDesconectar = new JButton();
+			jButtonDesconectar.setText(DESCONECTAR);
+			jButtonDesconectar.addActionListener(new java.awt.event.ActionListener() {
+				public void actionPerformed(java.awt.event.ActionEvent e) {
+					desconectar();
+				}
+			});
+		}
+		return jButtonDesconectar;
+	}
+	public void desconectar(){
+		this.dispose();
+		Login l = new Login();
+		l.setVisible(true);
 	}
 
 }  //  @jve:decl-index=0:visual-constraint="10,10"
