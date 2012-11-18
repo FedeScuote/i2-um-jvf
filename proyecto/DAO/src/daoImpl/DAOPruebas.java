@@ -12,12 +12,18 @@ public class DAOPruebas {
 
 
 	public static void main(String[] args) {
-		int credito=19;
 
-		int credito05=(int)Math.floor(Math.rint(credito*0.05));
-		int credito95=credito-credito05;
-		System.out.println(credito95);
-		System.out.println(credito05);
+		ReporteDAODB r=new ReporteDAODB();
+		System.out.println(r.getReporte().getMontoTotalComisionesJVF());
+		System.out.println(r.getReporte().getMontoTotalNoVirtuales());
+		System.out.println(r.getReporte().getMontoTotalVirtuales());
+
+//		int credito = 19;
+//
+//		int credito05 = (int) Math.floor(Math.rint(credito * 0.05));
+//		int credito95 = credito - credito05;
+//		System.out.println(credito95);
+//		System.out.println(credito05);
 //		RankingDAODB r=new RankingDAODB();
 //		try {
 //			System.out.println("Ranking ganadas jhirata= "+((Ranking)r.getRankingGeneral().get(1)).getUsuario());
