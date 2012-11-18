@@ -59,6 +59,12 @@ public class Login extends JFrame {
 	private static final String LABEL_USERNAME_KEY = labels.getString("LABEL_USERNAME");
 	private static final String NOMBRE_VENTANA = labels.getString("nombre_empresa");
 	private static final String LABEL_BOTON_LOGIN = labels.getString("LABEL_BOTON_LOGIN");
+	private static final String LABEL_BIENVENIDO = labels.getString("LABEL_BIENVENID");
+	private static final String	LABEL_USUARIO_INVALIDO = labels.getString("LABEL_USUARIO_INVALIDO");
+	private static final String	LABEL_ERROR = labels.getString("LABEL_ERROR");
+	private static final String LABEL_PASSWORD_INVALIDO = labels.getString("LABEL_PASSWORD_INVALIDO");
+	private static final String LABEL_ERROR_DESCONOCIDO = labels.getString("LABEL_ERROR_DESCONOCIDO");
+	private static final String LABEL_PARTIDA_EN_CURSO = labels.getString("LABEL_PARTIDA_EN_CURSO");
 
 	/**
 	 * This method initializes PanelLogin
@@ -275,24 +281,24 @@ public class Login extends JFrame {
 								datosPassword);
 						logger.debug("Se logeo");
 						JOptionPane.showMessageDialog(glassPane,
-								labels.getString("LABEL_BIENVENIDO")+" "+response.getNombreB());
+								LABEL_BIENVENIDO+" "+response.getNombreB());
 					    partidaEnCurso(response);
 
 					} catch (Exception error) {
 						// si no se encuentra el usuario la excepcion es
 						// NoSeEncuentraUsuarioExcption
 						if (error instanceof NoSeEncuentraUsuarioException) {
-							JOptionPane.showMessageDialog(new JFrame(),labels.getString("LABEL_USUARIO_INVALIDO"), labels.getString("LABEL_ERROR"), JOptionPane.ERROR_MESSAGE);
+							JOptionPane.showMessageDialog(new JFrame(),LABEL_USUARIO_INVALIDO, LABEL_ERROR, JOptionPane.ERROR_MESSAGE);
 
 						} else {
 							if (error instanceof ContrasenaInvalidaException) {
 								JOptionPane.showMessageDialog(new JFrame(),
-										labels.getString("LABEL_PASSWORD_INVALIDO"), labels.getString("LABEL_ERROR"), JOptionPane.ERROR_MESSAGE);
+										LABEL_PASSWORD_INVALIDO,LABEL_ERROR, JOptionPane.ERROR_MESSAGE);
 							} else {
 								logger.error("error de conexion");
 								error.printStackTrace();
 								JOptionPane.showMessageDialog(new JFrame(),
-										labels.getString("LABEL_PASSWORD_INVALIDO"), labels.getString("LABEL_ERROR"), JOptionPane.ERROR_MESSAGE);
+										LABEL_ERROR_DESCONOCIDO, LABEL_ERROR, JOptionPane.ERROR_MESSAGE);
 								pantalla.dispose();
 							}
 
@@ -342,14 +348,14 @@ public class Login extends JFrame {
 			Registry registry = LocateRegistry.getRegistry(host);
 			ServiciosBatallaNaval stub = (ServiciosBatallaNaval) registry.lookup("BatallaNavalServices");
 			if(stub.hayPartidaEnCurso(usuario) && (stub.inicioPartida(usuario))){//si tengo partida en curso y inicio
-				JOptionPane.showMessageDialog(new JFrame(),labels.getString("LABEL_PARTIDA_EN_CURSO"), labels.getString("nombre_empresa"), JOptionPane.INFORMATION_MESSAGE);
+				JOptionPane.showMessageDialog(new JFrame(),LABEL_PARTIDA_EN_CURSO, NOMBRE_VENTANA, JOptionPane.INFORMATION_MESSAGE);
 				BatallaNaval l = new BatallaNaval(usuario);
 				logger.debug("Partida en curso?");
 				this.setVisible(false);
 				l.setVisible(true);
 				this.dispose();
 			}else if(stub.hayPartidaEnCurso(usuario)){
-				JOptionPane.showMessageDialog(new JFrame(),labels.getString("LABEL_PARTIDA_EN_CURSO"), labels.getString("nombre_empresa"), JOptionPane.INFORMATION_MESSAGE);
+				JOptionPane.showMessageDialog(new JFrame(),LABEL_PARTIDA_EN_CURSO, NOMBRE_VENTANA, JOptionPane.INFORMATION_MESSAGE);
 				ColocarBarcos l = new ColocarBarcos(usuario, stub.distribucionPlus(usuario));
 				logger.debug("Partida en curso?");
 				this.setVisible(false);
