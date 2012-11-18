@@ -11,6 +11,7 @@ import java.awt.event.ActionListener;
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
+import java.util.ResourceBundle;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -91,6 +92,34 @@ public class BatallaNaval extends JFrame {
 
 	private JLabel indicadorTurno = null;
 
+	private JLabel jLabelBarcosHundidos = null;
+
+	private static ResourceBundle labels = ResourceBundle.getBundle("Gui");
+	private static ResourceBundle constantes = ResourceBundle.getBundle("bus");
+	private final static String ESTUTURNO = labels.getString("LABEL_ESTURNO");
+	private final static String NOESTUTURNO = labels.getString("LABEL_NOESTURNO");
+	private final static String LOSIENTO = labels.getString("LABEL_LOSIENTO");
+	private final static String HASPERDIDO = labels.getString("LABEL_PERDIDO");
+	private final static String TITULO = labels.getString("nombre_empresa");
+	private final static String URL = labels.getString("LABEL_URLFONDOJUEGO");
+	private final static String HASHUNDIDO = labels.getString("LABEL_BARCOSHUNDIDOS1");
+	private final static String BARCOS = labels.getString("LABEL_BARCOSHUNDIDOS2");
+	private final static String NOMBREJUEGO = labels.getString("LABEL_NOMBREJUEGO");
+	private final static String HASHUNDIDOUNBARCO = labels.getString("LABEL_HUNDIDO");
+	private final static String GANAR = labels.getString("LABEL_GANADO");
+	private final static String PERDER = labels.getString("LABEL_PERDIDO");
+	private final static String ENHORABUENA = labels.getString("LABEL_ENHORABUENA");
+	private final static String ESPERA = labels.getString("LABEL_ESPERA");
+	private final static String LABEL_ERROR = labels.getString("LABEL_ERROR");
+	private final static String ERRORDECONEXION = labels.getString("ERROR_CONEXION");
+	private final static String ERRORDESCONOCIDO = labels.getString("LABEL_ERROR_DESCONOCIDO");
+	private final static String AGUA = constantes.getString("AGUA");
+	private final static String TOCADO = constantes.getString("TOCADO");
+	private final static String HUNDIDO = constantes.getString("HUNDIDO");
+	private final static String OCUPADO = constantes.getString("OCUPADO");
+	private final static String TIROERRADO = constantes.getString("TIROERRADO");
+
+
 	/**
 	 * This is the default constructor
 	 */
@@ -119,18 +148,18 @@ public class BatallaNaval extends JFrame {
 			public void actionPerformed(ActionEvent evt) {
 				esMiTurno = preguntarTurno(usuario);
 				if (!esMiTurno && termino == false) {
-					indicadorTurno.setText("NO ES TU TURNO");
+					indicadorTurno.setText(ESTUTURNO);
 					PanelCentro.repaint();
 					temporizador.restart();
 				} else if (termino == false) {
-					indicadorTurno.setText("ES TU TURNO");
+					indicadorTurno.setText(NOESTUTURNO);
 					PanelCentro.repaint();
 					refrescarTableroJugador();
 					refrescarTableroOponente();
 					if (termino == false && perdi()) {
 						termino=true;
-						JOptionPane.showMessageDialog(new JFrame(), "HAS PERDIDO",
-								"LO SIENTO", JOptionPane.INFORMATION_MESSAGE);
+						JOptionPane.showMessageDialog(new JFrame(), HASPERDIDO,
+								LOSIENTO, JOptionPane.INFORMATION_MESSAGE);
 						temporizador.stop();
 						terminoPartida(false);// solo termina mi partida cuando perdi
 						dispose();
@@ -178,9 +207,9 @@ public class BatallaNaval extends JFrame {
 	 * @return void
 	 */
 	private void initialize() {
-		this.setSize(885, 603);
+		this.setSize(1206, 603);
 		this.setContentPane(getJContentPane());
-		this.setTitle("JFrame");
+		this.setTitle(TITULO);
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.setExtendedState(JFrame.MAXIMIZED_BOTH);
 	}
@@ -206,7 +235,7 @@ public class BatallaNaval extends JFrame {
 	 */
 	private ImagePanel getPanelBatallaNaval() {
 		if (PanelBatallaNaval == null) {
-			PanelBatallaNaval = new ImagePanel(new ImageIcon("src/fondoBatallaNaval.jpg").getImage());
+			PanelBatallaNaval = new ImagePanel(new ImageIcon(URL).getImage());
 			PanelBatallaNaval.setLayout(new BorderLayout());
 			PanelBatallaNaval.add(getPanelCentro(), BorderLayout.CENTER);
 			PanelBatallaNaval.add(getPanelSuperior(), BorderLayout.NORTH);
@@ -224,17 +253,22 @@ public class BatallaNaval extends JFrame {
 	 */
 	private JPanel getPanelCentro() {
 		if (PanelCentro == null) {
+			GridBagConstraints gridBagConstraints = new GridBagConstraints();
+			gridBagConstraints.gridx = 0;
+			gridBagConstraints.gridy = 1;
+			jLabelBarcosHundidos = new JLabel();
+			jLabelBarcosHundidos.setText(HASHUNDIDO+cantidadBarcosHundidos+BARCOS);
+			jLabelBarcosHundidos.setOpaque(false);
 			GridBagConstraints gridBagConstraints8 = new GridBagConstraints();
 			gridBagConstraints8.gridx = 0;
 			gridBagConstraints8.gridy = 0;
 			indicadorTurno = new JLabel();
-			indicadorTurno.setText("NO ES TU TURNO");
+			indicadorTurno.setText(NOESTUTURNO);
 			indicadorTurno.setOpaque(false);
 			PanelCentro = new TranslucentPanel(Color.white);
 			PanelCentro.setLayout(new GridBagLayout());
 			PanelCentro.add(indicadorTurno, gridBagConstraints8);
-
-
+			PanelCentro.add(jLabelBarcosHundidos, gridBagConstraints);
 		}
 		return PanelCentro;
 	}
@@ -246,7 +280,7 @@ public class BatallaNaval extends JFrame {
 	 */
 	private JPanel getPanelSuperior() {
 		if (PanelSuperior == null) {
-			PanelSuperior = new AnimatedPanelString("BATALLA NAVAL");
+			PanelSuperior = new AnimatedPanelString(NOMBREJUEGO);
 			PanelSuperior.setPreferredSize(new Dimension(0, this.getHeight()/5));
 			PanelSuperior.setLayout(new GridBagLayout());
 		}
@@ -378,18 +412,18 @@ public class BatallaNaval extends JFrame {
 				stub.disparar(this.usuario, fila, columna);
 				esMiTurno = false;
 				this.refrescarTableroOponente();
-				indicadorTurno.setText("NO ES TU TURNO");
+				indicadorTurno.setText(NOESTUTURNO);
 				if (stub.hundi(this.usuario)) {
 					cantidadBarcosHundidos++;
 					JOptionPane.showMessageDialog(new JFrame(),
-							"HAS HUNDIDO UN BARCO", "ENHORABUENA",
+							HASHUNDIDOUNBARCO, ENHORABUENA,
 							JOptionPane.INFORMATION_MESSAGE);
 				}
 				//termino es para que salten eventos extras del timer
 				if (termino == false && this.gane()) {
 					termino=true;
-					JOptionPane.showMessageDialog(new JFrame(), "HAS GANADO",
-							"ENHORABUENA", JOptionPane.INFORMATION_MESSAGE);
+					JOptionPane.showMessageDialog(new JFrame(), GANAR,
+							ENHORABUENA, JOptionPane.INFORMATION_MESSAGE);
 					temporizador.stop();
 					try {
 						if (stub.esBot(this.usuario)) {
@@ -409,8 +443,8 @@ public class BatallaNaval extends JFrame {
 
 			}
 		} else {
-			JOptionPane.showMessageDialog(new JFrame(), "NO ES TU TURNO",
-					"ESPERA", JOptionPane.ERROR_MESSAGE);
+			JOptionPane.showMessageDialog(new JFrame(), NOESTUTURNO,
+					ESPERA, JOptionPane.ERROR_MESSAGE);
 		}
 	}
 
@@ -447,13 +481,13 @@ public class BatallaNaval extends JFrame {
 		} catch (Exception e) {
 			if (e instanceof RemoteException) {
 				JOptionPane
-						.showMessageDialog(new JFrame(), "ERROR DE CONEXION",
-								"ERROR", JOptionPane.ERROR_MESSAGE);
+						.showMessageDialog(new JFrame(), ERRORDECONEXION,
+								LABEL_ERROR, JOptionPane.ERROR_MESSAGE);
 			} else {
 				e.printStackTrace();
 				JOptionPane
-						.showMessageDialog(new JFrame(), "ERROR DESCONOCIDO",
-								"ERROR", JOptionPane.ERROR_MESSAGE);
+						.showMessageDialog(new JFrame(), ERRORDESCONOCIDO,
+								LABEL_ERROR, JOptionPane.ERROR_MESSAGE);
 				this.dispose();
 			}
 		}
@@ -472,13 +506,13 @@ public class BatallaNaval extends JFrame {
 		} catch (Exception e) {
 			if (e instanceof RemoteException) {
 				JOptionPane
-						.showMessageDialog(new JFrame(), "ERROR DE CONEXION",
-								"ERROR", JOptionPane.ERROR_MESSAGE);
+						.showMessageDialog(new JFrame(), ERRORDECONEXION,
+								LABEL_ERROR, JOptionPane.ERROR_MESSAGE);
 			} else {
 				e.printStackTrace();
 				JOptionPane
-						.showMessageDialog(new JFrame(), "ERROR DESCONOCIDO",
-								"ERROR", JOptionPane.ERROR_MESSAGE);
+						.showMessageDialog(new JFrame(), ERRORDESCONOCIDO,
+								LABEL_ERROR, JOptionPane.ERROR_MESSAGE);
 				this.dispose();
 			}
 		}
@@ -494,16 +528,16 @@ public class BatallaNaval extends JFrame {
 			jArrayBotones = 0;
 			for (int j = 0; j < tabla.length; j++) {
 				jArrayBotones++;
-				if (tabla[i][j].getEstado().equals("AGUA")) {
+				if (tabla[i][j].getEstado().equals(AGUA)) {
 					botones[iArrayBotones][jArrayBotones]
 							.setBackground(Color.BLUE);
-				} else if (tabla[i][j].getEstado().equals("OCUPADO")) {
+				} else if (tabla[i][j].getEstado().equals(OCUPADO)) {
 					botones[iArrayBotones][jArrayBotones]
 							.setBackground(Color.BLACK);
-				} else if (tabla[i][j].getEstado().equals("TOCADO")) {
+				} else if (tabla[i][j].getEstado().equals(TOCADO)) {
 					botones[iArrayBotones][jArrayBotones]
 							.setBackground(Color.GREEN);
-				} else if (tabla[i][j].getEstado().equals("HUNDIDO")) {
+				} else if (tabla[i][j].getEstado().equals(HUNDIDO)) {
 					botones[iArrayBotones][jArrayBotones]
 							.setBackground(Color.GREEN);
 				} else {
@@ -529,8 +563,8 @@ public class BatallaNaval extends JFrame {
 		} catch (Exception e) {
 			if (e instanceof RemoteException) {
 				JOptionPane
-						.showMessageDialog(new JFrame(), "ERROR DE CONEXION",
-								"ERROR", JOptionPane.ERROR_MESSAGE);
+						.showMessageDialog(new JFrame(), ERRORDECONEXION,
+								LABEL_ERROR, JOptionPane.ERROR_MESSAGE);
 			}
 
 			e.printStackTrace();
@@ -550,8 +584,8 @@ public class BatallaNaval extends JFrame {
 		} catch (Exception e) {
 			if (e instanceof RemoteException) {
 				JOptionPane
-						.showMessageDialog(new JFrame(), "ERROR DE CONEXION",
-								"ERROR", JOptionPane.ERROR_MESSAGE);
+						.showMessageDialog(new JFrame(), ERRORDECONEXION,
+								LABEL_ERROR, JOptionPane.ERROR_MESSAGE);
 			}
 
 			e.printStackTrace();
@@ -571,8 +605,8 @@ public class BatallaNaval extends JFrame {
 		} catch (Exception e) {
 			if (e instanceof RemoteException) {
 				JOptionPane
-						.showMessageDialog(new JFrame(), "ERROR DE CONEXION",
-								"ERROR", JOptionPane.ERROR_MESSAGE);
+						.showMessageDialog(new JFrame(), ERRORDECONEXION,
+								LABEL_ERROR, JOptionPane.ERROR_MESSAGE);
 			}
 
 			e.printStackTrace();
