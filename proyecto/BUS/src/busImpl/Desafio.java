@@ -3,6 +3,10 @@ package busImpl;
 import java.rmi.RemoteException;
 import java.util.ArrayList;
 import java.util.Date;
+
+import org.apache.log4j.Logger;
+
+import busImpl.batallaNaval.JuegoBatallaNaval;
 import comm.DesafioBatallaNavalVO;
 import comm.DesafioVO;
 import comm.RankingVO;
@@ -17,7 +21,7 @@ import daoInterfaces.UsuarioDAO;
 import excepcionesB.NoHayDesafioException;
 
 public class Desafio implements ServiciosDesafio {
-
+	private static Logger log = Logger.getLogger(Desafio.class);
 	private String usuarioDesafio;
 	private int idUsuario;
 	private int idDesafio;
@@ -50,6 +54,7 @@ public class Desafio implements ServiciosDesafio {
 	}
 
 	public ArrayList<DesafioBatallaNavalVO> getDesafios() throws RemoteException, NoHayDesafiosDisponiblesException{
+		log.debug("obtengo los desafios propuestos");
 		DesafioDAO dao = getDesafioDAO();
 		UsuarioDAO dao1 = getUsuarioDAO();
 		ArrayList<DesafioBatallaNavalVO> aux = new ArrayList<DesafioBatallaNavalVO>();
@@ -57,6 +62,7 @@ public class Desafio implements ServiciosDesafio {
 			ArrayList desafiosBDD=dao.getDesafiosUsuariosDisponibleBatallaNaval();
 			int i=0;
 			while(i<desafiosBDD.size()){
+				log.debug("busco los desafios reales");
 				DesafioBatallaNavalVO nuevo = new DesafioBatallaNavalVO();
 				UsuarioVO usu = new UsuarioVO(((Desafio)desafiosBDD.get(i)).getUsuarioDesafio());
 				usu.setIdUsuario(((Desafio)desafiosBDD.get(i)).getIdUsuario());
@@ -66,16 +72,30 @@ public class Desafio implements ServiciosDesafio {
 				aux.add(nuevo);
 				i++;
 			}
+			if(desafiosBDD.size()<5){
+				ArrayList<DesafioBatallaNavalVO> aux1=generarDesafios(dao1.getUsuariosVirtuales());
+				for(int j=0;j<aux1.size();j++){
+					aux.add(aux1.get(j));
+				}
+			}
 			return aux;
 		}catch(NoHayDesafioException e){
+			log.debug("No hay desafios reales");
 			return generarDesafios(dao1.getUsuariosVirtuales());
 		}
 	}
 
 	private ArrayList<DesafioBatallaNavalVO> generarDesafios(ArrayList<Usuario> usuariosVirtuales) {
+		log.debug("cantidad de usuarios reales desafiantes menor que 5");
+		log.debug("genero desafios por parte de usuarios virtuales");
 		ArrayList<DesafioBatallaNavalVO> desafios=new ArrayList<DesafioBatallaNavalVO>();
-		int cantDesafios=1+(int)(Math.random()*usuariosVirtuales.size());
-		if(cantDesafios>usuariosVirtuales.size()){
+		int cantDesafios=0;
+		if(usuariosVirtuales.size()!=0){
+		if(usuariosVirtuales.size()>=5){
+			log.debug("tengo mas de 5 usuarios virtuales disponibles");
+			cantDesafios=5;
+		}else{
+			log.debug("no tengo mas de 5 usuarios virtuales disponibles");
 			cantDesafios=usuariosVirtuales.size();
 		}
 		for(int i=0;i<cantDesafios;i++){
@@ -87,6 +107,8 @@ public class Desafio implements ServiciosDesafio {
 			nuevo.setApuesta(apuesta);
 			nuevo.setUsuario(usuarioVOBot);
 			desafios.add(nuevo);
+		}
+
 		}
 		return desafios;
 	}
