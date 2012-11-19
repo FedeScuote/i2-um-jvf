@@ -107,6 +107,8 @@ public class CambiosSaldo extends JFrame {
 		this.setSize(743, 403);
 		this.setContentPane(getJContentPane());
 		this.setTitle("JFrame");
+		this.setExtendedState(JFrame.MAXIMIZED_BOTH);
+		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	}
 
 	/**
