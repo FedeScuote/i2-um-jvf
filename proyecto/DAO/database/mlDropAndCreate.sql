@@ -32,7 +32,7 @@ DROP TABLE disparos;
 -- http://www.phpmyadmin.net
 --
 -- Servidor: localhost
--- Tiempo de generación: 18-11-2012 a las 20:05:57
+-- Tiempo de generación: 19-11-2012 a las 02:03:31
 -- Versión del servidor: 5.5.16
 -- Versión de PHP: 5.3.8
 
@@ -165,15 +165,20 @@ CREATE TABLE IF NOT EXISTS `ranking` (
 --
 
 INSERT INTO `ranking` (`usuarios_idUsuario`, `juegos_idJuego`, `ganadas`) VALUES
-(6, 2, 1),
-(3, 2, 3),
-(8, 2, 2),
-(1, 1, 7),
-(3, 1, 5),
-(4, 1, 2),
-(8, 1, 4),
-(2, 1, 1),
-(6, 1, 1);
+(3, 1, 4),
+(4, 1, 9),
+(5, 1, 5),
+(6, 1, 78),
+(7, 1, 87),
+(8, 1, 98),
+(9, 1, 78),
+(10, 1, 33),
+(18, 1, 1),
+(12, 1, 1),
+(14, 1, 3),
+(15, 1, 4),
+(16, 1, 2),
+(17, 1, 1);
 
 -- --------------------------------------------------------
 
@@ -244,7 +249,7 @@ INSERT INTO `usuarios` (`idusuario`, `usuario`, `clave`, `nivelPrivilegio`, `vir
 (3, 'fscuoteguazza', 'fs', 1, 0, 29850, 4, 'Federico', 'Scuoteguazza', 'Inglaterra'),
 (4, 'vtuyare', 'vt', 1, 0, 30000, 9, 'Vicente', 'Tuyare', 'Uruguay'),
 (5, 'jhirata', 'jh', 1, 0, 30200, 5, 'John', 'Hirata', 'Inglaterra'),
-(6, 'dgonzalez', 'dg', 1, 1, 9100, 78, 'Diego', 'Gonzalez', 'Inglaterra'),
+(6, 'dgonzalez', 'dg', 1, 0, 9100, 78, 'Diego', 'Gonzalez', 'Inglaterra'),
 (7, 'fkono', 'fk', 1, 1, 30000, 87, 'Fumie', 'Kono', 'Inglaterra'),
 (8, 'thirata', 'th', 1, 1, 5000, 98, 'Tomiyoshi', 'Hirata', 'Inglaterra'),
 (9, 'jdiaz', 'jd', 1, 1, 5000, 78, 'Javier', 'Diaz', 'Uruguay'),
