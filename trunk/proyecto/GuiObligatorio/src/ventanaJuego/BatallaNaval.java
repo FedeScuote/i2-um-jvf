@@ -45,7 +45,7 @@ public class BatallaNaval extends JFrame {
 
 	private static final int pause2 = 4000;
 
-	private static final String host = null;
+	private static final String HOST = null;
 
 	private UsuarioVO usuario;
 
@@ -73,17 +73,17 @@ public class BatallaNaval extends JFrame {
 
 	private static Logger logger = Logger.getLogger(BatallaNavalVentana.class);  //  @jve:decl-index=0:
 
-	private ImagePanel PanelBatallaNaval = null;
+	private ImagePanel panelBatallaNaval = null;
 
-	private TranslucentPanel PanelCentro = null;
+	private TranslucentPanel panelCentro = null;
 
-	private AnimatedPanelString PanelSuperior = null;
+	private AnimatedPanelString panelSuperior = null;
 
-	private TransparentPanel PanelInferior = null;
+	private TransparentPanel panelInferior = null;
 
-	private TranslucentPanel PanelEste = null;
+	private TranslucentPanel panelEste = null;
 
-	private TranslucentPanel PanelOeste = null;
+	private TranslucentPanel panelOeste = null;
 
 	private JLabel indicadorTurno = null;
 
@@ -132,12 +132,12 @@ public class BatallaNaval extends JFrame {
 		initialize();
 		logger.debug("***creo BatallaNavalVentana***");
 		this.usuario = usuario;
-		this.crearCabezal(PanelEste);
-		this.crearTablero(PanelEste, botonesContrincante); // creo mi tablero
+		this.crearCabezal(panelEste);
+		this.crearTablero(panelEste, botonesContrincante); // creo mi tablero
 		// en mi panel
 		// jugador
-		this.crearCabezal(PanelOeste);
-		this.crearTablero(PanelOeste, botonesJugador);// creo mi
+		this.crearCabezal(panelOeste);
+		this.crearTablero(panelOeste, botonesJugador);// creo mi
 		// tablero
 		// en mi
 		// panel
@@ -153,11 +153,11 @@ public class BatallaNaval extends JFrame {
 				esMiTurno = preguntarTurno(usuario);
 				if (!esMiTurno && termino == false) {
 					indicadorTurno.setText(NOESTUTURNO);
-					PanelCentro.repaint();
+					panelCentro.repaint();
 					temporizador.restart();
 				} else if (termino == false) {
 					indicadorTurno.setText(ESTUTURNO);
-					PanelCentro.repaint();
+					panelCentro.repaint();
 					refrescarTableroJugador();
 					refrescarTableroOponente();
 					if (termino == false && perdi()) {
@@ -177,7 +177,7 @@ public class BatallaNaval extends JFrame {
 			public void actionPerformed(ActionEvent evt) {
 				try {
 					logger.debug("temporizadorInicioTurno");
-					Registry registry = LocateRegistry.getRegistry(host);
+					Registry registry = LocateRegistry.getRegistry(HOST);
 					ServiciosBatallaNaval stub = (ServiciosBatallaNaval) registry
 							.lookup("BatallaNavalServices");
 					if(stub.inicioPartida(usuario)){
@@ -238,16 +238,16 @@ public class BatallaNaval extends JFrame {
 	 * @return javax.swing.JPanel
 	 */
 	private ImagePanel getPanelBatallaNaval() {
-		if (PanelBatallaNaval == null) {
-			PanelBatallaNaval = new ImagePanel(new ImageIcon(URL).getImage());
-			PanelBatallaNaval.setLayout(new BorderLayout());
-			PanelBatallaNaval.add(getPanelCentro(), BorderLayout.CENTER);
-			PanelBatallaNaval.add(getPanelSuperior(), BorderLayout.NORTH);
-			PanelBatallaNaval.add(getPanelInferior(), BorderLayout.SOUTH);
-			PanelBatallaNaval.add(getPanelEste(), BorderLayout.EAST);
-			PanelBatallaNaval.add(getPanelOeste(), BorderLayout.WEST);
+		if (panelBatallaNaval == null) {
+			panelBatallaNaval = new ImagePanel(new ImageIcon(URL).getImage());
+			panelBatallaNaval.setLayout(new BorderLayout());
+			panelBatallaNaval.add(getPanelCentro(), BorderLayout.CENTER);
+			panelBatallaNaval.add(getPanelSuperior(), BorderLayout.NORTH);
+			panelBatallaNaval.add(getPanelInferior(), BorderLayout.SOUTH);
+			panelBatallaNaval.add(getPanelEste(), BorderLayout.EAST);
+			panelBatallaNaval.add(getPanelOeste(), BorderLayout.WEST);
 		}
-		return PanelBatallaNaval;
+		return panelBatallaNaval;
 	}
 
 	/**
@@ -256,7 +256,7 @@ public class BatallaNaval extends JFrame {
 	 * @return javax.swing.JPanel
 	 */
 	private JPanel getPanelCentro() {
-		if (PanelCentro == null) {
+		if (panelCentro == null) {
 			GridBagConstraints gridBagConstraints = new GridBagConstraints();
 			gridBagConstraints.gridx = 0;
 			gridBagConstraints.gridy = 1;
@@ -269,12 +269,12 @@ public class BatallaNaval extends JFrame {
 			indicadorTurno = new JLabel();
 			indicadorTurno.setText(NOESTUTURNO);
 			indicadorTurno.setOpaque(false);
-			PanelCentro = new TranslucentPanel(Color.white);
-			PanelCentro.setLayout(new GridBagLayout());
-			PanelCentro.add(indicadorTurno, gridBagConstraints8);
-			PanelCentro.add(jLabelBarcosHundidos, gridBagConstraints);
+			panelCentro = new TranslucentPanel(Color.white);
+			panelCentro.setLayout(new GridBagLayout());
+			panelCentro.add(indicadorTurno, gridBagConstraints8);
+			panelCentro.add(jLabelBarcosHundidos, gridBagConstraints);
 		}
-		return PanelCentro;
+		return panelCentro;
 	}
 
 	/**
@@ -283,12 +283,12 @@ public class BatallaNaval extends JFrame {
 	 * @return javax.swing.JPanel
 	 */
 	private JPanel getPanelSuperior() {
-		if (PanelSuperior == null) {
-			PanelSuperior = new AnimatedPanelString(NOMBREJUEGO);
-			PanelSuperior.setPreferredSize(new Dimension(0, this.getHeight()/5));
-			PanelSuperior.setLayout(new GridBagLayout());
+		if (panelSuperior == null) {
+			panelSuperior = new AnimatedPanelString(NOMBREJUEGO);
+			panelSuperior.setPreferredSize(new Dimension(0, this.getHeight()/5));
+			panelSuperior.setLayout(new GridBagLayout());
 		}
-		return PanelSuperior;
+		return panelSuperior;
 	}
 
 	/**
@@ -297,11 +297,11 @@ public class BatallaNaval extends JFrame {
 	 * @return javax.swing.JPanel
 	 */
 	private JPanel getPanelInferior() {
-		if (PanelInferior == null) {
-			PanelInferior = new TransparentPanel();
-			PanelInferior.setLayout(new GridBagLayout());
+		if (panelInferior == null) {
+			panelInferior = new TransparentPanel();
+			panelInferior.setLayout(new GridBagLayout());
 		}
-		return PanelInferior;
+		return panelInferior;
 	}
 
 	/**
@@ -310,12 +310,12 @@ public class BatallaNaval extends JFrame {
 	 * @return javax.swing.JPanel
 	 */
 	private JPanel getPanelEste() {
-		if (PanelEste == null) {
-			PanelEste = new TranslucentPanel();
-			PanelEste.setLayout(new GridBagLayout());
-			PanelEste.setPreferredSize(new Dimension(this.getWidth()/2,0));
+		if (panelEste == null) {
+			panelEste = new TranslucentPanel();
+			panelEste.setLayout(new GridBagLayout());
+			panelEste.setPreferredSize(new Dimension(this.getWidth()/2,0));
 		}
-		return PanelEste;
+		return panelEste;
 	}
 
 	/**
@@ -324,12 +324,12 @@ public class BatallaNaval extends JFrame {
 	 * @return javax.swing.JPanel
 	 */
 	private JPanel getPanelOeste() {
-		if (PanelOeste == null) {
-			PanelOeste = new TranslucentPanel();
-			PanelOeste.setLayout(new GridBagLayout());
-			PanelOeste.setPreferredSize(new Dimension(this.getWidth()/2,0));
+		if (panelOeste == null) {
+			panelOeste = new TranslucentPanel();
+			panelOeste.setLayout(new GridBagLayout());
+			panelOeste.setPreferredSize(new Dimension(this.getWidth()/2,0));
 		}
-		return PanelOeste;
+		return panelOeste;
 	}
 
 //	 metodo al cual le paso el panel donde quiero crear un tablero del tamano
@@ -373,7 +373,7 @@ public class BatallaNaval extends JFrame {
 				jlabel.setVerticalAlignment(SwingConstants.CENTER);
 			} else {
 				JButton jButton = new JButton();
-				if (panel.equals(PanelEste)) {// solo añado mis
+				if (panel.equals(panelEste)) {// solo añado mis
 					// listeners si es panel
 					// contr
 					jButton.addActionListener(new ListenerBoton(numeroFila, j));
@@ -410,7 +410,7 @@ public class BatallaNaval extends JFrame {
 		if (esMiTurno) {
 			try { // try y catch para verificar si esta el usuario o
 				// no
-				Registry registry = LocateRegistry.getRegistry(host);
+				Registry registry = LocateRegistry.getRegistry(HOST);
 				ServiciosBatallaNaval stub = (ServiciosBatallaNaval) registry
 						.lookup("BatallaNavalServices");
 				stub.disparar(this.usuario, fila, columna);
@@ -459,7 +459,7 @@ public class BatallaNaval extends JFrame {
 		  if (termino == false) {
 			try { // try y catch para verificar si esta el usuario o
 				// no
-				Registry registry = LocateRegistry.getRegistry(host);
+				Registry registry = LocateRegistry.getRegistry(HOST);
 				ServiciosBatallaNaval stub = (ServiciosBatallaNaval) registry
 						.lookup("BatallaNavalServices");
 				if (stub.esMiTurno(usuario)) {
@@ -479,7 +479,7 @@ public class BatallaNaval extends JFrame {
 		logger.debug("refrescarTableroJugador");
 		try { // try y catch para verificar si esta el usuario o
 			// no
-			Registry registry = LocateRegistry.getRegistry(host);
+			Registry registry = LocateRegistry.getRegistry(HOST);
 			ServiciosBatallaNaval stub = (ServiciosBatallaNaval) registry
 					.lookup("BatallaNavalServices");
 			cambiarBotones(botonesJugador, stub.refrescarTablero(usuario));
@@ -503,7 +503,7 @@ public class BatallaNaval extends JFrame {
 		logger.debug("refrescarTableroOponente");
 		try { // try y catch para verificar si esta el usuario o
 			// no
-			Registry registry = LocateRegistry.getRegistry(host);
+			Registry registry = LocateRegistry.getRegistry(HOST);
 			ServiciosBatallaNaval stub = (ServiciosBatallaNaval) registry
 					.lookup("BatallaNavalServices");
 			cambiarBotones(botonesContrincante, stub
@@ -560,7 +560,7 @@ public class BatallaNaval extends JFrame {
 		logger.debug("gane");
 		try { // try y catch para verificar si esta el usuario o
 			// no
-			Registry registry = LocateRegistry.getRegistry(host);
+			Registry registry = LocateRegistry.getRegistry(HOST);
 			ServiciosBatallaNaval stub = (ServiciosBatallaNaval) registry
 					.lookup("BatallaNavalServices");
 
@@ -581,7 +581,7 @@ public class BatallaNaval extends JFrame {
 		logger.debug("perdi");
 		try { // try y catch para verificar si esta el usuario o
 			// no
-			Registry registry = LocateRegistry.getRegistry(host);
+			Registry registry = LocateRegistry.getRegistry(HOST);
 			ServiciosBatallaNaval stub = (ServiciosBatallaNaval) registry
 					.lookup("BatallaNavalServices");
 
@@ -602,7 +602,7 @@ public class BatallaNaval extends JFrame {
 		logger.debug("terminoPartida");
 		try { // try y catch para verificar si esta el usuario o
 			// no
-			Registry registry = LocateRegistry.getRegistry(host);
+			Registry registry = LocateRegistry.getRegistry(HOST);
 			ServiciosBatallaNaval stub = (ServiciosBatallaNaval) registry
 					.lookup("BatallaNavalServices");
 
@@ -620,7 +620,7 @@ public class BatallaNaval extends JFrame {
 	}
 	private void preguntarContrincante(){
 		try{
-			Registry registry = LocateRegistry.getRegistry(host);
+			Registry registry = LocateRegistry.getRegistry(HOST);
 			ServiciosBatallaNaval stub = (ServiciosBatallaNaval) registry
 					.lookup("BatallaNavalServices");
 			contrincante = stub.contrincante(usuario);
