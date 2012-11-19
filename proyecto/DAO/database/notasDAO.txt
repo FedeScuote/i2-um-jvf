@@ -1,0 +1,40 @@
+Usuarios:
+
+nivelPrivilegio: 1-Usuario Jugador
+	 	         2-Administrador
+		         3-Dueño
+
+virtual: 0-real
+	     1-virtual
+
+
+
+Torneos:
+
+estadoT:  En hora
+	      En curso
+	      Atrasado
+	      Finalizado
+	      Cancelado
+
+
+
+Desafíos:
+
+estadoD:  En hora
+	      En curso
+	      Atrasado
+	      Finalizado
+	      Cancelado
+
+Partidas:
+
+estadoD:  En hora
+	      En curso
+	      Atrasado
+	      Finalizado
+	      Cancelado
+
+
+
+Para realizar las pruebas de junit se utilizó el script mlPruebasJunitDAO.
