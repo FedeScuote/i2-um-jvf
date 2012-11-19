@@ -1,6 +1,8 @@
 package comm;
 
-public class ReporteVO {
+import java.io.Serializable;
+
+public class ReporteVO implements Serializable {
 	private int montoTotalNoVirtuales=0;
 	private int montoTotalVirtuales=0;
 	private int montoTotalComisionesJVF=0;
