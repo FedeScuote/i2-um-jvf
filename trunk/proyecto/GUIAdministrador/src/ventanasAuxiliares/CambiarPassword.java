@@ -105,6 +105,8 @@ public class CambiarPassword extends JFrame {
 		this.setSize(497, 316);
 		this.setContentPane(getJContentPane());
 		this.setTitle("JFrame");
+		this.setExtendedState(JFrame.MAXIMIZED_BOTH);
+		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	}
 
 	/**

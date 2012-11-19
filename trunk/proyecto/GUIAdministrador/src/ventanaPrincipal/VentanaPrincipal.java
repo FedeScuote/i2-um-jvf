@@ -8,6 +8,7 @@ import java.util.ResourceBundle;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 import login.Login;
@@ -16,6 +17,7 @@ import org.apache.log4j.Logger;
 
 import ventanasAuxiliares.CambiarPassword;
 import ventanasAuxiliares.CambiosSaldo;
+import ventanasAuxiliares.Estadisticas;
 
 import comm.UsuarioVO;
 
@@ -43,6 +45,7 @@ public class VentanaPrincipal extends JFrame {
 	private static final String LABEL_ANIADIR_SALDO = labels.getString("LABEL_ANIADIR_SALDO");
 	private static final String LABEL_ESTADISTICAS = labels.getString("LABEL_ESTADISTICAS");
 	private static final String DESCONECTAR = labels.getString("LABEL_DESCONECTAR");
+	private static final String USUARIOINCORRECTO = labels.getString("LABEL_USUARIO_INVALIDO");
 
 	private JButton jButtonDesconectar = null;
 	private UsuarioVO usuario = null;
@@ -65,6 +68,8 @@ public class VentanaPrincipal extends JFrame {
 		this.setSize(579, 374);
 		this.setContentPane(getJContentPane());
 		this.setTitle("JFrame");
+		this.setExtendedState(JFrame.MAXIMIZED_BOTH);
+		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	}
 
 	/**
@@ -199,6 +204,17 @@ public class VentanaPrincipal extends JFrame {
 		if (botonEstadisticas == null) {
 			botonEstadisticas = new JButton();
 			botonEstadisticas.setText(LABEL_ESTADISTICAS);
+			botonEstadisticas.addActionListener(new java.awt.event.ActionListener() {
+				public void actionPerformed(java.awt.event.ActionEvent e) {
+					if(usuario.getNivelPrivilegio()==3){
+						dispose();
+						Estadisticas l = new Estadisticas(usuario);
+						l.setVisible(true);
+					}else{
+						JOptionPane.showMessageDialog(new JFrame(), USUARIOINCORRECTO);
+					}
+				}
+			});
 		}
 		return botonEstadisticas;
 	}
